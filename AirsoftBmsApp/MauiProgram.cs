@@ -13,6 +13,7 @@ namespace AirsoftBmsApp
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("CascadiaCode-VariableFont_wght", "CascadiaCode");
                 });
 
 #if DEBUG

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirsoftBmsApp.PlayerFormPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
+             >
+
+    <VerticalStackLayout VerticalOptions="Center" Padding="40">
+        <Label 
+            FontFamily="CascadiaCode" 
+            FontSize="30" 
+            HorizontalOptions="Center"
+            Margin="0, 0, 0, 20"
+            >
+            Without Account
+        </Label>
+
+        <Border 
+            Height="30"
+            Stroke="{StaticResource Outline}"
+            StrokeShape="RoundRectangle 45"
+            Padding="20, 0"
+            Margin="0, 0, 0, 10"
+            >
+            <Entry 
+                Placeholder="Enter your username"
+                PlaceholderColor="{StaticResource Outline}"
+                FontFamily="CascadiaCode"
+                BackgroundColor="Transparent"/>
+        </Border>
+        
+        <Button 
+            Height="30"
+            FontFamily="CascadiaCode" 
+            CornerRadius="30"
+            HorizontalOptions="Fill"
+            Text="Confirm"
+            FontSize="20"
+            Padding="0"
+            Margin="0, 0, 0, 20"
+            />
+
+        <FlexLayout Direction="Row" AlignItems="Center" Margin="0, 20">
+            <BoxView 
+                HeightRequest="1"
+                FlexLayout.Basis="45%"
+                Color="{StaticResource Outline}"
+                />
+
+                <Label 
+                    FontFamily="CascadiaCode" 
+                    FontSize="15" 
+                    TextColor="{StaticResource Outline}"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    FlexLayout.Basis="10%"
+                >
+                    OR
+                </Label>
+
+
+            <BoxView 
+                HeightRequest="1"
+                FlexLayout.Basis="45%"
+                Color="{StaticResource Outline}"
+                />
+        </FlexLayout>
+
+        <Label 
+            FontFamily="CascadiaCode" 
+            FontSize="30" 
+            HorizontalOptions="Center"
+            Margin="0, 0, 0, 20"
+        >
+            With Account
+        </Label>
+
+        <Button 
+            Height="30"
+            BackgroundColor="Transparent"
+            TextColor="{StaticResource Primary}"
+            BorderColor="{StaticResource Primary}"
+            BorderWidth="2"
+            FontFamily="CascadiaCode" 
+            CornerRadius="30"
+            HorizontalOptions="Fill"
+            Text="Log In"
+            FontSize="20"
+            Margin="0, 0, 0, 10"
+            Padding="0"
+        />
+
+        <Button 
+            Height="30"
+            BackgroundColor="Transparent"
+            TextColor="{StaticResource Primary}"
+            BorderColor="{StaticResource Primary}"
+            BorderWidth="2"
+            FontFamily="CascadiaCode" 
+            CornerRadius="30"
+            HorizontalOptions="Fill"
+            Text="Sign Up"
+            FontSize="20"
+            Margin="0, 0, 0, 10"
+            Padding="0"
+        />
+    </VerticalStackLayout>
+
+</ContentPage>
