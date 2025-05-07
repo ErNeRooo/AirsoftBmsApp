@@ -88,7 +88,7 @@
             FontSize="20"
             Margin="0, 0, 0, 10"
             Padding="0"
-            Clicked="OnLoginButtonClicked"
+            Clicked="OnLogInButtonClicked"
         />
 
         <Button 
@@ -104,6 +104,7 @@
             FontSize="20"
             Margin="0, 0, 0, 10"
             Padding="0"
+            Clicked="OnSignUpButtonClicked"
         />
     </VerticalStackLayout>
 

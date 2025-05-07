@@ -9,10 +9,15 @@ namespace AirsoftBmsApp
             InitializeComponent();
         }
 
-        private async void OnLoginButtonClicked(object sender, EventArgs e)
+        private async void OnLogInButtonClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(LogInPage));
         }
-    }
 
+        private async void OnSignUpButtonClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(SignUpPage));
+        }
+    }
 }
+

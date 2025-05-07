@@ -9,6 +9,7 @@ namespace AirsoftBmsApp
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(LogInPage), typeof(LogInPage));
+            Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
         }
     }
 }
