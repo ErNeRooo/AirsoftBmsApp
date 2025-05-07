@@ -56,5 +56,20 @@
         Clicked="OnCreateButtonClicked"
         />
 
+        <Button 
+            Height="30"
+            WidthRequest="50"
+            BackgroundColor="Transparent"
+            TextColor="{StaticResource SecondaryDarkText}"
+            BorderColor="Transparent"
+            BorderWidth="2"
+            FontFamily="CascadiaCode" 
+            CornerRadius="30"
+            Text="Back"
+            FontSize="20"
+            Padding="0"
+            Clicked="OnBackButtonClicked"
+        />
+
     </VerticalStackLayout>
 </ContentPage>

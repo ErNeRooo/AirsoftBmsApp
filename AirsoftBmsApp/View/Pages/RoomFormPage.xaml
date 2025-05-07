@@ -76,6 +76,7 @@
 
         <Button 
             Height="30"
+            WidthRequest="80"
             BackgroundColor="Transparent"
             TextColor="{StaticResource SecondaryDarkText}"
             BorderColor="Transparent"
