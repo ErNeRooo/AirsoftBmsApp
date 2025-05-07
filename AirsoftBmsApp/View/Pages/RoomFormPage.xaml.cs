@@ -11,7 +11,7 @@ namespace AirsoftBmsApp
 
         private async void OnJoinRoomButtonClicked(object sender, EventArgs e)
         {
-            //await Shell.Current.GoToAsync(nameof(LogInPage));
+            await Shell.Current.GoToAsync(nameof(JoinRoomPage));
         }
 
         private async void OnCreateRoomButtonClicked(object sender, EventArgs e)

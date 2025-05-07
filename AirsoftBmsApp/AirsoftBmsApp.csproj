@@ -65,6 +65,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\Pages\JoinRoomPage.xaml.cs">
+	    <DependentUpon>JoinRoomPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\Pages\RoomFormPage.xaml.cs">
 	    <DependentUpon>RoomFormPage.xaml</DependentUpon>
 	  </Compile>
@@ -77,6 +80,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\Pages\JoinRoomPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\Pages\RoomFormPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
