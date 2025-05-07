@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirsoftBmsApp.View.Pages.CreateRoomPage"
+             Title="Create Room"
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
+             >
+
+    <VerticalStackLayout VerticalOptions="Center" Padding="40">
+        <Label 
+        FontFamily="CascadiaCode" 
+        FontSize="30" 
+        HorizontalOptions="Center"
+        Margin="0, 0, 0, 20"
+        >
+            Create Room
+        </Label>
+
+        <Border 
+        Height="30"
+        Stroke="{StaticResource Outline}"
+        StrokeShape="RoundRectangle 45"
+        Padding="20, 0"
+        Margin="0, 0, 0, 10"
+        >
+            <Entry 
+            Placeholder="Enter custom room ID (optional)"
+            PlaceholderColor="{StaticResource Outline}"
+            FontFamily="CascadiaCode"
+            BackgroundColor="Transparent"/>
+        </Border>
+
+        <Border 
+            Height="30"
+            Stroke="{StaticResource Outline}"
+            StrokeShape="RoundRectangle 45"
+            Padding="20, 0"
+            Margin="0, 0, 0, 10"
+        >
+            <Entry 
+                Placeholder="Enter room password (optional)"
+                PlaceholderColor="{StaticResource Outline}"
+                FontFamily="CascadiaCode"
+                BackgroundColor="Transparent"/>
+        </Border>
+
+        <Button 
+        Height="30"
+        FontFamily="CascadiaCode" 
+        CornerRadius="30"
+        HorizontalOptions="Fill"
+        Text="Create"
+        FontSize="20"
+        Padding="0"
+        Margin="0, 0, 0, 20"
+        Clicked="OnCreateButtonClicked"
+        />
+
+        <Button 
+            Height="30"
+            WidthRequest="50"
+            BackgroundColor="Transparent"
+            TextColor="{StaticResource SecondaryDarkText}"
+            BorderColor="Transparent"
+            BorderWidth="2"
+            FontFamily="CascadiaCode" 
+            CornerRadius="30"
+            Text="Back"
+            FontSize="20"
+            Padding="0"
+            Clicked="OnBackButtonClicked"
+        />
+
+    </VerticalStackLayout>
+</ContentPage>

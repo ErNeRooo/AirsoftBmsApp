@@ -12,6 +12,7 @@ namespace AirsoftBmsApp
             Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
             Routing.RegisterRoute(nameof(RoomFormPage), typeof(RoomFormPage));
             Routing.RegisterRoute(nameof(JoinRoomPage), typeof(JoinRoomPage));
+            Routing.RegisterRoute(nameof(CreateRoomPage), typeof(CreateRoomPage));
         }
     }
 }
