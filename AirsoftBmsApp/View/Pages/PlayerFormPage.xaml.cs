@@ -18,6 +18,11 @@ namespace AirsoftBmsApp
         {
             await Shell.Current.GoToAsync(nameof(SignUpPage));
         }
+
+        private async void OnConfirmButtonClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(RoomFormPage));
+        }
     }
 }
 
