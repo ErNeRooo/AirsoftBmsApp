@@ -9,8 +9,8 @@
       >
 
     <ShellContent
-        Title="Home"
+        Title="Welcome"
         ContentTemplate="{DataTemplate local:PlayerFormPage}"
-        Route="MainPage"/>
+        Route="PlayerFormPage"/>
 
 </Shell>

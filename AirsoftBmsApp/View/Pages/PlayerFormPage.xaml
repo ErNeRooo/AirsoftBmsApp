@@ -88,6 +88,7 @@
             FontSize="20"
             Margin="0, 0, 0, 10"
             Padding="0"
+            Clicked="OnLoginButtonClicked"
         />
 
         <Button 

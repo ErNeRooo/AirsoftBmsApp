@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirsoftBmsApp.View.Pages.LogInPage"
+             Title="Log In"
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
+             >
+
+    <VerticalStackLayout VerticalOptions="Center" Padding="40">
+        <Label 
+        FontFamily="CascadiaCode" 
+        FontSize="30" 
+        HorizontalOptions="Center"
+        Margin="0, 0, 0, 20"
+        >
+            Log In
+        </Label>
+
+        <Border 
+        Height="30"
+        Stroke="{StaticResource Outline}"
+        StrokeShape="RoundRectangle 45"
+        Padding="20, 0"
+        Margin="0, 0, 0, 10"
+        >
+            <Entry 
+            Placeholder="Enter account email"
+            PlaceholderColor="{StaticResource Outline}"
+            FontFamily="CascadiaCode"
+            BackgroundColor="Transparent"/>
+        </Border>
+
+        <Border 
+            Height="30"
+            Stroke="{StaticResource Outline}"
+            StrokeShape="RoundRectangle 45"
+            Padding="20, 0"
+            Margin="0, 0, 0, 10"
+        >
+            <Entry 
+                Placeholder="Enter account password"
+                PlaceholderColor="{StaticResource Outline}"
+                FontFamily="CascadiaCode"
+                BackgroundColor="Transparent"/>
+        </Border>
+
+        <Button 
+        Height="30"
+        FontFamily="CascadiaCode" 
+        CornerRadius="30"
+        HorizontalOptions="Fill"
+        Text="Create"
+        FontSize="20"
+        Padding="0"
+        Margin="0, 0, 0, 20"
+        />
+
+    </VerticalStackLayout>
+</ContentPage>
