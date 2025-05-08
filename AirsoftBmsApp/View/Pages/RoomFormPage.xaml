@@ -6,7 +6,11 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              >
 
-    <VerticalStackLayout VerticalOptions="Center" Padding="40">
+    <VerticalStackLayout 
+        VerticalOptions="Center" 
+        Padding="40"
+        MaximumWidthRequest="600"
+        >
         <Label 
             FontFamily="CascadiaCode" 
             FontSize="30" 
@@ -19,7 +23,7 @@
         <Button 
             Height="30"
             FontFamily="CascadiaCode" 
-            CornerRadius="30"
+            CornerRadius="25"
             HorizontalOptions="Fill"
             Text="Join Room"
             FontSize="20"
@@ -65,7 +69,7 @@
             BorderColor="{StaticResource Primary}"
             BorderWidth="2"
             FontFamily="CascadiaCode" 
-            CornerRadius="30"
+            CornerRadius="25"
             HorizontalOptions="Fill"
             Text="Create Room"
             FontSize="20"
@@ -75,18 +79,18 @@
         />
 
         <Button 
+            WidthRequest="150"
             Height="30"
-            WidthRequest="80"
             BackgroundColor="Transparent"
             TextColor="{StaticResource SecondaryDarkText}"
             BorderColor="Transparent"
             BorderWidth="2"
             FontFamily="CascadiaCode" 
-            CornerRadius="30"
+            CornerRadius="25"
             Text="Log Out"
             FontSize="20"
             Margin="0, 20, 0, 0"
-            Padding="0"
+            Padding="10, 0"
             Clicked="OnLogOutButtonClicked"
         />
 

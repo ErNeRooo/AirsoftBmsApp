@@ -6,11 +6,15 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              >
 
-    <VerticalStackLayout VerticalOptions="Center" Padding="40">
+    <VerticalStackLayout 
+        VerticalOptions="Center" 
+        Padding="40"
+        >
         <Label 
         FontFamily="CascadiaCode" 
         FontSize="30" 
-        HorizontalOptions="Center"
+        HorizontalOptions="Center" 
+        MaximumWidthRequest="600"
         Margin="0, 0, 0, 20"
         >
             Create Room
@@ -41,13 +45,14 @@
                 Placeholder="Enter room password (optional)"
                 PlaceholderColor="{StaticResource Outline}"
                 FontFamily="CascadiaCode"
-                BackgroundColor="Transparent"/>
+                BackgroundColor="Transparent"
+                />
         </Border>
 
         <Button 
         Height="30"
         FontFamily="CascadiaCode" 
-        CornerRadius="30"
+        CornerRadius="25"
         HorizontalOptions="Fill"
         Text="Create"
         FontSize="20"
@@ -64,7 +69,7 @@
             BorderColor="Transparent"
             BorderWidth="2"
             FontFamily="CascadiaCode" 
-            CornerRadius="30"
+            CornerRadius="25"
             Text="Back"
             FontSize="20"
             Padding="0"

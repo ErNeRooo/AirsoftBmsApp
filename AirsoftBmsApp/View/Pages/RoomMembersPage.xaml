@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirsoftBmsApp.View.Pages.RoomMembersPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
+             Title="RoomMembersPage">
+
+    <VerticalStackLayout
+        Padding="40, 20"
+        >
+        <FlexLayout
+            JustifyContent="SpaceBetween"
+            AlignItems="Center"
+            Margin="0, 0, 0, 20"
+            >
+            <Label 
+                Text="Room 021370"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                FontSize="30"
+                TextColor="{StaticResource Primary}"
+                FontFamily="CascadiaCode"
+                />
+
+            <Button
+                Padding="0"
+                MaximumHeightRequest="30"
+                WidthRequest="100"
+                Text="Leave"
+                CornerRadius="25"
+                FontFamily="CascadiaCode"
+                />
+        </FlexLayout>
+
+        <Label
+            FontFamily="CascadiaCode"
+            FontSize="20"
+            TextColor="#D4D4D4"
+            HorizontalOptions="Start"
+        >
+            Under No Flag
+        </Label>
+
+        <Border
+            HorizontalOptions="Fill"
+            Padding="10"
+            BackgroundColor="#4F4F4F"
+            StrokeShape="RoundRectangle 15"
+            StrokeThickness="0"
+            Margin="0, 5, 0, 20"
+        >
+            <VerticalStackLayout
+                Spacing="5"
+            >
+                <Border
+                    BackgroundColor="#1C1917"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        consectetur
+                    </Label>
+                </Border>
+                <Border
+                    BackgroundColor="#1C1917"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        dolor
+                    </Label>
+                </Border>
+                <Border
+                    BackgroundColor="#1C1917"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        gravida
+                    </Label>
+                </Border>
+            </VerticalStackLayout>
+        </Border>
+        
+
+        <Label
+            FontFamily="CascadiaCode"
+            FontSize="20"
+            TextColor="#2563EB"
+            HorizontalOptions="Start"
+        >
+            Blue Team
+        </Label>
+
+        <Border
+            HorizontalOptions="Fill"
+            Padding="10"
+            BackgroundColor="#0E1838"
+            StrokeShape="RoundRectangle 15"
+            StrokeThickness="0"
+            Margin="0, 5, 0, 20"
+        >
+            <VerticalStackLayout
+                Spacing="5"
+            >
+                <Border
+                    BackgroundColor="#172554"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        ErNeRooo
+                    </Label>
+                </Border>
+                <Border
+                    BackgroundColor="#172554"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        ultricies
+                    </Label>
+                </Border>
+                <Border
+                    BackgroundColor="#172554"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        gravida
+                    </Label>
+                </Border>
+                <Border
+                    BackgroundColor="#172554"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        porttitor
+                    </Label>
+                </Border>
+            </VerticalStackLayout>
+        </Border>
+
+        
+
+        <Label
+            FontFamily="CascadiaCode"
+            FontSize="20"
+            TextColor="#E11D48"
+            HorizontalOptions="Start"
+        >
+            Red Team
+        </Label>
+        <Border
+            HorizontalOptions="Fill"
+            Padding="10"
+            BackgroundColor="#390D16"
+            StrokeShape="RoundRectangle 15"
+            StrokeThickness="0"
+            Margin="0, 5, 0, 20"
+            >
+            <VerticalStackLayout
+                Spacing="5"
+            >
+                <Border
+                    BackgroundColor="#4C0519"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        Vestibulum
+                    </Label>
+                </Border>
+
+                <Border
+                    BackgroundColor="#4C0519"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        ullamcorper 
+                    </Label>
+                </Border>
+                <Border
+                    BackgroundColor="#4C0519"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        Parabellum
+                    </Label>
+                </Border>
+                <Border
+                    BackgroundColor="#4C0519"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        Suspendisse
+                    </Label>
+                </Border>
+                <Border
+                    BackgroundColor="#4C0519"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    Padding="10, 0"
+                >
+                    <Label
+                        FontFamily="CascadiaCode"
+                        FontSize="10"
+                        TextColor="White"
+                    >
+                        himenaeos
+                    </Label>
+                </Border>
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>

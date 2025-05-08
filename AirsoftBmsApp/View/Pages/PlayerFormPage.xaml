@@ -5,7 +5,11 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              >
 
-    <VerticalStackLayout VerticalOptions="Center" Padding="40">
+    <VerticalStackLayout 
+        VerticalOptions="Center" 
+        Padding="40"
+        MaximumWidthRequest="600"
+        >
         <Label 
             FontFamily="CascadiaCode" 
             FontSize="30" 
@@ -32,7 +36,7 @@
         <Button 
             Height="30"
             FontFamily="CascadiaCode" 
-            CornerRadius="30"
+            CornerRadius="25"
             HorizontalOptions="Fill"
             Text="Confirm"
             FontSize="20"
@@ -89,7 +93,7 @@
             BorderColor="{StaticResource Primary}"
             BorderWidth="2"
             FontFamily="CascadiaCode" 
-            CornerRadius="30"
+            CornerRadius="25"
             HorizontalOptions="Fill"
             Text="Log In"
             FontSize="20"
@@ -105,7 +109,7 @@
             BorderColor="{StaticResource Primary}"
             BorderWidth="2"
             FontFamily="CascadiaCode" 
-            CornerRadius="30"
+            CornerRadius="25"
             HorizontalOptions="Fill"
             Text="Sign Up"
             FontSize="20"
