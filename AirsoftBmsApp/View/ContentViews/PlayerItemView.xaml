@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Border
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="using:AirsoftBmsApp.View.ContentViews"
+    xmlns:models="using:AirsoftBmsApp.Model"
+    x:Class="AirsoftBmsApp.View.ContentViews.PlayerItemView"
+    BackgroundColor="{Binding BindingContext.TeamTheme.SurfaceColor, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"
+    StrokeShape="RoundRectangle 25"
+    StrokeThickness="0"
+    Padding="10, 0"
+    x:DataType="models:Player"
+    >
+    <Label
+        FontFamily="CascadiaCode"
+        FontSize="10"
+        TextColor="{Binding BindingContext.TeamTheme.FontColor, Source={RelativeSource AncestorType={x:Type VerticalStackLayout}}}"
+        Text="{Binding Name}"
+        />
+</Border>

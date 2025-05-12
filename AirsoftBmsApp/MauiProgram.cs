@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AirsoftBmsApp.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace AirsoftBmsApp
 {
@@ -16,8 +17,10 @@ namespace AirsoftBmsApp
                     fonts.AddFont("CascadiaCode-VariableFont_wght", "CascadiaCode");
                 });
 
+            builder.Services.AddSingleton<RoomViewModel>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

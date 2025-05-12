@@ -65,6 +65,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\ContentViews\PlayerItemView.xaml.cs">
+	    <DependentUpon>PlayerItemView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\ContentViews\TeamView.xaml.cs">
+	    <DependentUpon>TeamView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\ContentViews\TeamNameTitleView.xaml.cs">
+	    <DependentUpon>TeamNameTitleView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\Pages\CreateRoomPage.xaml.cs">
 	    <DependentUpon>CreateRoomPage.xaml</DependentUpon>
 	  </Compile>
@@ -83,6 +92,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\ContentViews\PlayerItemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\TeamView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\TeamNameTitleView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\Pages\CreateRoomPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -101,6 +119,10 @@
 	  <MauiXaml Update="View\Pages\LogInPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="View\ContentViews\Team\" />
 	</ItemGroup>
 
 </Project>
