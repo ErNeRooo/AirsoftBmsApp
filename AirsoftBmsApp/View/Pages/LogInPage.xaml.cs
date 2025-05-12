@@ -1,15 +1,13 @@
+using AirsoftBmsApp.ViewModel.Abstractions;
+
 namespace AirsoftBmsApp.View.Pages;
 
 public partial class LogInPage : ContentPage
 {
-	public LogInPage()
+	public LogInPage(IFormViewModel viewModel)
 	{
 		InitializeComponent();
-	}
-
-    private async void OnCreateButtonClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(RoomFormPage));
+        BindingContext = viewModel;
     }
 
     private async void OnBackButtonClicked(object sender, EventArgs e)

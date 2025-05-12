@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model
 {
-    public class Player : INotifyPropertyChanged
+    public class RoomMember : INotifyPropertyChanged
     {
         private int _id;
+        private int? _teamId;
+        private int _roomId;
+        private int? _accountId;
         private string _name;
-        private string _jwt;
-        private Account? _account;
+        private bool _isDead;
 
         public int Id
         {
@@ -23,6 +25,45 @@ namespace AirsoftBmsApp.Model
                 if (_id != value)
                 {
                     _id = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int? TeamId
+        {
+            get => _teamId;
+            set
+            {
+                if (_teamId != value)
+                {
+                    _teamId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int RoomId
+        {
+            get => _roomId;
+            set
+            {
+                if (_roomId != value)
+                {
+                    _roomId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int? AccountId
+        {
+            get => _accountId;
+            set
+            {
+                if (_accountId != value)
+                {
+                    _accountId = value;
                     OnPropertyChanged();
                 }
             }
@@ -41,27 +82,14 @@ namespace AirsoftBmsApp.Model
             }
         }
 
-        public string JWT
+        public bool IsDead
         {
-            get => _jwt;
+            get => _isDead;
             set
             {
-                if (_jwt != value)
+                if (_isDead != value)
                 {
-                    _jwt = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public Account? Account
-        {
-            get => _account;
-            set
-            {
-                if (_account != value)
-                {
-                    _account = value;
+                    _isDead = value;
                     OnPropertyChanged();
                 }
             }

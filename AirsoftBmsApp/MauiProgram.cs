@@ -1,4 +1,7 @@
-﻿using AirsoftBmsApp.ViewModel;
+﻿using AirsoftBmsApp.Services;
+using AirsoftBmsApp.Services.Abstractions;
+using AirsoftBmsApp.ViewModel;
+using AirsoftBmsApp.ViewModel.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace AirsoftBmsApp
@@ -17,7 +20,9 @@ namespace AirsoftBmsApp
                     fonts.AddFont("CascadiaCode-VariableFont_wght", "CascadiaCode");
                 });
 
-            builder.Services.AddSingleton<RoomViewModel>();
+            builder.Services.AddSingleton<IRoomViewModel, RoomViewModel>();
+            builder.Services.AddSingleton<IFormViewModel, FormViewModel>();
+            builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -73,7 +73,7 @@
         FontColor="#DBEAFE"
     />
 
-    <model:Player
+    <model:RoomMember
         x:Key="ErNeRooo"
         Id="1"
         AccountId="1"
@@ -83,8 +83,8 @@
         Name="ErNeRooo"
     />
 
-    <x:Array x:Key="Players" Type="{x:Type model:Player}">
-        <model:Player
+    <x:Array x:Key="Players" Type="{x:Type model:RoomMember}">
+        <model:RoomMember
             Id="1"
             AccountId="1"
             RoomId="1"
@@ -92,7 +92,7 @@
             IsDead="False"
             Name="ErNeRooo"
         />
-        <model:Player
+        <model:RoomMember
             Id="1"
             AccountId="1"
             RoomId="1"
@@ -100,7 +100,7 @@
             IsDead="False"
             Name="Parabellum"
         />
-        <model:Player
+        <model:RoomMember
             Id="1"
             AccountId="1"
             RoomId="1"
@@ -108,7 +108,7 @@
             IsDead="False"
             Name="Vestibulum"
         />
-        <model:Player
+        <model:RoomMember
             Id="1"
             AccountId="1"
             RoomId="1"

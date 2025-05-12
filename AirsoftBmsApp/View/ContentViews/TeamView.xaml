@@ -27,7 +27,7 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <view:PlayerItemView />
+                    <view:RoomMemberItemView />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

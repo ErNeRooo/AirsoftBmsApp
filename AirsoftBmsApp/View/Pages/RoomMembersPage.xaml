@@ -4,7 +4,6 @@
              x:Class="AirsoftBmsApp.View.Pages.RoomMembersPage"
              xmlns:views="clr-namespace:AirsoftBmsApp.View.ContentViews"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
-             xmlns:models="clr-namespace:AirsoftBmsApp.Model"
              x:DataType="viewModel:RoomViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              Title="RoomMembersPage">

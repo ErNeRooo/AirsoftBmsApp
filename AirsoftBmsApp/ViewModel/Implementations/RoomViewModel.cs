@@ -7,10 +7,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using AirsoftBmsApp.Model;
+using AirsoftBmsApp.ViewModel.Abstractions;
 
 namespace AirsoftBmsApp.ViewModel
 {
-    public class RoomViewModel : INotifyPropertyChanged
+    public class RoomViewModel : INotifyPropertyChanged, IRoomViewModel
     {
         private ObservableCollection<Team> _teams;
 
@@ -42,6 +43,21 @@ namespace AirsoftBmsApp.ViewModel
             }
         }
 
+        private int _id;
+
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public RoomViewModel()
@@ -51,23 +67,23 @@ namespace AirsoftBmsApp.ViewModel
                 new Team
                 {
                     Name = "Under No Flag",
-                    Players = new ObservableCollection<Player>
+                    Players = new ObservableCollection<RoomMember>
                     {
-                        new Player
+                        new RoomMember
                         {
                             Id = 1,
                             AccountId = 1,
                             Name = "consectetur",
                             IsDead = false
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 2,
                             AccountId = 2,
                             Name = "Lorem",
                             IsDead = true
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 3,
                             AccountId = 3,
@@ -92,30 +108,30 @@ namespace AirsoftBmsApp.ViewModel
                 new Team
                 {
                     Name = "Blue Team",
-                    Players = new ObservableCollection<Player>
+                    Players = new ObservableCollection<RoomMember>
                     {
-                        new Player
+                        new RoomMember
                         {
                             Id = 4,
                             AccountId = 4,
                             Name = "ullamcorper",
                             IsDead = false
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 5,
                             AccountId = 5,
                             Name = "gravida",
                             IsDead = true
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 6,
                             AccountId = 6,
                             Name = "porttitor",
                             IsDead = false
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 7,
                             AccountId = 7,
@@ -140,44 +156,44 @@ namespace AirsoftBmsApp.ViewModel
                 new Team
                 {
                     Name = "Red Team",
-                    Players = new ObservableCollection<Player>
+                    Players = new ObservableCollection<RoomMember>
                     {
-                        new Player
+                        new RoomMember
                         {
                             Id = 8,
                             AccountId = 8,
                             Name = "ErNeRooo",
                             IsDead = false
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 9,
                             AccountId = 9,
                             Name = "Suspendisse",
                             IsDead = true
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 10,
                             AccountId = 10,
                             Name = "volutpat",
                             IsDead = false
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 11,
                             AccountId = 11,
                             Name = "himenaeos",
                             IsDead = false
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 12,
                             AccountId = 12,
                             Name = "adipiscing",
                             IsDead = false
                         },
-                        new Player
+                        new RoomMember
                         {
                             Id = 13,
                             AccountId = 13,

@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model
 {
-    public class Player : INotifyPropertyChanged
+    public class Account : INotifyPropertyChanged
     {
         private int _id;
+        private string _email;
         private string _name;
-        private string _jwt;
-        private Account? _account;
 
         public int Id
         {
@@ -28,6 +27,19 @@ namespace AirsoftBmsApp.Model
             }
         }
 
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                if (_email != value)
+                {
+                    _email = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string Name
         {
             get => _name;
@@ -36,32 +48,6 @@ namespace AirsoftBmsApp.Model
                 if (_name != value)
                 {
                     _name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string JWT
-        {
-            get => _jwt;
-            set
-            {
-                if (_jwt != value)
-                {
-                    _jwt = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public Account? Account
-        {
-            get => _account;
-            set
-            {
-                if (_account != value)
-                {
-                    _account = value;
                     OnPropertyChanged();
                 }
             }

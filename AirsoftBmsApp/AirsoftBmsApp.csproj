@@ -65,8 +65,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\ContentViews\PlayerItemView.xaml.cs">
-	    <DependentUpon>PlayerItemView.xaml</DependentUpon>
+	  <Compile Update="View\ContentViews\RoomMemberItemView.xaml.cs">
+	    <DependentUpon>RoomMemberItemView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\ContentViews\TeamView.xaml.cs">
 	    <DependentUpon>TeamView.xaml</DependentUpon>
@@ -92,7 +92,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\ContentViews\PlayerItemView.xaml">
+	  <MauiXaml Update="View\ContentViews\RoomMemberItemView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\TeamView.xaml">
