@@ -4,6 +4,7 @@ namespace AirsoftBmsApp.View.ContentViews.Buttons;
 
 public partial class FilledButton : ContentView
 {
+    public event EventHandler Clicked;
     public static readonly BindableProperty TextProperty =
         BindableProperty.Create(nameof(Text), typeof(string), typeof(FilledButton), "Confirm");
 
@@ -25,5 +26,6 @@ public partial class FilledButton : ContentView
     public FilledButton()
     {
         InitializeComponent();
+        button.Clicked += (s, e) => Clicked?.Invoke(this, e);
     }
 }

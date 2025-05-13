@@ -5,6 +5,7 @@
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:layout="clr-namespace:AirsoftBmsApp.View.ContentViews.Layout"
              x:Class="AirsoftBmsApp.View.Pages.LogInPage"
              Title="Log In"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
@@ -15,6 +16,7 @@
         VerticalOptions="Center" 
         Padding="40"
         MaximumWidthRequest="600"
+        Spacing="10"
         >
         <text:Header 
             Text="Log In"
@@ -28,6 +30,8 @@
             Placeholder="Enter account password"
             IsPassword="True"
         />
+
+
 
         <buttons:FilledButton 
             Command="{Binding LogIntoAccount}"

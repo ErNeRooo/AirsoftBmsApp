@@ -6,7 +6,6 @@
     <FlexLayout 
         Direction="Row" 
         AlignItems="Center" 
-        Margin="0, 20"
         Padding="15, 0">
 
         <BoxView 

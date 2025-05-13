@@ -7,7 +7,6 @@
         FontFamily="CascadiaCode" 
         FontSize="30" 
         HorizontalOptions="Center"
-        Margin="0, 0, 0, 20"
         Text="{Binding Text,Source={RelativeSource AncestorType={x:Type local:Header}}}"
         />
 </ContentView>

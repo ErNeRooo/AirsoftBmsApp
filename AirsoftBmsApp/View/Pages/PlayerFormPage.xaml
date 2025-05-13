@@ -5,6 +5,7 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:layout="clr-namespace:AirsoftBmsApp.View.ContentViews.Layout"
              x:Class="AirsoftBmsApp.PlayerFormPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:FormViewModel"
@@ -14,6 +15,7 @@
         VerticalOptions="Center" 
         Padding="40"
         MaximumWidthRequest="600"
+        Spacing="10"
         >
         <text:Header
             Text="Without Account"
@@ -23,18 +25,19 @@
             Placeholder="Enter your username"
             Text="{Binding PlayerForm.Name}"
             />
-
+        
         <buttons:FilledButton 
             Command="{Binding RegisterPlayer}"
             />
 
-        <text:ResizableLabelWithHorizontalLine
-            Text="OR"
-            />
+        <layout:Margin Size="10" />
+
+        <text:ResizableLabelWithHorizontalLine />
+
 
         <text:Header
             Text="With Account"
-            />
+        />
 
         <buttons:OutlinedButton
             Clicked="OnLogInButtonClicked"

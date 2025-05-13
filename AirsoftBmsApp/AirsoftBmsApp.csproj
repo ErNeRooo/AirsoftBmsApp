@@ -107,6 +107,9 @@
 	  <MauiXaml Update="View\ContentViews\Buttons\BackButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Layout\Margin.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Text\Header.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

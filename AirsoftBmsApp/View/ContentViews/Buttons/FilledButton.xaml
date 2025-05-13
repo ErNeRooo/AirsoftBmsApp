@@ -7,6 +7,7 @@
     >
 
     <Button 
+        x:Name="button"
         HeightRequest="30"
         FontFamily="CascadiaCode" 
         CornerRadius="25"
@@ -16,6 +17,5 @@
         Text="{Binding Text, Source={RelativeSource AncestorType={x:Type local:FilledButton}}}"
         FontSize="20"
         Padding="0"
-        Margin="0, 0, 0, 20"
         Command="{Binding Command, Source={RelativeSource AncestorType={x:Type local:FilledButton}}}" />
 </ContentView>

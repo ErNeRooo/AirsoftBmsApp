@@ -18,7 +18,6 @@
         HorizontalOptions="Fill"
         Text="{Binding Text, Source={RelativeSource AncestorType={x:Type local:OutlinedButton}}}"
         FontSize="20"
-        Margin="0, 0, 0, 10"
         Padding="0"
         Command="{Binding Command, Source={RelativeSource AncestorType={x:Type local:OutlinedButton}}}"
     />
