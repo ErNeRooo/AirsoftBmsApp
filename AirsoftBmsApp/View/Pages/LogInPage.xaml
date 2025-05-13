@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
+             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              x:Class="AirsoftBmsApp.View.Pages.LogInPage"
              Title="Log In"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
@@ -13,69 +16,24 @@
         Padding="40"
         MaximumWidthRequest="600"
         >
-        <Label 
-        FontFamily="CascadiaCode" 
-        FontSize="30" 
-        HorizontalOptions="Center"
-        Margin="0, 0, 0, 20"
-        >
-            Log In
-        </Label>
+        <text:Header 
+            Text="Log In"
+            />
 
-        <Border 
-        Height="30"
-        Stroke="{StaticResource Outline}"
-        StrokeShape="RoundRectangle 45"
-        Padding="20, 0"
-        Margin="0, 0, 0, 10"
-        >
-            <Entry 
+        <inputs:StyledEntry 
             Placeholder="Enter account email"
-            PlaceholderColor="{StaticResource Outline}"
-            FontFamily="CascadiaCode"
-            BackgroundColor="Transparent"/>
-        </Border>
+            />
 
-        <Border 
-            Height="30"
-            Stroke="{StaticResource Outline}"
-            StrokeShape="RoundRectangle 45"
-            Padding="20, 0"
-            Margin="0, 0, 0, 10"
-        >
-            <Entry 
-                Placeholder="Enter account password"
-                PlaceholderColor="{StaticResource Outline}"
-                FontFamily="CascadiaCode"
-                BackgroundColor="Transparent"/>
-        </Border>
+        <inputs:StyledEntry 
+            Placeholder="Enter account password"
+            IsPassword="True"
+        />
 
-        <Button 
-            Height="30"
-            FontFamily="CascadiaCode" 
-            CornerRadius="25"
-            HorizontalOptions="Fill"
-            Text="Create"
-            FontSize="20"
-            Padding="0"
-            Margin="0, 0, 0, 20"
+        <buttons:FilledButton 
             Command="{Binding LogIntoAccount}"
-        />
+            />
 
-        <Button 
-            Height="30"
-            WidthRequest="50"
-            BackgroundColor="Transparent"
-            TextColor="{StaticResource SecondaryDarkText}"
-            BorderColor="Transparent"
-            BorderWidth="2"
-            FontFamily="CascadiaCode" 
-            CornerRadius="25"
-            Text="Back"
-            FontSize="20"
-            Padding="0"
-            Clicked="OnBackButtonClicked"
-        />
+        <buttons:BackButton />
 
     </VerticalStackLayout>
 </ContentPage>

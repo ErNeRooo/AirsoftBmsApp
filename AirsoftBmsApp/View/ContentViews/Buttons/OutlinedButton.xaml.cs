@@ -1,11 +1,13 @@
 using System.Windows.Input;
 
-namespace AirsoftBmsApp.View.ContentViews.Forms;
+namespace AirsoftBmsApp.View.ContentViews.Buttons;
 
-public partial class FilledButton : ContentView
+public partial class OutlinedButton : ContentView
 {
+    public event EventHandler Clicked;
+
     public static readonly BindableProperty TextProperty =
-        BindableProperty.Create(nameof(Text), typeof(string), typeof(FilledButton), "Confirm");
+        BindableProperty.Create(nameof(Text), typeof(string), typeof(OutlinedButton), "Other");
 
     public static readonly BindableProperty CommandProperty =
         BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(FilledButton));
@@ -22,8 +24,9 @@ public partial class FilledButton : ContentView
         set => SetValue(CommandProperty, value);
     }
 
-    public FilledButton()
+    public OutlinedButton()
     {
         InitializeComponent();
+        button.Clicked += (s, e) => Clicked?.Invoke(this, e);
     }
 }

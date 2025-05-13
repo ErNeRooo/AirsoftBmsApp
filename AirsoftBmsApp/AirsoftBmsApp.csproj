@@ -65,7 +65,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\ContentViews\Forms\OutlinedButton.xaml.cs">
+	  <Compile Update="View\ContentViews\Buttons\OutlinedButton.xaml.cs">
 	    <DependentUpon>OutlinedButton.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\ContentViews\Team\RoomMemberItemView.xaml.cs">
@@ -95,13 +95,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\ContentViews\Forms\OutlinedButton.xaml">
+	  <MauiXaml Update="View\ContentViews\Buttons\OutlinedButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\ContentViews\Forms\FilledButton.xaml">
+	  <MauiXaml Update="View\ContentViews\Buttons\FilledButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\ContentViews\Forms\StyledEntry.xaml">
+	  <MauiXaml Update="View\ContentViews\Inputs\StyledEntry.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Buttons\BackButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Text\Header.xaml">

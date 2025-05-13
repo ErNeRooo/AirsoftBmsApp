@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
-             xmlns:forms="clr-namespace:AirsoftBmsApp.View.ContentViews.Forms"
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              x:Class="AirsoftBmsApp.PlayerFormPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:FormViewModel"
@@ -18,11 +19,12 @@
             Text="Without Account"
         />
 
-        <forms:StyledEntry 
+        <inputs:StyledEntry 
             Placeholder="Enter your username"
+            Text="{Binding PlayerForm.Name}"
             />
 
-        <forms:FilledButton 
+        <buttons:FilledButton 
             Command="{Binding RegisterPlayer}"
             />
 
@@ -34,12 +36,12 @@
             Text="With Account"
             />
 
-        <forms:OutlinedButton
+        <buttons:OutlinedButton
             Clicked="OnLogInButtonClicked"
             Text="Log In"
             />
 
-        <forms:OutlinedButton
+        <buttons:OutlinedButton
             Clicked="OnSignUpButtonClicked"
             Text="Sign Up"
             />
