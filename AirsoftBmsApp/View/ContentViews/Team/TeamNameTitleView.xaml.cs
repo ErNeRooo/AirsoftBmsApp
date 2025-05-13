@@ -1,4 +1,4 @@
-namespace AirsoftBmsApp.View.ContentViews;
+namespace AirsoftBmsApp.View.ContentViews.Team;
 
 public partial class TeamNameTitleView : Label
 {

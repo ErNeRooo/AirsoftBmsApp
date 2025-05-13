@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <VerticalStackLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:view="using:AirsoftBmsApp.View.ContentViews"
+             xmlns:local="using:AirsoftBmsApp.View.ContentViews.Team"
              xmlns:models="clr-namespace:AirsoftBmsApp.Model"
-             x:Class="AirsoftBmsApp.View.ContentViews.TeamView"
+             x:Class="AirsoftBmsApp.View.ContentViews.Team.TeamView"
              x:DataType="models:Team"
              >
 
-    <view:TeamNameTitleView
+    <local:TeamNameTitleView
         Text="{Binding Name}"
         TextColor="{Binding TeamTheme.TitleColor}"
         />
@@ -27,7 +27,7 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <view:RoomMemberItemView />
+                    <local:RoomMemberItemView />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

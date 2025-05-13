@@ -65,13 +65,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\ContentViews\RoomMemberItemView.xaml.cs">
+	  <Compile Update="View\ContentViews\Forms\OutlinedButton.xaml.cs">
+	    <DependentUpon>OutlinedButton.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\ContentViews\Team\RoomMemberItemView.xaml.cs">
 	    <DependentUpon>RoomMemberItemView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\ContentViews\TeamView.xaml.cs">
+	  <Compile Update="View\ContentViews\Team\TeamView.xaml.cs">
 	    <DependentUpon>TeamView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\ContentViews\TeamNameTitleView.xaml.cs">
+	  <Compile Update="View\ContentViews\Team\TeamNameTitleView.xaml.cs">
 	    <DependentUpon>TeamNameTitleView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\Pages\CreateRoomPage.xaml.cs">
@@ -92,13 +95,28 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\ContentViews\RoomMemberItemView.xaml">
+	  <MauiXaml Update="View\ContentViews\Forms\OutlinedButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\ContentViews\TeamView.xaml">
+	  <MauiXaml Update="View\ContentViews\Forms\FilledButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\ContentViews\TeamNameTitleView.xaml">
+	  <MauiXaml Update="View\ContentViews\Forms\StyledEntry.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Text\Header.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Team\RoomMemberItemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Team\TeamView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Team\TeamNameTitleView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Text\ResizableLabelWithHorizontalLine.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Pages\CreateRoomPage.xaml">
@@ -119,10 +137,6 @@
 	  <MauiXaml Update="View\Pages\LogInPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="View\ContentViews\Team\" />
 	</ItemGroup>
 
 </Project>

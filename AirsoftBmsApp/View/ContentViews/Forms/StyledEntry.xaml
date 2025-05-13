@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.Forms"
+             x:Class="AirsoftBmsApp.View.ContentViews.Forms.StyledEntry">
+    <Border 
+        Height="30"
+        Stroke="{StaticResource Outline}"
+        StrokeShape="RoundRectangle 45"
+        Padding="20, 0"
+        Margin="0, 0, 0, 10"
+    >
+        <Entry 
+            Placeholder="{Binding Placeholder, Source={RelativeSource AncestorType={x:Type local:StyledEntry}}}"
+            Text="{Binding BindingContext.PlayerForm.Name, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+            PlaceholderColor="{StaticResource Outline}"
+            FontFamily="CascadiaCode"
+            BackgroundColor="Transparent"/>
+    </Border>
+</ContentView>

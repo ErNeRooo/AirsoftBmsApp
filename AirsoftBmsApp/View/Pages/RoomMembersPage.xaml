@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirsoftBmsApp.View.Pages.RoomMembersPage"
-             xmlns:views="clr-namespace:AirsoftBmsApp.View.ContentViews"
+             xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
              x:DataType="viewModel:RoomViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
@@ -38,7 +38,7 @@
         <CollectionView ItemsSource="{Binding Teams}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <views:TeamView></views:TeamView>
+                    <team:TeamView></team:TeamView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
