@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              x:Class="AirsoftBmsApp.View.Pages.SignUpPage"
              Title="Sign Up"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
@@ -13,97 +16,34 @@
         Padding="40" 
         MaximumWidthRequest="600"
         >
-        <Label 
-        FontFamily="CascadiaCode" 
-        FontSize="30" 
-        HorizontalOptions="Center"
-        Margin="0, 0, 0, 20"
-        >
-            Sign Up
-        </Label>
-
-        <Border 
-        Height="30"
-        Stroke="{StaticResource Outline}"
-        StrokeShape="RoundRectangle 45"
-        Padding="20, 0"
-        Margin="0, 0, 0, 10"
-        >
-            <Entry 
-            Placeholder="Enter username"
-            PlaceholderColor="{StaticResource Outline}"
-            FontFamily="CascadiaCode"
-            BackgroundColor="Transparent"/>
-        </Border>
-
-        <Border 
-            Height="30"
-            Stroke="{StaticResource Outline}"
-            StrokeShape="RoundRectangle 45"
-            Padding="20, 0"
-            Margin="0, 0, 0, 10"
-        >
-            <Entry 
-                Placeholder="Enter email"
-                PlaceholderColor="{StaticResource Outline}"
-                FontFamily="CascadiaCode"
-                BackgroundColor="Transparent"/>
-        </Border>
-
-        <Border 
-            Height="30"
-            Stroke="{StaticResource Outline}"
-            StrokeShape="RoundRectangle 45"
-            Padding="20, 0"
-            Margin="0, 0, 0, 10"
-        >
-            <Entry 
-                Placeholder="Enter password"
-                PlaceholderColor="{StaticResource Outline}"
-                FontFamily="CascadiaCode"
-                BackgroundColor="Transparent"/>
-        </Border>
-
-        <Border 
-            Height="30"
-            Stroke="{StaticResource Outline}"
-            StrokeShape="RoundRectangle 45"
-            Padding="20, 0"
-            Margin="0, 0, 0, 10"
-        >
-            <Entry 
-                Placeholder="Confirm password"
-                PlaceholderColor="{StaticResource Outline}"
-                FontFamily="CascadiaCode"
-                BackgroundColor="Transparent"/>
-        </Border>
-
-        <Button 
-        Height="30"
-        FontFamily="CascadiaCode" 
-        CornerRadius="25"
-        HorizontalOptions="Fill"
-        Text="Create"
-        FontSize="20"
-        Padding="0"
-        Margin="0, 0, 0, 20"
-        Command="{Binding SignUpAccount}"
+        <text:Header 
+            Text="Sign Up"
         />
 
-        <Button 
-            Height="30"
-            WidthRequest="50"
-            BackgroundColor="Transparent"
-            TextColor="{StaticResource SecondaryDarkText}"
-            BorderColor="Transparent"
-            BorderWidth="2"
-            FontFamily="CascadiaCode" 
-            CornerRadius="25"
-            Text="Back"
-            FontSize="20"
-            Padding="0"
-            Clicked="OnBackButtonClicked"
+        <inputs:StyledEntry 
+            Placeholder="Enter your username"
         />
+
+        <inputs:StyledEntry 
+            Placeholder="Enter your email"
+        />
+
+        <inputs:StyledEntry 
+            Placeholder="Enter your password"
+            IsPassword="True"
+        />
+
+        <inputs:StyledEntry 
+            Placeholder="Confirm your password"
+            IsPassword="True"
+        />
+
+        <buttons:FilledButton 
+            Command="{Binding SignUpAccount}"
+            Text="Create"
+        />
+
+        <buttons:BackButton />
 
     </VerticalStackLayout>
 </ContentPage>
