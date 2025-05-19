@@ -9,69 +9,105 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AirsoftBmsApp.Model;
 using AirsoftBmsApp.Services.Abstractions;
+using AirsoftBmsApp.Validation.Rules;
 using AirsoftBmsApp.ViewModel.Abstractions;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AirsoftBmsApp.ViewModel
 {
-    public class FormViewModel : INotifyPropertyChanged, IFormViewModel
+    public partial class FormViewModel : ObservableObject, IFormViewModel
     {
         private IPlayerRestService _playerRestService;
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private Player _player;
-        private PlayerForm _playerForm;
 
-        public ICommand RegisterPlayer { get; }
-        public ICommand LogIntoAccount { get; }
-        public ICommand SignUpAccount { get; }
+        [ObservableProperty] 
+        Player player = new();
 
-        public Player Player
-        {
-            get => _player;
-            set
-            {
-                if (_player != value)
-                {
-                    _player = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public PlayerForm PlayerForm
-        {
-            get => _playerForm;
-            set
-            {
-                if (_playerForm != value)
-                {
-                    _playerForm = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty] 
+        PlayerForm playerForm = new();
 
         public FormViewModel(IPlayerRestService playerRestService)
         {
-            RegisterPlayer = new Command(OnRegisterPlayer);
-            LogIntoAccount = new Command(OnLogIntoAccount);
-            SignUpAccount = new Command(OnSignUpAccount);
-
             _playerRestService = playerRestService;
 
-            PlayerForm = new PlayerForm
+            playerForm.Name.Validations.Add(new IsNotNullOrEmptyRule<string> 
+            { 
+                ValidationMessage = "Name is required." 
+            });
+
+            playerForm.Name.Validations.Add(new HasMaxLengthRule<string>
             {
+                ValidationMessage = "Name must be 20 characters or fewer.",
+                MaxLength = 20
+            });
 
-            };
+            playerForm.Email.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Email is required."
+            });
+
+            playerForm.Email.Validations.Add(new IsEmailRule<string>
+            {
+                ValidationMessage = "Wrong Email Format."
+            });
+
+            playerForm.Password.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Password is required."
+            });
+
+            playerForm.ConfirmPassword.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Confirm password is required."
+            }); 
+
+            playerForm.ConfirmPassword.Validations.Add(new MatchPasswordRule(() => playerForm.Password.Value)
+            {
+                ValidationMessage = "Passwords do not match."
+            });
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        [RelayCommand]
+        public void Validate()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            ValidateName();
+            ValidateEmail();
+            ValidatePassword();
+            ValidateConfirmPassword();
         }
 
-        public async void OnRegisterPlayer()
+        [RelayCommand]
+        public void ValidateName()
         {
-            Task<bool> response = _playerRestService.RegisterPlayerAsync(PlayerForm.Name);
+            playerForm.Name.Validate();
+        }
+
+        [RelayCommand]
+        public void ValidateEmail()
+        {
+            playerForm.Email.Validate();
+        }
+
+        [RelayCommand]
+        public void ValidatePassword()
+        {
+            playerForm.Password.Validate();
+        }
+
+        [RelayCommand]
+        public void ValidateConfirmPassword()
+        {
+            playerForm.ConfirmPassword.Validate();
+        }
+
+        [RelayCommand]
+        public async Task RegisterPlayerAsync()
+        {
+            ValidateName();
+
+            if (!playerForm.Name.IsValid) return;
+
+            Task<bool> response = _playerRestService.RegisterPlayerAsync(playerForm.Name.Value);
 
             if (response.Result)
             {
@@ -83,9 +119,15 @@ namespace AirsoftBmsApp.ViewModel
             }
         }
 
-        public async void OnLogIntoAccount()
+        [RelayCommand]
+        async void LogIntoAccount()
         {
-            Task<bool> response = _playerRestService.LogInToAccountAsync(PlayerForm.Email, PlayerForm.Password);
+            ValidateEmail();
+            ValidatePassword();
+
+            if (!playerForm.Email.IsValid || !playerForm.Password.IsValid) return;
+
+            Task<bool> response = _playerRestService.LogInToAccountAsync(playerForm.Email.Value, playerForm.Password.Value);
 
             if (response.Result)
             {
@@ -97,9 +139,14 @@ namespace AirsoftBmsApp.ViewModel
             }
         }
 
-        public async void OnSignUpAccount()
+        [RelayCommand]
+        async void SignUpAccount()
         {
-            Task<bool> response = _playerRestService.SignUpAccountAsync(PlayerForm.Name, PlayerForm.Email, PlayerForm.Password);
+            Validate();
+
+            if (!playerForm.Name.IsValid || !playerForm.Email.IsValid || !playerForm.Password.IsValid || !playerForm.ConfirmPassword.IsValid) return;
+
+            Task<bool> response = _playerRestService.SignUpAccountAsync(playerForm.Name.Value, playerForm.Email.Value, playerForm.Password.Value);
 
             if (response.Result)
             {

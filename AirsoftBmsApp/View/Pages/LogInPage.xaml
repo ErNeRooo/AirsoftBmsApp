@@ -22,19 +22,21 @@
             Text="Log In"
             />
 
-        <inputs:StyledEntry 
+        <inputs:ValidatableStyledEntry
             Placeholder="Enter account email"
-            />
-
-        <inputs:StyledEntry 
+            ValidatableObject="{Binding PlayerForm.Email}"
+            ValidateCommand="{Binding ValidateEmailCommand}"
+        />
+        
+        <inputs:ValidatableStyledEntry
             Placeholder="Enter account password"
+            ValidatableObject="{Binding PlayerForm.Password}"
+            ValidateCommand="{Binding ValidatePasswordCommand}"
             IsPassword="True"
         />
 
-
-
         <buttons:FilledButton 
-            Command="{Binding LogIntoAccount}"
+            Command="{Binding LogIntoAccountCommand}"
             />
 
         <buttons:BackButton />

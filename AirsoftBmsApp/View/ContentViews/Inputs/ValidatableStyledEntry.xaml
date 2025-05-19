@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="AirsoftBmsApp.View.ContentViews.Inputs.ValidatableStyledEntry"
+             x:Name="ValidatableEntry"
+             >
+    <VerticalStackLayout
+        BindingContext="{Binding Source={RelativeSource AncestorType={x:Type local:ValidatableStyledEntry}}}"
+        >
+        <Border 
+            Height="30"
+            Stroke="{StaticResource Outline}"
+            StrokeShape="RoundRectangle 45"
+            Padding="20, 0">
+            <Border.Triggers>
+                <DataTrigger
+                    TargetType="Border"
+                    Binding="{Binding ValidatableObject.IsValid}"
+                    Value="False"
+                    >
+                    <Setter Property="Stroke" Value="{StaticResource Error}" />
+                </DataTrigger>
+            </Border.Triggers>
+            <Entry 
+                Placeholder="{Binding Placeholder}"
+                Text="{Binding ValidatableObject.Value, Mode=TwoWay}"
+                IsPassword="{Binding IsPassword}"
+                PlaceholderColor="{StaticResource Outline}"
+                FontFamily="CascadiaCode"
+                FontSize="15"
+                BackgroundColor="Transparent" >
+                <Entry.Behaviors >
+                    <mct:EventToCommandBehavior 
+                        EventName="TextChanged"
+                        BindingContext="{Binding Path=BindingContext, Source={x:Reference ValidatableEntry}}"
+                        Command="{Binding ValidateCommand, Source={x:Reference ValidatableEntry}}"
+                        />
+                </Entry.Behaviors>
+            </Entry>
+
+        </Border>
+        <Label
+            Text="{Binding ValidatableObject.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+            TextColor="{StaticResource Error}"
+            FontFamily="CascadiaCode"
+            FontSize="10"
+            Margin="20, 2, 0, 0"
+            IsVisible="{Binding ValidatableObject.IsValid, Converter={StaticResource InverseBoolConverter}}"
+            />
+    </VerticalStackLayout>
+</ContentView>

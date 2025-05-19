@@ -8,40 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using AirsoftBmsApp.Model;
 using AirsoftBmsApp.ViewModel.Abstractions;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AirsoftBmsApp.ViewModel
 {
-    public class RoomViewModel : INotifyPropertyChanged, IRoomViewModel
+    public class RoomViewModel : ObservableObject, IRoomViewModel
     {
-        private ObservableCollection<Team> _teams;
+        public ObservableCollection<Team> Teams { get; set; }
 
-        public ObservableCollection<Team> Teams
-        {
-            get => _teams;
-            set
-            {
-                if (_teams != value)
-                {
-                    _teams = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _joinCode = "021370";
-
-        public string JoinCode
-        {
-            get => _joinCode;
-            set
-            {
-                if (value != _joinCode)
-                {
-                    _joinCode = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public string JoinCode { get; set; } = "021370";
 
         private int _id;
 

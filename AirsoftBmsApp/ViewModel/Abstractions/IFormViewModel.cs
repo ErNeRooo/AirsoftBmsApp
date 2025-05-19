@@ -9,11 +9,6 @@ namespace AirsoftBmsApp.ViewModel.Abstractions
 {
     public interface IFormViewModel
     {
-        public Player Player { get; set; }
-        public void OnRegisterPlayer();
-
-        public void OnLogIntoAccount();
-
-        public void OnSignUpAccount();
+        public Task RegisterPlayerAsync();
     }
 }

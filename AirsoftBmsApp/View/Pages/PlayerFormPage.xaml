@@ -21,13 +21,14 @@
             Text="Without Account"
         />
 
-        <inputs:StyledEntry 
+        <inputs:ValidatableStyledEntry
             Placeholder="Enter your username"
-            Text="{Binding PlayerForm.Name}"
+            ValidatableObject="{Binding PlayerForm.Name}"
+            ValidateCommand="{Binding ValidateNameCommand}"
             />
         
         <buttons:FilledButton 
-            Command="{Binding RegisterPlayer}"
+            Command="{Binding RegisterPlayerCommand}"
             />
 
         <layout:Margin Size="10" />
