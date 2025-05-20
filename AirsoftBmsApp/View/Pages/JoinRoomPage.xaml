@@ -4,7 +4,7 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
-             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.JoinRoomFormViewModel"
              x:DataType="viewModel:JoinRoomFormViewModel"
              x:Class="AirsoftBmsApp.View.Pages.JoinRoomPage"
              Title="Join Room"

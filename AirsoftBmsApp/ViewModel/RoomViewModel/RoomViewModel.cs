@@ -7,10 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using AirsoftBmsApp.Model;
-using AirsoftBmsApp.ViewModel.Abstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace AirsoftBmsApp.ViewModel
+namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
     public class RoomViewModel : ObservableObject, IRoomViewModel
     {

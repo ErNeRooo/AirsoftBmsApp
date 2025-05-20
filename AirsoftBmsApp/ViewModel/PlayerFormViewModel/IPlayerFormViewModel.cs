@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AirsoftBmsApp.Model;
 
-namespace AirsoftBmsApp.ViewModel.Abstractions
+namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 {
     public interface IPlayerFormViewModel
     {

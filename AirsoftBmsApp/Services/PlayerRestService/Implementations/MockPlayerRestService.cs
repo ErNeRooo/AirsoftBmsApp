@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AirsoftBmsApp.Services.Abstractions;
+using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 
-namespace AirsoftBmsApp.Services
+namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 {
     public class MockPlayerRestService : IPlayerRestService
     {

@@ -1,13 +1,13 @@
 using AirsoftBmsApp.ViewModel;
-using AirsoftBmsApp.ViewModel.Abstractions;
+using AirsoftBmsApp.ViewModel.RoomViewModel;
 
 namespace AirsoftBmsApp.View.Pages;
 
 public partial class RoomMembersPage : ContentPage
 {
-	public RoomMembersPage(IRoomViewModel vm)
+	public RoomMembersPage(IRoomViewModel viewModel)
 	{
 		InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
     }
 }

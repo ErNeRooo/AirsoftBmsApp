@@ -1,12 +1,12 @@
-﻿using System;
+﻿using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AirsoftBmsApp.Services.Abstractions;
 
-namespace AirsoftBmsApp.Services
+namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 {
     public class PlayerRestService : IPlayerRestService
     {

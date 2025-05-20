@@ -4,7 +4,7 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
-             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.CreateRoomFormViewModel"
              x:Class="AirsoftBmsApp.View.Pages.CreateRoomPage"
              Title="Create Room"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"

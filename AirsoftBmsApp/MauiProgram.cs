@@ -1,10 +1,14 @@
-﻿using AirsoftBmsApp.Services;
-using AirsoftBmsApp.Services.Abstractions;
-using AirsoftBmsApp.Services.Implementations;
-using AirsoftBmsApp.ViewModel;
-using AirsoftBmsApp.ViewModel.Abstractions;
+﻿using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
+using AirsoftBmsApp.Services.PlayerDataService.Implementations;
+using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using AirsoftBmsApp.Services.PlayerRestService.Implementations;
+using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
+using AirsoftBmsApp.ViewModel.JoinRoomFormViewModel;
+using AirsoftBmsApp.ViewModel.PlayerFormViewModel;
+using AirsoftBmsApp.ViewModel.RoomViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+
 
 namespace AirsoftBmsApp
 {

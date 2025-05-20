@@ -1,4 +1,4 @@
-using AirsoftBmsApp.ViewModel.Abstractions;
+using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
 
 namespace AirsoftBmsApp.View.Pages;
 

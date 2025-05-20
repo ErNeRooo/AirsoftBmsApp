@@ -1,14 +1,14 @@
 ﻿using AirsoftBmsApp.View.Pages;
-using AirsoftBmsApp.ViewModel.Abstractions;
+using AirsoftBmsApp.ViewModel.PlayerFormViewModel;
 
 namespace AirsoftBmsApp
 {
     public partial class PlayerFormPage : ContentPage
     {
-        public PlayerFormPage(IPlayerFormViewModel vm)
+        public PlayerFormPage(IPlayerFormViewModel viewModel)
         {
             InitializeComponent();
-            BindingContext = vm;
+            BindingContext = viewModel;
         }
 
         private async void OnLogInButtonClicked(object sender, EventArgs e)

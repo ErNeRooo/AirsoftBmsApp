@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using AirsoftBmsApp.Model;
-using AirsoftBmsApp.Services.Abstractions;
+﻿using AirsoftBmsApp.Model;
+using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Validation.Rules;
-using AirsoftBmsApp.ViewModel.Abstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace AirsoftBmsApp.ViewModel
+namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 {
     public partial class PlayerFormViewModel : ObservableObject, IPlayerFormViewModel
     {
