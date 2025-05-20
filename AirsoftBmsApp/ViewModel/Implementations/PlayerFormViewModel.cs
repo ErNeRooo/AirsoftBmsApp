@@ -16,17 +16,14 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AirsoftBmsApp.ViewModel
 {
-    public partial class FormViewModel : ObservableObject, IFormViewModel
+    public partial class PlayerFormViewModel : ObservableObject, IPlayerFormViewModel
     {
         private IPlayerRestService _playerRestService;
 
         [ObservableProperty] 
-        Player player = new();
-
-        [ObservableProperty] 
         PlayerForm playerForm = new();
 
-        public FormViewModel(IPlayerRestService playerRestService)
+        public PlayerFormViewModel(IPlayerRestService playerRestService)
         {
             _playerRestService = playerRestService;
 

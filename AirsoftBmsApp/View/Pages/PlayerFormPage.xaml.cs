@@ -5,7 +5,7 @@ namespace AirsoftBmsApp
 {
     public partial class PlayerFormPage : ContentPage
     {
-        public PlayerFormPage(IFormViewModel vm)
+        public PlayerFormPage(IPlayerFormViewModel vm)
         {
             InitializeComponent();
             BindingContext = vm;

@@ -4,6 +4,8 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
+             x:DataType="viewModel:JoinRoomFormViewModel"
              x:Class="AirsoftBmsApp.View.Pages.JoinRoomPage"
              Title="Join Room"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
@@ -19,18 +21,22 @@
             Text="Join Room"
             />
 
-        <inputs:StyledEntry 
-            Placeholder="Enter room join code" 
-            />
-
-        <inputs:StyledEntry 
+        <inputs:ValidatableStyledEntry
+            Placeholder="Enter room join code"
+            ValidatableObject="{Binding RoomForm.JoinCode}"
+            ValidateCommand="{Binding ValidateJoinCodeCommand}" 
+        />
+        
+        <inputs:ValidatableStyledEntry
             Placeholder="Enter room password" 
+            ValidatableObject="{Binding RoomForm.Password}"
+            ValidateCommand="{Binding ValidatePasswordCommand}" 
             IsPassword="True"
         />
 
         <buttons:FilledButton
             Text="Join"
-            Clicked="OnJoinButtonClicked"
+            Command="{Binding JoinRoomAsyncCommand}"
             />
 
         <buttons:BackButton />

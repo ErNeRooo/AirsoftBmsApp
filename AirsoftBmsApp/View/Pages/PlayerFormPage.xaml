@@ -8,7 +8,7 @@
              xmlns:layout="clr-namespace:AirsoftBmsApp.View.ContentViews.Layout"
              x:Class="AirsoftBmsApp.PlayerFormPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
-             x:DataType="viewModel:FormViewModel"
+             x:DataType="viewModel:PlayerFormViewModel"
              >
 
     <VerticalStackLayout 

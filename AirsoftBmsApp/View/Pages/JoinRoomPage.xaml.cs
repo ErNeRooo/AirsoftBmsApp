@@ -1,19 +1,12 @@
+using AirsoftBmsApp.ViewModel.Abstractions;
+
 namespace AirsoftBmsApp.View.Pages;
 
 public partial class JoinRoomPage : ContentPage
 {
-	public JoinRoomPage()
+	public JoinRoomPage(IJoinRoomFormViewModel viewModel)
 	{
 		InitializeComponent();
-	}
-
-    private async void OnJoinButtonClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(RoomMembersPage));
-    }
-
-    private async void OnBackButtonClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("..");
+        BindingContext = viewModel;
     }
 }

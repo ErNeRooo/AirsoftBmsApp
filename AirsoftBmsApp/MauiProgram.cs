@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Services;
 using AirsoftBmsApp.Services.Abstractions;
+using AirsoftBmsApp.Services.Implementations;
 using AirsoftBmsApp.ViewModel;
 using AirsoftBmsApp.ViewModel.Abstractions;
 using CommunityToolkit.Maui;
@@ -23,7 +24,11 @@ namespace AirsoftBmsApp
                 });
 
             builder.Services.AddSingleton<IRoomViewModel, RoomViewModel>();
-            builder.Services.AddSingleton<IFormViewModel, FormViewModel>();
+            builder.Services.AddSingleton<IPlayerFormViewModel, PlayerFormViewModel>();
+            builder.Services.AddSingleton<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
+            builder.Services.AddSingleton<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
+
+            builder.Services.AddSingleton<IPlayerDataService, PlayerDataService>();
             builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
 
 #if DEBUG

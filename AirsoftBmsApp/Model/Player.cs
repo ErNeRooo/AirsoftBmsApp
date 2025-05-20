@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,68 +9,18 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model
 {
-    public class Player : INotifyPropertyChanged
+    public partial class Player : ObservableObject
     {
+        [ObservableProperty]
         private int _id;
+
+        [ObservableProperty]
         private string _name;
+        
+        [ObservableProperty]
         private string _jwt;
+        
+        [ObservableProperty]
         private Account? _account;
-
-        public int Id
-        {
-            get => _id;
-            set
-            {
-                if (_id != value)
-                {
-                    _id = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string JWT
-        {
-            get => _jwt;
-            set
-            {
-                if (_jwt != value)
-                {
-                    _jwt = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public Account? Account
-        {
-            get => _account;
-            set
-            {
-                if (_account != value)
-                {
-                    _account = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

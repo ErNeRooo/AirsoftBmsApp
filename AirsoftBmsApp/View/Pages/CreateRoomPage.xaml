@@ -4,9 +4,11 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
              x:Class="AirsoftBmsApp.View.Pages.CreateRoomPage"
              Title="Create Room"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
+             x:DataType="viewModel:CreateRoomFormViewModel"
              >
 
     <VerticalStackLayout 
@@ -19,11 +21,20 @@
             Text="Create Room" 
             />
 
-        <inputs:StyledEntry Placeholder="Enter custom room ID (optional)" />
-        <inputs:StyledEntry Placeholder="Enter room password (optional)" IsPassword="True" />
+        <inputs:ValidatableStyledEntry
+            Placeholder="Enter room join code (optional)"
+            ValidatableObject="{Binding RoomForm.JoinCode}"
+            ValidateCommand="{Binding ValidateJoinCodeCommand}"
+            />
+
+        <inputs:ValidatableStyledEntry
+            Placeholder="Enter room password (optional)"
+            ValidatableObject="{Binding RoomForm.Password}"
+            ValidateCommand="{Binding ValidatePasswordCommand}"
+            />
 
         <buttons:FilledButton 
-            Clicked="OnCreateButtonClicked"
+            Command="{Binding CreateRoomAsyncCommand}"
             />
 
         <buttons:BackButton />

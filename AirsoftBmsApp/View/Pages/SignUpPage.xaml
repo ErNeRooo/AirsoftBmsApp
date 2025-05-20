@@ -8,7 +8,7 @@
              x:Class="AirsoftBmsApp.View.Pages.SignUpPage"
              Title="Sign Up"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
-             x:DataType="viewModel:FormViewModel"
+             x:DataType="viewModel:PlayerFormViewModel"
              >
 
     <VerticalStackLayout 
