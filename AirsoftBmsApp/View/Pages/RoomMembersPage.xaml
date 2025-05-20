@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirsoftBmsApp.View.Pages.RoomMembersPage"
              xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel"
              x:DataType="viewModel:RoomViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
@@ -26,13 +27,9 @@
                 FontFamily="CascadiaCode"
                 />
 
-            <Button
-                Padding="0"
-                MaximumHeightRequest="30"
-                WidthRequest="100"
+            <buttons:BackButton
                 Text="Leave"
-                CornerRadius="25"
-                FontFamily="CascadiaCode"
+                Path="//PlayerFormPage"
                 />
         </FlexLayout>
 
