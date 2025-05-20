@@ -15,7 +15,7 @@
         VerticalOptions="Center" 
         Padding="40" 
         Spacing="10"
-        MaximumWidthRequest="600"
+        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         >
         <text:Header 
             Text="Sign Up"

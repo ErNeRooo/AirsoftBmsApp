@@ -10,6 +10,7 @@
 
     <VerticalStackLayout
         Padding="40, 20"
+        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         >
         <FlexLayout
             JustifyContent="SpaceBetween"

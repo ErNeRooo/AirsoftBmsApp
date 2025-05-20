@@ -15,7 +15,7 @@
     <VerticalStackLayout 
         VerticalOptions="Center" 
         Padding="40"
-        MaximumWidthRequest="600"
+        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         Spacing="10"
         >
         <text:Header 

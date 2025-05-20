@@ -13,6 +13,7 @@
         VerticalOptions="Center" 
         Padding="40"
         Spacing="10"
+        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         >
         <text:Header 
             Text="Join Room"
