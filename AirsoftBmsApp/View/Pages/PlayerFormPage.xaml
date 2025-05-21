@@ -6,50 +6,55 @@
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:layout="clr-namespace:AirsoftBmsApp.View.ContentViews.Layout"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              x:Class="AirsoftBmsApp.PlayerFormPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:PlayerFormViewModel"
              >
-
-    <VerticalStackLayout 
-        VerticalOptions="Center" 
-        Padding="40"
-        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-        Spacing="10"
-        >
-        <text:Header
-            Text="Without Account"
-        />
-
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter your username"
-            ValidatableObject="{Binding PlayerForm.Name}"
-            ValidateCommand="{Binding ValidateNameCommand}"
+    <Grid>
+        <VerticalStackLayout 
+            VerticalOptions="Center" 
+            Padding="40"
+            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+            Spacing="10"
+            >
+            <text:Header
+                Text="Without Account"
             />
+
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter your username"
+                ValidatableObject="{Binding PlayerForm.Name}"
+                ValidateCommand="{Binding ValidateNameCommand}"
+                />
         
-        <buttons:FilledButton 
-            Command="{Binding RegisterPlayerCommand}"
+            <buttons:FilledButton 
+                Command="{Binding RegisterPlayerCommand}"
+                />
+
+            <layout:Margin Size="10" />
+
+            <text:ResizableLabelWithHorizontalLine />
+
+
+            <text:Header
+                Text="With Account"
             />
 
-        <layout:Margin Size="10" />
+            <buttons:OutlinedButton
+                Clicked="OnLogInButtonClicked"
+                Text="Log In"
+                />
 
-        <text:ResizableLabelWithHorizontalLine />
+            <buttons:OutlinedButton
+                Clicked="OnSignUpButtonClicked"
+                Text="Sign Up"
+                />
 
+        </VerticalStackLayout>
 
-        <text:Header
-            Text="With Account"
-        />
-
-        <buttons:OutlinedButton
-            Clicked="OnLogInButtonClicked"
-            Text="Log In"
+        <loading:LoadingScreen 
+            IsLoading="{Binding IsLoading}"
             />
-
-        <buttons:OutlinedButton
-            Clicked="OnSignUpButtonClicked"
-            Text="Sign Up"
-            />
-
-    </VerticalStackLayout>
-
+    </Grid>
 </ContentPage>

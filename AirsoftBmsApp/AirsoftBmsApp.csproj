@@ -121,6 +121,9 @@
 	  <MauiXaml Update="View\ContentViews\Layout\Margin.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\LoadingScreen\LoadingScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Text\Header.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

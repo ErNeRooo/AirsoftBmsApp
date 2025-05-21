@@ -6,40 +6,46 @@
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:layout="clr-namespace:AirsoftBmsApp.View.ContentViews.Layout"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              x:Class="AirsoftBmsApp.View.Pages.LogInPage"
              Title="Log In"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:PlayerFormViewModel"
              >
+    <Grid>
+        <VerticalStackLayout 
+            VerticalOptions="Center" 
+            Padding="40"
+            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+            Spacing="10"
+            >
+            <text:Header 
+                Text="Log In"
+                />
 
-    <VerticalStackLayout 
-        VerticalOptions="Center" 
-        Padding="40"
-        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-        Spacing="10"
-        >
-        <text:Header 
-            Text="Log In"
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter account email"
+                ValidatableObject="{Binding PlayerForm.Email}"
+                ValidateCommand="{Binding ValidateEmailCommand}"
             />
 
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter account email"
-            ValidatableObject="{Binding PlayerForm.Email}"
-            ValidateCommand="{Binding ValidateEmailCommand}"
-        />
-        
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter account password"
-            ValidatableObject="{Binding PlayerForm.Password}"
-            ValidateCommand="{Binding ValidatePasswordCommand}"
-            IsPassword="True"
-        />
-
-        <buttons:FilledButton 
-            Command="{Binding LogIntoAccountCommand}"
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter account password"
+                ValidatableObject="{Binding PlayerForm.Password}"
+                ValidateCommand="{Binding ValidatePasswordCommand}"
+                IsPassword="True"
             />
 
-        <buttons:BackButton />
+            <buttons:FilledButton 
+                Command="{Binding LogIntoAccountCommand}"
+                />
 
-    </VerticalStackLayout>
+            <buttons:BackButton />
+
+            </VerticalStackLayout>
+
+            <loading:LoadingScreen 
+                IsLoading="{Binding IsLoading}"
+            />
+    </Grid>
 </ContentPage>

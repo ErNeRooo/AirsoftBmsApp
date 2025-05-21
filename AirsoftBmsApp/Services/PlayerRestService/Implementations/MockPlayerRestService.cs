@@ -22,6 +22,8 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
                 Jwt = "mock-jwt-token",
             };
 
+            await Task.Delay(3000);
+
             return await Task.FromResult(new Success<Player>(player));
         }
 
@@ -32,6 +34,8 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
                 Jwt = "mock-jwt-token",
             };
 
+            await Task.Delay(3000);
+
             return await Task.FromResult(new Success<Player>(player));
         }
 
@@ -41,6 +45,8 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             {
                 Jwt = "mock-jwt-token",
             };
+
+            await Task.Delay(3000);
 
             return await Task.FromResult(new Success<Player>(player));
         }

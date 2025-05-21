@@ -5,51 +5,58 @@
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              x:Class="AirsoftBmsApp.View.Pages.SignUpPage"
              Title="Sign Up"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:PlayerFormViewModel"
              >
+    <Grid>
+        <VerticalStackLayout 
+            VerticalOptions="Center" 
+            Padding="40" 
+            Spacing="10"
+            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+            >
+            <text:Header 
+                Text="Sign Up"
+            />
 
-    <VerticalStackLayout 
-        VerticalOptions="Center" 
-        Padding="40" 
-        Spacing="10"
-        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-        >
-        <text:Header 
-            Text="Sign Up"
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter your username"
+                ValidatableObject="{Binding PlayerForm.Name}"
+                ValidateCommand="{Binding ValidateNameCommand}"
+            />
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter your email"
+                ValidatableObject="{Binding PlayerForm.Email}"
+                ValidateCommand="{Binding ValidateEmailCommand}"
+            />
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter your password"
+                ValidatableObject="{Binding PlayerForm.Password}"
+                ValidateCommand="{Binding ValidatePasswordCommand}"
+                IsPassword="True"
+            />
+            <inputs:ValidatableStyledEntry
+                Placeholder="Confirm your password"
+                ValidatableObject="{Binding PlayerForm.ConfirmPassword}"
+                ValidateCommand="{Binding ValidateConfirmPasswordCommand}"
+                IsPassword="True"
+            />
+
+            <buttons:FilledButton 
+                Command="{Binding SignUpAccountCommand}"
+                Text="Create"
+            />
+
+            <buttons:BackButton />
+
+        </VerticalStackLayout>
+
+        <loading:LoadingScreen 
+            IsLoading="{Binding IsLoading}"
         />
 
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter your username"
-            ValidatableObject="{Binding PlayerForm.Name}"
-            ValidateCommand="{Binding ValidateNameCommand}"
-        />
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter your email"
-            ValidatableObject="{Binding PlayerForm.Email}"
-            ValidateCommand="{Binding ValidateEmailCommand}"
-        />
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter your password"
-            ValidatableObject="{Binding PlayerForm.Password}"
-            ValidateCommand="{Binding ValidatePasswordCommand}"
-            IsPassword="True"
-        />
-        <inputs:ValidatableStyledEntry
-            Placeholder="Confirm your password"
-            ValidatableObject="{Binding PlayerForm.ConfirmPassword}"
-            ValidateCommand="{Binding ValidateConfirmPasswordCommand}"
-            IsPassword="True"
-        />
-
-        <buttons:FilledButton 
-            Command="{Binding SignUpAccountCommand}"
-            Text="Create"
-        />
-
-        <buttons:BackButton />
-
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

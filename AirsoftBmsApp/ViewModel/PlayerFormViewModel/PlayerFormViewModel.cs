@@ -19,6 +19,9 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [ObservableProperty] 
         PlayerForm playerForm = new();
 
+        [ObservableProperty]
+        bool isLoading = false;
+
         public PlayerFormViewModel(IPlayerRestService playerRestService, IPlayerDataService playerDataService)
         {
             _playerRestService = playerRestService;
@@ -101,6 +104,8 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             if (!playerForm.Name.IsValid) return;
 
+            IsLoading = true;
+
             PostPlayerDto playerDto = new PostPlayerDto
             {
                 Name = playerForm.Name.Value
@@ -117,9 +122,12 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
 
+                    IsLoading = false;
+
                     break;
                 case Failure<Player> failure:
-                    // Handle failure
+                    IsLoading = false;
+
                     break;
             }
         }
@@ -131,6 +139,8 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             ValidatePassword();
 
             if (!playerForm.Email.IsValid || !playerForm.Password.IsValid) return;
+
+            IsLoading = true;
 
             LoginAccountDto accountDto = new LoginAccountDto
             {
@@ -150,9 +160,12 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
 
+                    IsLoading = false;
+
                     break;
                 case Failure<Player> failure:
-                    // Handle failure
+                    IsLoading = false;
+
                     break;
             }
         }
@@ -163,6 +176,8 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             Validate();
 
             if (!playerForm.Name.IsValid || !playerForm.Email.IsValid || !playerForm.Password.IsValid || !playerForm.ConfirmPassword.IsValid) return;
+
+            IsLoading = true;
 
             RegisterAccountDto accountDto = new RegisterAccountDto
             {
@@ -183,9 +198,12 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
 
+                    IsLoading = false;
+
                     break;
                 case Failure<Player> failure:
-                    // Handle failure
+                    IsLoading = false;
+          
                     break;
             }
         }
