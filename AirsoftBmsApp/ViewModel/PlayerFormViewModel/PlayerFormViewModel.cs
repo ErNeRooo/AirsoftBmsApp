@@ -1,4 +1,9 @@
 ﻿using AirsoftBmsApp.Model;
+using AirsoftBmsApp.Model.Dto.Login;
+using AirsoftBmsApp.Model.Dto.Post;
+using AirsoftBmsApp.Model.Dto.Register;
+using AirsoftBmsApp.Networking;
+using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Validation.Rules;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,13 +14,15 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
     public partial class PlayerFormViewModel : ObservableObject, IPlayerFormViewModel
     {
         private IPlayerRestService _playerRestService;
+        private IPlayerDataService _playerDataService;
 
         [ObservableProperty] 
         PlayerForm playerForm = new();
 
-        public PlayerFormViewModel(IPlayerRestService playerRestService)
+        public PlayerFormViewModel(IPlayerRestService playerRestService, IPlayerDataService playerDataService)
         {
             _playerRestService = playerRestService;
+            _playerDataService = playerDataService;
 
             playerForm.Name.Validations.Add(new IsNotNullOrEmptyRule<string> 
             { 
@@ -94,15 +101,26 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             if (!playerForm.Name.IsValid) return;
 
-            Task<bool> response = _playerRestService.RegisterPlayerAsync(playerForm.Name.Value);
+            PostPlayerDto playerDto = new PostPlayerDto
+            {
+                Name = playerForm.Name.Value
+            };
 
-            if (response.Result)
-            {
-                await Shell.Current.GoToAsync(nameof(RoomFormPage));
-            }
-            else
-            {
-                throw new NotImplementedException();
+            var result = await _playerRestService.RegisterPlayerAsync(playerDto);
+
+            switch (result) { 
+                case Success<Player> success:
+                    _playerDataService.Player.Jwt = success.data.Jwt;
+                    _playerDataService.Player.Id = success.data.Id;
+                    _playerDataService.Player.Name = playerForm.Name.Value;
+                    _playerDataService.Player.Account = null;
+
+                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+
+                    break;
+                case Failure<Player> failure:
+                    // Handle failure
+                    break;
             }
         }
 
@@ -114,15 +132,28 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             if (!playerForm.Email.IsValid || !playerForm.Password.IsValid) return;
 
-            Task<bool> response = _playerRestService.LogInToAccountAsync(playerForm.Email.Value, playerForm.Password.Value);
+            LoginAccountDto accountDto = new LoginAccountDto
+            {
+                Email = playerForm.Email.Value,
+                Password = playerForm.Password.Value
+            };
 
-            if (response.Result)
+            var result = await _playerRestService.LogInToAccountAsync(accountDto);
+
+            switch (result)
             {
-                await Shell.Current.GoToAsync(nameof(RoomFormPage));
-            }
-            else
-            {
-                throw new NotImplementedException();
+                case Success<Player> success:
+                    _playerDataService.Player.Jwt = success.data.Jwt;
+                    _playerDataService.Player.Id = success.data.Id;
+                    _playerDataService.Player.Name = success.data.Name;
+                    _playerDataService.Player.Account = success.data.Account;
+
+                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+
+                    break;
+                case Failure<Player> failure:
+                    // Handle failure
+                    break;
             }
         }
 
@@ -133,15 +164,29 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             if (!playerForm.Name.IsValid || !playerForm.Email.IsValid || !playerForm.Password.IsValid || !playerForm.ConfirmPassword.IsValid) return;
 
-            Task<bool> response = _playerRestService.SignUpAccountAsync(playerForm.Name.Value, playerForm.Email.Value, playerForm.Password.Value);
+            RegisterAccountDto accountDto = new RegisterAccountDto
+            {
+                Name = playerForm.Name.Value,
+                Email = playerForm.Email.Value,
+                Password = playerForm.Password.Value
+            };
 
-            if (response.Result)
+            var result = await _playerRestService.SignUpAccountAsync(accountDto);
+
+            switch (result)
             {
-                await Shell.Current.GoToAsync(nameof(RoomFormPage));
-            }
-            else
-            {
-                throw new NotImplementedException();
+                case Success<Player> success:
+                    _playerDataService.Player.Jwt = success.data.Jwt;
+                    _playerDataService.Player.Id = success.data.Id;
+                    _playerDataService.Player.Name = success.data.Name;
+                    _playerDataService.Player.Account = success.data.Account;
+
+                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+
+                    break;
+                case Failure<Player> failure:
+                    // Handle failure
+                    break;
             }
         }
     }

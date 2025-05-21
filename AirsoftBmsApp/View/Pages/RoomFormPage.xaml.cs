@@ -1,13 +1,15 @@
 ﻿using System.Windows.Input;
+using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.View.Pages;
 
 namespace AirsoftBmsApp
 {
     public partial class RoomFormPage : ContentPage
     {
-        public RoomFormPage()
+        public RoomFormPage(IPlayerDataService playerDataService)
         {
             InitializeComponent();
+            Title.Text = playerDataService.Player.Name;
         }
 
         public async void OnJoinRoomButtonClicked(object sender, EventArgs e)

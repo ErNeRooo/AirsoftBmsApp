@@ -10,6 +10,6 @@ namespace AirsoftBmsApp.Services.PlayerDataService.Implementations
 {
     public class PlayerDataService : IPlayerDataService
     {
-        public Player Player { get; set; }
+        public Player Player { get; set; } = new();
     }
 }

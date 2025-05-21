@@ -33,7 +33,7 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
 
             builder.Services.AddSingleton<IPlayerDataService, PlayerDataService>();
-            builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
+            builder.Services.AddSingleton<IPlayerRestService, PlayerRestService>();
 
 #if DEBUG
             builder.Logging.AddDebug();

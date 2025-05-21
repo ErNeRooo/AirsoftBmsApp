@@ -1,9 +1,15 @@
-﻿namespace AirsoftBmsApp.Services.PlayerRestService.Abstractions
+﻿using AirsoftBmsApp.Model;
+using AirsoftBmsApp.Model.Dto.Login;
+using AirsoftBmsApp.Model.Dto.Post;
+using AirsoftBmsApp.Model.Dto.Register;
+using AirsoftBmsApp.Networking;
+
+namespace AirsoftBmsApp.Services.PlayerRestService.Abstractions
 {
     public interface IPlayerRestService
     {
-        Task<bool> RegisterPlayerAsync(string name);
-        Task<bool> LogInToAccountAsync(string email, string password);
-        Task<bool> SignUpAccountAsync(string name, string email, string password);
+        Task<HttpResult<Player>> RegisterPlayerAsync(PostPlayerDto playerDto);
+        Task<HttpResult<Player>> LogInToAccountAsync(LoginAccountDto accountDto);
+        Task<HttpResult<Player>> SignUpAccountAsync(RegisterAccountDto accountDto);
     }
 }
