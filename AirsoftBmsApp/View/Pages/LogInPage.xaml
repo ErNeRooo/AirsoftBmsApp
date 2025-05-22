@@ -7,12 +7,17 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:layout="clr-namespace:AirsoftBmsApp.View.ContentViews.Layout"
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              x:Class="AirsoftBmsApp.View.Pages.LogInPage"
              Title="Log In"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:PlayerFormViewModel"
              >
     <Grid>
+        <error:ErrorMessageView
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            />
+
         <VerticalStackLayout 
             VerticalOptions="Center" 
             Padding="40"

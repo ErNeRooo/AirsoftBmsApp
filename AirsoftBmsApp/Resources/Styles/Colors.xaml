@@ -20,6 +20,7 @@
     <Color x:Key="Outline">#B5B5B5</Color>
 
     <Color x:Key="Error">#CA3B33</Color>
+    <Color x:Key="OnError">White</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

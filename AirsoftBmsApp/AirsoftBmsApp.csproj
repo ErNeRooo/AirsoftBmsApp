@@ -70,6 +70,9 @@
 	  <Compile Update="View\ContentViews\Buttons\OutlinedButton.xaml.cs">
 	    <DependentUpon>OutlinedButton.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="View\ContentViews\ErrorMessageView\ErrorMessageView.xaml.cs">
+	    <DependentUpon>ErrorMessageView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\ContentViews\Inputs\ValidatableStyledEntry.xaml.cs">
 	    <DependentUpon>ValidatableStyledEntry.xaml</DependentUpon>
 	  </Compile>
@@ -107,6 +110,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Buttons\FilledButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\ErrorMessageView\ErrorMessageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Inputs\ValidatableStyledEntry.xaml">

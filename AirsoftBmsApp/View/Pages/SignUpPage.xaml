@@ -6,12 +6,17 @@
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              x:Class="AirsoftBmsApp.View.Pages.SignUpPage"
              Title="Sign Up"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:PlayerFormViewModel"
              >
     <Grid>
+        <error:ErrorMessageView
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            />
+
         <VerticalStackLayout 
             VerticalOptions="Center" 
             Padding="40" 
