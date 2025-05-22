@@ -9,7 +9,7 @@
     <Button 
         x:Name="button"
         HeightRequest="30"
-        FontFamily="CascadiaCode" 
+        FontFamily="{StaticResource GlobalFont}" 
         CornerRadius="25"
         BackgroundColor="{StaticResource Primary}"
         TextColor="{StaticResource PrimaryDarkText}"

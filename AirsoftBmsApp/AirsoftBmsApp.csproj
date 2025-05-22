@@ -106,6 +106,9 @@
 	  <MauiXaml Update="Converters\Converters.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\Fonts.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Buttons\OutlinedButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -14,7 +14,7 @@
             FlexLayout.Grow="1" />
 
         <Label 
-            FontFamily="CascadiaCode" 
+            FontFamily="{StaticResource GlobalFont}" 
             FontSize="15" 
             TextColor="{StaticResource Outline}"
             HorizontalTextAlignment="Center"

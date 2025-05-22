@@ -31,13 +31,13 @@
                 <Label 
                     Margin="0"
                     FontSize="20"
-                    FontFamily="CascadiaCode"
+                    FontFamily="{StaticResource GlobalFont}" 
                     TextColor="{StaticResource OnError}"
                     Text="Networking error occured :/"
                     HorizontalTextAlignment="Center"/>
                 <Label 
                     Margin="0"
-                    FontFamily="CascadiaCode"
+                    FontFamily="{StaticResource GlobalFont}" 
                     TextColor="{StaticResource OnError}"
                     Text="{Binding ErrorMessage}"
                     HorizontalTextAlignment="Center"/>

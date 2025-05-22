@@ -13,7 +13,7 @@
         TextColor="{StaticResource Primary}"
         BorderColor="{StaticResource Primary}"
         BorderWidth="2"
-        FontFamily="CascadiaCode" 
+        FontFamily="{StaticResource GlobalFont}" 
         CornerRadius="25"
         HorizontalOptions="Fill"
         Text="{Binding Text, Source={RelativeSource AncestorType={x:Type local:OutlinedButton}}}"

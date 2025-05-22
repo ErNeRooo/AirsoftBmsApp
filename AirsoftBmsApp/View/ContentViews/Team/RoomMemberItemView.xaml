@@ -12,7 +12,7 @@
     x:DataType="models:RoomMember"
     >
     <Label
-        FontFamily="CascadiaCode"
+        FontFamily="{StaticResource GlobalFont}" 
         FontSize="10"
         TextColor="{Binding BindingContext.TeamTheme.FontColor, Source={RelativeSource AncestorType={x:Type local:TeamView}}}"
         Text="{Binding Name}"

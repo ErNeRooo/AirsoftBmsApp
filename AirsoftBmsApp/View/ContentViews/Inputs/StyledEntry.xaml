@@ -14,7 +14,7 @@
             Text="{Binding Text, Mode=TwoWay, Source={RelativeSource AncestorType={x:Type local:StyledEntry}}}"
             IsPassword="{Binding IsPassword, Source={RelativeSource AncestorType={x:Type local:StyledEntry}}}"
             PlaceholderColor="{StaticResource Outline}"
-            FontFamily="CascadiaCode"
+            FontFamily="{StaticResource GlobalFont}" 
             BackgroundColor="Transparent"/>
     </Border>
 </ContentView>

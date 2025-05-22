@@ -28,7 +28,7 @@
                 Text="{Binding ValidatableObject.Value, Mode=TwoWay}"
                 IsPassword="{Binding IsPassword}"
                 PlaceholderColor="{StaticResource Outline}"
-                FontFamily="CascadiaCode"
+                FontFamily="{StaticResource GlobalFont}" 
                 FontSize="15"
                 BackgroundColor="Transparent" >
                 <Entry.Behaviors >
@@ -44,7 +44,7 @@
         <Label
             Text="{Binding ValidatableObject.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
             TextColor="{StaticResource Error}"
-            FontFamily="CascadiaCode"
+            FontFamily="{StaticResource GlobalFont}" 
             FontSize="10"
             Margin="20, 2, 0, 0"
             IsVisible="{Binding ValidatableObject.IsValid, Converter={StaticResource InverseBoolConverter}}"

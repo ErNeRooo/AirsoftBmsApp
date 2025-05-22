@@ -24,7 +24,7 @@
                 HorizontalOptions="Center"
                 FontSize="30"
                 TextColor="{StaticResource Primary}"
-                FontFamily="CascadiaCode"
+                FontFamily="{StaticResource GlobalFont}" 
                 />
 
             <buttons:BackButton

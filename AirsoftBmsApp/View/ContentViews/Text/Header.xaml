@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              x:Class="AirsoftBmsApp.View.ContentViews.Text.Header">
     <Label 
-        FontFamily="CascadiaCode" 
+        FontFamily="{StaticResource GlobalFont}" 
         FontSize="30" 
         HorizontalOptions="Center"
         Text="{Binding Text,Source={RelativeSource AncestorType={x:Type local:Header}}}"
