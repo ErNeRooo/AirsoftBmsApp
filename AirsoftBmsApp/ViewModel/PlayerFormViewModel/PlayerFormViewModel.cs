@@ -101,16 +101,8 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         }
 
         [RelayCommand]
-        private void CleanErrorMessage()
-        {
-            ErrorMessage = "";
-            //IsErrorMessageVisible = "false";
-        }
-
-        [RelayCommand]
         public async Task RegisterPlayerAsync()
         {
-            CleanErrorMessage();
             ValidateName();
 
             if (!playerForm.Name.IsValid) return;
@@ -138,7 +130,6 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
                     break;
                 case Failure<Player> failure:
                     ErrorMessage = failure.errorMessage;
-                    //IsErrorMessageVisible = "true";
 
                     IsLoading = false;
                     break;
@@ -148,7 +139,6 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [RelayCommand]
         async void LogIntoAccount()
         {
-            CleanErrorMessage();
             ValidateEmail();
             ValidatePassword();
 
@@ -179,7 +169,6 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
                     break;
                 case Failure<Player> failure:
                     ErrorMessage = failure.errorMessage;
-                    //IsErrorMessageVisible = "true";
 
                     IsLoading = false;
                     break;
@@ -189,7 +178,6 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [RelayCommand]
         async void SignUpAccount()
         {
-            CleanErrorMessage();
             Validate();
 
             if (!playerForm.Name.IsValid || !playerForm.Email.IsValid || !playerForm.Password.IsValid || !playerForm.ConfirmPassword.IsValid) return;
@@ -220,7 +208,6 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
                     break;
                 case Failure<Player> failure:
                     ErrorMessage = failure.errorMessage;
-                    //IsErrorMessageVisible = "true";
 
                     IsLoading = false;
                     break;

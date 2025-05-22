@@ -48,13 +48,11 @@
 
             <buttons:OutlinedButton
                 Clicked="OnLogInButtonClicked"
-                Command="{Binding CleanErrorMessageCommand}"
                 Text="Log In"
                 />
 
             <buttons:OutlinedButton
                 Clicked="OnSignUpButtonClicked"
-                Command="{Binding CleanErrorMessageCommand}"
                 Text="Sign Up"
                 />
 

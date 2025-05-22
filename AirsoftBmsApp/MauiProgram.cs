@@ -28,9 +28,9 @@ namespace AirsoftBmsApp
                 });
 
             builder.Services.AddSingleton<IRoomViewModel, RoomViewModel>();
-            builder.Services.AddSingleton<IPlayerFormViewModel, PlayerFormViewModel>();
-            builder.Services.AddSingleton<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
-            builder.Services.AddSingleton<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
+            builder.Services.AddTransient<IPlayerFormViewModel, PlayerFormViewModel>();
+            builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
+            builder.Services.AddTransient<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
 
             builder.Services.AddSingleton<IPlayerDataService, PlayerDataService>();
             builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
