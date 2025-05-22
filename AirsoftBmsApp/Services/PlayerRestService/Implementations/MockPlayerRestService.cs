@@ -17,16 +17,16 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
     {
         private async Task<HttpResult<Player>> GetMockedResults(string inputString) {
 
-            if (inputString == "not found" || inputString == "404")
+            if (inputString == "not found" || inputString == "404" || inputString == "4@0.4")
             {
                 await Task.Delay(3000);
                 return await Task.FromResult(new Failure<Player>("Not Found"));
             }
-            else if (inputString == "bad request" || inputString == "400")
+            else if (inputString == "bad request" || inputString == "400" || inputString == "4@0.0")
             {
                 return await Task.FromResult(new Failure<Player>("Internal server error"));
             }
-            else if (inputString == "internal server error" || inputString == "500")
+            else if (inputString == "internal server error" || inputString == "500" || inputString == "5@0.0")
             {
                 return await Task.FromResult(new Failure<Player>("Internal server error"));
             }
@@ -50,7 +50,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 
         public async Task<HttpResult<Player>> LogInToAccountAsync(LoginAccountDto accountDto)
         {
-            return await Task.FromResult(await GetMockedResults(accountDto.Password));
+            return await Task.FromResult(await GetMockedResults(accountDto.Email));
         }
 
         public async Task<HttpResult<Player>> SignUpAccountAsync(RegisterAccountDto accountDto)

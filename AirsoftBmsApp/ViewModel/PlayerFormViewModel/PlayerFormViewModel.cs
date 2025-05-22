@@ -5,6 +5,7 @@ using AirsoftBmsApp.Model.Dto.Register;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.Validation.Rules;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -25,46 +26,12 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [ObservableProperty]
         string errorMessage = "";
 
-        public PlayerFormViewModel(IPlayerRestService playerRestService, IPlayerDataService playerDataService)
+        public PlayerFormViewModel(IPlayerRestService playerRestService, IPlayerDataService playerDataService, IValidationHelperFactory validationHelperFactory)
         {
             _playerRestService = playerRestService;
             _playerDataService = playerDataService;
 
-            playerForm.Name.Validations.Add(new IsNotNullOrEmptyRule<string> 
-            { 
-                ValidationMessage = "Name is required." 
-            });
-
-            playerForm.Name.Validations.Add(new HasMaxLengthRule<string>
-            {
-                ValidationMessage = "Name must be 20 characters or fewer.",
-                MaxLength = 20
-            });
-
-            playerForm.Email.Validations.Add(new IsNotNullOrEmptyRule<string>
-            {
-                ValidationMessage = "Email is required."
-            });
-
-            playerForm.Email.Validations.Add(new IsEmailRule<string>
-            {
-                ValidationMessage = "Wrong Email Format."
-            });
-
-            playerForm.Password.Validations.Add(new IsNotNullOrEmptyRule<string>
-            {
-                ValidationMessage = "Password is required."
-            });
-
-            playerForm.ConfirmPassword.Validations.Add(new IsNotNullOrEmptyRule<string>
-            {
-                ValidationMessage = "Confirm password is required."
-            }); 
-
-            playerForm.ConfirmPassword.Validations.Add(new MatchPasswordRule(() => playerForm.Password.Value)
-            {
-                ValidationMessage = "Passwords do not match."
-            });
+            validationHelperFactory.AddValidations(playerForm);
         }
 
         [RelayCommand]
@@ -103,6 +70,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [RelayCommand]
         public async Task RegisterPlayerAsync()
         {
+            ErrorMessage = "";
             ValidateName();
 
             if (!playerForm.Name.IsValid) return;
@@ -139,6 +107,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [RelayCommand]
         async void LogIntoAccount()
         {
+            ErrorMessage = "";
             ValidateEmail();
             ValidatePassword();
 
@@ -178,6 +147,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [RelayCommand]
         async void SignUpAccount()
         {
+            ErrorMessage = "";
             Validate();
 
             if (!playerForm.Name.IsValid || !playerForm.Email.IsValid || !playerForm.Password.IsValid || !playerForm.ConfirmPassword.IsValid) return;

@@ -2,6 +2,7 @@
 using AirsoftBmsApp.Services.PlayerDataService.Implementations;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Implementations;
+using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.JoinRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.PlayerFormViewModel;
@@ -32,6 +33,7 @@ namespace AirsoftBmsApp
             builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
             builder.Services.AddTransient<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
 
+            builder.Services.AddSingleton <IValidationHelperFactory, ValidationHelperFactory>();
             builder.Services.AddSingleton<IPlayerDataService, PlayerDataService>();
             builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
 
