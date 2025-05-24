@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Model.Dto.Register
+namespace AirsoftBmsApp.Model.Dto.Account
 {
-    public class RegisterAccountDto
+    public class LogInAccountDto
     {
-        public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Model.Dto.Login
+namespace AirsoftBmsApp.Model.Dto.Account
 {
-    public class LoginAccountDto
+    public class PutAccountDto
     {
         public string Email { get; set; }
         public string Password { get; set; }
