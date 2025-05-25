@@ -1,8 +1,8 @@
 ﻿using AirsoftBmsApp.Model;
 using AirsoftBmsApp.Model.Dto.Account;
 using AirsoftBmsApp.Networking;
+using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.JwtTokenService;
-using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
+namespace AirsoftBmsApp.Services.AccountRestService.Implementations
 {
     public class AccountRestService : IAccountRestService
     {
@@ -63,10 +63,9 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             {
                 SetAuthorizationHeader();
 
-                var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var stringContent = GetStringContet(accountDto);
 
-                var response = await _client.PutAsync($"id/{accoundId}", content);
+                var response = await _client.PutAsync($"id/{accoundId}", stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -108,16 +107,15 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> SignUpAsync(SignupAccountDto accountDto)
+        public async Task<HttpResult> SignUpAsync(SignUpAccountDto accountDto)
         {
             try
             {
                 SetAuthorizationHeader();
 
-                var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var stringContent = GetStringContet(accountDto);
 
-                var response = await _client.PostAsync($"signup", content);
+                var response = await _client.PostAsync($"signup", stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -146,10 +144,9 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             {
                 SetAuthorizationHeader();
 
-                var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var stringContent = GetStringContet(accountDto);
 
-                var response = await _client.PostAsync($"login", content);
+                var response = await _client.PostAsync($"login", stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -158,7 +155,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 
                     int.TryParse(idString, out int id);
 
-                    return new Success<object>(null);
+                    return new Success<int>(id);
                 }
                 else
                 {
@@ -182,6 +179,12 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             {
                 throw new Exception("No JWT token");
             }
+        }
+
+        private StringContent GetStringContet(object accountDto)
+        {
+            var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
+            return new StringContent(json, Encoding.UTF8, "application/json");
         }
     }
 }

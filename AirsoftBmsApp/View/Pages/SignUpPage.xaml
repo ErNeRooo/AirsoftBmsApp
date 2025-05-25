@@ -51,7 +51,7 @@
             />
 
             <buttons:FilledButton 
-                Command="{Binding SignUpAccountCommand}"
+                Command="{Binding SignUpButtonClickedCommand}"
                 Text="Create"
             />
 

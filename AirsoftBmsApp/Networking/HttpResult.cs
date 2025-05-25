@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Networking
 {
-    public abstract record HttpResult<D>();
+    public abstract record HttpResult();
 
-    public record Success<D>(D data) : HttpResult<D>;
-    public record Failure<D>(string errorMessage) : HttpResult<D>;
+    public abstract record SuccessBase : HttpResult;
+
+    public record Success<D>(D? data) : SuccessBase;
+    public record Failure(string errorMessage) : HttpResult;
+    public record Error(string errorMessage) : HttpResult;
 }

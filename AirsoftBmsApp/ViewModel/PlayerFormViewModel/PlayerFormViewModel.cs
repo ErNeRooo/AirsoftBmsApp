@@ -1,7 +1,6 @@
 ﻿using AirsoftBmsApp.Model;
-using AirsoftBmsApp.Model.Dto.Login;
+using AirsoftBmsApp.Model.Dto.Account;
 using AirsoftBmsApp.Model.Dto.Post;
-using AirsoftBmsApp.Model.Dto.Register;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
@@ -9,6 +8,10 @@ using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.Validation.Rules;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using AirsoftBmsApp.Services.JwtTokenService;
+using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 
 namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 {
@@ -16,6 +19,9 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
     {
         private IPlayerRestService _playerRestService;
         private IPlayerDataService _playerDataService;
+        private IAccountRestService _accountRestService;
+        private IJwtTokenService _jwtTokenService;
+        private HttpClient _httpClient;
 
         [ObservableProperty] 
         PlayerForm playerForm = new();
@@ -26,16 +32,26 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [ObservableProperty]
         string errorMessage = "";
 
-        public PlayerFormViewModel(IPlayerRestService playerRestService, IPlayerDataService playerDataService, IValidationHelperFactory validationHelperFactory)
+        public PlayerFormViewModel(
+            IPlayerRestService playerRestService, 
+            IPlayerDataService playerDataService, 
+            IAccountRestService accountRestService, 
+            IValidationHelperFactory validationHelperFactory, 
+            IJwtTokenService jwtTokenService, 
+            HttpClient httpClient
+            )
         {
+            _jwtTokenService = jwtTokenService;
             _playerRestService = playerRestService;
             _playerDataService = playerDataService;
+            _accountRestService = accountRestService;
+            _httpClient = httpClient;
 
             validationHelperFactory.AddValidations(playerForm);
         }
 
         [RelayCommand]
-        public void Validate()
+        void Validate()
         {
             ValidateName();
             ValidateEmail();
@@ -44,25 +60,25 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         }
 
         [RelayCommand]
-        public void ValidateName()
+        void ValidateName()
         {
             playerForm.Name.Validate();
         }
 
         [RelayCommand]
-        public void ValidateEmail()
+        void ValidateEmail()
         {
             playerForm.Email.Validate();
         }
 
         [RelayCommand]
-        public void ValidatePassword()
+        void ValidatePassword()
         {
             playerForm.Password.Validate();
         }
 
         [RelayCommand]
-        public void ValidateConfirmPassword()
+        void ValidateConfirmPassword()
         {
             playerForm.ConfirmPassword.Validate();
         }
@@ -77,35 +93,35 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             IsLoading = true;
 
-            PostPlayerDto playerDto = new PostPlayerDto
+            var registerPlayer = new PlayerRegisterHandler(_playerRestService, _playerDataService);
+
+            var data = new PostPlayerDto
             {
                 Name = playerForm.Name.Value
             };
 
-            var result = await _playerRestService.RegisterPlayerAsync(playerDto);
+            var result = await registerPlayer.Handle(data);
 
-            switch (result) { 
+            switch (result)
+            {
                 case Success<Player> success:
-                    _playerDataService.Player.Jwt = success.data.Jwt;
-                    _playerDataService.Player.Id = success.data.Id;
-                    _playerDataService.Player.Name = playerForm.Name.Value;
-                    _playerDataService.Player.Account = null;
-
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
-
-                    IsLoading = false;
-
                     break;
-                case Failure<Player> failure:
+                case Failure failure:
                     ErrorMessage = failure.errorMessage;
-
-                    IsLoading = false;
                     break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
             }
+
+            IsLoading = false;
         }
 
         [RelayCommand]
-        async void LogIntoAccount()
+        async Task OnLogInButtonClicked()
         {
             ErrorMessage = "";
             ValidateEmail();
@@ -115,37 +131,40 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             IsLoading = true;
 
-            LoginAccountDto accountDto = new LoginAccountDto
+            var registerPlayer = new PlayerRegisterHandler(_playerRestService, _playerDataService);
+            var logInAccount = new AccountLogInHandler(_accountRestService, _playerDataService);
+
+            registerPlayer.SetNext(logInAccount);
+
+            var data = new
             {
+                Name = playerForm.Name.Value,
                 Email = playerForm.Email.Value,
                 Password = playerForm.Password.Value
             };
 
-            var result = await _playerRestService.LogInToAccountAsync(accountDto);
+            var result = await registerPlayer.Handle(data);
 
             switch (result)
             {
                 case Success<Player> success:
-                    _playerDataService.Player.Jwt = success.data.Jwt;
-                    _playerDataService.Player.Id = success.data.Id;
-                    _playerDataService.Player.Name = success.data.Name;
-                    _playerDataService.Player.Account = success.data.Account;
-
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
-
-                    IsLoading = false;
-
                     break;
-                case Failure<Player> failure:
+                case Failure failure:
                     ErrorMessage = failure.errorMessage;
-
-                    IsLoading = false;
                     break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
             }
+
+            IsLoading = false;
         }
 
         [RelayCommand]
-        async void SignUpAccount()
+        async Task OnSignUpButtonClicked()
         {
             ErrorMessage = "";
             Validate();
@@ -154,34 +173,36 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             IsLoading = true;
 
-            RegisterAccountDto accountDto = new RegisterAccountDto
+            var registerPlayer = new PlayerRegisterHandler(_playerRestService, _playerDataService);
+            var signUpAccount = new AccountSignUpHandler(_accountRestService, _playerDataService);
+
+            registerPlayer.SetNext(signUpAccount);
+
+            var data = new
             {
                 Name = playerForm.Name.Value,
                 Email = playerForm.Email.Value,
                 Password = playerForm.Password.Value
             };
 
-            var result = await _playerRestService.SignUpAccountAsync(accountDto);
+            var result = await registerPlayer.Handle(data);
 
             switch (result)
             {
-                case Success<Player> success:
-                    _playerDataService.Player.Jwt = success.data.Jwt;
-                    _playerDataService.Player.Id = success.data.Id;
-                    _playerDataService.Player.Name = success.data.Name;
-                    _playerDataService.Player.Account = success.data.Account;
-
+                case SuccessBase success:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
-
-                    IsLoading = false;
-
                     break;
-                case Failure<Player> failure:
+                case Failure failure:
                     ErrorMessage = failure.errorMessage;
-
-                    IsLoading = false;
                     break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
             }
+
+            IsLoading = false;
         }
     }
 }

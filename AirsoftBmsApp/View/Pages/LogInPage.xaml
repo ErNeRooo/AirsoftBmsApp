@@ -29,6 +29,12 @@
                 />
 
             <inputs:ValidatableStyledEntry
+                Placeholder="Enter your username"
+                ValidatableObject="{Binding PlayerForm.Name}"
+                ValidateCommand="{Binding ValidateNameCommand}"
+            />
+
+            <inputs:ValidatableStyledEntry
                 Placeholder="Enter account email"
                 ValidatableObject="{Binding PlayerForm.Email}"
                 ValidateCommand="{Binding ValidateEmailCommand}"
@@ -42,7 +48,7 @@
             />
 
             <buttons:FilledButton 
-                Command="{Binding LogIntoAccountCommand}"
+                Command="{Binding LogInButtonClickedCommand}"
                 />
 
             <buttons:BackButton />

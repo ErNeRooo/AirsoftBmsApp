@@ -18,9 +18,6 @@ namespace AirsoftBmsApp.Model
         private string _name;
         
         [ObservableProperty]
-        private string _jwt;
-        
-        [ObservableProperty]
         private Account? _account;
     }
 }
