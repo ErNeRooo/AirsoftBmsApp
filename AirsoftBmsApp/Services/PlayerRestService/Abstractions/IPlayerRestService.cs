@@ -5,6 +5,9 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Abstractions
 {
     public interface IPlayerRestService
     {
-        Task<HttpResult> RegisterPlayerAsync(PostPlayerDto playerDto);
+        Task<HttpResult> GetAsync(int playerId);
+        Task<HttpResult> PutAsync(PostPlayerDto playerDto, int playerId);
+        Task<HttpResult> RegisterAsync(PostPlayerDto playerDto);
+        Task<HttpResult> DeleteAsync(int playerId);
     }
 }

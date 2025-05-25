@@ -43,7 +43,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
                     var json = await response.Content.ReadAsStreamAsync();
                     var account = await JsonSerializer.DeserializeAsync<AccountDto>(json, _serializeOptions);
 
-                    return new Success<AccountDto>(new AccountDto { Email = account.Email, Id = account.Id });
+                    return new Success<AccountDto>(account);
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             {
                 SetAuthorizationHeader();
 
-                var stringContent = GetStringContet(accountDto);
+                var stringContent = GetStringContent(accountDto);
 
                 var response = await _client.PutAsync($"id/{accoundId}", stringContent);
 
@@ -113,7 +113,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             {
                 SetAuthorizationHeader();
 
-                var stringContent = GetStringContet(accountDto);
+                var stringContent = GetStringContent(accountDto);
 
                 var response = await _client.PostAsync($"signup", stringContent);
 
@@ -144,7 +144,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             {
                 SetAuthorizationHeader();
 
-                var stringContent = GetStringContet(accountDto);
+                var stringContent = GetStringContent(accountDto);
 
                 var response = await _client.PostAsync($"login", stringContent);
 
@@ -181,7 +181,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             }
         }
 
-        private StringContent GetStringContet(object accountDto)
+        private StringContent GetStringContent(object accountDto)
         {
             var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
             return new StringContent(json, Encoding.UTF8, "application/json");
