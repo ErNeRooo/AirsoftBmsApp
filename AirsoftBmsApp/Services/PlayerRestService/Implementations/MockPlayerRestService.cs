@@ -46,5 +46,25 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
         {
             return await Task.FromResult(await GetMockedResults(playerDto.Name));
         }
+
+        public Task<HttpResult> GetAsync(int playerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpResult> PutAsync(PutPlayerDto playerDto, int playerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpResult> RegisterAsync(PostPlayerDto playerDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpResult> DeleteAsync(int playerId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

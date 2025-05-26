@@ -1,6 +1,7 @@
 ﻿using AirsoftBmsApp.Model;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Post;
+using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
@@ -10,13 +11,13 @@ using System.Text.Json;
 
 namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 {
-    public class PlayerRestService : IPlayerRestService
+    public class RoomRestService : IRoomRestService
     {
         HttpClient _client;
         JsonSerializerOptions _serializeOptions;
         IJwtTokenService _jwtTokenService;
 
-        public PlayerRestService(HttpClient httpClient, IJwtTokenService jwtTokenService)
+        public RoomRestService(HttpClient httpClient, IJwtTokenService jwtTokenService)
         {
             _jwtTokenService = jwtTokenService;
             _client = httpClient;
@@ -27,21 +28,20 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             };
         }
 
-
-        public async Task<HttpResult> GetAsync(int playerId)
+        public async Task<HttpResult> GetByIdAsync(int roomId)
         {
             try
             {
                 SetAuthorizationHeader();
 
-                var response = await _client.GetAsync($"id/{playerId}");
+                var response = await _client.GetAsync($"id/{roomId}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStreamAsync();
-                    var player = await JsonSerializer.DeserializeAsync<PlayerDto>(json, _serializeOptions);
+                    var room = await JsonSerializer.DeserializeAsync<RoomDto>(json, _serializeOptions);
 
-                    return new Success<PlayerDto>(player);
+                    return new Success<RoomDto>(room);
                 }
                 else
                 {
@@ -55,15 +55,42 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> PutAsync(PutPlayerDto playerDto, int playerId)
+        public async Task<HttpResult> GetByJoinCodeAsync(string joinCode)
         {
             try
             {
                 SetAuthorizationHeader();
 
-                StringContent stringContent = GetStringContet(playerDto);
+                var response = await _client.GetAsync($"join-code/{joinCode}");
 
-                var response = await _client.PutAsync($"id/{playerId}", stringContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStreamAsync();
+                    var room = await JsonSerializer.DeserializeAsync<RoomDto>(json, _serializeOptions);
+
+                    return new Success<RoomDto>(room);
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    return new Failure(errorContent);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.Message);
+            }
+        }
+
+        public async Task<HttpResult> PutAsync(PutRoomDto roomDto, int roomId)
+        {
+            try
+            {
+                SetAuthorizationHeader();
+
+                StringContent stringContent = GetStringContent(roomDto);
+
+                var response = await _client.PutAsync($"id/{roomId}", stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -81,24 +108,20 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> RegisterAsync(PostPlayerDto playerDto)
+        public async Task<HttpResult> PostAsync(PostRoomDto roomDto)
         {
             try
             {
-                var json = JsonSerializer.Serialize(playerDto, _serializeOptions);
-                StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+                StringContent stringContent = GetStringContent(roomDto);
 
                 var response = await _client.PostAsync($"register", stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var jwt = await response.Content.ReadAsStringAsync();
                     var path = response.Headers.Location?.ToString();
                     var idString = path?.Split('/').LastOrDefault();
 
                     int.TryParse(idString, out int id);
-
-                    _jwtTokenService.Token = jwt;
 
                     return new Success<int>(id);
                 }
@@ -114,13 +137,63 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> DeleteAsync(int playerId)
+        public async Task<HttpResult> DeleteAsync(int roomId)
         {
             try
             {
                 SetAuthorizationHeader();
 
-                var response = await _client.DeleteAsync($"id/{playerId}");
+                var response = await _client.DeleteAsync($"id/{roomId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return new Success<object>(null);
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    return new Failure(errorContent);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.Message);
+            }
+        }
+
+        public async Task<HttpResult> JoinAsync(LogInRoomDto roomDto)
+        {
+            try
+            {
+                SetAuthorizationHeader();
+
+                var content = GetStringContent(roomDto);
+
+                var response = await _client.PostAsync("join", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return new Success<object>(null);
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    return new Failure(errorContent);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.Message);
+            }
+        }
+
+        public async Task<HttpResult> LeaveAsync()
+        {
+            try
+            {
+                SetAuthorizationHeader();
+
+                var response = await _client.PostAsync("leave", null);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -150,7 +223,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        private StringContent GetStringContet(object accountDto)
+        private StringContent GetStringContent(object accountDto)
         {
             var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
             return new StringContent(json, Encoding.UTF8, "application/json");
