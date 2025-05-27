@@ -9,29 +9,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Networking
+namespace AirsoftBmsApp.Networking.Handlers.Account
 {
-    public class AccountLogInHandler(IAccountRestService accountRestService, IPlayerDataService playerDataService) : AbstractHandler
+    public class AccountSignUpHandler(IAccountRestService accountRestService, IPlayerDataService playerDataService) : AbstractHandler
     {
         public override async Task<HttpResult> Handle(object request)
         {
             dynamic dynamicRequest = request;
 
-            LogInAccountDto logInAccountDto = new LogInAccountDto
+            SignUpAccountDto signUpAccountDto = new SignUpAccountDto
             {
                 Email = dynamicRequest.Email,
                 Password = dynamicRequest.Password,
             };
 
-            var result = await accountRestService.TryRequest(new LogInAccountAsync(logInAccountDto));
+            var result = await accountRestService.TryRequest(new SignUpAccountAsync(signUpAccountDto));
 
             switch (result)
             {
                 case Success<int> success:
-                    playerDataService.Player.Account = new Account
+                    playerDataService.Player.Account = new Model.Account
                     {
                         Id = success.data,
-                        Email = logInAccountDto.Email
+                        Email = signUpAccountDto.Email
                     };
 
                     var nextResult = await base.Handle(request);

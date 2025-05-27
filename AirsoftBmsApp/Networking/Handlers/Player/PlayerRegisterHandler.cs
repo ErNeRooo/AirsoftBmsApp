@@ -2,7 +2,7 @@
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 
-namespace AirsoftBmsApp.Networking
+namespace AirsoftBmsApp.Networking.Handlers.Player
 {
     public class PlayerRegisterHandler(IPlayerRestService playerRestService, IPlayerDataService playerDataService) : AbstractHandler
     {

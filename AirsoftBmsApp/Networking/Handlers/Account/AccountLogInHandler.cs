@@ -2,36 +2,31 @@
 using AirsoftBmsApp.Model.Dto.Account;
 using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
-using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Networking
+
+namespace AirsoftBmsApp.Networking.Handlers.Account
 {
-    public class AccountSignUpHandler(IAccountRestService accountRestService, IPlayerDataService playerDataService) : AbstractHandler
+    public class AccountLogInHandler(IAccountRestService accountRestService, IPlayerDataService playerDataService) : AbstractHandler
     {
         public override async Task<HttpResult> Handle(object request)
         {
             dynamic dynamicRequest = request;
 
-            SignUpAccountDto signUpAccountDto = new SignUpAccountDto
+            LogInAccountDto logInAccountDto = new LogInAccountDto
             {
                 Email = dynamicRequest.Email,
                 Password = dynamicRequest.Password,
             };
 
-            var result = await accountRestService.TryRequest(new SignUpAccountAsync(signUpAccountDto));
+            var result = await accountRestService.TryRequest(new LogInAccountAsync(logInAccountDto));
 
             switch (result)
             {
                 case Success<int> success:
-                    playerDataService.Player.Account = new Account
+                    playerDataService.Player.Account = new Model.Account
                     {
                         Id = success.data,
-                        Email = signUpAccountDto.Email
+                        Email = logInAccountDto.Email
                     };
 
                     var nextResult = await base.Handle(request);

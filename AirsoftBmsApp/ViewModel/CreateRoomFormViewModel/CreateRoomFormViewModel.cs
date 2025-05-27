@@ -1,4 +1,11 @@
 ﻿using AirsoftBmsApp.Model;
+using AirsoftBmsApp.Model.Dto.Room;
+using AirsoftBmsApp.Networking.Handlers.Player;
+using AirsoftBmsApp.Networking.Handlers.Room;
+using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
+using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using AirsoftBmsApp.Services.RoomDataService.Abstractions;
+using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.Validation.Rules;
 using AirsoftBmsApp.View.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -8,16 +15,19 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
 {
     public partial class CreateRoomFormViewModel : ObservableObject, ICreateRoomFormViewModel
     {
+        IPlayerDataService _playerDataService;
+        IRoomDataService _roomDataService;
+        IRoomRestService _roomRestService;
+
         [ObservableProperty]
         RoomForm roomForm = new();
 
-        public CreateRoomFormViewModel()
+        public CreateRoomFormViewModel(IValidationHelperFactory validationHelperFactory, IPlayerDataService playerDataService, IRoomDataService roomDataService, IRoomRestService roomRestService)
         {
-            roomForm.JoinCode.Validations.Add(new OptionalLengthRule<string>
-            {
-                ValidationMessage = "If join code is specified it must be 6 characters.",
-                Length = 6
-            });
+            validationHelperFactory.AddValidations(roomForm);
+            _playerDataService = playerDataService;
+            _roomDataService = roomDataService;
+            _roomRestService = roomRestService;
         }
 
         [RelayCommand]
@@ -44,6 +54,17 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
         {
             Validate();
             if (!roomForm.JoinCode.IsValid || !roomForm.Password.IsValid) return;
+
+            var handler = new RoomPostHandler(_roomRestService, _roomDataService, _playerDataService);
+
+            var postRoomDto = new PostRoomDto
+            {
+                JoinCode = roomForm.JoinCode.Value,
+                Password = roomForm.Password.Value,
+                MaxPlayers = 50,
+            };
+
+            var result = await handler.Handle(postRoomDto);
 
             await Shell.Current.GoToAsync(nameof(RoomMembersPage));
         }

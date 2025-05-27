@@ -7,6 +7,8 @@ using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Implementations;
 using AirsoftBmsApp.Services.RestHelperService.Abstractions;
 using AirsoftBmsApp.Services.RestHelperService.Implementations;
+using AirsoftBmsApp.Services.RoomDataService.Abstractions;
+using AirsoftBmsApp.Services.RoomDataService.Implementations;
 using AirsoftBmsApp.Services.RoomRestService.Implementations;
 using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
@@ -68,6 +70,7 @@ namespace AirsoftBmsApp
 
             builder.Services.AddSingleton<IValidationHelperFactory, ValidationHelperFactory>();
             builder.Services.AddSingleton<IPlayerDataService, PlayerDataService>();
+            builder.Services.AddSingleton<IRoomDataService, RoomDataService>();
             builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
             builder.Services.AddSingleton<IJsonHelperService, JsonHelperService>();
 

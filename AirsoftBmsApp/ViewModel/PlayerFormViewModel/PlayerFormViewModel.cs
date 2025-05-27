@@ -5,9 +5,10 @@ using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Validation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Model.Dto.Player;
+using AirsoftBmsApp.Networking.Handlers.Player;
+using AirsoftBmsApp.Networking.Handlers.Account;
 
 namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 {
