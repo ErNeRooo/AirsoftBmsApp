@@ -23,7 +23,7 @@ namespace AirsoftBmsApp.Networking
                 Password = dynamicRequest.Password,
             };
 
-            var result = await accountRestService.LogInAsync(request as LogInAccountDto);
+            var result = await accountRestService.TryRequest(new LogInAccountAsync(logInAccountDto));
 
             switch (result)
             {

@@ -3,6 +3,7 @@ using AirsoftBmsApp.Model.Dto.Account;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.JwtTokenService;
+using AirsoftBmsApp.Services.RestHelperService.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,178 +14,139 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Services.AccountRestService.Implementations
 {
-    public class AccountRestService : IAccountRestService
+    public class AccountRestService(HttpClient client, IJwtTokenService jwtTokenService, IJsonHelperService jsonHelper) : IAccountRestService
     {
-        HttpClient _client;
-        JsonSerializerOptions _serializeOptions;
-        IJwtTokenService _jwtTokenService;
-
-        public AccountRestService(HttpClient httpClient, IJwtTokenService jwtTokenService)
-        {
-            _jwtTokenService = jwtTokenService;
-            _client = httpClient;
-            _serializeOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true,
-            };
-        }
-
-        public async Task<HttpResult> GetAsync(int accountId)
+        public async Task<HttpResult> TryRequest(AccountRequestIntent accountRequest)
         {
             try
             {
                 SetAuthorizationHeader();
 
-                var response = await _client.GetAsync($"id/{accountId}");
-
-                if (response.IsSuccessStatusCode)
+                switch (accountRequest)
                 {
-                    var json = await response.Content.ReadAsStreamAsync();
-                    var account = await JsonSerializer.DeserializeAsync<AccountDto>(json, _serializeOptions);
-
-                    return new Success<AccountDto>(account);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
+                    case GetAccountByIdAsync getById:
+                        return await GetAsync(getById.accountId);
+                    case PutAccountAsync put:
+                        return await PutAsync(put.accountDto, put.accountId);
+                    case SignUpAccountAsync signUp:
+                        return await SignUpAsync(signUp.accountDto);
+                    case LogInAccountAsync logIn:
+                        return await LogInAsync(logIn.accountDto);
+                    case DeleteAccountAsync delete:
+                        return await DeleteAsync(delete.accountId);
+                    default:
+                        return new Failure("Unknown request type");
                 }
             }
             catch (Exception ex)
             {
                 return new Error(ex.Message);
+            }
+        }
+
+        public async Task<HttpResult> GetAsync(int accountId)
+        {
+            var response = await client.GetAsync($"id/{accountId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var account = await jsonHelper.DeserializeFromResponseAsync<AccountDto>(response);
+
+                return new Success<AccountDto>(account);
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
         public async Task<HttpResult> PutAsync(PutAccountDto accountDto, int accoundId)
         {
-            try
+            var stringContent = jsonHelper.GetStringContent(accountDto);
+
+            var response = await client.PutAsync($"id/{accoundId}", stringContent);
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
-
-                var stringContent = GetStringContent(accountDto);
-
-                var response = await _client.PutAsync($"id/{accoundId}", stringContent);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return new Success<object>(null);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<object>(null);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
         public async Task<HttpResult> DeleteAsync(int accoundId)
         {
-            try
+            var response = await client.DeleteAsync($"id/{accoundId}");
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
-
-                var response = await _client.DeleteAsync($"id/{accoundId}");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return new Success<object>(null);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<object>(null);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
         public async Task<HttpResult> SignUpAsync(SignUpAccountDto accountDto)
         {
-            try
+            var stringContent = jsonHelper.GetStringContent(accountDto);
+
+            var response = await client.PostAsync($"signup", stringContent);
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
+                var path = response.Headers.Location?.ToString();
+                var idString = path?.Split('/').LastOrDefault();
 
-                var stringContent = GetStringContent(accountDto);
+                int.TryParse(idString, out int id);
 
-                var response = await _client.PostAsync($"signup", stringContent);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var path = response.Headers.Location?.ToString();
-                    var idString = path?.Split('/').LastOrDefault();
-
-                    int.TryParse(idString, out int id);
-
-                    return new Success<int>(id);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<int>(id);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
         public async Task<HttpResult> LogInAsync(LogInAccountDto accountDto)
         {
-            try
+            var stringContent = jsonHelper.GetStringContent(accountDto);
+
+            var response = await client.PostAsync($"login", stringContent);
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
+                var path = response.Headers.Location?.ToString();
+                var idString = path?.Split('/').LastOrDefault();
 
-                var stringContent = GetStringContent(accountDto);
+                int.TryParse(idString, out int id);
 
-                var response = await _client.PostAsync($"login", stringContent);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var path = response.Headers.Location?.ToString();
-                    var idString = path?.Split('/').LastOrDefault();
-
-                    int.TryParse(idString, out int id);
-
-                    return new Success<int>(id);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<int>(id);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
         private void SetAuthorizationHeader()
         {
-            if (!string.IsNullOrEmpty(_jwtTokenService.Token))
+            if (!string.IsNullOrEmpty(jwtTokenService.Token))
             {
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _jwtTokenService.Token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtTokenService.Token);
             }
             else
             {
                 throw new Exception("No JWT token");
             }
-        }
-
-        private StringContent GetStringContent(object accountDto)
-        {
-            var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
-            return new StringContent(json, Encoding.UTF8, "application/json");
         }
     }
 }
