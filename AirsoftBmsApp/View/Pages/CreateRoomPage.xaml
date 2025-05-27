@@ -5,39 +5,51 @@
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.CreateRoomFormViewModel"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              x:Class="AirsoftBmsApp.View.Pages.CreateRoomPage"
              Title="Create Room"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:CreateRoomFormViewModel"
              >
 
-    <VerticalStackLayout 
-        VerticalOptions="Center" 
-        Padding="40"
-        Spacing="10"
-        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+    <Grid>
+        <error:ErrorMessageView
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            />
+        
+        <VerticalStackLayout 
+            VerticalOptions="Center" 
+            Padding="40"
+            Spacing="10"
+            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         >
-        <text:Header 
-            Text="Create Room" 
+            <text:Header 
+                Text="Create Room" 
             />
 
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter room join code (optional)"
-            ValidatableObject="{Binding RoomForm.JoinCode}"
-            ValidateCommand="{Binding ValidateJoinCodeCommand}"
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter room join code (optional)"
+                ValidatableObject="{Binding RoomForm.JoinCode}"
+                ValidateCommand="{Binding ValidateJoinCodeCommand}"
             />
 
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter room password (optional)"
-            ValidatableObject="{Binding RoomForm.Password}"
-            ValidateCommand="{Binding ValidatePasswordCommand}"
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter room password (optional)"
+                ValidatableObject="{Binding RoomForm.Password}"
+                ValidateCommand="{Binding ValidatePasswordCommand}"
             />
 
-        <buttons:FilledButton 
-            Command="{Binding CreateRoomAsyncCommand}"
+            <buttons:FilledButton 
+                Command="{Binding CreateRoomCommand}"
             />
 
-        <buttons:BackButton />
+            <buttons:BackButton />
 
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <loading:LoadingScreen 
+            IsLoading="{Binding IsLoading}"
+        />
+    </Grid>
 </ContentPage>

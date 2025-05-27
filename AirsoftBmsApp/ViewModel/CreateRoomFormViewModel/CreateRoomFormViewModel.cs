@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model;
 using AirsoftBmsApp.Model.Dto.Room;
+using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.Handlers.Player;
 using AirsoftBmsApp.Networking.Handlers.Room;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
@@ -21,6 +22,12 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
 
         [ObservableProperty]
         RoomForm roomForm = new();
+
+        [ObservableProperty]
+        bool isLoading = false;
+
+        [ObservableProperty]
+        string errorMessage = "";
 
         public CreateRoomFormViewModel(IValidationHelperFactory validationHelperFactory, IPlayerDataService playerDataService, IRoomDataService roomDataService, IRoomRestService roomRestService)
         {
@@ -50,10 +57,12 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
         }
 
         [RelayCommand]
-        async void CreateRoomAsync()
+        async Task CreateRoomAsync()
         {
             Validate();
             if (!roomForm.JoinCode.IsValid || !roomForm.Password.IsValid) return;
+
+            IsLoading = true;
 
             var handler = new RoomPostHandler(_roomRestService, _roomDataService, _playerDataService);
 
@@ -66,7 +75,22 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
 
             var result = await handler.Handle(postRoomDto);
 
-            await Shell.Current.GoToAsync(nameof(RoomMembersPage));
+            switch (result)
+            {
+                case SuccessBase success:
+                    await Shell.Current.GoToAsync(nameof(RoomMembersPage));
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
         }
     }
 }

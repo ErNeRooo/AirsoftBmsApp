@@ -25,6 +25,8 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         return await PutAsync(put.roomDto, put.roomId);
                     case DeleteRoomAsync delete:
                         return await DeleteAsync(delete.roomId);
+                    case PostRoomAsync post:
+                        return await PostAsync(post.roomDto);
                     case JoinRoomAsync post:
                         return await JoinAsync(post.roomDto);
                     case LeaveRoomAsync post:
@@ -111,6 +113,22 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             else
             {
                 return new Success<object>(null);
+            }
+        }
+
+        private async Task<HttpResult> PostAsync(PostRoomDto roomDto)
+        {
+            if (roomDto.JoinCode == "400000")
+            {
+                return new Failure("400000 - Mocked Bad Request");
+            }
+            else if (roomDto.JoinCode == "213700")
+            {
+                throw new Exception("Mocked Exception for Join Code 213700");
+            }
+            else
+            {
+                return new Success<int>(1);
             }
         }
 
