@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model.Dto.Room
 {
-    public class LogInRoomDto
+    public class JoinRoomDto
     {
-        public int JoinCode { get; set; }
-        public int Password { get; set; }
+        public string JoinCode { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> GetAsync(int accountId)
+        private async Task<HttpResult> GetAsync(int accountId)
         {
             var response = await client.GetAsync($"id/{accountId}");
 
@@ -61,7 +61,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> PutAsync(PutAccountDto accountDto, int accoundId)
+        private async Task<HttpResult> PutAsync(PutAccountDto accountDto, int accoundId)
         {
             var stringContent = jsonHelper.GetStringContent(accountDto);
 
@@ -78,7 +78,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> DeleteAsync(int accoundId)
+        private async Task<HttpResult> DeleteAsync(int accoundId)
         {
             var response = await client.DeleteAsync($"id/{accoundId}");
 
@@ -93,7 +93,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> SignUpAsync(SignUpAccountDto accountDto)
+        private async Task<HttpResult> SignUpAsync(SignUpAccountDto accountDto)
         {
             var stringContent = jsonHelper.GetStringContent(accountDto);
 
@@ -115,7 +115,7 @@ namespace AirsoftBmsApp.Services.AccountRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> LogInAsync(LogInAccountDto accountDto)
+        private async Task<HttpResult> LogInAsync(LogInAccountDto accountDto)
         {
             var stringContent = jsonHelper.GetStringContent(accountDto);
 

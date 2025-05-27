@@ -131,7 +131,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        private async Task<HttpResult> JoinAsync(LogInRoomDto roomDto)
+        private async Task<HttpResult> JoinAsync(JoinRoomDto roomDto)
         {
             var content = jsonHelper.GetStringContent(roomDto);
 

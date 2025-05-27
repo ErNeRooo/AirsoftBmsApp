@@ -16,8 +16,6 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         private IPlayerRestService _playerRestService;
         private IPlayerDataService _playerDataService;
         private IAccountRestService _accountRestService;
-        private IJwtTokenService _jwtTokenService;
-        private HttpClient _httpClient;
 
         [ObservableProperty] 
         PlayerForm playerForm = new();
@@ -32,16 +30,12 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             IPlayerRestService playerRestService, 
             IPlayerDataService playerDataService, 
             IAccountRestService accountRestService, 
-            IValidationHelperFactory validationHelperFactory, 
-            IJwtTokenService jwtTokenService, 
-            HttpClient httpClient
+            IValidationHelperFactory validationHelperFactory
             )
         {
-            _jwtTokenService = jwtTokenService;
             _playerRestService = playerRestService;
             _playerDataService = playerDataService;
             _accountRestService = accountRestService;
-            _httpClient = httpClient;
 
             validationHelperFactory.AddValidations(playerForm);
         }
@@ -100,7 +94,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             switch (result)
             {
-                case Success<Player> success:
+                case SuccessBase success:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
                     break;
                 case Failure failure:
@@ -143,7 +137,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             switch (result)
             {
-                case Success<Player> success:
+                case SuccessBase success:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
                     break;
                 case Failure failure:

@@ -14,6 +14,6 @@ namespace AirsoftBmsApp.Services.RoomRestService.Abstractions
     public record PutRoomAsync(PutRoomDto roomDto, int roomId) : RoomRequestIntent;
     public record PostRoomAsync(PostRoomDto roomDto) : RoomRequestIntent;
     public record DeleteRoomAsync(int roomId) : RoomRequestIntent;
-    public record JoinRoomAsync(LogInRoomDto roomDto) : RoomRequestIntent;
+    public record JoinRoomAsync(JoinRoomDto roomDto) : RoomRequestIntent;
     public record LeaveRoomAsync() : RoomRequestIntent;
 }

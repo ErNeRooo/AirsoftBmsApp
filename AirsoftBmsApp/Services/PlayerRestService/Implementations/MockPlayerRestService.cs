@@ -14,62 +14,101 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 {
     public class MockPlayerRestService : IPlayerRestService
     {
-        public Task<HttpResult> TryRequest(PlayerRequestIntent playerRequest)
+        public async Task<HttpResult> TryRequest(PlayerRequestIntent playerRequest)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await Task.Delay(1000);
+
+                switch (playerRequest)
+                {
+                    case GetPlayerByIdAsync getById:
+                        return await GetAsync(getById.playerId);
+                    case PutPlayerAsync put:
+                        return await PutAsync(put.playerDto, put.playerId);
+                    case RegisterPlayerAsync post:
+                        return await RegisterAsync(post.playerDto);
+                    case DeletePlayerAsync delete:
+                        return await DeleteAsync(delete.playerId);
+                    default:
+                        return new Failure("Unknown request type");
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.Message);
+            }
         }
 
-        private async Task<HttpResult> GetMockedResults(string inputString) {
-
-            if (inputString == "not found" || inputString == "404" || inputString == "4@0.4")
+        public async Task<HttpResult> GetAsync(int playerId)
+        {
+            if (playerId == 400)
             {
-                await Task.Delay(3000);
-                return await Task.FromResult(new Failure("Not Found"));
+                return new Failure("Mocked Bad Request");
             }
-            else if (inputString == "bad request" || inputString == "400" || inputString == "4@0.0")
+            else if (playerId == 2137)
             {
-                return await Task.FromResult(new Failure("Internal server error"));
-            }
-            else if (inputString == "internal server error" || inputString == "500" || inputString == "5@0.0")
-            {
-                return await Task.FromResult(new Failure("Internal server error"));
+                throw new Exception("Mocked Exception for id 2137");
             }
             else
             {
-                Player player = new Player
+                return new Success<PlayerDto>(new PlayerDto
                 {
-                    Name = "Mockry player"
-                };
-
-                await Task.Delay(3000);
-                return await Task.FromResult(new Success<Player>(player));
+                    Id = playerId,
+                    Name = "Mocked Player",
+                    IsDead = false,
+                    AccountId = 1,
+                    RoomId = 1,
+                    TeamId = 1
+                });
             }
         }
 
-
-        public async Task<HttpResult> RegisterPlayerAsync(PostPlayerDto playerDto)
+        public async Task<HttpResult> PutAsync(PutPlayerDto playerDto, int playerId)
         {
-            return await Task.FromResult(await GetMockedResults(playerDto.Name));
+            if (playerId == 400)
+            {
+                return new Failure("Mocked Bad Request");
+            }
+            else if (playerId == 2137)
+            {
+                throw new Exception("Mocked Exception for id 2137");
+            }
+            else
+            {
+                return new Success<object>(null);
+            }
+        }
+        public async Task<HttpResult> RegisterAsync(PostPlayerDto playerDto)
+        {
+            if (playerDto.Name == "400")
+            {
+                return new Failure("Mocked Bad Request");
+            }
+            else if (playerDto.Name == "2137")
+            {
+                throw new Exception("Mocked Exception for id 2137");
+            }
+            else
+            {
+                return new Success<int>(1);
+            }
         }
 
-        public Task<HttpResult> GetAsync(int playerId)
+        public async Task<HttpResult> DeleteAsync(int playerId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<HttpResult> PutAsync(PutPlayerDto playerDto, int playerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<HttpResult> RegisterAsync(PostPlayerDto playerDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<HttpResult> DeleteAsync(int playerId)
-        {
-            throw new NotImplementedException();
+            if (playerId == 400)
+            {
+                return new Failure("Mocked Bad Request");
+            }
+            else if (playerId == 2137)
+            {
+                throw new Exception("Mocked Exception for id 2137");
+            }
+            else
+            {
+                return new Success<object>(null);
+            }
         }
 
         
