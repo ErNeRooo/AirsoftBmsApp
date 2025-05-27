@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using AirsoftBmsApp.Model;
 using AirsoftBmsApp.Model.Dto.Account;
-using AirsoftBmsApp.Model.Dto.Post;
+using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 
@@ -14,6 +14,11 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 {
     public class MockPlayerRestService : IPlayerRestService
     {
+        public Task<HttpResult> TryRequest(PlayerRequestIntent playerRequest)
+        {
+            throw new NotImplementedException();
+        }
+
         private async Task<HttpResult> GetMockedResults(string inputString) {
 
             if (inputString == "not found" || inputString == "404" || inputString == "4@0.4")
@@ -66,5 +71,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

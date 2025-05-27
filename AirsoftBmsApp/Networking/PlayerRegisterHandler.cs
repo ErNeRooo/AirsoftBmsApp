@@ -1,4 +1,4 @@
-﻿using AirsoftBmsApp.Model.Dto.Post;
+﻿using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 
@@ -15,7 +15,7 @@ namespace AirsoftBmsApp.Networking
                 Name = dynamicRequest.Name,
             };
 
-            var result = await playerRestService.RegisterAsync(postPlayerDto);
+            var result = await playerRestService.TryRequest(new RegisterPlayerAsync(postPlayerDto));
 
             switch (result)
             {

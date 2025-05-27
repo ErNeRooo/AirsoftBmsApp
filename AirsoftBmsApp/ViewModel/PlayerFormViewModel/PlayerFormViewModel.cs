@@ -1,17 +1,13 @@
 ﻿using AirsoftBmsApp.Model;
-using AirsoftBmsApp.Model.Dto.Account;
-using AirsoftBmsApp.Model.Dto.Post;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Validation;
-using AirsoftBmsApp.Validation.Rules;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Net.Http.Headers;
-using System.Net.Http;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.AccountRestService.Abstractions;
+using AirsoftBmsApp.Model.Dto.Player;
 
 namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 {

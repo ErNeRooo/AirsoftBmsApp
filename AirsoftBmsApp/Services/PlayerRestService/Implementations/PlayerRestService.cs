@@ -1,52 +1,36 @@
 ﻿using AirsoftBmsApp.Model;
 using AirsoftBmsApp.Model.Dto.Player;
-using AirsoftBmsApp.Model.Dto.Post;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using AirsoftBmsApp.Services.RestHelperService.Abstractions;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
 namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 {
-    public class PlayerRestService : IPlayerRestService
+    public class PlayerRestService(HttpClient client, IJwtTokenService jwtTokenService, IJsonHelperService jsonHelper) : IPlayerRestService
     {
-        HttpClient _client;
-        JsonSerializerOptions _serializeOptions;
-        IJwtTokenService _jwtTokenService;
-
-        public PlayerRestService(HttpClient httpClient, IJwtTokenService jwtTokenService)
-        {
-            _jwtTokenService = jwtTokenService;
-            _client = httpClient;
-            _serializeOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true,
-            };
-        }
-
-
-        public async Task<HttpResult> GetAsync(int playerId)
+        public async Task<HttpResult> TryRequest(PlayerRequestIntent playerRequest)
         {
             try
             {
-                SetAuthorizationHeader();
-
-                var response = await _client.GetAsync($"id/{playerId}");
-
-                if (response.IsSuccessStatusCode)
+                switch (playerRequest)
                 {
-                    var json = await response.Content.ReadAsStreamAsync();
-                    var player = await JsonSerializer.DeserializeAsync<PlayerDto>(json, _serializeOptions);
-
-                    return new Success<PlayerDto>(player);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
+                    case GetPlayerByIdAsync getById:
+                        SetAuthorizationHeader();
+                        return await GetAsync(getById.playerId);
+                    case PutPlayerAsync put:
+                        SetAuthorizationHeader();
+                        return await PutAsync(put.playerDto, put.playerId);
+                    case RegisterPlayerAsync post:
+                        return await RegisterAsync(post.playerDto);
+                    case DeletePlayerAsync delete:
+                        SetAuthorizationHeader();
+                        return await DeleteAsync(delete.playerId);
+                    default:
+                        return new Failure("Unknown request type");
                 }
             }
             catch (Exception ex)
@@ -55,105 +39,101 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> PutAsync(PutPlayerDto playerDto, int playerId)
+        private async Task<HttpResult> GetAsync(int playerId)
         {
-            try
+            var response = await client.GetAsync($"id/{playerId}");
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
+                var player = jsonHelper.DeserializeFromResponseAsync<PlayerDto>(response).Result;
 
-                StringContent stringContent = GetStringContent(playerDto);
-
-                var response = await _client.PutAsync($"id/{playerId}", stringContent);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return new Success<object>(null);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<PlayerDto>(player);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
-        public async Task<HttpResult> RegisterAsync(PostPlayerDto playerDto)
+        private async Task<HttpResult> PutAsync(PutPlayerDto playerDto, int playerId)
         {
-            try
+            StringContent stringContent = jsonHelper.GetStringContent(playerDto);
+
+            var response = await client.PutAsync($"id/{playerId}", stringContent);
+
+            if (response.IsSuccessStatusCode)
             {
-                var json = JsonSerializer.Serialize(playerDto, _serializeOptions);
-                StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var response = await _client.PostAsync($"register", stringContent);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var jwt = await response.Content.ReadAsStringAsync();
-                    var path = response.Headers.Location?.ToString();
-                    var idString = path?.Split('/').LastOrDefault();
-
-                    int.TryParse(idString, out int id);
-
-                    _jwtTokenService.Token = jwt;
-
-                    return new Success<int>(id);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<object>(null);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
-        public async Task<HttpResult> DeleteAsync(int playerId)
+        private async Task<HttpResult> RegisterAsync(PostPlayerDto playerDto)
         {
-            try
-            {
-                SetAuthorizationHeader();
+            StringContent stringContent = jsonHelper.GetStringContent(playerDto);
 
-                var response = await _client.DeleteAsync($"id/{playerId}");
+            var response = await client.PostAsync($"register", stringContent);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return new Success<object>(null);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
-            }
-            catch (Exception ex)
+            if (response.IsSuccessStatusCode)
             {
-                return new Error(ex.Message);
+                var jwt = await response.Content.ReadAsStringAsync();
+                int id = GetLocationIdFromResponse(response);
+
+                jwtTokenService.Token = jwt;
+
+                return new Success<int>(id);
             }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
+            }
+        }
+
+        private async Task<HttpResult> DeleteAsync(int playerId)
+        {
+            var response = await client.DeleteAsync($"id/{playerId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new Success<object>(null);
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
+            }
+        }
+
+        private int GetLocationIdFromResponse(HttpResponseMessage response)
+        {
+            var path = response.Headers.Location?.ToString();
+            var idString = path?.Split('/').LastOrDefault();
+
+            bool isParsingSuccessfull = int.TryParse(idString, out int id);
+
+            if (isParsingSuccessfull)
+            {
+                return id;
+            }
+            throw new Exception("Failed to parse ID from response location header.");
         }
 
         private void SetAuthorizationHeader()
         {
-            if (!string.IsNullOrEmpty(_jwtTokenService.Token))
+            if (!string.IsNullOrEmpty(jwtTokenService.Token))
             {
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _jwtTokenService.Token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtTokenService.Token);
             }
             else
             {
                 throw new Exception("No JWT token");
             }
-        }
-
-        private StringContent GetStringContent(object accountDto)
-        {
-            var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
-            return new StringContent(json, Encoding.UTF8, "application/json");
         }
     }
 }
