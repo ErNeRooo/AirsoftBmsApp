@@ -139,7 +139,12 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 
             if (response.IsSuccessStatusCode)
             {
-                return new Success<object>(null);
+                var path = response.Headers.Location?.ToString();
+                var idString = path?.Split('/').LastOrDefault();
+
+                int.TryParse(idString, out int id);
+
+                return new Success<int>(id);
             }
             else
             {

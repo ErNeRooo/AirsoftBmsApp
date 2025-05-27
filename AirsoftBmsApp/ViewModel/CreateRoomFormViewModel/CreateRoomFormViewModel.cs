@@ -64,7 +64,10 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
 
             IsLoading = true;
 
-            var handler = new RoomPostHandler(_roomRestService, _roomDataService, _playerDataService);
+            var postRoom = new RoomPostHandler(_roomRestService, _roomDataService, _playerDataService);
+            var joinRoom = new RoomJoinHandler(_roomRestService, _roomDataService, _playerDataService);
+
+            postRoom.SetNext(joinRoom);
 
             var postRoomDto = new PostRoomDto
             {
@@ -73,7 +76,7 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
                 MaxPlayers = 50,
             };
 
-            var result = await handler.Handle(postRoomDto);
+            var result = await postRoom.Handle(postRoomDto);
 
             switch (result)
             {

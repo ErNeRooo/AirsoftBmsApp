@@ -144,12 +144,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return new Success<RoomDto>(new RoomDto
-                {
-                    JoinCode = roomDto.JoinCode,
-                    AdminPlayerId = 1,
-                    RoomId = 1,
-                });
+                return new Success<int>(1);
             }
         }
 

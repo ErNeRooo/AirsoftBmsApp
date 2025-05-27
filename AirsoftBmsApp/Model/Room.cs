@@ -12,6 +12,7 @@ namespace AirsoftBmsApp.Model
         public int MaxPlayers { get; set; }
         public string JoinCode { get; set; }
         public int AdminPlayerId { get; set; }
+        public List<Player> Players { get; set; } = new List<Player>();
 
     }
 }

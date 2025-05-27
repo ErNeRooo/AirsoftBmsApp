@@ -19,5 +19,8 @@ namespace AirsoftBmsApp.Model
         
         [ObservableProperty]
         private Account? _account;
+
+        [ObservableProperty]
+        private int _roomId;
     }
 }

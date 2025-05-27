@@ -5,41 +5,52 @@
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.JoinRoomFormViewModel"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              x:DataType="viewModel:JoinRoomFormViewModel"
              x:Class="AirsoftBmsApp.View.Pages.JoinRoomPage"
              Title="Join Room"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              >
-
-    <VerticalStackLayout 
-        VerticalOptions="Center" 
-        Padding="40"
-        Spacing="10"
-        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-        >
-        <text:Header 
-            Text="Join Room"
+    <Grid>
+        <error:ErrorMessageView
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
             />
-
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter room join code"
-            ValidatableObject="{Binding RoomForm.JoinCode}"
-            ValidateCommand="{Binding ValidateJoinCodeCommand}" 
-        />
         
-        <inputs:ValidatableStyledEntry
-            Placeholder="Enter room password" 
-            ValidatableObject="{Binding RoomForm.Password}"
-            ValidateCommand="{Binding ValidatePasswordCommand}" 
-            IsPassword="True"
-        />
+        <VerticalStackLayout 
+            VerticalOptions="Center" 
+            Padding="40"
+            Spacing="10"
+            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+            >
+            <text:Header 
+                Text="Join Room"
+                />
 
-        <buttons:FilledButton
-            Text="Join"
-            Command="{Binding JoinRoomAsyncCommand}"
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter room join code"
+                ValidatableObject="{Binding RoomForm.JoinCode}"
+                ValidateCommand="{Binding ValidateJoinCodeCommand}" 
+            />
+        
+            <inputs:ValidatableStyledEntry
+                Placeholder="Enter room password" 
+                ValidatableObject="{Binding RoomForm.Password}"
+                ValidateCommand="{Binding ValidatePasswordCommand}" 
+                IsPassword="True"
             />
 
-        <buttons:BackButton />
+            <buttons:FilledButton
+                Text="Join"
+                Command="{Binding JoinRoomAsyncCommand}"
+                />
 
-    </VerticalStackLayout>
+            <buttons:BackButton />
+
+        </VerticalStackLayout>
+
+        <loading:LoadingScreen 
+            IsLoading="{Binding IsLoading}"
+        />
+    </Grid>
 </ContentPage>
