@@ -5,6 +5,8 @@ using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerDataService.Implementations;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Implementations;
+using AirsoftBmsApp.Services.RestHelperService.Abstractions;
+using AirsoftBmsApp.Services.RestHelperService.Implementations;
 using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.JoinRoomFormViewModel;
@@ -42,6 +44,7 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IValidationHelperFactory, ValidationHelperFactory>();
             builder.Services.AddSingleton<IPlayerDataService, PlayerDataService>();
             builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
+            builder.Services.AddSingleton<IJsonHelperService, JsonHelperService>();
 
             var androidBaseAddress = "http://10.0.2.2:8080/";
             var baseAddress = "http://localhost:8080/";

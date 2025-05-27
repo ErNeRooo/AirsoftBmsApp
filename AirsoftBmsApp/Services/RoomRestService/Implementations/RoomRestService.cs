@@ -1,79 +1,39 @@
-﻿using AirsoftBmsApp.Model;
-using AirsoftBmsApp.Model.Dto.Player;
-using AirsoftBmsApp.Model.Dto.Post;
-using AirsoftBmsApp.Model.Dto.Room;
+﻿using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using AirsoftBmsApp.Services.RestHelperService.Abstractions;
+using AirsoftBmsApp.Services.RoomRestService.Abstractions;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
 
 namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 {
-    public class RoomRestService : IRoomRestService
+    public class RoomRestService(HttpClient client, IJsonHelperService jsonHelper, IJwtTokenService jwtTokenService) : IRoomRestService
     {
-        HttpClient _client;
-        JsonSerializerOptions _serializeOptions;
-        IJwtTokenService _jwtTokenService;
-
-        public RoomRestService(HttpClient httpClient, IJwtTokenService jwtTokenService)
-        {
-            _jwtTokenService = jwtTokenService;
-            _client = httpClient;
-            _serializeOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true,
-            };
-        }
-
-        public async Task<HttpResult> GetByIdAsync(int roomId)
+        public async Task<HttpResult> TryRequest(RoomRequestIntent roomRequest)
         {
             try
             {
                 SetAuthorizationHeader();
 
-                var response = await _client.GetAsync($"id/{roomId}");
-
-                if (response.IsSuccessStatusCode)
+                switch (roomRequest)
                 {
-                    var json = await response.Content.ReadAsStreamAsync();
-                    var room = await JsonSerializer.DeserializeAsync<RoomDto>(json, _serializeOptions);
-
-                    return new Success<RoomDto>(room);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
-            }
-            catch (Exception ex)
-            {
-                return new Error(ex.Message);
-            }
-        }
-
-        public async Task<HttpResult> GetByJoinCodeAsync(string joinCode)
-        {
-            try
-            {
-                SetAuthorizationHeader();
-
-                var response = await _client.GetAsync($"join-code/{joinCode}");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStreamAsync();
-                    var room = await JsonSerializer.DeserializeAsync<RoomDto>(json, _serializeOptions);
-
-                    return new Success<RoomDto>(room);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
+                    case GetRoomByIdAsync getById:
+                        return await GetByIdAsync(getById.roomId);
+                    case GetRoomByJoinCodeAsync getByJoinCode:
+                        return await GetByJoinCodeAsync(getByJoinCode.joinCode);
+                    case PutRoomAsync put:
+                        return await PutAsync(put.roomDto, put.roomId);
+                    case PostRoomAsync post:
+                        return await PostAsync(post.roomDto);
+                    case DeleteRoomAsync delete:
+                        return await DeleteAsync(delete.roomId);
+                    case JoinRoomAsync join:
+                        return await JoinAsync(join.roomDto);
+                    case LeaveRoomAsync leave:
+                        return await LeaveAsync();
+                    default:
+                        return new Failure("Unknown request type");
                 }
             }
             catch (Exception ex)
@@ -82,151 +42,137 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> PutAsync(PutRoomDto roomDto, int roomId)
+        private async Task<HttpResult> GetByIdAsync(int roomId)
         {
-            try
+            var response = await client.GetAsync($"id/{roomId}");
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
+                var room = await jsonHelper.DeserializeFromResponseAsync<RoomDto>(response);
 
-                StringContent stringContent = GetStringContent(roomDto);
-
-                var response = await _client.PutAsync($"id/{roomId}", stringContent);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return new Success<object>(null);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<RoomDto>(room);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
-        public async Task<HttpResult> PostAsync(PostRoomDto roomDto)
+        private async Task<HttpResult> GetByJoinCodeAsync(string joinCode)
         {
-            try
+            var response = await client.GetAsync($"join-code/{joinCode}");
+
+            if (response.IsSuccessStatusCode)
             {
-                StringContent stringContent = GetStringContent(roomDto);
+                var room = jsonHelper.DeserializeFromResponseAsync<RoomDto>(response).Result;
 
-                var response = await _client.PostAsync($"register", stringContent);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var path = response.Headers.Location?.ToString();
-                    var idString = path?.Split('/').LastOrDefault();
-
-                    int.TryParse(idString, out int id);
-
-                    return new Success<int>(id);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<RoomDto>(room);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
+            }
+            
+        }
+
+        private async Task<HttpResult> PutAsync(PutRoomDto roomDto, int roomId)
+        {
+            StringContent stringContent = jsonHelper.GetStringContent(roomDto);
+
+            var response = await client.PutAsync($"id/{roomId}", stringContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new Success<object>(null);
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
-        public async Task<HttpResult> DeleteAsync(int roomId)
+        private async Task<HttpResult> PostAsync(PostRoomDto roomDto)
         {
-            try
+            StringContent stringContent = jsonHelper.GetStringContent(roomDto);
+
+            var response = await client.PostAsync($"register", stringContent);
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
+                var path = response.Headers.Location?.ToString();
+                var idString = path?.Split('/').LastOrDefault();
 
-                var response = await _client.DeleteAsync($"id/{roomId}");
+                int.TryParse(idString, out int id);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return new Success<object>(null);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<int>(id);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
-        public async Task<HttpResult> JoinAsync(LogInRoomDto roomDto)
+        private async Task<HttpResult> DeleteAsync(int roomId)
         {
-            try
+            var response = await client.DeleteAsync($"id/{roomId}");
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
-
-                var content = GetStringContent(roomDto);
-
-                var response = await _client.PostAsync("join", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return new Success<object>(null);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<object>(null);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
-        public async Task<HttpResult> LeaveAsync()
+        private async Task<HttpResult> JoinAsync(LogInRoomDto roomDto)
         {
-            try
+            var content = jsonHelper.GetStringContent(roomDto);
+
+            var response = await client.PostAsync("join", content);
+
+            if (response.IsSuccessStatusCode)
             {
-                SetAuthorizationHeader();
-
-                var response = await _client.PostAsync("leave", null);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return new Success<object>(null);
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    return new Failure(errorContent);
-                }
+                return new Success<object>(null);
             }
-            catch (Exception ex)
+            else
             {
-                return new Error(ex.Message);
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
+            }
+        }
+
+        private async Task<HttpResult> LeaveAsync()
+        {
+            var response = await client.PostAsync("leave", null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new Success<object>(null);
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
             }
         }
 
         private void SetAuthorizationHeader()
         {
-            if (!string.IsNullOrEmpty(_jwtTokenService.Token))
+            if (!string.IsNullOrEmpty(jwtTokenService.Token))
             {
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _jwtTokenService.Token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtTokenService.Token);
             }
             else
             {
                 throw new Exception("No JWT token");
             }
-        }
-
-        private StringContent GetStringContent(object accountDto)
-        {
-            var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
-            return new StringContent(json, Encoding.UTF8, "application/json");
         }
     }
 }

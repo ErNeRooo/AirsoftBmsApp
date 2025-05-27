@@ -61,7 +61,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             {
                 SetAuthorizationHeader();
 
-                StringContent stringContent = GetStringContet(playerDto);
+                StringContent stringContent = GetStringContent(playerDto);
 
                 var response = await _client.PutAsync($"id/{playerId}", stringContent);
 
@@ -150,7 +150,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        private StringContent GetStringContet(object accountDto)
+        private StringContent GetStringContent(object accountDto)
         {
             var json = JsonSerializer.Serialize(accountDto, _serializeOptions);
             return new StringContent(json, Encoding.UTF8, "application/json");
