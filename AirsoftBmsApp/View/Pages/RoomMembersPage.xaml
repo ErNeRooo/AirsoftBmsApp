@@ -5,40 +5,53 @@
              xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.RoomViewModel"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              x:DataType="viewModel:RoomViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              Title="RoomMembersPage">
-
-    <VerticalStackLayout
-        Padding="40, 20"
-        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-        >
-        <FlexLayout
-            JustifyContent="SpaceBetween"
-            AlignItems="Center"
-            Margin="0, 0, 0, 20"
+    <Grid>
+        <VerticalStackLayout
+            Padding="40, 20"
+            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
             >
-            <Label 
-                Text="Room 021370"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center"
-                FontSize="30"
-                TextColor="{StaticResource Primary}"
-                FontFamily="{StaticResource GlobalFont}" 
-                />
+            <FlexLayout
+                JustifyContent="SpaceBetween"
+                AlignItems="Center"
+                Margin="0, 0, 0, 20"
+                >
+                <Label 
+                    Text="Room 021370"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    FontSize="30"
+                    TextColor="{StaticResource Primary}"
+                    FontFamily="{StaticResource GlobalFont}" 
+                    />
 
-            <buttons:BackButton
-                Text="Leave"
-                Command="{Binding LeaveRoomCommand}"
-                />
-        </FlexLayout>
+                <buttons:BackButton
+                    Text="Leave"
+                    Command="{Binding LeaveRoomCommand}"
+                    />
+            </FlexLayout>
 
-        <CollectionView ItemsSource="{Binding Teams}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <team:TeamView></team:TeamView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+            <error:ErrorMessageView
+                ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            />
+
+            <ScrollView>
+                <CollectionView ItemsSource="{Binding Teams}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <team:TeamView></team:TeamView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </VerticalStackLayout>
+
+        <loading:LoadingScreen 
+            IsLoading="{Binding IsLoading}"
+        />
+    </Grid>
 </ContentPage>

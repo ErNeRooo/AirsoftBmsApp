@@ -20,9 +20,17 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
     public partial class RoomViewModel(IPlayerDataService playerDataService, IPlayerRestService playerRestService, IRoomRestService roomRestService, IRoomDataService roomDataService) : ObservableObject, IRoomViewModel
     {
+        [ObservableProperty]
+        bool isLoading = false;
+
+        [ObservableProperty]
+        string errorMessage = "";
+
         [RelayCommand]
         async Task LeaveRoom()
         {
+            IsLoading = true;
+
             var leaveRoom = new RoomLeaveHandler(roomRestService, roomDataService, playerDataService);
 
             var result = await leaveRoom.Handle(null);
@@ -32,7 +40,17 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
                 case SuccessBase _:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
                     break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
             }
+
+            IsLoading = false;
         }
     }
 }
