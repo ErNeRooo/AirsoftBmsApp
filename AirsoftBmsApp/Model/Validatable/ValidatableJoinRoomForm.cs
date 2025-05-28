@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model.Validatable
 {
-    public class ValidatableRoomForm
+    public class ValidatableJoinRoomForm
     {
         public ValidatableObject<string> JoinCode { get; set; } = new();
         public ValidatableObject<string> Password { get; set; } = new();

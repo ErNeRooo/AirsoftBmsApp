@@ -20,7 +20,7 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
         IRoomRestService _roomRestService;
 
         [ObservableProperty]
-        ValidatableRoomForm roomForm = new();
+        ValidatableJoinRoomForm roomForm = new();
 
         [ObservableProperty]
         bool isLoading = false;
@@ -34,18 +34,6 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
             _playerDataService = playerDataService;
             _roomDataService = roomDataService;
             _roomRestService = roomRestService;
-        }
-        public JoinRoomFormViewModel()
-        {
-            roomForm.JoinCode.Validations.Add(new IsNotNullOrEmptyRule<string>
-            {
-                ValidationMessage = "Join code is required."
-            });
-            roomForm.JoinCode.Validations.Add(new HasLengthRule<string>
-            {
-                ValidationMessage = "Join code must be 6 characters.",
-                Length = 6
-            });
         }
 
         [RelayCommand]

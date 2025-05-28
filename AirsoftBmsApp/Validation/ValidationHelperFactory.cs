@@ -10,18 +10,25 @@ namespace AirsoftBmsApp.Validation
 {
     public class ValidationHelperFactory : IValidationHelperFactory
     {
-        public void AddValidations(ValidatablePlayerForm playerForm)
+        public void AddValidations(ValidatablePlayerForm form)
         {
             var validationHelper = new PlayerFormValidationHelper();
 
-            validationHelper.AddAllValidations(playerForm);
+            validationHelper.AddAllValidations(form);
         }
 
-        public void AddValidations(ValidatableRoomForm roomForm)
+        public void AddValidations(ValidatableCreateRoomForm form)
         {
             var validationHelper = new CreateRoomFormValidationHelper();
 
-            validationHelper.AddAllValidations(roomForm);
+            validationHelper.AddAllValidations(form);
+        }
+
+        public void AddValidations(ValidatableJoinRoomForm form)
+        {
+            var validationHelper = new JoinRoomFormValidationHelper();
+
+            validationHelper.AddAllValidations(form);
         }
     }
 }

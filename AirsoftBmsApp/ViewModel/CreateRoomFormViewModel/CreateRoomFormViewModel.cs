@@ -21,7 +21,7 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
         IRoomRestService _roomRestService;
 
         [ObservableProperty]
-        ValidatableRoomForm roomForm = new();
+        ValidatableCreateRoomForm roomForm = new();
 
         [ObservableProperty]
         bool isLoading = false;

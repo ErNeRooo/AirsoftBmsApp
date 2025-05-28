@@ -9,7 +9,8 @@ namespace AirsoftBmsApp.Validation
 {
     public interface IValidationHelperFactory
     {
-        void AddValidations(ValidatablePlayerForm playerForm);
-        void AddValidations(ValidatableRoomForm roomForm);
+        void AddValidations(ValidatablePlayerForm form);
+        void AddValidations(ValidatableCreateRoomForm form);
+        void AddValidations(ValidatableJoinRoomForm form);
     }
 }

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Validation.ValidationHelpers
 {
-    public class CreateRoomFormValidationHelper
+    public class JoinRoomFormValidationHelper
     {
-        public void AddAllValidations(ValidatableCreateRoomForm roomForm)
+        public void AddAllValidations(ValidatableJoinRoomForm roomForm)
         {
             AddJoinCodeValidations(roomForm);
         }
 
-        private void AddJoinCodeValidations(ValidatableCreateRoomForm roomForm)
+        private void AddJoinCodeValidations(ValidatableJoinRoomForm roomForm)
         {
-            roomForm.JoinCode.Validations.Add(new OptionalLengthRule<string>
+            roomForm.JoinCode.Validations.Add(new HasLengthRule<string>
             {
-                ValidationMessage = "Password must be exactly 6 characters, if provided.",
+                ValidationMessage = "Join code must be exactly 6 characters",
                 Length = 6
             });
         }
