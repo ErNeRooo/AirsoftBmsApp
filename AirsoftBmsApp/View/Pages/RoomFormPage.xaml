@@ -5,41 +5,51 @@
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:airsoftBmsApp="clr-namespace:AirsoftBmsApp"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.RoomFormPageViewModel"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              x:Class="AirsoftBmsApp.RoomFormPage"
              Title="Join or Create Room"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:RoomFormViewModel"
              >
-
-    <VerticalStackLayout 
-        VerticalOptions="Center" 
-        Padding="40"
-        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-        Spacing="10"
-        >
-        <text:Header
-            x:Name="Title"
-            Text="Welcome ErNeRooo!"/>
-
-        <BoxView Height="10" />
-
-        <buttons:FilledButton 
-            Text="Join Room"
-            Clicked="OnJoinRoomButtonClicked"
+    <Grid>
+        <error:ErrorMessageView
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
             />
+        
+        <VerticalStackLayout 
+            VerticalOptions="Center" 
+            Padding="40"
+            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+            Spacing="10"
+            >
+            <text:Header
+                x:Name="Title"
+                Text="Welcome ErNeRooo!"/>
 
-        <text:ResizableLabelWithHorizontalLine />
+            <BoxView Height="10" />
 
-        <buttons:OutlinedButton 
-            Text="Create Room"
-            Clicked="OnCreateRoomButtonClicked"
-            />
+            <buttons:FilledButton 
+                Text="Join Room"
+                Clicked="OnJoinRoomButtonClicked"
+                />
 
-        <buttons:BackButton 
-            Text="Log Out"
-            Command="{Binding LogOutCommand}"
-            />
+            <text:ResizableLabelWithHorizontalLine />
 
-    </VerticalStackLayout>
+            <buttons:OutlinedButton 
+                Text="Create Room"
+                Clicked="OnCreateRoomButtonClicked"
+                />
 
+            <buttons:BackButton 
+                Text="Log Out"
+                Command="{Binding LogOutCommand}"
+                />
+
+        </VerticalStackLayout>
+
+        <loading:LoadingScreen 
+            IsLoading="{Binding IsLoading}"
+        />
+    </Grid>
 </ContentPage>

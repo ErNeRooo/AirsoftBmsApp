@@ -14,9 +14,17 @@ namespace AirsoftBmsApp.ViewModel.RoomFormPageViewModel
 {
     public partial class RoomFormViewModel(IPlayerDataService playerDataService, IPlayerRestService playerRestService) : ObservableObject, IRoomFormViewModel
     {
+        [ObservableProperty]
+        bool isLoading = false;
+
+        [ObservableProperty]
+        string errorMessage = "";
+
         [RelayCommand]
         async Task LogOut()
         {
+            IsLoading = true;
+
             var deletePlayer = new PlayerDeleteHandler(playerRestService, playerDataService);
 
             var result = await deletePlayer.Handle(playerDataService.Player.Id);
@@ -26,9 +34,17 @@ namespace AirsoftBmsApp.ViewModel.RoomFormPageViewModel
                 case SuccessBase success:
                     await Shell.Current.GoToAsync("//PlayerFormPage");
                     break;
-                default:
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
                     break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
             }
+
+            IsLoading = false;
         }
 
         [RelayCommand]
