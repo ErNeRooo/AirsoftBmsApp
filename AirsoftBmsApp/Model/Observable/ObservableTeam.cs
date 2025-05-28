@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AirsoftBmsApp.Resources.Styles.TeamTheme;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +29,7 @@ namespace AirsoftBmsApp.Model
         private ObservableCollection<ObservablePlayer> players;
 
         [ObservableProperty]
-        private ObservableTeamTheme teamTheme;
+        private ITeamTheme teamTheme;
     }
 
 }

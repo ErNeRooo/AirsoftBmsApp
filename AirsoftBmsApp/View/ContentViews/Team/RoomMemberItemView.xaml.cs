@@ -1,4 +1,5 @@
 using AirsoftBmsApp.Model;
+using AirsoftBmsApp.Resources.Styles.TeamTheme;
 
 namespace AirsoftBmsApp.View.ContentViews.Team;
 
@@ -12,11 +13,11 @@ public partial class RoomMemberItemView : Border
         set => SetValue(RoomMemberProperty, value);
     }
 
-    public static readonly BindableProperty TeamThemeProperty = BindableProperty.Create(nameof(Theme), typeof(ObservableTeamTheme), typeof(RoomMemberItemView));
+    public static readonly BindableProperty TeamThemeProperty = BindableProperty.Create(nameof(Theme), typeof(ITeamTheme), typeof(RoomMemberItemView));
 
-    public ObservableTeamTheme Theme
+    public ITeamTheme Theme
     {
-        get => (ObservableTeamTheme)GetValue(TeamThemeProperty);
+        get => (ITeamTheme)GetValue(TeamThemeProperty);
         set => SetValue(TeamThemeProperty, value);
     }
 

@@ -22,8 +22,6 @@ namespace AirsoftBmsApp.Model
         [ObservableProperty]
         private int adminPlayerId;
 
-        public ObservableCollection<ObservablePlayer> PlayersWithoutTeam = new ObservableCollection<ObservablePlayer>();
-
         public ObservableCollection<ObservableTeam> Teams { get; set; } = new ObservableCollection<ObservableTeam>();
     }
 }

@@ -26,7 +26,7 @@ namespace AirsoftBmsApp.Networking.Handlers.Room
                     roomDataService.Room.Id = success.data;
                     playerDataService.Player.RoomId = success.data;
                     roomDataService.Room.JoinCode = postRoomDto.JoinCode;
-                    roomDataService.Room.PlayersWithoutTeam.Add(playerDataService.Player);
+                    roomDataService.Room.Teams[0].Players.Add(playerDataService.Player);
 
                     var nextResult = await base.Handle(request);
 

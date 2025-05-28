@@ -21,6 +21,9 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
     public partial class RoomViewModel(IPlayerDataService playerDataService, IPlayerRestService playerRestService, IRoomRestService roomRestService, IRoomDataService roomDataService) : ObservableObject, IRoomViewModel
     {
         [ObservableProperty]
+        ObservableRoom room = roomDataService.Room;
+
+        [ObservableProperty]
         bool isLoading = false;
 
         [ObservableProperty]
