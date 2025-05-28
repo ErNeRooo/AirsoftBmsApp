@@ -21,7 +21,7 @@ namespace AirsoftBmsApp.ViewModel.RoomFormPageViewModel
         string errorMessage = "";
 
         [RelayCommand]
-        async Task LogOut()
+        public async Task LogOut()
         {
             IsLoading = true;
 

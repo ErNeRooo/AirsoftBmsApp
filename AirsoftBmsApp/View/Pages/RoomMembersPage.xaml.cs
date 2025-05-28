@@ -9,7 +9,6 @@ public partial class RoomMembersPage : ContentPage
 
 	public RoomMembersPage(IRoomViewModel viewModel)
 	{
-
         _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
         InitializeComponent();
         BindingContext = viewModel;

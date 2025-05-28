@@ -8,5 +8,6 @@ namespace AirsoftBmsApp.ViewModel.RoomFormPageViewModel
 {
     public interface IRoomFormViewModel
     {
+        public Task LogOut();
     }
 }

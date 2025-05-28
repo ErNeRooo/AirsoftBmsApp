@@ -7,10 +7,13 @@ namespace AirsoftBmsApp
 {
     public partial class RoomFormPage : ContentPage
     {
+        IRoomFormViewModel _viewModel;
+
         public RoomFormPage(IPlayerDataService playerDataService, IRoomFormViewModel viewModel)
         {
             InitializeComponent();
             BindingContext = viewModel;
+            _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
             Title.Text = playerDataService.Player.Name;
         }
 
@@ -22,6 +25,12 @@ namespace AirsoftBmsApp
         public async void OnCreateRoomButtonClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(CreateRoomPage));
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            _viewModel.LogOut();
+            return true;
         }
     }
 }
