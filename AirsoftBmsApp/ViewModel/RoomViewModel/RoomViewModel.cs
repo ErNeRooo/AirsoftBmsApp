@@ -27,7 +27,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         string errorMessage = "";
 
         [RelayCommand]
-        async Task LeaveRoom()
+        public async Task LeaveRoom()
         {
             IsLoading = true;
 
