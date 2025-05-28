@@ -9,6 +9,6 @@ namespace AirsoftBmsApp.Services.RoomDataService.Abstractions
 {
     public interface IRoomDataService
     {
-        Room Room { get; set; }
+        ObservableRoom Room { get; set; }
     }
 }

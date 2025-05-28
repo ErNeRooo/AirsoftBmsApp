@@ -4,9 +4,11 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:airsoftBmsApp="clr-namespace:AirsoftBmsApp"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.RoomFormPageViewModel"
              x:Class="AirsoftBmsApp.RoomFormPage"
              Title="Join or Create Room"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
+             x:DataType="viewModel:RoomFormViewModel"
              >
 
     <VerticalStackLayout 
@@ -35,7 +37,7 @@
 
         <buttons:BackButton 
             Text="Log Out"
-            Path="//PlayerFormPage"
+            Command="{Binding LogOutCommand}"
             />
 
     </VerticalStackLayout>

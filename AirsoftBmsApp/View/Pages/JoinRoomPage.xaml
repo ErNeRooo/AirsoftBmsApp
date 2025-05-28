@@ -45,7 +45,9 @@
                 Command="{Binding JoinRoomAsyncCommand}"
                 />
 
-            <buttons:BackButton />
+            <buttons:BackButton 
+                Command="{Binding RedirectCommand}"
+                />
 
         </VerticalStackLayout>
 

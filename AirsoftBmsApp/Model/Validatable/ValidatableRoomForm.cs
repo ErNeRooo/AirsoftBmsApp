@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Model
+namespace AirsoftBmsApp.Model.Validatable
 {
-    public class RoomForm
+    public class ValidatableRoomForm
     {
         public ValidatableObject<string> JoinCode { get; set; } = new();
         public ValidatableObject<string> Password { get; set; } = new();

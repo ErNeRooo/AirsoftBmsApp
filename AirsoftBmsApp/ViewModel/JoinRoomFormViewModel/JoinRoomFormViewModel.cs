@@ -1,5 +1,5 @@
-﻿using AirsoftBmsApp.Model;
-using AirsoftBmsApp.Model.Dto.Room;
+﻿using AirsoftBmsApp.Model.Dto.Room;
+using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.Handlers.Room;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
@@ -20,7 +20,7 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
         IRoomRestService _roomRestService;
 
         [ObservableProperty]
-        RoomForm roomForm = new();
+        ValidatableRoomForm roomForm = new();
 
         [ObservableProperty]
         bool isLoading = false;
@@ -65,6 +65,12 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
         void ValidatePassword()
         {
             roomForm.Password.Validate();
+        }
+
+        [RelayCommand]
+        async Task Redirect(string path)
+        {
+            await Shell.Current.GoToAsync(path);
         }
 
         [RelayCommand]

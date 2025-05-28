@@ -1,4 +1,4 @@
-﻿using AirsoftBmsApp.Model;
+﻿using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Validation.Rules;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
 {
     public class PlayerFormValidationHelper
     {
-        public void AddAllValidations(PlayerForm playerForm)
+        public void AddAllValidations(ValidatablePlayerForm playerForm)
         {
             AddNameValidations(playerForm);
             AddEmailValidations(playerForm);
@@ -18,7 +18,7 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
             AddConfirmPasswordValidations(playerForm);
         }
 
-        public void AddNameValidations(PlayerForm playerForm)
+        public void AddNameValidations(ValidatablePlayerForm playerForm)
         {
             playerForm.Name.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
@@ -32,7 +32,7 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
             });
         }
 
-        private void AddEmailValidations(PlayerForm playerForm)
+        private void AddEmailValidations(ValidatablePlayerForm playerForm)
         {
             playerForm.Email.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
@@ -45,7 +45,7 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
             });
         }
 
-        private void AddPasswordValidations(PlayerForm playerForm)
+        private void AddPasswordValidations(ValidatablePlayerForm playerForm)
         {
             playerForm.Password.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
@@ -83,7 +83,7 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
             });
         }
 
-        private void AddConfirmPasswordValidations(PlayerForm playerForm)
+        private void AddConfirmPasswordValidations(ValidatablePlayerForm playerForm)
         {
             playerForm.ConfirmPassword.Validations.Add(new IsNotNullOrEmptyRule<string>
             {

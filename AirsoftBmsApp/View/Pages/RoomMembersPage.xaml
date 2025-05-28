@@ -29,7 +29,7 @@
 
             <buttons:BackButton
                 Text="Leave"
-                Path="//PlayerFormPage"
+                Command="{Binding LeaveRoomCommand}"
                 />
         </FlexLayout>
 

@@ -9,6 +9,6 @@ namespace AirsoftBmsApp.Services.PlayerDataService.Abstractions
 {
     public interface IPlayerDataService
     {
-        Player Player { get; set; }
+        ObservablePlayer Player { get; set; }
     }
 }

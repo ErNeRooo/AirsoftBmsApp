@@ -14,6 +14,7 @@ using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.JoinRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.PlayerFormViewModel;
+using AirsoftBmsApp.ViewModel.RoomFormPageViewModel;
 using AirsoftBmsApp.ViewModel.RoomViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
@@ -36,6 +37,7 @@ namespace AirsoftBmsApp
                 });
 
             builder.Services.AddSingleton<IRoomViewModel, RoomViewModel>();
+            builder.Services.AddTransient<IRoomFormViewModel, RoomFormViewModel>();
             builder.Services.AddTransient<IPlayerFormViewModel, PlayerFormViewModel>();
             builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
             builder.Services.AddTransient<IJoinRoomFormViewModel, JoinRoomFormViewModel>();

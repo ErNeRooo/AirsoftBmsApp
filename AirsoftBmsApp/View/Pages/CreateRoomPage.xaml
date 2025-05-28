@@ -44,7 +44,8 @@
                 Command="{Binding CreateRoomCommand}"
             />
 
-            <buttons:BackButton />
+            <buttons:BackButton
+                Command="{Binding RedirectCommand}"/>
 
         </VerticalStackLayout>
 

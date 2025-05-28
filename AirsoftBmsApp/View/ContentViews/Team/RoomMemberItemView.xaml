@@ -9,7 +9,7 @@
     StrokeShape="RoundRectangle 25"
     StrokeThickness="0"
     Padding="10, 0"
-    x:DataType="models:RoomMember"
+    x:DataType="models:ObservablePlayer"
     >
     <Label
         FontFamily="{StaticResource GlobalFont}" 

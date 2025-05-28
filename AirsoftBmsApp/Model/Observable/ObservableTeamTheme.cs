@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model
 {
-    public partial class Player : ObservableObject
+    public partial class ObservableTeamTheme : ObservableObject
     {
         [ObservableProperty]
-        private int _id;
+        private Color backgroundColor;
 
         [ObservableProperty]
-        private string _name;
-        
-        [ObservableProperty]
-        private Account? _account;
+        private Color surfaceColor;
 
         [ObservableProperty]
-        private int _roomId;
+        private Color titleColor;
+
+        [ObservableProperty]
+        private Color fontColor;
     }
 }

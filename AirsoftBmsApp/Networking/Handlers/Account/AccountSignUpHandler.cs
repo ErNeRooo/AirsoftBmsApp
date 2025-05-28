@@ -28,7 +28,7 @@ namespace AirsoftBmsApp.Networking.Handlers.Account
             switch (result)
             {
                 case Success<int> success:
-                    playerDataService.Player.Account = new Model.Account
+                    playerDataService.Player.Account = new Model.ObservableAccount
                     {
                         Id = success.data,
                         Email = signUpAccountDto.Email

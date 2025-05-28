@@ -1,4 +1,4 @@
-﻿using AirsoftBmsApp.Model;
+﻿using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Validation.Rules;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
 {
     public class CreateRoomFormValidationHelper
     {
-        public void AddAllValidations(RoomForm roomForm)
+        public void AddAllValidations(ValidatableRoomForm roomForm)
         {
             AddJoinCodeValidations(roomForm);
         }
 
-        private void AddJoinCodeValidations(RoomForm roomForm)
+        private void AddJoinCodeValidations(ValidatableRoomForm roomForm)
         {
             roomForm.JoinCode.Validations.Add(new OptionalLengthRule<string>
             {

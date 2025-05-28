@@ -1,4 +1,4 @@
-﻿using AirsoftBmsApp.Model;
+﻿using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Validation.ValidationHelpers;
 using System;
 using System.Collections.Generic;
@@ -10,14 +10,14 @@ namespace AirsoftBmsApp.Validation
 {
     public class ValidationHelperFactory : IValidationHelperFactory
     {
-        public void AddValidations(PlayerForm playerForm)
+        public void AddValidations(ValidatablePlayerForm playerForm)
         {
             var validationHelper = new PlayerFormValidationHelper();
 
             validationHelper.AddAllValidations(playerForm);
         }
 
-        public void AddValidations(RoomForm roomForm)
+        public void AddValidations(ValidatableRoomForm roomForm)
         {
             var validationHelper = new CreateRoomFormValidationHelper();
 

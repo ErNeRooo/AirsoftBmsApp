@@ -4,19 +4,19 @@ namespace AirsoftBmsApp.View.ContentViews.Team;
 
 public partial class RoomMemberItemView : Border
 {
-    public static readonly BindableProperty RoomMemberProperty = BindableProperty.Create(nameof(RoomMember), typeof(RoomMember), typeof(RoomMemberItemView));
+    public static readonly BindableProperty RoomMemberProperty = BindableProperty.Create(nameof(RoomMember), typeof(ObservablePlayer), typeof(RoomMemberItemView));
 
-    public RoomMember RoomMember
+    public ObservablePlayer RoomMember
     {
-        get => (RoomMember)GetValue(RoomMemberProperty);
+        get => (ObservablePlayer)GetValue(RoomMemberProperty);
         set => SetValue(RoomMemberProperty, value);
     }
 
-    public static readonly BindableProperty TeamThemeProperty = BindableProperty.Create(nameof(Theme), typeof(TeamTheme), typeof(RoomMemberItemView));
+    public static readonly BindableProperty TeamThemeProperty = BindableProperty.Create(nameof(Theme), typeof(ObservableTeamTheme), typeof(RoomMemberItemView));
 
-    public TeamTheme Theme
+    public ObservableTeamTheme Theme
     {
-        get => (TeamTheme)GetValue(TeamThemeProperty);
+        get => (ObservableTeamTheme)GetValue(TeamThemeProperty);
         set => SetValue(TeamThemeProperty, value);
     }
 

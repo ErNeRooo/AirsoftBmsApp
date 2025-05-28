@@ -1,14 +1,16 @@
 ﻿using System.Windows.Input;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.View.Pages;
+using AirsoftBmsApp.ViewModel.RoomFormPageViewModel;
 
 namespace AirsoftBmsApp
 {
     public partial class RoomFormPage : ContentPage
     {
-        public RoomFormPage(IPlayerDataService playerDataService)
+        public RoomFormPage(IPlayerDataService playerDataService, IRoomFormViewModel viewModel)
         {
             InitializeComponent();
+            BindingContext = viewModel;
             Title.Text = playerDataService.Player.Name;
         }
 

@@ -13,9 +13,11 @@
         BorderWidth="2"
         FontFamily="{StaticResource GlobalFont}" 
         CornerRadius="25"
-        Text="{Binding Text, Source={RelativeSource AncestorType={x:Type buttons:BackButton}}}"
+        BindingContext="{Binding Source={RelativeSource AncestorType={x:Type buttons:BackButton}}}"
+        Text="{Binding Text}"
         FontSize="20"
         Padding="10, 0"
-        Clicked="OnBackButtonClicked"
+        Command="{Binding Command}"
+        CommandParameter="{Binding CommandParameter}"
     />
 </ContentView>

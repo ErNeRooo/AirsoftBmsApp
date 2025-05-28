@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using AirsoftBmsApp.Validation;
 
-namespace AirsoftBmsApp.Model
+namespace AirsoftBmsApp.Model.Validatable
 {
-    public class PlayerForm
+    public class ValidatablePlayerForm
     {
         public ValidatableObject<string> Name { get; set; } = new();
         public ValidatableObject<string> Email { get; set; } = new();

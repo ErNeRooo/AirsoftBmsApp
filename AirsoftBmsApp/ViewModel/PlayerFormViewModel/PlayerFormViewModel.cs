@@ -1,5 +1,4 @@
-﻿using AirsoftBmsApp.Model;
-using AirsoftBmsApp.Networking;
+﻿using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Validation;
@@ -9,6 +8,7 @@ using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Networking.Handlers.Player;
 using AirsoftBmsApp.Networking.Handlers.Account;
+using AirsoftBmsApp.Model.Validatable;
 
 namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 {
@@ -19,7 +19,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         private IAccountRestService _accountRestService;
 
         [ObservableProperty] 
-        PlayerForm playerForm = new();
+        ValidatablePlayerForm playerForm = new();
 
         [ObservableProperty]
         bool isLoading = false;

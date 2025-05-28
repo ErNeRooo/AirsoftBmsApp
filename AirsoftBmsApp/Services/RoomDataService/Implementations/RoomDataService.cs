@@ -10,6 +10,6 @@ namespace AirsoftBmsApp.Services.RoomDataService.Implementations
 {
     public class RoomDataService : IRoomDataService
     {
-        public Room Room { get; set; } = new();
+        public ObservableRoom Room { get; set; } = new();
     }
 }

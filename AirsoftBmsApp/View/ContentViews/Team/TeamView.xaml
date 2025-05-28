@@ -4,7 +4,7 @@
              xmlns:local="using:AirsoftBmsApp.View.ContentViews.Team"
              xmlns:models="clr-namespace:AirsoftBmsApp.Model"
              x:Class="AirsoftBmsApp.View.ContentViews.Team.TeamView"
-             x:DataType="models:Team"
+             x:DataType="models:ObservableTeam"
              >
 
     <local:TeamNameTitleView

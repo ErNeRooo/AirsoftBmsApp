@@ -10,8 +10,6 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
     public interface IRoomViewModel
     {
-        public string JoinCode { get; set; }
-        public int Id { get; set; }
-        public ObservableCollection<Team> Teams { get; set; }
+
     }
 }

@@ -1,32 +1,27 @@
-﻿using AirsoftBmsApp.Model.Dto.Room;
+﻿using AirsoftBmsApp.Model;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomRestService.Abstractions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Networking.Handlers.Room
 {
-    public class RoomJoinHandler(IRoomRestService roomRestService, IRoomDataService roomDataService, IPlayerDataService playerDataService) : AbstractHandler
+    public class RoomLeaveHandler(IRoomRestService roomRestService, IRoomDataService roomDataService, IPlayerDataService playerDataService) : AbstractHandler
     {
         public override async Task<HttpResult> Handle(object request)
         {
-            dynamic dynamicRequest = request;
-
-            JoinRoomDto postRoomDto = new JoinRoomDto
-            {
-                JoinCode = dynamicRequest.JoinCode,
-                Password = dynamicRequest.Password,
-            };
-
-            var result = await roomRestService.TryRequest(new JoinRoomAsync(postRoomDto));
+            var result = await roomRestService.TryRequest(new LeaveRoomAsync());
 
             switch (result)
             {
-                case Success<int> success:
-                    roomDataService.Room.Id = success.data;
-                    playerDataService.Player.RoomId = success.data;
-                    roomDataService.Room.JoinCode = postRoomDto.JoinCode;
-                    roomDataService.Room.PlayersWithoutTeam.Add(playerDataService.Player);
+                case SuccessBase success:
+                    roomDataService.Room = new ObservableRoom();
+                    playerDataService.Player.RoomId = 0;
 
                     var nextResult = await base.Handle(request);
 
