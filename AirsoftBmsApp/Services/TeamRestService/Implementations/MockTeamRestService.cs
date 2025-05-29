@@ -49,7 +49,7 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
                     if (post.teamDto?.Name == "error")
                         return new Error("Mocked error for PostTeam");
 
-                    return new Success<object>(null);
+                    return new Success<int>(4);
 
                 case DeleteTeam delete:
                     if (delete.teamId == -1)

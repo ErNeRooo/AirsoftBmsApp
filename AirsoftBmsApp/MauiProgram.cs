@@ -20,7 +20,6 @@ using AirsoftBmsApp.ViewModel.RoomFormPageViewModel;
 using AirsoftBmsApp.ViewModel.RoomViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-using static System.Net.WebRequestMethods;
 
 namespace AirsoftBmsApp
 {
@@ -52,7 +51,7 @@ namespace AirsoftBmsApp
                 builder.Services.AddSingleton<IAccountRestService, MockAccountRestService>();
                 builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
                 builder.Services.AddSingleton<IRoomRestService, MockRoomRestService>();
-                builder.Services.AddSingleton<ITeamRestService, TeamRestService>();
+                builder.Services.AddSingleton<ITeamRestService, MockTeamRestService>();
             } else
             {
                 string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8080/" : "http://localhost:8080/";

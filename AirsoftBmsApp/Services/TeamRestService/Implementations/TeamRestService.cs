@@ -70,7 +70,9 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
 
             if (response.IsSuccessStatusCode)
             {
-                return new Success<object>(null);
+                int id = GetLocationIdFromResponse(response);
+
+                return new Success<int>(id);
             }
             else
             {
@@ -104,6 +106,20 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
             {
                 throw new Exception("No JWT token");
             }
+        }
+
+        private int GetLocationIdFromResponse(HttpResponseMessage response)
+        {
+            var path = response.Headers.Location?.ToString();
+            var idString = path?.Split('/').LastOrDefault();
+
+            bool isParsingSuccessfull = int.TryParse(idString, out int id);
+
+            if (isParsingSuccessfull)
+            {
+                return id;
+            }
+            throw new Exception("Failed to parse ID from response location header.");
         }
     }
 }

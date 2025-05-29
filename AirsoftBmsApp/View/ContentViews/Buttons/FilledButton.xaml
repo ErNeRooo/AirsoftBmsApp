@@ -6,16 +6,19 @@
     x:Class="AirsoftBmsApp.View.ContentViews.Buttons.FilledButton"
     >
 
-    <Button 
-        x:Name="button"
-        HeightRequest="30"
-        FontFamily="{StaticResource GlobalFont}" 
-        CornerRadius="25"
-        BackgroundColor="{StaticResource Primary}"
-        TextColor="{StaticResource PrimaryDarkText}"
-        HorizontalOptions="Fill"
-        Text="{Binding Text, Source={RelativeSource AncestorType={x:Type local:FilledButton}}}"
-        FontSize="20"
-        Padding="0"
-        Command="{Binding Command, Source={RelativeSource AncestorType={x:Type local:FilledButton}}}" />
+    <Border
+        StrokeShape="RoundRectangle 45"
+        StrokeThickness="0"
+        >
+        <Button 
+            x:Name="button"
+            FontFamily="{StaticResource GlobalFont}" 
+            BackgroundColor="{StaticResource Primary}"
+            TextColor="{StaticResource PrimaryDarkText}"
+            HorizontalOptions="Fill"
+            Text="{Binding Text, Source={RelativeSource AncestorType={x:Type local:FilledButton}}}"
+            FontSize="20"
+            Padding="0"
+            Command="{Binding Command, Source={RelativeSource AncestorType={x:Type local:FilledButton}}}" />
+    </Border>
 </ContentView>

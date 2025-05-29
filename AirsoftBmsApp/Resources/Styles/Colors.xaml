@@ -18,6 +18,7 @@
     <Color x:Key="PrimaryDarkText">#242424</Color>
     <Color x:Key="SecondaryDarkText">#B5B5B5</Color>
     <Color x:Key="Outline">#B5B5B5</Color>
+    <Color x:Key="Surface">#141414</Color>
 
     <Color x:Key="Error">#CA3B33</Color>
     <Color x:Key="OnError">White</Color>

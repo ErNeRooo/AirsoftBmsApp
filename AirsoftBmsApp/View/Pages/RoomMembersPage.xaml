@@ -43,10 +43,18 @@
             <team:TeamsScrollView 
                 Teams="{Binding Room.Teams}"
                 IsCreateTeamButtonVisible="{Binding IsCreateTeamButtonVisible, Mode=TwoWay}"
-                CreateTeamButtonCommand="{Binding CreateRoomCommand}"
+                CreateTeamButtonCommand="{Binding CreateTeamButtonClickedCommand}"
                 />
 
         </VerticalStackLayout>
+
+        <team:CreateTeamDialog 
+            CreateTeamCommand="{Binding CreateTeamCommand}"
+            CancelCommand="{Binding CancelTeamDialogClickedCommand}"
+            IsVisible="{Binding IsCreateTeamDialogVisible, Mode=TwoWay}"
+            ValidatableName="{Binding TeamForm.Name, Mode=TwoWay}"
+            ValidateCommand="{Binding ValidateNameCommand}"
+            />
 
         <loading:LoadingScreen 
             IsLoading="{Binding IsLoading}"
