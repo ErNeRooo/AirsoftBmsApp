@@ -39,7 +39,7 @@ namespace AirsoftBmsApp
                     fonts.AddFont("CascadiaCode-VariableFont_wght", "CascadiaCode");
                 });
 
-            builder.Services.AddSingleton<IRoomViewModel, RoomViewModel>();
+            builder.Services.AddTransient<IRoomViewModel, RoomViewModel>();
             builder.Services.AddTransient<IRoomFormViewModel, RoomFormViewModel>();
             builder.Services.AddTransient<IPlayerFormViewModel, PlayerFormViewModel>();
             builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();

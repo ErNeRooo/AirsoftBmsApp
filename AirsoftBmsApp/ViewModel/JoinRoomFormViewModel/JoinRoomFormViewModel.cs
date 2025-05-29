@@ -69,7 +69,10 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
 
             IsLoading = true;
 
-            var handler = new RoomJoinHandler(_roomRestService, _roomDataService, _playerDataService);
+            var joinRoom = new RoomJoinHandler(_roomRestService, _roomDataService, _playerDataService);
+            var getRoom = new RoomGetByJoinCodeHandler(_roomRestService, _roomDataService);
+
+            joinRoom.SetNext(getRoom);
 
             var joinRoomDto = new JoinRoomDto
             {
@@ -77,7 +80,7 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
                 Password = roomForm.Password.Value
             };
 
-            var result = await handler.Handle(joinRoomDto);
+            var result = await joinRoom.Handle(joinRoomDto);
 
             switch (result)
             {

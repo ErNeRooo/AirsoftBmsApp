@@ -13,7 +13,7 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
     {
         public async Task<HttpResult> TryRequest(TeamRequestIntent roomRequest)
         {
-            await Task.Delay(50);
+            await Task.Delay(100);
 
             switch (roomRequest)
             {

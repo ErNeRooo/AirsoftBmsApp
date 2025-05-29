@@ -40,15 +40,12 @@
                 ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
             />
 
-            <ScrollView>
-                <CollectionView ItemsSource="{Binding Room.Teams}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <team:TeamView></team:TeamView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </ScrollView>
+            <team:TeamsScrollView 
+                Teams="{Binding Room.Teams}"
+                IsCreateTeamButtonVisible="{Binding IsCreateTeamButtonVisible, Mode=TwoWay}"
+                CreateTeamButtonCommand="{Binding CreateRoomCommand}"
+                />
+
         </VerticalStackLayout>
 
         <loading:LoadingScreen 

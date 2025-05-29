@@ -13,7 +13,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
         {
             try
             {
-                await Task.Delay(1000);
+                await Task.Delay(100);
 
                 switch (roomRequest)
                 {
@@ -57,7 +57,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                 return new Success<RoomDto>(new RoomDto
                 {
                     JoinCode = joinCode,
-                    AdminPlayerId = 1,
+                    AdminPlayerId = 4,
                     RoomId = 1,
                 });
             }
@@ -78,7 +78,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                 return new Success<RoomDto>(new RoomDto
                 {
                     JoinCode = "110110",
-                    AdminPlayerId = 1,
+                    AdminPlayerId = 3,
                     RoomId = 1,
                 });
             }

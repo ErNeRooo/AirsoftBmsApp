@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AirsoftBmsApp.Resources.Styles.TeamTheme;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +23,16 @@ namespace AirsoftBmsApp.Model
         [ObservableProperty]
         private int adminPlayerId;
 
-        public ObservableCollection<ObservableTeam> Teams { get; set; } = new ObservableCollection<ObservableTeam>();
+        public ObservableCollection<ObservableTeam> Teams { get; set; } = 
+            new ObservableCollection<ObservableTeam>()
+            {
+                new ObservableTeam
+                {
+                    Id = 0,
+                    Name = "Under No Flag",
+                    Players = new ObservableCollection<ObservablePlayer>(),
+                    TeamTheme = TeamThemes.UnderNoFlag,
+                },
+            };
     }
 }

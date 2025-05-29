@@ -27,7 +27,21 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         bool isLoading = false;
 
         [ObservableProperty]
+        bool isCreateTeamButtonVisible = roomDataService.Room.AdminPlayerId == playerDataService.Player.Id;
+
+        [ObservableProperty]
         string errorMessage = "";
+
+        [RelayCommand]
+        public async Task CreateRoom()
+        {
+            Room.Teams.Add(new ObservableTeam
+            {
+                Id = 1,
+                Name = "Team 1",
+                Players = new ObservableCollection<ObservablePlayer>()
+            });
+        }
 
         [RelayCommand]
         public async Task LeaveRoom()

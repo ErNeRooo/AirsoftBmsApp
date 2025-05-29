@@ -15,16 +15,7 @@ namespace AirsoftBmsApp.Services.RoomDataService.Implementations
     {
         public ObservableRoom Room { get; set; } = new ObservableRoom
         {
-            Teams = new ObservableCollection<ObservableTeam>()
-            {
-                new ObservableTeam
-                {
-                    Id = 0,
-                    Name = "Under No Flag",
-                    Players = new ObservableCollection<ObservablePlayer>(),
-                    TeamTheme = TeamThemes.UnderNoFlag,
-                },
-            },
+
         };
     }
 }

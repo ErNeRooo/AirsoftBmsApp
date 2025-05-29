@@ -29,7 +29,7 @@ namespace AirsoftBmsApp.Model
         private ObservableCollection<ObservablePlayer> players;
 
         [ObservableProperty]
-        private ITeamTheme teamTheme;
+        private ITeamTheme teamTheme = TeamThemes.UnderNoFlag;
     }
 
 }
