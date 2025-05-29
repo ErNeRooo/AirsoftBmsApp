@@ -10,6 +10,8 @@ using AirsoftBmsApp.Services.RestHelperService.Implementations;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Implementations;
 using AirsoftBmsApp.Services.RoomRestService.Implementations;
+using AirsoftBmsApp.Services.TeamRestService.Abstractions;
+using AirsoftBmsApp.Services.TeamRestService.Implementations;
 using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.JoinRoomFormViewModel;
@@ -18,6 +20,7 @@ using AirsoftBmsApp.ViewModel.RoomFormPageViewModel;
 using AirsoftBmsApp.ViewModel.RoomViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using static System.Net.WebRequestMethods;
 
 namespace AirsoftBmsApp
 {
@@ -42,31 +45,36 @@ namespace AirsoftBmsApp
             builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
             builder.Services.AddTransient<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
 
-            bool isUsingMockRestServices = true; // Set to true to use mock REST services
+            bool isUsingMockRestServices = true;
 
             if (isUsingMockRestServices)
             {
                 builder.Services.AddSingleton<IAccountRestService, MockAccountRestService>();
                 builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
                 builder.Services.AddSingleton<IRoomRestService, MockRoomRestService>();
+                builder.Services.AddSingleton<ITeamRestService, TeamRestService>();
             } else
             {
-                var androidBaseAddress = "http://10.0.2.2:8080/";
-                var baseAddress = "http://localhost:8080/";
+                string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8080/" : "http://localhost:8080/";
 
                 builder.Services.AddHttpClient<IAccountRestService, AccountRestService>(client =>
                 {
-                    client.BaseAddress = new Uri(DeviceInfo.Platform == DevicePlatform.Android ? $"{androidBaseAddress}/Account/" : $"{baseAddress}/Account/");
+                    client.BaseAddress = new Uri($"{baseAddress}/Account/");
                 });
 
                 builder.Services.AddHttpClient<IPlayerRestService, PlayerRestService>(client =>
                 {
-                    client.BaseAddress = new Uri(DeviceInfo.Platform == DevicePlatform.Android ? $"{androidBaseAddress}/Player/" : $"{baseAddress}/Player/");
+                    client.BaseAddress = new Uri($"{baseAddress}/Player/");
                 });
 
                 builder.Services.AddHttpClient<IRoomRestService, RoomRestService>(client =>
                 {
-                    client.BaseAddress = new Uri(DeviceInfo.Platform == DevicePlatform.Android ? $"{androidBaseAddress}/Room/" : $"{baseAddress}/Room/");
+                    client.BaseAddress = new Uri($"{baseAddress}/Room/");
+                });
+
+                builder.Services.AddHttpClient<ITeamRestService, TeamRestService>(client =>
+                {
+                    client.BaseAddress = new Uri($"{baseAddress}/Team/");
                 });
             }
 
