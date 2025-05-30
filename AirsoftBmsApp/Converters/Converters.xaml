@@ -5,4 +5,5 @@
     xmlns:local="clr-namespace:AirsoftBmsApp.Converters">
     <local:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
     <local:InverseBoolConverter x:Key="InverseBoolConverter" />
+    <local:IsZeroConverter x:Key="IsZeroConverter" />
 </ResourceDictionary>

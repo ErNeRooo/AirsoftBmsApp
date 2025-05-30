@@ -20,16 +20,24 @@
         StrokeThickness="0"
         Margin="0, 5, 0, 20"
     >
-        <CollectionView ItemsSource="{Binding Players}">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="2.5"></LinearItemsLayout>
-            </CollectionView.ItemsLayout>
+        <VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding Players}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="2.5"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <local:RoomMemberItemView />
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <local:RoomMemberItemView />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <Label 
+                Text="No one's here"
+                IsVisible="{Binding Players.Count, Converter={StaticResource IsZeroConverter}}"
+                />
+        </VerticalStackLayout>
+
     </Border>
 </VerticalStackLayout>
