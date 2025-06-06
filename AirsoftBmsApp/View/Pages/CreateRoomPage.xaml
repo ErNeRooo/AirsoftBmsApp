@@ -37,6 +37,7 @@
             <inputs:ValidatableStyledEntry
                 Placeholder="Enter room password (optional)"
                 ValidatableObject="{Binding RoomForm.Password}"
+                IsPassword="True"
                 ValidateCommand="{Binding ValidatePasswordCommand}"
             />
 

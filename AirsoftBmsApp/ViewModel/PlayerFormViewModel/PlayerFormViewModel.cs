@@ -117,8 +117,9 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             ErrorMessage = "";
             ValidateEmail();
             ValidatePassword();
+            ValidateName();
 
-            if (!playerForm.Email.IsValid || !playerForm.Password.IsValid) return;
+            if (!playerForm.Email.IsValid || !playerForm.Password.IsValid || !playerForm.Name.IsValid) return;
 
             IsLoading = true;
 

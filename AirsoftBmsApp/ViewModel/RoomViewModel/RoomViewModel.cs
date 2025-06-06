@@ -92,6 +92,8 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
                     throw new InvalidOperationException("Unknown result type");
             }
 
+            TeamForm = new ValidatableTeamForm();
+
             IsLoading = false;
         }
 

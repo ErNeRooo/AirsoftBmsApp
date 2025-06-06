@@ -13,7 +13,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
         {
             try
             {
-                await Task.Delay(100);
+                await Task.Delay(1000);
 
                 switch (roomRequest)
                 {
