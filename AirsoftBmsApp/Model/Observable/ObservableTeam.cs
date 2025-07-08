@@ -1,35 +1,40 @@
-﻿using AirsoftBmsApp.Resources.Styles.TeamTheme;
+﻿using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Resources.Styles.TeamTheme;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Model
+namespace AirsoftBmsApp.Model.Observable;
+
+public partial class ObservableTeam : ObservableObject
 {
-    public partial class ObservableTeam : ObservableObject
+    [ObservableProperty]
+    private int id;
+
+    [ObservableProperty]
+    private int roomId;
+
+    [ObservableProperty]
+    private int officerId;
+
+    [ObservableProperty]
+    private string name;
+
+    [ObservableProperty]
+    private ObservableCollection<ObservablePlayer> players;
+
+    [ObservableProperty]
+    private ITeamTheme teamTheme = TeamThemes.UnderNoFlag;
+
+    public ObservableTeam()
     {
-        [ObservableProperty]
-        private int id;
-
-        [ObservableProperty]
-        private int roomId;
-
-        [ObservableProperty]
-        private int officerId;
-
-        [ObservableProperty]
-        private string name;
-
-        [ObservableProperty]
-        private ObservableCollection<ObservablePlayer> players;
-
-        [ObservableProperty]
-        private ITeamTheme teamTheme = TeamThemes.UnderNoFlag;
+        
     }
 
+    public ObservableTeam(TeamDto team)
+    {
+        Id = team.TeamId;
+        RoomId = team.RoomId;
+        OfficerId = team.OfficerPlayerId;
+        Name = team.Name;
+    }
 }

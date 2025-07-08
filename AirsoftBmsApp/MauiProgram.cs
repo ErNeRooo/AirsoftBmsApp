@@ -1,4 +1,8 @@
-﻿using AirsoftBmsApp.Services.AccountRestService.Abstractions;
+﻿using AirsoftBmsApp.Networking.ApiFacade;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Account;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
+using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.AccountRestService.Implementations;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
@@ -44,7 +48,7 @@ namespace AirsoftBmsApp
             builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
             builder.Services.AddTransient<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
 
-            bool isUsingMockRestServices = true;
+            bool isUsingMockRestServices = false;
 
             if (isUsingMockRestServices)
             {
@@ -54,7 +58,7 @@ namespace AirsoftBmsApp
                 builder.Services.AddSingleton<ITeamRestService, MockTeamRestService>();
             } else
             {
-                string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8080/" : "http://localhost:8080/";
+                string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8080" : "http://localhost:8080";
 
                 builder.Services.AddHttpClient<IAccountRestService, AccountRestService>(client =>
                 {
@@ -82,6 +86,12 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IRoomDataService, RoomDataService>();
             builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
             builder.Services.AddSingleton<IJsonHelperService, JsonHelperService>();
+
+            builder.Services.AddSingleton<IApiFacade, ApiFacade>();
+            builder.Services.AddSingleton<IAccountHandler, AccountHandler>();
+            builder.Services.AddSingleton<IPlayerHandler, PlayerHandler>();
+            builder.Services.AddSingleton<IRoomHandler, RoomHandler>();
+            builder.Services.AddSingleton<ITeamHandler, TeamHandler>();
 
 #if DEBUG
             builder.Logging.AddDebug();

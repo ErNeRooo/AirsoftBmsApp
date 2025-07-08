@@ -8,7 +8,8 @@ namespace AirsoftBmsApp.Model.Dto.Account
 {
     public class AccountDto
     {
-        public int Id { get; set; }
+        public int AccountId { get; set; }
+        public int PlayerId { get; set; }
         public string? Email { get; set; }
     }
 }

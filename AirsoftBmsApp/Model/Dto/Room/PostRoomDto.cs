@@ -9,7 +9,7 @@ namespace AirsoftBmsApp.Model.Dto.Room
     public class PostRoomDto
     {
         public int MaxPlayers { get; set; }
-        public string JoinCode { get; set; }
-        public string Password { get; set; }
+        public string JoinCode { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
     }
 }

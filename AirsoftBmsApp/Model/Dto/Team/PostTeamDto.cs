@@ -9,5 +9,6 @@ namespace AirsoftBmsApp.Model.Dto.Team
     public class PostTeamDto
     {
         public string Name { get; set; }
+        public int RoomId { get; set; }
     }
 }

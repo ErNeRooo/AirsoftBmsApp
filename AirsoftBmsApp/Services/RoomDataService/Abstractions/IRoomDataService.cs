@@ -1,14 +1,8 @@
-﻿using AirsoftBmsApp.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AirsoftBmsApp.Model.Observable;
 
-namespace AirsoftBmsApp.Services.RoomDataService.Abstractions
+namespace AirsoftBmsApp.Services.RoomDataService.Abstractions;
+
+public interface IRoomDataService
 {
-    public interface IRoomDataService
-    {
-        ObservableRoom Room { get; set; }
-    }
+    ObservableRoom Room { get; set; }
 }

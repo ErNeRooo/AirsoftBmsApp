@@ -5,6 +5,10 @@ namespace AirsoftBmsApp.Services.AccountRestService.Abstractions
 {
     public interface IAccountRestService
     {
-        Task<HttpResult> TryRequest(AccountRequestIntent accountRequest);
+        public Task<(HttpResult result, AccountDto? account)> GetAsync(int accountId);
+        public Task<(HttpResult result, AccountDto? account)> PutAsync(PutAccountDto accountDto, int accoundId);
+        public Task<HttpResult> DeleteAsync(int accoundId);
+        public Task<(HttpResult result, AccountDto? account)> SignUpAsync(SignUpAccountDto accountDto);
+        public Task<(HttpResult result, AccountDto? account)> LogInAsync(LogInAccountDto accountDto);
     }
 }

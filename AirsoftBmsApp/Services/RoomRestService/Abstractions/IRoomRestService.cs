@@ -1,11 +1,15 @@
 ﻿using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Networking;
-using AirsoftBmsApp.Services.RoomRestService.Abstractions;
 
-namespace AirsoftBmsApp.Services.PlayerRestService.Abstractions
+namespace AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+
+public interface IRoomRestService
 {
-    public interface IRoomRestService
-    {
-        Task<HttpResult> TryRequest(RoomRequestIntent roomRequest);
-    }
-}
+    public Task<(HttpResult result, RoomDto? room)> GetByIdAsync(int roomId);
+    public Task<(HttpResult result, RoomDto? room)> GetByJoinCodeAsync(string joinCode);
+    public Task<(HttpResult result, RoomDto? room)> PutAsync(PutRoomDto roomDto, int roomId);
+    public Task<(HttpResult result, RoomDto? room)> PostAsync(PostRoomDto roomDto);
+    public Task<HttpResult> DeleteAsync(int roomId);
+    public Task<(HttpResult result, RoomDto? room)> JoinAsync(JoinRoomDto roomDto);
+    public Task<HttpResult> LeaveAsync();
+}   

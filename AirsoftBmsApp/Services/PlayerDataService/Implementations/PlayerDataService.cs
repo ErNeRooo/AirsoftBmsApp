@@ -1,15 +1,10 @@
-﻿using AirsoftBmsApp.Model;
+﻿using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Services.PlayerDataService.Implementations
+
+namespace AirsoftBmsApp.Services.PlayerDataService.Implementations;
+
+public class PlayerDataService : IPlayerDataService
 {
-    public class PlayerDataService : IPlayerDataService
-    {
-        public ObservablePlayer Player { get; set; } = new();
-    }
+    public ObservablePlayer Player { get; set; } = new();
 }

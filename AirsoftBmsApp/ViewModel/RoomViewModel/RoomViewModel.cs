@@ -1,13 +1,10 @@
-﻿using AirsoftBmsApp.Model;
+﻿using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Model.Dto.Team;
 using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Networking;
-using AirsoftBmsApp.Networking.Handlers.Room;
-using AirsoftBmsApp.Networking.Handlers.Team;
+using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
-using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
-using AirsoftBmsApp.Services.TeamRestService.Abstractions;
 using AirsoftBmsApp.Validation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,10 +13,8 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
     public partial class RoomViewModel : ObservableObject, IRoomViewModel
     {
+        IApiFacade _apiFacade;
         IPlayerDataService _playerDataService;
-        IRoomDataService _roomDataService;
-        IRoomRestService _roomRestService;
-        ITeamRestService _teamRestService;
 
         [ObservableProperty]
         ObservableRoom room;
@@ -41,19 +36,16 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
         public RoomViewModel(
             IValidationHelperFactory validationHelperFactory,
-            IPlayerDataService playerDataService,
-            IRoomRestService roomRestService,
             IRoomDataService roomDataService,
-            ITeamRestService teamRestService
+            IApiFacade apiFacade,
+            IPlayerDataService playerDataService
             )
         {
+            _apiFacade = apiFacade;
             _playerDataService = playerDataService;
-            _roomRestService = roomRestService;
-            _roomDataService = roomDataService;
-            _teamRestService = teamRestService;
 
-            room = _roomDataService.Room;
-            isCreateTeamButtonVisible = _roomDataService.Room.AdminPlayerId == _playerDataService.Player.Id;
+            Room = roomDataService.Room;
+            IsCreateTeamButtonVisible = roomDataService.Room.AdminPlayerId == _playerDataService.Player.Id;
 
             validationHelperFactory.AddValidations(TeamForm);
         }
@@ -66,18 +58,17 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             IsLoading = true;
 
-            var createRoom = new TeamPostHandler(_teamRestService, _roomDataService);
-
-            PostTeamDto postRoomDto = new PostTeamDto
+            PostTeamDto postTeamDto = new PostTeamDto
             {
                 Name = teamForm.Name.Value,
+                RoomId = Room.Id
             };
 
-            var result = await createRoom.Handle(postRoomDto);
+            var result = await _apiFacade.Team.Create(postTeamDto);
 
             switch (result)
             {
-                case SuccessBase _:
+                case Success:
                     IsCreateTeamDialogVisible = false;
 
                     TeamForm.Name.Value = "";
@@ -120,13 +111,11 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         {
             IsLoading = true;
 
-            var leaveRoom = new RoomLeaveHandler(_roomRestService, _roomDataService, _playerDataService);
-
-            var result = await leaveRoom.Handle(null);
+            var result = await _apiFacade.Room.Leave();
 
             switch (result)
             {
-                case SuccessBase _:
+                case Success:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
                     break;
                 case Failure failure:

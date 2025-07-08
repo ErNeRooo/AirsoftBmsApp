@@ -1,22 +1,17 @@
 ﻿using AirsoftBmsApp.Networking;
-using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
-using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Validation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Model.Dto.Player;
-using AirsoftBmsApp.Networking.Handlers.Player;
-using AirsoftBmsApp.Networking.Handlers.Account;
 using AirsoftBmsApp.Model.Validatable;
+using AirsoftBmsApp.Networking.ApiFacade;
+using AirsoftBmsApp.Model.Dto.Account;
 
 namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 {
     public partial class PlayerFormViewModel : ObservableObject, IPlayerFormViewModel
     {
-        private IPlayerRestService _playerRestService;
-        private IPlayerDataService _playerDataService;
-        private IAccountRestService _accountRestService;
+        IApiFacade _apiFacade;
 
         [ObservableProperty] 
         ValidatablePlayerForm playerForm = new();
@@ -28,15 +23,11 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         string errorMessage = "";
 
         public PlayerFormViewModel(
-            IPlayerRestService playerRestService, 
-            IPlayerDataService playerDataService, 
-            IAccountRestService accountRestService, 
+            IApiFacade apiFacade,
             IValidationHelperFactory validationHelperFactory
             )
         {
-            _playerRestService = playerRestService;
-            _playerDataService = playerDataService;
-            _accountRestService = accountRestService;
+            _apiFacade = apiFacade;
 
             validationHelperFactory.AddValidations(playerForm);
         }
@@ -84,18 +75,16 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             IsLoading = true;
 
-            var registerPlayer = new PlayerRegisterHandler(_playerRestService, _playerDataService);
-
-            var data = new PostPlayerDto
+            var playerDto = new PostPlayerDto
             {
                 Name = playerForm.Name.Value
             };
 
-            var result = await registerPlayer.Handle(data);
+            HttpResult result = await _apiFacade.Player.Register(playerDto);
 
             switch (result)
             {
-                case SuccessBase success:
+                case Success:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
                     break;
                 case Failure failure:
@@ -123,23 +112,17 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             IsLoading = true;
 
-            var registerPlayer = new PlayerRegisterHandler(_playerRestService, _playerDataService);
-            var logInAccount = new AccountLogInHandler(_accountRestService, _playerDataService);
-
-            registerPlayer.SetNext(logInAccount);
-
-            var data = new
+            var logInAccountDto = new LogInAccountDto
             {
-                Name = playerForm.Name.Value,
                 Email = playerForm.Email.Value,
                 Password = playerForm.Password.Value
             };
 
-            var result = await registerPlayer.Handle(data);
+            var result = await _apiFacade.Account.LogIn(logInAccountDto, playerForm.Name.Value);
 
             switch (result)
             {
-                case SuccessBase success:
+                case Success:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
                     break;
                 case Failure failure:
@@ -165,23 +148,17 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             IsLoading = true;
 
-            var registerPlayer = new PlayerRegisterHandler(_playerRestService, _playerDataService);
-            var signUpAccount = new AccountSignUpHandler(_accountRestService, _playerDataService);
-
-            registerPlayer.SetNext(signUpAccount);
-
-            var data = new
+            var signUpAccountDto = new SignUpAccountDto
             {
-                Name = playerForm.Name.Value,
                 Email = playerForm.Email.Value,
                 Password = playerForm.Password.Value
             };
 
-            var result = await registerPlayer.Handle(data);
+            var result = await _apiFacade.Account.SignUp(signUpAccountDto, playerForm.Name.Value);
 
             switch (result)
             {
-                case SuccessBase success:
+                case Success:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
                     break;
                 case Failure failure:

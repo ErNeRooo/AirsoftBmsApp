@@ -7,20 +7,20 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirsoftBmsApp.Model
+namespace AirsoftBmsApp.Model.Observable;
+
+public partial class ObservablePlayer : ObservableObject
 {
-    public partial class ObservablePlayer : ObservableObject
-    {
-        [ObservableProperty]
-        private int id;
+    [ObservableProperty]
+    private int id;
 
-        [ObservableProperty]
-        private string name;
+    [ObservableProperty]
+    private string name;
         
-        [ObservableProperty]
-        private ObservableAccount? account;
+    [ObservableProperty]
+    private ObservableAccount? account;
 
-        [ObservableProperty]
-        private int roomId;
-    }
+    [ObservableProperty]
+    private int roomId;
 }
+

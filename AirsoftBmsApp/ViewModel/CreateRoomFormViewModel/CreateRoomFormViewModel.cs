@@ -1,13 +1,8 @@
 ﻿using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Networking;
-using AirsoftBmsApp.Networking.Handlers.Player;
-using AirsoftBmsApp.Networking.Handlers.Room;
-using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
-using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
-using AirsoftBmsApp.Services.RoomDataService.Abstractions;
+using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Validation;
-using AirsoftBmsApp.Validation.Rules;
 using AirsoftBmsApp.View.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,9 +11,7 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
 {
     public partial class CreateRoomFormViewModel : ObservableObject, ICreateRoomFormViewModel
     {
-        IPlayerDataService _playerDataService;
-        IRoomDataService _roomDataService;
-        IRoomRestService _roomRestService;
+        IApiFacade _apiFacade;
 
         [ObservableProperty]
         ValidatableCreateRoomForm roomForm = new();
@@ -29,12 +22,13 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
         [ObservableProperty]
         string errorMessage = "";
 
-        public CreateRoomFormViewModel(IValidationHelperFactory validationHelperFactory, IPlayerDataService playerDataService, IRoomDataService roomDataService, IRoomRestService roomRestService)
+        public CreateRoomFormViewModel(
+            IValidationHelperFactory validationHelperFactory, 
+            IApiFacade apiFacade
+            )
         {
             validationHelperFactory.AddValidations(roomForm);
-            _playerDataService = playerDataService;
-            _roomDataService = roomDataService;
-            _roomRestService = roomRestService;
+            _apiFacade = apiFacade;
         }
 
         [RelayCommand]
@@ -70,11 +64,6 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
 
             IsLoading = true;
 
-            var postRoom = new RoomPostHandler(_roomRestService, _roomDataService, _playerDataService);
-            var joinRoom = new RoomJoinHandler(_roomRestService, _roomDataService, _playerDataService);
-
-            postRoom.SetNext(joinRoom);
-
             var postRoomDto = new PostRoomDto
             {
                 JoinCode = roomForm.JoinCode.Value,
@@ -82,11 +71,11 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
                 MaxPlayers = 50,
             };
 
-            var result = await postRoom.Handle(postRoomDto);
+            HttpResult result = await _apiFacade.Room.Create(postRoomDto);
 
             switch (result)
             {
-                case SuccessBase success:
+                case Success:
                     await Shell.Current.GoToAsync(nameof(RoomMembersPage));
                     break;
                 case Failure failure:

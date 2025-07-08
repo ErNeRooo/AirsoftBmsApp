@@ -1,4 +1,4 @@
-using AirsoftBmsApp.Model;
+using AirsoftBmsApp.Model.Observable;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 

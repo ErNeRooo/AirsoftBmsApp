@@ -1,52 +1,16 @@
-﻿using AirsoftBmsApp.Model.Dto.Account;
-using AirsoftBmsApp.Model.Dto.Player;
-using AirsoftBmsApp.Model.Dto.Room;
+﻿using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
-using AirsoftBmsApp.Services.RoomRestService.Abstractions;
 
 namespace AirsoftBmsApp.Services.RoomRestService.Implementations
 {
     public class MockRoomRestService : IRoomRestService
     {
-        public async Task<HttpResult> TryRequest(RoomRequestIntent roomRequest)
-        {
-            try
-            {
-                await Task.Delay(1000);
-
-                switch (roomRequest)
-                {
-                    case GetRoomByIdAsync getById:
-                        return await GetByIdAsync(getById.roomId);
-                    case GetRoomByJoinCodeAsync getByJoinCode:
-                        return await GetByJoinCodeAsync(getByJoinCode.joinCode);
-                    case PutRoomAsync put:
-                        return await PutAsync(put.roomDto, put.roomId);
-                    case DeleteRoomAsync delete:
-                        return await DeleteAsync(delete.roomId);
-                    case PostRoomAsync post:
-                        return await PostAsync(post.roomDto);
-                    case JoinRoomAsync post:
-                        return await JoinAsync(post.roomDto);
-                    case LeaveRoomAsync post:
-                        return await LeaveAsync();
-                    default:
-                        return new Failure("Unknown request type");
-                }
-            }
-            catch (Exception ex)
-            {
-                return new Error(ex.Message);
-            }
-            
-        }
-
-        public async Task<HttpResult> GetByJoinCodeAsync(string joinCode)
+        public async Task<(HttpResult result, RoomDto? room)> GetByJoinCodeAsync(string joinCode)
         {
             if(joinCode == "400000")
             {
-                return new Failure("400000 - Mocked Bad Request");
+                return (new Failure("400000 - Mocked Bad Request"), null);
             }
             else if (joinCode == "213700")
             {
@@ -54,7 +18,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return new Success<RoomDto>(new RoomDto
+                return (new Success(), new RoomDto
                 {
                     JoinCode = joinCode,
                     AdminPlayerId = 4,
@@ -63,11 +27,11 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> GetByIdAsync(int roomId)
+        public async Task<(HttpResult result, RoomDto? room)> GetByIdAsync(int roomId)
         {
             if (roomId == 400)
             {
-                return new Failure("400 - Mocked Bad Request");
+                return (new Failure("400 - Mocked Bad Request"), null);
             }
             else if (roomId == 2137)
             {
@@ -75,7 +39,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return new Success<RoomDto>(new RoomDto
+                return (new Success(), new RoomDto
                 {
                     JoinCode = "110110",
                     AdminPlayerId = 3,
@@ -84,11 +48,11 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> PutAsync(PutRoomDto roomDto, int roomId)
+        public async Task<(HttpResult result, RoomDto? room)> PutAsync(PutRoomDto roomDto, int roomId)
         {
             if (roomId == 400)
             {
-                return new Failure("400 - Mocked Bad Request");
+                return (new Failure("400 - Mocked Bad Request"), null);
             }
             else if (roomId == 2137)
             {
@@ -96,7 +60,12 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return new Success<object>(null);
+                return (new Success(), new RoomDto
+                {
+                    JoinCode = roomDto.JoinCode,
+                    AdminPlayerId = 3,
+                    RoomId = 1,
+                });
             }
         }
 
@@ -112,15 +81,15 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return new Success<object>(null);
+                return new Success();
             }
         }
 
-        private async Task<HttpResult> PostAsync(PostRoomDto roomDto)
+        public async Task<(HttpResult result, RoomDto? room)> PostAsync(PostRoomDto roomDto)
         {
             if (roomDto.JoinCode == "400000")
             {
-                return new Failure("400000 - Mocked Bad Request");
+                return (new Failure("400000 - Mocked Bad Request"), null);
             }
             else if (roomDto.JoinCode == "213700")
             {
@@ -128,15 +97,20 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return new Success<int>(1);
+                return (new Success(), new RoomDto
+                {
+                    JoinCode = "110110",
+                    AdminPlayerId = 3,
+                    RoomId = 1,
+                });
             }
         }
 
-        private async Task<HttpResult> JoinAsync(JoinRoomDto roomDto)
+        public async Task<(HttpResult result, RoomDto? room)> JoinAsync(JoinRoomDto roomDto)
         {
             if (roomDto.JoinCode == "400000")
             {
-                return new Failure("400000 - Mocked Bad Request");
+                return (new Failure("400000 - Mocked Bad Request"), null);
             }
             else if (roomDto.JoinCode == "213700")
             {
@@ -144,13 +118,18 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return new Success<int>(1);
+                return (new Success(), new RoomDto
+                {
+                    JoinCode = "110110",
+                    AdminPlayerId = 3,
+                    RoomId = 1,
+                });
             }
         }
 
-        private async Task<HttpResult> LeaveAsync()
+        public async Task<HttpResult> LeaveAsync()
         {
-            return new Success<object>(null);
+            return new Success();
         }
     }
 }

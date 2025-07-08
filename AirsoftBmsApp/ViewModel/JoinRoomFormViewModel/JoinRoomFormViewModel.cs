@@ -1,12 +1,8 @@
 ﻿using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Networking;
-using AirsoftBmsApp.Networking.Handlers.Room;
-using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
-using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
-using AirsoftBmsApp.Services.RoomDataService.Abstractions;
+using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Validation;
-using AirsoftBmsApp.Validation.Rules;
 using AirsoftBmsApp.View.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,9 +11,7 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
 {
     public partial class JoinRoomFormViewModel : ObservableObject, IJoinRoomFormViewModel
     {
-        IPlayerDataService _playerDataService;
-        IRoomDataService _roomDataService;
-        IRoomRestService _roomRestService;
+        IApiFacade _apiFacade;
 
         [ObservableProperty]
         ValidatableJoinRoomForm roomForm = new();
@@ -28,12 +22,10 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
         [ObservableProperty]
         string errorMessage = "";
 
-        public JoinRoomFormViewModel(IValidationHelperFactory validationHelperFactory, IPlayerDataService playerDataService, IRoomDataService roomDataService, IRoomRestService roomRestService)
+        public JoinRoomFormViewModel(IValidationHelperFactory validationHelperFactory, IApiFacade apiFacade)
         {
             validationHelperFactory.AddValidations(roomForm);
-            _playerDataService = playerDataService;
-            _roomDataService = roomDataService;
-            _roomRestService = roomRestService;
+            _apiFacade = apiFacade;
         }
 
         [RelayCommand]
@@ -69,22 +61,17 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
 
             IsLoading = true;
 
-            var joinRoom = new RoomJoinHandler(_roomRestService, _roomDataService, _playerDataService);
-            var getRoom = new RoomGetByJoinCodeHandler(_roomRestService, _roomDataService);
-
-            joinRoom.SetNext(getRoom);
-
             var joinRoomDto = new JoinRoomDto
             {
                 JoinCode = roomForm.JoinCode.Value,
                 Password = roomForm.Password.Value
             };
 
-            var result = await joinRoom.Handle(joinRoomDto);
+            HttpResult result = await _apiFacade.Room.Join(joinRoomDto);
 
             switch (result)
             {
-                case SuccessBase success:
+                case Success:
                     await Shell.Current.GoToAsync(nameof(RoomMembersPage));
                     break;
                 case Failure failure:

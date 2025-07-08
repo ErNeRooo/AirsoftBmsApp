@@ -1,4 +1,4 @@
-using AirsoftBmsApp.Model;
+using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Resources.Styles.TeamTheme;
 
 namespace AirsoftBmsApp.View.ContentViews.Team;

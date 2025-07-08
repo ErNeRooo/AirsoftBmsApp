@@ -1,5 +1,5 @@
 ﻿using AirsoftBmsApp.Networking;
-using AirsoftBmsApp.Networking.Handlers.Player;
+using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.ViewModel.RoomFormPageViewModel
 {
-    public partial class RoomFormViewModel(IPlayerDataService playerDataService, IPlayerRestService playerRestService) : ObservableObject, IRoomFormViewModel
+    public partial class RoomFormViewModel(IPlayerDataService playerDataService, IApiFacade apiFacade) : ObservableObject, IRoomFormViewModel
     {
         [ObservableProperty]
         bool isLoading = false;
@@ -25,13 +25,11 @@ namespace AirsoftBmsApp.ViewModel.RoomFormPageViewModel
         {
             IsLoading = true;
 
-            var deletePlayer = new PlayerDeleteHandler(playerRestService, playerDataService);
-
-            var result = await deletePlayer.Handle(playerDataService.Player.Id);
+            var result = await apiFacade.Player.LogOut();
 
             switch (result)
             {
-                case SuccessBase success:
+                case Success:
                     await Shell.Current.GoToAsync("//PlayerFormPage");
                     break;
                 case Failure failure:

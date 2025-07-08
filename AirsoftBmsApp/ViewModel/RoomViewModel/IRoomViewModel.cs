@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AirsoftBmsApp.Model;
+﻿using AirsoftBmsApp.Model.Observable;
 
-namespace AirsoftBmsApp.ViewModel.RoomViewModel
+namespace AirsoftBmsApp.ViewModel.RoomViewModel;
+
+public interface IRoomViewModel
 {
-    public interface IRoomViewModel
-    {
-        ObservableRoom Room { get; set; }
-        public Task LeaveRoom();
-    }
+    ObservableRoom Room { get; set; }
+    public Task LeaveRoom();
 }

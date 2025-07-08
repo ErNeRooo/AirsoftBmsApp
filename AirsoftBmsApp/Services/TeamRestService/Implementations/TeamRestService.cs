@@ -9,85 +9,73 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
 {
     public class TeamRestService(HttpClient client, IJsonHelperService jsonHelper, IJwtTokenService jwtTokenService) : ITeamRestService
     {
-        public async Task<HttpResult> TryRequest(TeamRequestIntent roomRequest)
+        public async Task<(HttpResult result, TeamDto? team)> GetByIdAsync(int teamId)
         {
             SetAuthorizationHeader();
 
-            switch (roomRequest)
-            {
-                case GetTeamByIdAsync getById:
-                    return await GetByIdAsync(getById.teamId);
-                case PutTeam put:
-                    return await PutAsync(put.teamDto, put.teamId);
-                case PostTeam post:
-                    return await PostAsync(post.teamDto);
-                case DeleteTeam delete:
-                    return await DeleteAsync(delete.teamId);
-
-            }
-
-            throw new NotImplementedException();
-        }
-
-        private async Task<HttpResult> GetByIdAsync(int teamId)
-        {
             var response = await client.GetAsync($"id/{teamId}");
 
             if (response.IsSuccessStatusCode)
             {
                 var team = await jsonHelper.DeserializeFromResponseAsync<TeamDto>(response);
-                return new Success<TeamDto>(team);
+                return (new Success(), team);
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                return new Failure(errorContent);
+                return (new Failure(errorContent), null);
             }
         }
 
-        private async Task<HttpResult> PutAsync(PutTeamDto teamDto, int teamId)
+        public async Task<(HttpResult result, TeamDto? team)> PutAsync(PutTeamDto teamDto, int teamId)
         {
+            SetAuthorizationHeader();
+
             var content = jsonHelper.GetStringContent(teamDto);
 
             var response = await client.PutAsync($"id/{teamId}", content);
 
             if (response.IsSuccessStatusCode)
             {
-                return new Success<object>(null);
+                var team = await jsonHelper.DeserializeFromResponseAsync<TeamDto>(response);
+                return (new Success(), team);
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                return new Failure(errorContent);
+                return (new Failure(errorContent), null);
             }
         }
 
-        private async Task<HttpResult> PostAsync(PostTeamDto teamDto)
+        public async Task<(HttpResult result, TeamDto? team)> PostAsync(PostTeamDto teamDto)
         {
+            SetAuthorizationHeader();
+
             var content = jsonHelper.GetStringContent(teamDto);
 
             var response = await client.PostAsync("", content);
 
             if (response.IsSuccessStatusCode)
             {
-                int id = GetLocationIdFromResponse(response);
-
-                return new Success<int>(id);
+                var team = await jsonHelper.DeserializeFromResponseAsync<TeamDto>(response);
+                return (new Success(), team);
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                return new Failure(errorContent);
+                return (new Failure(errorContent), null);
             }
         }
 
-        private async Task<HttpResult> DeleteAsync(int teamId)
+        public async Task<HttpResult> DeleteAsync(int teamId)
         {
+            SetAuthorizationHeader();
+
             var response = await client.DeleteAsync($"id/{teamId}");
 
             if (response.IsSuccessStatusCode)
             {
-                return new Success<object>(null);
+                return new Success();
             }
             else
             {
@@ -98,7 +86,7 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
 
         private void SetAuthorizationHeader()
         {
-            if (!string.IsNullOrEmpty(jwtTokenService.Token))
+            if (jwtTokenService.Token is not null)
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtTokenService.Token);
             }
@@ -106,20 +94,6 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
             {
                 throw new Exception("No JWT token");
             }
-        }
-
-        private int GetLocationIdFromResponse(HttpResponseMessage response)
-        {
-            var path = response.Headers.Location?.ToString();
-            var idString = path?.Split('/').LastOrDefault();
-
-            bool isParsingSuccessfull = int.TryParse(idString, out int id);
-
-            if (isParsingSuccessfull)
-            {
-                return id;
-            }
-            throw new Exception("Failed to parse ID from response location header.");
         }
     }
 }
