@@ -8,6 +8,7 @@ using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Validation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using AirsoftBmsApp.Model.Dto.Player;
 
 namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
@@ -89,6 +90,41 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         }
 
         [RelayCommand]
+        public async Task SwitchTeam(int teamId)
+        {
+            if (teamId == 0) 
+            { 
+                LeaveTeam();
+                return;            
+            }
+
+            IsLoading = true;
+
+            var playerWithSwitchedTeam = new PutPlayerDto
+            {
+                TeamId = teamId
+            };
+
+            var result = await _apiFacade.Player.Update(playerWithSwitchedTeam);
+
+            HandleFailures(result);
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task LeaveTeam()
+        {
+            IsLoading = true;
+
+            var result = await _apiFacade.Team.Leave();
+
+            HandleFailures(result);
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
         public async Task ValidateName()
         {
             TeamForm.Name.Validate();
@@ -129,6 +165,23 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             }
 
             IsLoading = false;
+        }
+
+        private void HandleFailures(HttpResult result)
+        {
+            switch (result)
+            {
+                case Success success:
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
         }
     }
 }

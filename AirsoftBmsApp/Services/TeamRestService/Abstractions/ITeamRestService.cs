@@ -9,4 +9,5 @@ public interface ITeamRestService
     public Task<(HttpResult result, TeamDto? team)> PutAsync(PutTeamDto teamDto, int teamId);
     public Task<(HttpResult result, TeamDto? team)> PostAsync(PostTeamDto teamDto);
     public Task<HttpResult> DeleteAsync(int teamId);
+    public Task<HttpResult> LeaveAsync();
 }

@@ -53,7 +53,7 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
 
             var content = jsonHelper.GetStringContent(teamDto);
 
-            var response = await client.PostAsync("", content);
+            var response = await client.PostAsync("create", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -72,6 +72,23 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
             SetAuthorizationHeader();
 
             var response = await client.DeleteAsync($"id/{teamId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new Success();
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return new Failure(errorContent);
+            }
+        }
+
+        public async Task<HttpResult> LeaveAsync()
+        {
+            SetAuthorizationHeader();
+
+            var response = await client.PostAsync("leave", null);
 
             if (response.IsSuccessStatusCode)
             {

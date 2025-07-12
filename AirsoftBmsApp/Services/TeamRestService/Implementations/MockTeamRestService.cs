@@ -42,4 +42,9 @@ public class MockTeamRestService : ITeamRestService
     {
         return new Success();
     }
+
+    public async Task<HttpResult> LeaveAsync()
+    {
+        return new Success(); 
+    }
 }

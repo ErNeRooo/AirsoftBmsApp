@@ -44,6 +44,7 @@
                 Teams="{Binding Room.Teams}"
                 IsCreateTeamButtonVisible="{Binding IsCreateTeamButtonVisible, Mode=TwoWay}"
                 CreateTeamButtonCommand="{Binding CreateTeamButtonClickedCommand}"
+                SwitchTeamCommand="{Binding SwitchTeamCommand}"
                 />
 
         </VerticalStackLayout>

@@ -20,7 +20,7 @@ public partial class ObservableTeam : ObservableObject
     private string name;
 
     [ObservableProperty]
-    private ObservableCollection<ObservablePlayer> players;
+    private ObservableCollection<ObservablePlayer> players = new();
 
     [ObservableProperty]
     private ITeamTheme teamTheme = TeamThemes.UnderNoFlag;

@@ -16,9 +16,15 @@ public partial class ObservablePlayer : ObservableObject
 
     [ObservableProperty]
     private string name;
-        
+
+    [ObservableProperty]
+    private bool isDead;
+
     [ObservableProperty]
     private ObservableAccount? account;
+
+    [ObservableProperty]
+    private int teamId;
 
     [ObservableProperty]
     private int roomId;

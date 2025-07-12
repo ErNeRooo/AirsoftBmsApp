@@ -51,28 +51,17 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<(HttpResult result, PlayerDto? player)> PutAsync(PutPlayerDto playerDto, int playerId)
+        public async Task<(HttpResult result, PlayerDto? player)> PutAsync(PutPlayerDto playerDto)
         {
-            if (playerId == 400)
+            return (new Success(), new PlayerDto
             {
-                return (new Failure("Mocked Bad Request"), null);
-            }
-            else if (playerId == 2137)
-            {
-                throw new Exception("Mocked Exception for id 2137");
-            }
-            else
-            {
-                return (new Success(), new PlayerDto
-                {
-                    Id = 1,
-                    Name = playerDto.Name,
-                    IsDead = false,
-                    AccountId = 1,
-                    RoomId = 1,
-                    TeamId = 1
-                });
-            }
+                Id = 1,
+                Name = playerDto.Name,
+                IsDead = false,
+                AccountId = 1,
+                RoomId = 1,
+                TeamId = 1
+            });
         }
         public async Task<(HttpResult result, int? playerId)> RegisterAsync(PostPlayerDto playerDto)
         {

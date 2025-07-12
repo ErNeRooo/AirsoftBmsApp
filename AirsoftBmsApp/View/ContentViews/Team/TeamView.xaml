@@ -5,6 +5,7 @@
              xmlns:models="clr-namespace:AirsoftBmsApp.Model.Observable"
              x:Class="AirsoftBmsApp.View.ContentViews.Team.TeamView"
              x:DataType="models:ObservableTeam"
+             xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"    
              >
 
     <local:TeamNameTitleView
@@ -18,9 +19,18 @@
         BackgroundColor="{Binding TeamTheme.BackgroundColor}"
         StrokeShape="RoundRectangle 15"
         StrokeThickness="0"
-        Margin="0, 5, 0, 20"
+        Margin="0, 5, 0, 20" 
     >
-        <VerticalStackLayout>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer 
+                Command="{Binding SwitchTeamCommand, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}} }"
+                CommandParameter="{Binding Id}"
+                />
+        </Border.GestureRecognizers>
+
+        <VerticalStackLayout
+            
+            >
             <CollectionView ItemsSource="{Binding Players}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="2.5"></LinearItemsLayout>

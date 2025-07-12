@@ -47,13 +47,13 @@ public class PlayerRestService(HttpClient client, IJwtTokenService jwtTokenServi
         }
     }
 
-    public async Task<(HttpResult result, PlayerDto? player)> PutAsync(PutPlayerDto playerDto, int playerId)
+    public async Task<(HttpResult result, PlayerDto? player)> PutAsync(PutPlayerDto playerDto)
     {
         SetAuthorizationHeader();
 
         StringContent stringContent = jsonHelper.GetStringContent(playerDto);
 
-        var response = await client.PutAsync($"id/{playerId}", stringContent);
+        var response = await client.PutAsync("", stringContent);
 
         if (response.IsSuccessStatusCode)
         {

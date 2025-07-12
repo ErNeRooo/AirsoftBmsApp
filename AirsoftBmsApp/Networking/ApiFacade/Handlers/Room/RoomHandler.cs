@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 
@@ -7,7 +8,8 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
 
 public class RoomHandler(
     IRoomRestService roomRestService,
-    IRoomDataService roomDataService
+    IRoomDataService roomDataService,
+    IPlayerDataService playerDataService
     ) : IRoomHandler
 {
     public async Task<HttpResult> Create(PostRoomDto postRoomDto)
@@ -16,7 +18,10 @@ public class RoomHandler(
         {
             (HttpResult result, RoomDto? room) = await roomRestService.PostAsync(postRoomDto);
 
-            if (result is Success) roomDataService.Room = new ObservableRoom(room);
+            if (result is Success) { 
+                roomDataService.Room = new ObservableRoom(room);
+                roomDataService.Room.Teams[0].Players.Add(playerDataService.Player);
+            }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
 
             return result;
@@ -31,12 +36,17 @@ public class RoomHandler(
     {
         try
         {
-            (HttpResult result, RoomDto? room) = await roomRestService.JoinAsync(joinRoomDto);
+            (HttpResult joinResult, RoomDto? room) = await roomRestService.JoinAsync(joinRoomDto);
 
-            if (result is Success) roomDataService.Room = new ObservableRoom(room);
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            if (joinResult is Success)
+            {
+                roomDataService.Room = new ObservableRoom(room);
 
-            return result;
+
+            }
+            else if (joinResult is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+
+            return joinResult;
         }
         catch (Exception ex)
         {

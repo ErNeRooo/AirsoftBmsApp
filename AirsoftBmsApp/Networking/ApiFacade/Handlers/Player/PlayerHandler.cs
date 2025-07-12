@@ -2,12 +2,14 @@
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 
 namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
 {
     public class PlayerHandler(
         IPlayerRestService playerRestService,
-        IPlayerDataService playerDataService
+        IPlayerDataService playerDataService,
+        IRoomDataService roomDataService
         ) : IPlayerHandler
     {
         public async Task<HttpResult> LogOut()
@@ -32,6 +34,45 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                     Id = playerId ?? 0,
                     Name = postPlayerDto.Name
                 };
+                else
+                {
+                    if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+
+                    return result;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.Message);
+            }
+        }
+
+        public async Task<HttpResult> Update(PutPlayerDto putPlayerDto)
+        {
+            try
+            {
+                (HttpResult result, PlayerDto? player) = await playerRestService.PutAsync(putPlayerDto);
+
+                if (result is Success)
+                {
+                    playerDataService.Player.Name = player?.Name;
+                    playerDataService.Player.IsDead = (bool)player?.IsDead;
+
+                    if (playerDataService.Player.TeamId != player.TeamId)
+                    {
+                        roomDataService.Room
+                            .Teams.FirstOrDefault(t => t.Id == playerDataService.Player.TeamId)
+                            ?.Players.Remove(playerDataService.Player);
+
+                        playerDataService.Player.TeamId = (int)player?.TeamId;
+
+                        roomDataService.Room
+                            .Teams.FirstOrDefault(t => t.Id == player?.TeamId)
+                            ?.Players.Add(playerDataService.Player);
+                    }
+                }
                 else
                 {
                     if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");

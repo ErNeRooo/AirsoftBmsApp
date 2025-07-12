@@ -63,7 +63,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                 return (new Success(), new RoomDto
                 {
                     JoinCode = roomDto.JoinCode,
-                    AdminPlayerId = 3,
+                    AdminPlayerId = roomDto.AdminPlayerId,
                     RoomId = 1,
                 });
             }
@@ -100,7 +100,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                 return (new Success(), new RoomDto
                 {
                     JoinCode = "110110",
-                    AdminPlayerId = 3,
+                    AdminPlayerId = 1,
                     RoomId = 1,
                 });
             }

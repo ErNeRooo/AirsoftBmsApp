@@ -6,5 +6,6 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
     {
         public Task<HttpResult> Register(PostPlayerDto postPlayerDto);
         public Task<HttpResult> LogOut();
+        public Task<HttpResult> Update(PutPlayerDto putPlayerDto);
     }
 }
