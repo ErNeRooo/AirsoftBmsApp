@@ -1,4 +1,5 @@
-﻿using AirsoftBmsApp.Model.Dto.Room;
+﻿using AirsoftBmsApp.Model.Dto.Player;
+using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Resources.Styles.TeamTheme;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
@@ -36,6 +37,8 @@ public partial class ObservableRoom : ObservableObject
             },
         };
 
+    public ObservableBattle? Battle { get; set; }
+
     public ObservableRoom()
     {
         
@@ -43,9 +46,40 @@ public partial class ObservableRoom : ObservableObject
 
     public ObservableRoom(RoomDto room)
     {
-        id = room.RoomId;
-        maxPlayers = room.MaxPlayers;
-        joinCode = room.JoinCode;
-        adminPlayerId = room.AdminPlayerId;
+        Id = room.RoomId;
+        MaxPlayers = room.MaxPlayers;
+        JoinCode = room.JoinCode;
+        AdminPlayerId = room.AdminPlayerId;
+    }
+
+    public ObservableRoom(RoomIncludingRelatedEntitiesDto room)
+    {
+        Id = room.RoomId;
+        MaxPlayers = room.MaxPlayers;
+        JoinCode = room.JoinCode;
+        AdminPlayerId = room.AdminPlayer.PlayerId;
+
+        Battle = room.Battle is null ? null : new ObservableBattle(room.Battle);
+
+        var fetchedTeams = room.Teams.Select(team => new ObservableTeam(team));
+        foreach (var team in fetchedTeams) Teams.Add(team);
+
+        if (room.Players != null)
+        {
+            foreach (PlayerDto player in room.Players)
+            {
+                if (player.TeamId is null)
+                {
+                    Teams[0].Players.Add(new ObservablePlayer(player));
+                    continue;
+                }
+
+                var team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
+                if (team != null)
+                {
+                    team.Players.Add(new ObservablePlayer(player));
+                }
+            }
+        }
     }
 }

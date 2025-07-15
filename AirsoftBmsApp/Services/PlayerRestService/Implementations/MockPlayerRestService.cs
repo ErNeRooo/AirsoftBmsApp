@@ -18,10 +18,9 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
         {
             return (new Success(), new PlayerDto
             {
-                Id = 1,
+                PlayerId = 1,
                 Name = "Mocked Player",
                 IsDead = false,
-                AccountId = 1,
                 RoomId = 1,
                 TeamId = 1
             });
@@ -41,10 +40,9 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             {
                 return (new Success(), new PlayerDto
                 {
-                    Id = 1,
+                    PlayerId = 1,
                     Name = "Mocked Player",
                     IsDead = false,
-                    AccountId = 1,
                     RoomId = 1,
                     TeamId = 1
                 });
@@ -55,10 +53,9 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
         {
             return (new Success(), new PlayerDto
             {
-                Id = 1,
+                PlayerId = 1,
                 Name = playerDto.Name,
                 IsDead = false,
-                AccountId = 1,
                 RoomId = 1,
                 TeamId = 1
             });
@@ -93,10 +90,9 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             {
                 return (new Success(), new PlayerDto
                 {
-                    Id = playerId,
+                    PlayerId = playerId,
                     Name = "Mocked Player",
                     IsDead = false,
-                    AccountId = 1,
                     RoomId = 1,
                     TeamId = 1
                 });

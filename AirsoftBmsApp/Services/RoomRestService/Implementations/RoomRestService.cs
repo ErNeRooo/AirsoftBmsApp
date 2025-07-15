@@ -9,7 +9,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 {
     public class RoomRestService(HttpClient client, IJsonHelperService jsonHelper, IJwtTokenService jwtTokenService) : IRoomRestService
     {
-        public async Task<(HttpResult result, RoomDto? room)> GetByIdAsync(int roomId)
+        public async Task<(HttpResult result, RoomIncludingRelatedEntitiesDto? room)> GetByIdAsync(int roomId)
         {
             SetAuthorizationHeader();
 
@@ -17,7 +17,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 
             if (response.IsSuccessStatusCode)
             {
-                var room = await jsonHelper.DeserializeFromResponseAsync<RoomDto>(response);
+                var room = await jsonHelper.DeserializeFromResponseAsync<RoomIncludingRelatedEntitiesDto>(response);
 
                 return (new Success(), room);
             }
@@ -28,7 +28,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<(HttpResult result, RoomDto? room)> GetByJoinCodeAsync(string joinCode)
+        public async Task<(HttpResult result, RoomIncludingRelatedEntitiesDto? room)> GetByJoinCodeAsync(string joinCode)
         {
             SetAuthorizationHeader();
 
@@ -36,7 +36,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 
             if (response.IsSuccessStatusCode)
             {
-                var room = jsonHelper.DeserializeFromResponseAsync<RoomDto>(response).Result;
+                var room = jsonHelper.DeserializeFromResponseAsync<RoomIncludingRelatedEntitiesDto>(response).Result;
 
                 return (new Success(), room);
             }
@@ -108,7 +108,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<(HttpResult result, RoomDto? room)> JoinAsync(JoinRoomDto roomDto)
+        public async Task<(HttpResult result, RoomIncludingRelatedEntitiesDto? room)> JoinAsync(JoinRoomDto roomDto)
         {
             SetAuthorizationHeader();
 
@@ -118,7 +118,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 
             if (response.IsSuccessStatusCode)
             {
-                var room = jsonHelper.DeserializeFromResponseAsync<RoomDto>(response).Result;
+                var room = jsonHelper.DeserializeFromResponseAsync<RoomIncludingRelatedEntitiesDto>(response).Result;
 
                 return (new Success(), room);
             }

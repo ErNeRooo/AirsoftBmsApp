@@ -36,13 +36,12 @@ public class RoomHandler(
     {
         try
         {
-            (HttpResult joinResult, RoomDto? room) = await roomRestService.JoinAsync(joinRoomDto);
+            (HttpResult joinResult, RoomIncludingRelatedEntitiesDto? room) = await roomRestService.JoinAsync(joinRoomDto);
 
             if (joinResult is Success)
             {
+                playerDataService.Player.RoomId = room.RoomId;
                 roomDataService.Room = new ObservableRoom(room);
-
-
             }
             else if (joinResult is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
 

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AirsoftBmsApp.Model.Dto.Player;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,9 +25,23 @@ public partial class ObservablePlayer : ObservableObject
     private ObservableAccount? account;
 
     [ObservableProperty]
-    private int teamId;
+    private int? teamId;
 
     [ObservableProperty]
-    private int roomId;
+    private int? roomId;
+
+    public ObservablePlayer()
+    {
+        
+    }
+
+    public ObservablePlayer(PlayerDto playerDto)
+    {
+        Id = playerDto.PlayerId;
+        Name = playerDto.Name;
+        IsDead = playerDto.IsDead;
+        TeamId = playerDto.TeamId;
+        RoomId = playerDto.RoomId;
+    }
 }
 

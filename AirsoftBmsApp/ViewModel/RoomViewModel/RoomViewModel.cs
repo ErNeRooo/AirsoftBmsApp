@@ -92,13 +92,14 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [RelayCommand]
         public async Task SwitchTeam(int teamId)
         {
+            IsLoading = true;
+
             if (teamId == 0) 
             { 
                 LeaveTeam();
+                IsLoading = false;
                 return;            
             }
-
-            IsLoading = true;
 
             var playerWithSwitchedTeam = new PutPlayerDto
             {

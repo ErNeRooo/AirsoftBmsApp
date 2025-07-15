@@ -6,7 +6,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
 {
     public class MockRoomRestService : IRoomRestService
     {
-        public async Task<(HttpResult result, RoomDto? room)> GetByJoinCodeAsync(string joinCode)
+        public async Task<(HttpResult result, RoomIncludingRelatedEntitiesDto? room)> GetByJoinCodeAsync(string joinCode)
         {
             if(joinCode == "400000")
             {
@@ -18,16 +18,15 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return (new Success(), new RoomDto
+                return (new Success(), new RoomIncludingRelatedEntitiesDto
                 {
                     JoinCode = joinCode,
-                    AdminPlayerId = 4,
                     RoomId = 1,
                 });
             }
         }
 
-        public async Task<(HttpResult result, RoomDto? room)> GetByIdAsync(int roomId)
+        public async Task<(HttpResult result, RoomIncludingRelatedEntitiesDto? room)> GetByIdAsync(int roomId)
         {
             if (roomId == 400)
             {
@@ -39,10 +38,9 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return (new Success(), new RoomDto
+                return (new Success(), new RoomIncludingRelatedEntitiesDto
                 {
                     JoinCode = "110110",
-                    AdminPlayerId = 3,
                     RoomId = 1,
                 });
             }
@@ -106,7 +104,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
         }
 
-        public async Task<(HttpResult result, RoomDto? room)> JoinAsync(JoinRoomDto roomDto)
+        public async Task<(HttpResult result, RoomIncludingRelatedEntitiesDto? room)> JoinAsync(JoinRoomDto roomDto)
         {
             if (roomDto.JoinCode == "400000")
             {
@@ -118,10 +116,9 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
             else
             {
-                return (new Success(), new RoomDto
+                return (new Success(), new RoomIncludingRelatedEntitiesDto
                 {
                     JoinCode = "110110",
-                    AdminPlayerId = 3,
                     RoomId = 1,
                 });
             }
