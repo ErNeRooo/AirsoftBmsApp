@@ -7,19 +7,24 @@
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.RoomViewModel"
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
+             xmlns:local="clr-namespace:AirsoftBmsApp.View.Pages"
              x:DataType="viewModel:RoomViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              Title="RoomMembersPage">
     <Grid>
-        <VerticalStackLayout
-            Padding="40, 20"
+        <Grid 
+            RowDefinitions="auto,auto,*"
+            RowSpacing="10"  
+            Padding="40, 20, 40, 0"
             MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
             >
             <FlexLayout
                 JustifyContent="SpaceBetween"
                 AlignItems="Center"
                 Margin="0, 0, 0, 20"
+                Grid.Row="0"
                 >
+
                 <Label 
                     x:Name="JoinCodeTitle"
                     Text="Room 021370"
@@ -37,17 +42,20 @@
             </FlexLayout>
 
             <error:ErrorMessageView
+                Grid.Row="1"
+                Margin="0"
                 ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
             />
 
             <team:TeamsScrollView 
+                Grid.Row="2"
                 Teams="{Binding Room.Teams}"
                 IsCreateTeamButtonVisible="{Binding IsCreateTeamButtonVisible, Mode=TwoWay}"
                 CreateTeamButtonCommand="{Binding CreateTeamButtonClickedCommand}"
                 SwitchTeamCommand="{Binding SwitchTeamCommand}"
                 />
 
-        </VerticalStackLayout>
+        </Grid>
 
         <team:CreateTeamDialog 
             CreateTeamCommand="{Binding CreateTeamCommand}"

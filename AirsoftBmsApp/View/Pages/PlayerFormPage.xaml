@@ -13,10 +13,6 @@
              x:DataType="viewModel:PlayerFormViewModel"
              >
     <Grid>
-        <error:ErrorMessageView
-            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
-            />
-
         <VerticalStackLayout 
             VerticalOptions="Center" 
             Padding="40"
@@ -57,6 +53,10 @@
                 />
 
         </VerticalStackLayout>
+
+        <error:ErrorMessageView
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            />
 
         <loading:LoadingScreen 
             IsLoading="{Binding IsLoading}"

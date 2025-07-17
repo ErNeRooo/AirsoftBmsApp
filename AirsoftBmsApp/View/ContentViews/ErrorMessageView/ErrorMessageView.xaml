@@ -2,13 +2,27 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirsoftBmsApp.View.ContentViews.ErrorMessageView.ErrorMessageView"
+             MaximumHeightRequest="140"
+             VerticalOptions="Start"
+             Margin="40, 20"
              xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView">
+
+    <ContentView.Triggers>
+        <DataTrigger 
+                TargetType="ContentView"
+                Binding="{Binding ErrorMessage}"
+                Value=""
+                >
+            <Setter Property="MaximumHeightRequest" Value="0" />
+            <Setter Property="Margin" Value="0" />
+        </DataTrigger>
+    </ContentView.Triggers>
+
     <Border 
         VerticalOptions="Start"
         HorizontalOptions="Fill"
         Padding="10"
         BackgroundColor="{StaticResource Error}"
-        Margin="40, 20"
         StrokeShape="RoundRectangle 25"
         StrokeThickness="0"
         BindingContext="{Binding Source={RelativeSource AncestorType={x:Type local:ErrorMessageView}}}"

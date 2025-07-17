@@ -5,6 +5,10 @@
         public App()
         {
             InitializeComponent();
+
+#if ANDROID
+            App.Current.UserAppTheme = AppTheme.Dark;
+#endif
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

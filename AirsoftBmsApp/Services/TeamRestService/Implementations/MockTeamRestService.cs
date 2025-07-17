@@ -13,7 +13,7 @@ public class MockTeamRestService : ITeamRestService
             TeamId = teamId,
             Name = "Mocked Team",
             RoomId = 1,
-            OfficerPlayerId = 2,
+            OfficerPlayerId = null,
         });
     }
 
@@ -22,7 +22,7 @@ public class MockTeamRestService : ITeamRestService
         return (new Success(), new TeamDto
         {
             TeamId = 1,
-            Name = "Mocked Team",
+            Name = teamDto.Name,
             RoomId = 1,
             OfficerPlayerId = 2,
         });
@@ -33,9 +33,9 @@ public class MockTeamRestService : ITeamRestService
         return (new Success(), new TeamDto
         {
             TeamId = teamId,
-            Name = "Mocked Team",
+            Name = teamDto.Name,
             RoomId = 1,
-            OfficerPlayerId = 2,
+            OfficerPlayerId = teamDto.OfficerPlayerId,
         });
     }
     public async Task<HttpResult> DeleteAsync(int teamId)

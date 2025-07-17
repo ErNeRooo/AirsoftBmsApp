@@ -14,7 +14,7 @@ public partial class ObservableTeam : ObservableObject
     private int roomId;
 
     [ObservableProperty]
-    private int officerId;
+    private int? officerId;
 
     [ObservableProperty]
     private string name;

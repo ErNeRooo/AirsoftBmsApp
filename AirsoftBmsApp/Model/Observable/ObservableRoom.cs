@@ -23,7 +23,7 @@ public partial class ObservableRoom : ObservableObject
     public string joinCode;
     
     [ObservableProperty]
-    private int adminPlayerId;
+    private int? adminPlayerId;
 
     public ObservableCollection<ObservableTeam> Teams { get; set; } = 
         new ObservableCollection<ObservableTeam>()

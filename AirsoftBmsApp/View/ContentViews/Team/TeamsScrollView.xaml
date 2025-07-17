@@ -3,24 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirsoftBmsApp.View.ContentViews.Team.TeamsScrollView"
              xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"
-             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons">
-    <ScrollView
-        BindingContext="{Binding Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
-        >
-        <VerticalStackLayout>
-            <CollectionView ItemsSource="{Binding Teams}">
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             
+             >
+    <ScrollView>
+        <Grid
+            RowDefinitions="*,50"
+            RowSpacing="10"
+            BindingContext="{Binding Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
+            >
+            <CollectionView 
+                Grid.Row="0"
+                InputTransparent="False"
+                ItemsSource="{Binding Teams}" 
+                >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <team:TeamView></team:TeamView>
+                        <Border
+                            BackgroundColor="Transparent"
+                            Margin="0"
+                            Padding="1"
+                            Stroke="Transparent"
+                            >
+                            <team:TeamView></team:TeamView>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
             <buttons:OutlinedButton 
+                Grid.Row="1"
                 Text="Create Team"
                 IsVisible="{Binding IsCreateTeamButtonVisible, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
                 Command="{Binding CreateTeamButtonCommand}"
+                Margin="0,0,0,10"
             />
-        </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 </ContentView>
