@@ -8,8 +8,9 @@
              >
     <ScrollView>
         <Grid
-            RowDefinitions="*,50"
+            RowDefinitions="{OnPlatform Android='*,50', iOS='*,50', Tizen='*,50', Default='*,60' }"
             RowSpacing="10"
+            Margin="20,20"
             BindingContext="{Binding Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
             >
             <CollectionView 
@@ -36,7 +37,7 @@
                 Text="Create Team"
                 IsVisible="{Binding IsCreateTeamButtonVisible, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
                 Command="{Binding CreateTeamButtonCommand}"
-                Margin="0,0,0,10"
+
             />
         </Grid>
     </ScrollView>

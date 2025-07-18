@@ -25,6 +25,8 @@
             Margin="40"
             Padding="10"
             StrokeShape="RoundRectangle 30"
+            Stroke="{StaticResource Outline}"
+            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
             >
             <FlexLayout
                Direction="Column"

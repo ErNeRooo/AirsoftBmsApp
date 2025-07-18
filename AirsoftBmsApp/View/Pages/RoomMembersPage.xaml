@@ -9,19 +9,20 @@
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:local="clr-namespace:AirsoftBmsApp.View.Pages"
              x:DataType="viewModel:RoomViewModel"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              Title="RoomMembersPage">
     <Grid>
         <Grid 
             RowDefinitions="auto,auto,*"
             RowSpacing="10"  
-            Padding="40, 20, 40, 0"
+            Padding="10, 20, 10, 0"
             MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
             >
             <FlexLayout
+                Margin="20,0"
                 JustifyContent="SpaceBetween"
                 AlignItems="Center"
-                Margin="0, 0, 0, 20"
                 Grid.Row="0"
                 >
 
@@ -43,7 +44,7 @@
 
             <error:ErrorMessageView
                 Grid.Row="1"
-                Margin="0"
+                Margin="20,0"
                 ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
             />
 

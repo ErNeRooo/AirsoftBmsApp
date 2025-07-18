@@ -10,6 +10,7 @@
              x:DataType="viewModel:JoinRoomFormViewModel"
              x:Class="AirsoftBmsApp.View.Pages.JoinRoomPage"
              Title="Join Room"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              >
     <Grid>

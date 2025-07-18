@@ -9,6 +9,7 @@
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              x:Class="AirsoftBmsApp.RoomFormPage"
              Title="Join or Create Room"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:RoomFormViewModel"
              >

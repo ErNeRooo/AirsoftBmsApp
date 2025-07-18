@@ -11,6 +11,7 @@
              x:Class="AirsoftBmsApp.PlayerFormPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
              x:DataType="viewModel:PlayerFormViewModel"
+             Shell.NavBarIsVisible="False"
              >
     <Grid>
         <VerticalStackLayout 
