@@ -11,10 +11,32 @@
     Padding="10, 5"
     x:DataType="models:ObservablePlayer"
     >
-    <Label
-        FontFamily="{StaticResource GlobalFont}" 
-        FontSize="10"
-        TextColor="{Binding BindingContext.TeamTheme.FontColor, Source={RelativeSource AncestorType={x:Type local:TeamView}}}"
-        Text="{Binding Name}"
-        />
+
+    <HorizontalStackLayout
+        >
+        <Image 
+            x:Name="AdminIcon"
+            Source="{OnPlatform Default='room_admin_icon.svg', WinUI='room_admin_icon.png'}"
+            MaximumHeightRequest="{OnPlatform Default=18, WinUI=16}"
+            MinimumWidthRequest="{OnPlatform Default=18, WinUI=16}"
+            Margin="0,0,5,0"
+            IsVisible="False"
+            />
+
+        <Image 
+            x:Name="OfficerIcon"
+            Source="{OnPlatform Default='team_officer_icon.svg', WinUI='team_officer_icon.png'}"
+            MaximumHeightRequest="{OnPlatform Default=18, WinUI=16}"
+            MinimumWidthRequest="{OnPlatform Default=18, WinUI=16}"
+            Margin="0,0,5,0"
+            IsVisible="False"
+            />
+
+        <Label
+            FontFamily="{StaticResource GlobalFont}" 
+            FontSize="{OnPlatform Default=12, WinUI=14}"
+            TextColor="{Binding BindingContext.TeamTheme.FontColor, Source={RelativeSource AncestorType={x:Type local:TeamView}}}"
+            Text="{Binding Name}"
+            />
+    </HorizontalStackLayout>
 </Border>

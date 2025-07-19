@@ -1,28 +1,31 @@
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Resources.Styles.TeamTheme;
+using AirsoftBmsApp.Utils;
+using AirsoftBmsApp.ViewModel.RoomViewModel;
 
 namespace AirsoftBmsApp.View.ContentViews.Team;
 
 public partial class RoomMemberItemView : Border
 {
-    public static readonly BindableProperty RoomMemberProperty = BindableProperty.Create(nameof(RoomMember), typeof(ObservablePlayer), typeof(RoomMemberItemView));
-
-    public ObservablePlayer RoomMember
-    {
-        get => (ObservablePlayer)GetValue(RoomMemberProperty);
-        set => SetValue(RoomMemberProperty, value);
-    }
-
-    public static readonly BindableProperty TeamThemeProperty = BindableProperty.Create(nameof(Theme), typeof(ITeamTheme), typeof(RoomMemberItemView));
-
-    public ITeamTheme Theme
-    {
-        get => (ITeamTheme)GetValue(TeamThemeProperty);
-        set => SetValue(TeamThemeProperty, value);
-    }
-
     public RoomMemberItemView()
 	{
 		InitializeComponent();
-	}
+
+        this.Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        ObservablePlayer player = this.BindingContext as ObservablePlayer;
+        var teamsScrollView = VisualTreeHelper.FindParent<TeamsScrollView>(this);
+
+        if (teamsScrollView is not null)
+        {
+            IRoomViewModel roomViewModel = teamsScrollView.BindingContext as IRoomViewModel;
+            ObservableTeam currentTeam = this.Parent.BindingContext as ObservableTeam;
+
+            if (roomViewModel.Room.AdminPlayerId == player.Id) AdminIcon.IsVisible = true;
+            if (currentTeam.OfficerId == player.Id) OfficerIcon.IsVisible = true;
+        }
+    }
 }

@@ -150,123 +150,143 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         {
                             PlayerId = 3,
                             Name = "Eris",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 2,
                             Name = "Narberal",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 4,
                             Name = "Yor",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 10,
                             Name = "Alya",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 11,
                             Name = "Fern",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 12,
                             Name = "Solution",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 13,
                             Name = "Mikasa",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 19,
                             Name = "Chisato",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 21,
                             Name = "Takina",
-                            TeamId = 1
+                            TeamId = 1,
+                            RoomId = 1,
                         },
 
                         new PlayerDto
                         {
                             PlayerId = 5,
                             Name = "Sparkle",
-                            TeamId = null
+                            TeamId = null,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 1,
                             Name = playerDataService.Player.Name,
-                            TeamId = null
+                            TeamId = null,
+                            RoomId = 1,
                         },
 
                         new PlayerDto
                         {
                             PlayerId = 6,
                             Name = "Yumemizuki Mizuki",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 8,
                             Name = "Yae Miko",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 7,
                             Name = "Ei",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 9,
                             Name = "Keqing",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 14,
                             Name = "Yelan",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 15,
                             Name = "Ningguang",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 16,
                             Name = "Mona",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 17,
                             Name = "Navia",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                         new PlayerDto
                         {
                             PlayerId = 18,
                             Name = "Clorinde",
-                            TeamId = 2
+                            TeamId = 2,
+                            RoomId = 1,
                         },
                     },
                     Teams = new List<TeamDto>
@@ -274,12 +294,14 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         new TeamDto
                         {
                             TeamId = 1,
-                            Name = "Team A"
+                            Name = "Team A",
+                            OfficerPlayerId = 4,
                         },
                         new TeamDto
                         {
                             TeamId = 2,
-                            Name = "Team B"
+                            Name = "Team B",
+                            OfficerPlayerId = 7,
                         },
                         new TeamDto
                         {
