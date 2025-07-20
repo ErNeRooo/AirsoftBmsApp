@@ -1,5 +1,4 @@
 using AirsoftBmsApp.Model.Observable;
-using AirsoftBmsApp.Resources.Styles.TeamTheme;
 using AirsoftBmsApp.Utils;
 using AirsoftBmsApp.ViewModel.RoomViewModel;
 

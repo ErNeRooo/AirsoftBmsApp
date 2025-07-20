@@ -52,7 +52,9 @@
                 Command="{Binding LogInButtonClickedCommand}"
                 />
 
-            <buttons:BackButton />
+            <buttons:BackButton 
+                Command="{Binding GoBackCommand}"
+                />
 
             </VerticalStackLayout>
 

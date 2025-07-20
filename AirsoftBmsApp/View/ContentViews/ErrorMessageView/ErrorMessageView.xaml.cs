@@ -14,7 +14,7 @@ public partial class ErrorMessageView : ContentView
         set => SetValue(ErrorMessageProperty, value);
     }
 
-    public void CleanErrorMessage(object sender, EventArgs e)
+    public async void ClearErrorMessage(object sender, EventArgs e)
     {
         ErrorMessage = "";
     }

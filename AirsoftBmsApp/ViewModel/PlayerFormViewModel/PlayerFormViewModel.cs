@@ -173,5 +173,11 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 
             IsLoading = false;
         }
+
+        [RelayCommand]
+        async Task GoBack()
+        {
+            await Shell.Current.GoToAsync("..");
+        }
     }
 }

@@ -56,7 +56,9 @@
                 Text="Create"
             />
 
-            <buttons:BackButton />
+            <buttons:BackButton 
+                Command="{Binding GoBackCommand}"
+                />
 
         </VerticalStackLayout>
 

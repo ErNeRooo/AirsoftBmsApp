@@ -2,10 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirsoftBmsApp.View.ContentViews.ErrorMessageView.ErrorMessageView"
-             MaximumHeightRequest="140"
+             MaximumHeightRequest="150"
              VerticalOptions="Start"
              Margin="40, 20"
-             xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView">
+             xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
+             x:Name="ErrorMessageContentView"
+             >
+
 
     <ContentView.Triggers>
         <DataTrigger 
@@ -19,14 +22,16 @@
     </ContentView.Triggers>
 
     <Border 
+        x:Name="ErrorMessageBorder"
         VerticalOptions="Start"
         HorizontalOptions="Fill"
-        Padding="10"
+
         BackgroundColor="{StaticResource Error}"
         StrokeShape="RoundRectangle 25"
         StrokeThickness="0"
         BindingContext="{Binding Source={RelativeSource AncestorType={x:Type local:ErrorMessageView}}}"
     >
+
         <Border.Triggers>
             <DataTrigger 
                 TargetType="Border"
@@ -37,25 +42,52 @@
             </DataTrigger>
         </Border.Triggers>
 
-        <ScrollView
-            MaximumHeightRequest="140" 
-            VerticalOptions="Start"
-        >
-            <VerticalStackLayout>
+        <VerticalStackLayout
+            Padding="10"
+            >
+
+            <Label 
+                Grid.Row="0"
+                Margin="0"
+                FontSize="20"
+                FontFamily="{StaticResource GlobalFont}" 
+                TextColor="{StaticResource OnError}"
+                Text="Networking error occured :/"
+                HorizontalTextAlignment="Center"/>
+
+            <ScrollView
+                MaximumHeightRequest="60"
+                >
                 <Label 
-                    Margin="0"
-                    FontSize="20"
-                    FontFamily="{StaticResource GlobalFont}" 
-                    TextColor="{StaticResource OnError}"
-                    Text="Networking error occured :/"
-                    HorizontalTextAlignment="Center"/>
-                <Label 
+
                     Margin="0"
                     FontFamily="{StaticResource GlobalFont}" 
                     TextColor="{StaticResource OnError}"
                     Text="{Binding ErrorMessage}"
                     HorizontalTextAlignment="Center"/>
-            </VerticalStackLayout>
-        </ScrollView>
+            </ScrollView>
+
+
+            <Border
+                Grid.Row="2"
+                StrokeShape="RoundRectangle 45"
+                StrokeThickness="2"
+                Margin="0,10,0,0"
+                HeightRequest="30"
+                Stroke="{StaticResource OnError}"
+                >
+                <Button 
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource OnError}"
+                    BorderWidth="2"
+                    FontFamily="{StaticResource GlobalFont}" 
+                    HorizontalOptions="Fill"
+                    Text="Hide"
+                    Clicked="ClearErrorMessage"
+                    FontSize="14"
+                    Padding="0"
+                />
+            </Border>
+        </VerticalStackLayout>
     </Border>
 </ContentView>
