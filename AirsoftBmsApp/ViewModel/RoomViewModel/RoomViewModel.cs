@@ -46,6 +46,8 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [ObservableProperty]
         string informationDialogMessage = "";
 
+        int TargetTeamId = 0;
+
         public RoomViewModel(
             IValidationHelperFactory validationHelperFactory,
             IRoomDataService roomDataService,
@@ -101,11 +103,24 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         }
 
         [RelayCommand]
-        public async Task SwitchTeam(int teamId)
+        public async Task SwitchTeamConfirmation(int teamId)
         {
+            TargetTeamId = teamId;
+            string teamName = Room.Teams.FirstOrDefault(t => t.Id == teamId)?.Name ?? "Unknown Team";
+
+            ConfirmationDialogState.Message = teamId == 0
+                ? "Are you sure you want to leave your team?"
+                : $"Are you sure you want to switch to team {teamName}?";
+            ConfirmationDialogState.Command = SwitchTeamCommand;
+        }
+
+        [RelayCommand]
+        public async Task SwitchTeam()
+        {
+            ConfirmationDialogState.Message = "";
             IsLoading = true;
 
-            if (teamId == 0) 
+            if (TargetTeamId == 0) 
             { 
                 LeaveTeam();
                 IsLoading = false;
@@ -114,7 +129,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             var playerWithSwitchedTeam = new PutPlayerDto
             {
-                TeamId = teamId
+                TeamId = TargetTeamId
             };
 
             var result = await _apiFacade.Player.Update(playerWithSwitchedTeam);
@@ -152,6 +167,13 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         public async Task CancelTeamDialogClicked()
         {
             IsCreateTeamDialogVisible = false;
+        }
+
+        [RelayCommand]
+        public async Task LeaveRoomConfirmation()
+        {
+            ConfirmationDialogState.Message = "Are you sure you want to leave the room?";
+            ConfirmationDialogState.Command = LeaveRoomCommand;
         }
 
         [RelayCommand]

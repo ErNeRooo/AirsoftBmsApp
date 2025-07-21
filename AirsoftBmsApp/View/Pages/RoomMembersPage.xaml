@@ -65,7 +65,7 @@
 
                 <buttons:BackButton
                     Text="Leave"
-                    Command="{Binding LeaveRoomCommand}"
+                    Command="{Binding LeaveRoomConfirmationCommand}"
                     />
             </FlexLayout>
 
@@ -80,7 +80,7 @@
                 Teams="{Binding Room.Teams}"
                 IsCreateTeamButtonVisible="{Binding IsCreateTeamButtonVisible, Mode=TwoWay}"
                 CreateTeamButtonCommand="{Binding CreateTeamButtonClickedCommand}"
-                SwitchTeamCommand="{Binding SwitchTeamCommand}"
+                SwitchTeamCommand="{Binding SwitchTeamConfirmationCommand, Mode=TwoWay}"
                 TakeOfficerCommand="{Binding TakeOfficerConfirmationCommand}"
                 />
 
