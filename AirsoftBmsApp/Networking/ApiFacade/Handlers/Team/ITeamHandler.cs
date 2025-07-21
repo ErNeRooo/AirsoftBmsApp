@@ -11,6 +11,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Room
     public interface ITeamHandler
     {
         public Task<HttpResult> Create(PostTeamDto postTeamDto);
+        public Task<HttpResult> Update(PutTeamDto putTeamDto, int teamId);
         public Task<HttpResult> Leave();
     }
 }

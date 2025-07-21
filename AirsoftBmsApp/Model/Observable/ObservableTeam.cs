@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.Model.Observable;
 
-public partial class ObservableTeam : ObservableObject
+public partial class ObservableTeam : ObservableObject, IObservableTeam
 {
     [ObservableProperty]
     private int id;
@@ -34,7 +34,34 @@ public partial class ObservableTeam : ObservableObject
     {
         Id = team.TeamId;
         RoomId = team.RoomId;
-        OfficerId = team.OfficerPlayerId;
+        OfficerId = team.OfficerPlayerId ?? 0;
         Name = team.Name;
+    }
+
+    public void Attach(ObservablePlayer observer)
+    {
+        players.Add(observer);
+    }
+
+    public void Detach(ObservablePlayer observer)
+    {
+        players.Remove(observer);
+    }
+
+    public void Notify()
+    {
+        foreach (ObservablePlayer observer in players)
+        {
+            observer.UpdateIsOfficer(this);
+        }
+    }
+
+    partial void OnOfficerIdChanged(int? oldValue, int? newValue)
+    {
+        ObservablePlayer? oldPlayer = Players.FirstOrDefault(p => p.Id == oldValue);
+        ObservablePlayer? newPlayer = Players.FirstOrDefault(p => p.Id == newValue);
+
+        if (oldPlayer != null) oldPlayer.UpdateIsOfficer(this);
+        if (newPlayer != null) newPlayer.UpdateIsOfficer(this);
     }
 }

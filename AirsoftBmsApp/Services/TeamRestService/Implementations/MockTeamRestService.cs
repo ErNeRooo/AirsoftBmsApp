@@ -33,7 +33,7 @@ public class MockTeamRestService : ITeamRestService
         return (new Success(), new TeamDto
         {
             TeamId = teamId,
-            Name = teamDto.Name,
+            Name = "Team B",
             RoomId = 1,
             OfficerPlayerId = teamDto.OfficerPlayerId,
         });

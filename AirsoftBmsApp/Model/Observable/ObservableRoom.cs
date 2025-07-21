@@ -39,6 +39,8 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
 
     public ObservableBattle? Battle { get; set; }
 
+    List<IObservablePlayer> observerablePlayers = new();
+
     public ObservableRoom()
     {
         
@@ -52,8 +54,6 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
         AdminPlayerId = room.AdminPlayerId;
     }
 
-    List<IObservablePlayer> observerablePlayers = new();
-
     public ObservableRoom(RoomIncludingRelatedEntitiesDto room)
     {
         Id = room.RoomId;
@@ -66,31 +66,37 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
         var fetchedTeams = room.Teams.Select(team => new ObservableTeam(team));
         foreach (var team in fetchedTeams) Teams.Add(team);
 
-        if (room.Players != null)
+        if (room.Players == null) return;
+
+        foreach (PlayerDto player in room.Players)
         {
-            foreach (PlayerDto player in room.Players)
+            ObservablePlayer observablePlayer = new ObservablePlayer(player);
+
+            if (room.AdminPlayer is not null && player.PlayerId == room.AdminPlayer.PlayerId)
             {
-                if (player.TeamId is null)
+                observablePlayer.IsAdmin = true;
+            }
+
+            observerablePlayers.Add(observablePlayer);
+
+            if (player.TeamId is null)
+            {
+                Teams[0].Players.Add(observablePlayer);
+                continue;
+            }
+
+            var team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
+            if (team != null)
+            {
+                if (player.PlayerId == team.OfficerId)
                 {
-                    ObservablePlayer observablePlayer = new ObservablePlayer(player);
-
-                    if(room.AdminPlayer is not null && player.PlayerId == room.AdminPlayer.PlayerId)
-                    {
-                        observablePlayer.IsAdmin = true;
-                    }
-
-                    observerablePlayers.Add(observablePlayer);
-                    Teams[0].Players.Add(observablePlayer);
-                    continue;
+                    observablePlayer.IsOfficer = true;
                 }
 
-                var team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
-                if (team != null)
-                {
-                    team.Players.Add(new ObservablePlayer(player));
-                }
+                team.Players.Add(observablePlayer);
             }
         }
+
     }
 
     public void Attach(IObservablePlayer observer)
@@ -107,7 +113,7 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
     {
         foreach (var observer in observerablePlayers)
         {
-            observer.Update(this);
+            observer.UpdateIsAdmin(this);
         }
     }
 
@@ -116,7 +122,7 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
         IObservablePlayer? oldPlayer = observerablePlayers.FirstOrDefault(p => p.Id == oldValue);
         IObservablePlayer? newPlayer = observerablePlayers.FirstOrDefault(p => p.Id == newValue);
 
-        if (oldPlayer != null) oldPlayer.Update(this);
-        if (newPlayer != null) newPlayer.Update(this);
+        if (oldPlayer != null) oldPlayer.UpdateIsAdmin(this);
+        if (newPlayer != null) newPlayer.UpdateIsAdmin(this);
     }
 }

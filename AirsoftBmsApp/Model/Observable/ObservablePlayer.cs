@@ -1,12 +1,5 @@
 ﻿using AirsoftBmsApp.Model.Dto.Player;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model.Observable;
 
@@ -33,6 +26,9 @@ public partial class ObservablePlayer : ObservableObject, IObservablePlayer
     [ObservableProperty]
     private bool isAdmin = false;
 
+    [ObservableProperty]
+    private bool isOfficer = false;
+
     public ObservablePlayer()
     {
         
@@ -47,10 +43,16 @@ public partial class ObservablePlayer : ObservableObject, IObservablePlayer
         RoomId = playerDto.RoomId;
     }
 
-    public void Update(IObservableRoom subject)
+    public void UpdateIsAdmin(IObservableRoom room)
     {
-        if (subject.AdminPlayerId == Id) IsAdmin = true;
+        if (room.AdminPlayerId == Id) IsAdmin = true;
         else IsAdmin = false;
+    }
+
+    public void UpdateIsOfficer(IObservableTeam team)
+    {
+        if (team.OfficerId == Id) IsOfficer = true;
+        else IsOfficer = false;
     }
 }
 

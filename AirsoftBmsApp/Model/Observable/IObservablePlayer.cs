@@ -14,10 +14,12 @@ namespace AirsoftBmsApp.Model.Observable
         string Name { get; set; }
         bool IsDead { get; set; }
         bool IsAdmin { get; set; }
+        bool IsOfficer { get; set; }
         ObservableAccount? Account { get; set; }
         int? TeamId { get; set; }
         int? RoomId { get; set; }
 
-        void Update(IObservableRoom subject);
+        void UpdateIsAdmin(IObservableRoom subject);
+        void UpdateIsOfficer(IObservableTeam subject);
     }
 }

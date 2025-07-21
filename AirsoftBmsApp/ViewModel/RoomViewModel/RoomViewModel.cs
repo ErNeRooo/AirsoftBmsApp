@@ -43,6 +43,9 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             Command = null
         };
 
+        [ObservableProperty]
+        string informationDialogMessage = "";
+
         public RoomViewModel(
             IValidationHelperFactory validationHelperFactory,
             IRoomDataService roomDataService,
@@ -195,6 +198,52 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             };
 
             var result = await _apiFacade.Room.Update(roomDto);
+
+            switch (result)
+            {
+                case Success:
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task TakeOfficerConfirmation(int teamId)
+        {
+            if(teamId != _playerDataService.Player.TeamId)
+            {
+                InformationDialogMessage = "You can only take officer role in your own team.";
+                return;
+            }
+
+            ConfirmationDialogState.Message = "Are you sure you want to take officer role?";
+            ConfirmationDialogState.Command = TakeOfficerCommand;
+        }
+
+        [RelayCommand]
+        public async Task TakeOfficer()
+        {
+            ConfirmationDialogState.Message = "";
+
+            if (_playerDataService.Player.TeamId is null) return;
+
+            IsLoading = true;
+
+            PutTeamDto teamDto = new()
+            {
+                OfficerPlayerId = _playerDataService.Player.Id
+            };
+
+            var result = await _apiFacade.Team.Update(teamDto, (int)_playerDataService.Player.TeamId);
 
             switch (result)
             {

@@ -74,7 +74,11 @@ public class RoomHandler(
         {
             HttpResult result = await roomRestService.LeaveAsync();
 
-            if (result is Success) roomDataService.Room = new ObservableRoom();
+            if (result is Success) {
+                roomDataService.Room = new ObservableRoom();
+                playerDataService.Player.IsAdmin = false;
+                playerDataService.Player.IsOfficer = false;
+            }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
 
             return result;

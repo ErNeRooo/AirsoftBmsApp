@@ -121,7 +121,13 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                     JoinCode = "000000",
                     RoomId = 1,
                     MaxPlayers = 10,
-                    AdminPlayer = null,
+                    AdminPlayer = new PlayerDto
+                    {
+                        PlayerId = 4,
+                        Name = "Yor",
+                        TeamId = 1,
+                        RoomId = 1,
+                    },
                     Battle = new BattleDto
                     {
                         BattleId = 1,
@@ -285,7 +291,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         {
                             TeamId = 2,
                             Name = "Team B",
-                            OfficerPlayerId = 7,
+                            OfficerPlayerId = null,
                         },
                         new TeamDto
                         {

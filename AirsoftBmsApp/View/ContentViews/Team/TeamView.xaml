@@ -8,17 +8,50 @@
              xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"    
              >
 
-    <local:TeamNameTitleView
-        Text="{Binding Name}"
-        TextColor="{Binding TeamTheme.TitleColor}"
+    <HorizontalStackLayout
+        IsVisible="True">
+        <Label
+            FontFamily="{StaticResource GlobalFont}" 
+            FontSize="20"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            Text="{Binding Name}"
+            TextColor="{Binding TeamTheme.TitleColor}"
+            IsVisible="True"
         >
-        <Label.GestureRecognizers>
-            <TapGestureRecognizer 
-                Command="{Binding SwitchTeamCommand, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}} }"
-                CommandParameter="{Binding Id}"
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer 
+                    Command="{Binding SwitchTeamCommand, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}} }"
+                    CommandParameter="{Binding Id}"
                 />
-        </Label.GestureRecognizers>
-    </local:TeamNameTitleView>
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Image 
+            Source="{OnPlatform Default='team_officer_icon.svg', WinUI='team_officer_icon.png'}"
+            HeightRequest="20"
+            WidthRequest="20"
+            Rotation="-45"
+            Margin="10,0,0,0"
+            IsVisible="False"
+            >
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding TakeOfficerCommand, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
+                    CommandParameter="{Binding Id}"
+                    />
+            </Image.GestureRecognizers>
+            <Image.Triggers>
+                <DataTrigger
+                    TargetType="Image"
+                    Binding="{Binding OfficerId}"
+                    Value="0"
+                    >
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </Image.Triggers>
+        </Image>
+    </HorizontalStackLayout>
 
     <Border
         HorizontalOptions="Fill"

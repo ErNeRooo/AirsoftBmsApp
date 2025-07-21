@@ -42,8 +42,36 @@ public class TeamHandler(
 
                 playerDataService.Player.TeamId = 0;
 
-                roomDataService.Room.Teams[0]
-                        .Players.Add(playerDataService.Player);
+                bool isPlayerInUnderNoFlagTeam = roomDataService.Room.Teams[0].Players.Any(p => p.Id == playerDataService.Player.Id);
+
+                if (!isPlayerInUnderNoFlagTeam)
+                    roomDataService.Room.Teams[0].Players.Add(playerDataService.Player);
+            }
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return new Error(ex.Message);
+        }
+    }
+
+    public async Task<HttpResult> Update(PutTeamDto putTeamDto, int teamId)
+    {
+        try
+        {
+            (HttpResult result, TeamDto? team) = await teamRestService.PutAsync(putTeamDto, teamId);
+
+            if (result is Success && team is not null)
+            {
+                ObservableTeam? teamToUpdate = roomDataService.Room.Teams.FirstOrDefault(t => t.Id == teamId);
+
+                if (teamToUpdate is not null)
+                {
+                    teamToUpdate.Name = team.Name;
+                    teamToUpdate.OfficerId = team.OfficerPlayerId;
+                }
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
 

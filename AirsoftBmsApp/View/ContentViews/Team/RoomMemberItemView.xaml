@@ -30,7 +30,7 @@
             MaximumHeightRequest="{OnPlatform Default=18, WinUI=16}"
             MinimumWidthRequest="{OnPlatform Default=18, WinUI=16}"
             Margin="0,0,5,0"
-            IsVisible="False"
+            IsVisible="{Binding IsOfficer}"
             />
 
         <Label

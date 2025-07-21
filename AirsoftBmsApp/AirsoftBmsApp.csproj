@@ -83,9 +83,6 @@
 	  <Compile Update="View\ContentViews\Team\TeamView.xaml.cs">
 	    <DependentUpon>TeamView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\ContentViews\Team\TeamNameTitleView.xaml.cs">
-	    <DependentUpon>TeamNameTitleView.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="View\Pages\CreateRoomPage.xaml.cs">
 	    <DependentUpon>CreateRoomPage.xaml</DependentUpon>
 	  </Compile>
@@ -119,6 +116,9 @@
 	  <MauiXaml Update="View\ContentViews\Dialogs\ConfirmationDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Dialogs\InformationDialog.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\ErrorMessageView\ErrorMessageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -150,9 +150,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Team\TeamView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\ContentViews\Team\TeamNameTitleView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Text\ResizableLabelWithHorizontalLine.xaml">

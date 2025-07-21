@@ -62,8 +62,12 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
 
                     if (playerDataService.Player.TeamId != player.TeamId)
                     {
+                        playerDataService.Player.IsOfficer = false;
+
                         ObservableTeam? previousTeam = roomDataService.Room.Teams
                             .FirstOrDefault(t => t.Id == (playerDataService.Player.TeamId ?? 0));
+
+                        if(previousTeam.OfficerId == player.PlayerId) previousTeam.OfficerId = 0;
 
                         for (int i = 0; i < previousTeam.Players.Count; i++)
                         {

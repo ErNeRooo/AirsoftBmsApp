@@ -81,6 +81,7 @@
                 IsCreateTeamButtonVisible="{Binding IsCreateTeamButtonVisible, Mode=TwoWay}"
                 CreateTeamButtonCommand="{Binding CreateTeamButtonClickedCommand}"
                 SwitchTeamCommand="{Binding SwitchTeamCommand}"
+                TakeOfficerCommand="{Binding TakeOfficerConfirmationCommand}"
                 />
 
         </Grid>
@@ -94,8 +95,12 @@
             />
 
         <dialogs:ConfirmationDialog 
-            Message="{Binding ConfirmationDialogState.Message}"
-            ConfirmCommand="{Binding ConfirmationDialogState.Command}"
+            Message="{Binding ConfirmationDialogState.Message, Mode=TwoWay}"
+            ConfirmCommand="{Binding ConfirmationDialogState.Command, Mode=TwoWay}"
+            />
+
+        <dialogs:InformationDialog 
+            Message="{Binding InformationDialogMessage, Mode=TwoWay}"
             />
 
         <loading:LoadingScreen 
