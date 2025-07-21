@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model.Observable;
 
-public partial class ObservablePlayer : ObservableObject
+public partial class ObservablePlayer : ObservableObject, IObservablePlayer
 {
     [ObservableProperty]
     private int id;
@@ -30,6 +30,9 @@ public partial class ObservablePlayer : ObservableObject
     [ObservableProperty]
     private int? roomId;
 
+    [ObservableProperty]
+    private bool isAdmin = false;
+
     public ObservablePlayer()
     {
         
@@ -42,6 +45,12 @@ public partial class ObservablePlayer : ObservableObject
         IsDead = playerDto.IsDead;
         TeamId = playerDto.TeamId;
         RoomId = playerDto.RoomId;
+    }
+
+    public void Update(IObservableRoom subject)
+    {
+        if (subject.AdminPlayerId == Id) IsAdmin = true;
+        else IsAdmin = false;
     }
 }
 

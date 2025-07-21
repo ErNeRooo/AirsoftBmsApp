@@ -54,25 +54,16 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             }
         }
 
-        public async Task<(HttpResult result, RoomDto? room)> PutAsync(PutRoomDto roomDto, int roomId)
+        public async Task<(HttpResult result, RoomDto? room)> PutAsync(PutRoomDto roomDto)
         {
-            if (roomId == 400)
+            await Task.Delay(200);
+
+            return (new Success(), new RoomDto
             {
-                return (new Failure("400 - Mocked Bad Request"), null);
-            }
-            else if (roomId == 2137)
-            {
-                throw new Exception("Mocked Exception for id 2137");
-            }
-            else
-            {
-                return (new Success(), new RoomDto
-                {
-                    JoinCode = roomDto.JoinCode,
-                    AdminPlayerId = roomDto.AdminPlayerId ?? roomDataService.Room.AdminPlayerId,
-                    RoomId = 1,
-                });
-            }
+                JoinCode = roomDto.JoinCode,
+                AdminPlayerId = roomDto.AdminPlayerId ?? roomDataService.Room.AdminPlayerId,
+                RoomId = 1,
+            });
         }
 
         public async Task<HttpResult> DeleteAsync(int roomId)
@@ -130,14 +121,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                     JoinCode = "000000",
                     RoomId = 1,
                     MaxPlayers = 10,
-                    AdminPlayer = new PlayerDto
-                    {
-                        PlayerId = 5,
-                        Name = "Sparkle",
-                        IsDead = false,
-                        TeamId = null,
-                        RoomId = 1,
-                    },
+                    AdminPlayer = null,
                     Battle = new BattleDto
                     {
                         BattleId = 1,

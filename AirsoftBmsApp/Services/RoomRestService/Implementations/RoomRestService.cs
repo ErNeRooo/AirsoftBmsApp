@@ -48,13 +48,13 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 
         }
 
-        public async Task<(HttpResult result, RoomDto? room)> PutAsync(PutRoomDto roomDto, int roomId)
+        public async Task<(HttpResult result, RoomDto? room)> PutAsync(PutRoomDto roomDto)
         {
             SetAuthorizationHeader();
 
             StringContent stringContent = jsonHelper.GetStringContent(roomDto);
 
-            var response = await client.PutAsync($"id/{roomId}", stringContent);
+            var response = await client.PutAsync("", stringContent);
 
             if (response.IsSuccessStatusCode)
             {

@@ -67,7 +67,6 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
 
                         for (int i = 0; i < previousTeam.Players.Count; i++)
                         {
-                            var wtf = previousTeam.Players[i];
                             if (previousTeam.Players[i].Id == playerDataService.Player.Id)
                             {
                                 previousTeam.Players.RemoveAt(i);

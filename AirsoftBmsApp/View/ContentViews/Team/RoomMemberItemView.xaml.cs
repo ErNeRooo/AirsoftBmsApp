@@ -9,22 +9,30 @@ public partial class RoomMemberItemView : Border
     public RoomMemberItemView()
 	{
 		InitializeComponent();
-
-        this.Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object? sender, EventArgs e)
-    {
-        ObservablePlayer player = this.BindingContext as ObservablePlayer;
-        var teamsScrollView = VisualTreeHelper.FindParent<TeamsScrollView>(this);
+    //protected override void OnBindingContextChanged()
+    //{
+    //    base.OnBindingContextChanged();
 
-        if (teamsScrollView is not null)
-        {
-            IRoomViewModel roomViewModel = teamsScrollView.BindingContext as IRoomViewModel;
-            ObservableTeam currentTeam = this.Parent.BindingContext as ObservableTeam;
+    //    ObservablePlayer player = this.BindingContext as ObservablePlayer;
 
-            if (roomViewModel.Room.AdminPlayerId == player.Id) AdminIcon.IsVisible = true;
-            if (currentTeam.OfficerId == player.Id) OfficerIcon.IsVisible = true;
-        }
-    }
+    //    AdminIcon.IsVisible = player.IsAdmin;
+    //}
+
+    //private void OnLoaded(object? sender, EventArgs e)
+    //{
+    //    ObservablePlayer player = this.BindingContext as ObservablePlayer;
+    //    var teamsScrollView = VisualTreeHelper.FindParent<TeamsScrollView>(this);
+
+    //    if (teamsScrollView is not null)
+    //    {
+
+    //        IRoomViewModel roomViewModel = teamsScrollView.BindingContext as IRoomViewModel;
+    //        ObservableTeam currentTeam = this.Parent.BindingContext as ObservableTeam;
+
+    //        if (roomViewModel.Room.AdminPlayerId == player.Id) AdminIcon.IsVisible = true;
+    //        if (currentTeam.OfficerId == player.Id) OfficerIcon.IsVisible = true;
+    //    }
+    //}
 }

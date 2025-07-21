@@ -5,6 +5,7 @@
              xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.RoomViewModel"
+             xmlns:dialogs="clr-namespace:AirsoftBmsApp.View.ContentViews.Dialogs"
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:local="clr-namespace:AirsoftBmsApp.View.Pages"
@@ -26,15 +27,41 @@
                 Grid.Row="0"
                 >
 
-                <Label 
-                    x:Name="JoinCodeTitle"
-                    Text="Room 021370"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center"
-                    FontSize="30"
-                    TextColor="{StaticResource Primary}"
-                    FontFamily="{StaticResource GlobalFont}" 
+                <HorizontalStackLayout>
+                    <Label 
+                        x:Name="JoinCodeTitle"
+                        Text="Room 021370"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"
+                        FontSize="30"
+                        TextColor="{StaticResource Primary}"
+                        FontFamily="{StaticResource GlobalFont}" 
                     />
+
+                    <Image 
+                        Source="{OnPlatform Default='outline_room_admin_icon.svg', WinUI='outline_room_admin_icon.png'}"
+                        HeightRequest="36"
+                        WidthRequest="36"
+                        Rotation="-45"
+                        Margin="10,0,0,0"
+                        IsVisible="False"
+                        >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding TakeAdminConfirmationCommand}"
+                                />
+                        </Image.GestureRecognizers>
+                        <Image.Triggers>
+                            <DataTrigger
+                                TargetType="Image"
+                                Binding="{Binding Room.AdminPlayerId}"
+                                Value="0"
+                                >
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </HorizontalStackLayout>
 
                 <buttons:BackButton
                     Text="Leave"
@@ -64,6 +91,11 @@
             IsVisible="{Binding IsCreateTeamDialogVisible, Mode=TwoWay}"
             ValidatableName="{Binding TeamForm.Name, Mode=TwoWay}"
             ValidateCommand="{Binding ValidateNameCommand}"
+            />
+
+        <dialogs:ConfirmationDialog 
+            Message="{Binding ConfirmationDialogState.Message}"
+            ConfirmCommand="{Binding ConfirmationDialogState.Command}"
             />
 
         <loading:LoadingScreen 

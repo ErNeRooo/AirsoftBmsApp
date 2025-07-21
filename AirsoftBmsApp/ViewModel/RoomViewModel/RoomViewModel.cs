@@ -9,6 +9,7 @@ using AirsoftBmsApp.Validation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using AirsoftBmsApp.Model.Dto.Player;
+using AirsoftBmsApp.Model.Dto.Room;
 
 namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
@@ -34,6 +35,13 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
         [ObservableProperty]
         string errorMessage = "";
+
+        [ObservableProperty]
+        ObservableConfirmationDialogState confirmationDialogState = new()
+        {
+            Message = "",
+            Command = null
+        };
 
         public RoomViewModel(
             IValidationHelperFactory validationHelperFactory,
@@ -154,6 +162,43 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             {
                 case Success:
                     await Shell.Current.GoToAsync(nameof(RoomFormPage));
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task TakeAdminConfirmation()
+        {
+            ConfirmationDialogState.Message = "Are you sure you want to take admin role?";
+            ConfirmationDialogState.Command = TakeAdminCommand;
+        }
+
+        [RelayCommand]
+        public async Task TakeAdmin()
+        {
+            ConfirmationDialogState.Message = "";
+            IsLoading = true;
+
+            PutRoomDto roomDto = new PutRoomDto
+            {
+                AdminPlayerId = _playerDataService.Player.Id
+            };
+
+            var result = await _apiFacade.Room.Update(roomDto);
+
+            switch (result)
+            {
+                case Success:
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;
