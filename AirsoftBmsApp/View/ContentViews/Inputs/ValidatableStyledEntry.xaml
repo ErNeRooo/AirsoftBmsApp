@@ -10,7 +10,7 @@
         BindingContext="{Binding Source={RelativeSource AncestorType={x:Type local:ValidatableStyledEntry}}}"
         >
         <Border 
-            Height="30"
+
             Stroke="{StaticResource Outline}"
             StrokeShape="RoundRectangle 45"
             Padding="20, 0">

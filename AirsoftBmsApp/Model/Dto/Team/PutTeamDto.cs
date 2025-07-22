@@ -9,6 +9,6 @@ namespace AirsoftBmsApp.Model.Dto.Team
     public class PutTeamDto
     {
         public string Name { get; set; }
-        public int OfficerPlayerId { get; set; }
+        public int? OfficerPlayerId { get; set; }
     }
 }

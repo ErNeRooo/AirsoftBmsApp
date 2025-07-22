@@ -28,6 +28,35 @@ public class TeamHandler(
         }
     }
 
+    public async Task<HttpResult> Delete(int teamId)
+    {
+        try
+        {
+            HttpResult result = await teamRestService.DeleteAsync(teamId);
+
+            if (result is Success)
+            {
+                ObservableTeam teamToRemove = roomDataService.Room.Teams.FirstOrDefault(t => t.Id == teamId);
+
+                foreach (var player in teamToRemove.Players)
+                {
+                    if (teamToRemove.OfficerId == player.Id) player.IsOfficer = false;
+                    player.TeamId = 0;
+                    roomDataService.Room.Teams[0].Players.Add(player);
+                }
+
+                roomDataService.Room.Teams.Remove(teamToRemove);
+            }
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return new Error(ex.Message);
+        }
+    }
+
     public async Task<HttpResult> Leave()
     {
         try

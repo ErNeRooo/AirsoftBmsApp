@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.TeamSettingsDialog"
+             x:Name="TeamSettingsDialogView"
+             
+             >
+    <Grid   
+        BackgroundColor="#80000000"   
+        VerticalOptions="Fill"  
+        CascadeInputTransparent="False"  
+        HorizontalOptions="Fill">
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer/>
+        </Grid.GestureRecognizers>
+
+        <Border
+             HorizontalOptions="Center"
+             VerticalOptions="Center"
+             BackgroundColor="{StaticResource Surface}"
+             Margin="40"
+             
+             StrokeShape="RoundRectangle 30"
+             Stroke="{StaticResource Outline}"
+             WidthRequest="350"
+         >
+            <Grid 
+                RowDefinitions="auto,auto,auto,auto,auto"
+                RowSpacing="5"
+                Padding="10,15"
+                >
+                <text:Header Text="Team Settings" Grid.Row="0" />
+
+                <Grid 
+                    ColumnDefinitions="80,*" 
+                    HorizontalOptions="Fill"
+                    Grid.Row="1"
+                    >
+                    <Label 
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        Text="Name"
+                        HorizontalOptions="Center"
+                        FontFamily="{StaticResource GlobalFont}"
+                        TextColor="{StaticResource Outline}"
+                        />
+
+                    <inputs:ValidatableStyledEntry
+                        ValidatableObject="{Binding  TeamSettings.TeamForm.Name, Source={x:Reference TeamSettingsDialogView}}"
+                        ValidateCommand="{Binding TeamSettings.ValidateCommand, Source={x:Reference TeamSettingsDialogView}}"
+                        Grid.Column="1"/>
+                </Grid>
+
+                <Grid 
+                    ColumnDefinitions="80,*" 
+                    HorizontalOptions="Fill"
+                    Grid.Row="2"
+                    >
+                    <Label 
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        Text="Officer"
+                        HorizontalOptions="Center"
+                        FontFamily="{StaticResource GlobalFont}"
+                        TextColor="{StaticResource Outline}"
+                        />
+                    <Border
+                        Grid.Column="1"
+                        Stroke="{StaticResource Outline}"
+                        StrokeShape="RoundRectangle 15"
+                        HeightRequest="45"
+                        >
+                        <Picker
+                            x:Name="OfficerPicker"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            HeightRequest="10"
+                            FontFamily="{StaticResource GlobalFont}"
+                            BindingContext="{Binding Source={x:Reference TeamSettingsDialogView}}"
+                            ItemsSource="{Binding TeamSettings.Players}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding TeamSettings.SelectedPlayerToBecomeOfficer, Mode=TwoWay}"
+                            Title="{OnPlatform Default='Choose Player', WinUI=''}"
+                        />
+                    </Border>
+
+                </Grid>
+
+                <Border
+                    Grid.Row="3"
+                    StrokeShape="RoundRectangle 45"
+                    StrokeThickness="2"
+                    Stroke="{StaticResource Danger}"
+                    >
+                    <Button 
+                        x:Name="Delete"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Danger}"
+                        BorderWidth="2"
+                        FontFamily="{StaticResource GlobalFont}" 
+                        HorizontalOptions="Fill"
+                        Text="Delete Team"
+                        FontSize="20"
+                        Padding="0"
+                        Command="{Binding DeleteTeamCommand, Source={x:Reference TeamSettingsDialogView}}"
+                    />
+                </Border>
+
+                <Grid 
+                    Grid.Row="4"
+                    ColumnDefinitions="*,*"
+                    HorizontalOptions="Fill"
+                    ColumnSpacing="10"
+                    VerticalOptions="Center">
+
+                    <buttons:OutlinedButton 
+                        Text="Cancel"
+                        Clicked="Cancel"
+                        Grid.Column="0"
+                        HorizontalOptions="Fill"
+                        />
+
+                    <buttons:FilledButton 
+                        Text="Save"
+                        Command="{Binding UpdateTeamCommand, Source={x:Reference TeamSettingsDialogView}}"
+                        Grid.Column="1"
+                        HorizontalOptions="Fill"
+                        />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

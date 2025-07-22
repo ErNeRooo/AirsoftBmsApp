@@ -82,6 +82,8 @@
                 CreateTeamButtonCommand="{Binding CreateTeamButtonClickedCommand}"
                 SwitchTeamCommand="{Binding SwitchTeamConfirmationCommand, Mode=TwoWay}"
                 TakeOfficerCommand="{Binding TakeOfficerConfirmationCommand}"
+                ShowSettingsCommand="{Binding ShowSettingsCommand}"
+                Player="{Binding Player}"
                 />
 
         </Grid>
@@ -92,6 +94,13 @@
             IsVisible="{Binding IsCreateTeamDialogVisible, Mode=TwoWay}"
             ValidatableName="{Binding TeamForm.Name, Mode=TwoWay}"
             ValidateCommand="{Binding ValidateNameCommand}"
+            />
+
+        <dialogs:TeamSettingsDialog 
+            TeamSettings="{Binding TeamSettingsState, Mode=TwoWay}"
+            IsVisible="{Binding TeamSettingsState.IsVisible, Mode=TwoWay}"
+            UpdateTeamCommand="{Binding UpdateTeamCommand}"
+            DeleteTeamCommand="{Binding DeleteTeamConfirmationCommand}"
             />
 
         <dialogs:ConfirmationDialog 

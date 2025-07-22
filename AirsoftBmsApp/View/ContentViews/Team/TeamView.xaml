@@ -6,6 +6,9 @@
              x:Class="AirsoftBmsApp.View.ContentViews.Team.TeamView"
              x:DataType="models:ObservableTeam"
              xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"    
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Name="TheTeam"
+                     
              >
 
     <HorizontalStackLayout
@@ -26,6 +29,52 @@
                 />
             </Label.GestureRecognizers>
         </Label>
+
+        <Image 
+            Source="{OnPlatform Default='settings_icon.svg', WinUI='settings_icon.png'}"
+            HeightRequest="20"
+            WidthRequest="20"
+            Rotation="90"
+            Margin="10,0,0,0"
+            IsVisible="False"
+            
+            >
+            <Image.Behaviors>
+                <toolkit:IconTintColorBehavior
+                    TintColor="{Binding TeamTheme.TitleColor}"
+                    />
+            </Image.Behaviors>
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding ShowSettingsCommand, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
+                    CommandParameter="{Binding Id}"
+                    />
+            </Image.GestureRecognizers>
+            <Image.Triggers>
+
+                <DataTrigger
+                    TargetType="Image"
+                    Binding="{Binding IsOfficer, Source={x:Reference TheTeam}}"
+                    Value="true"
+                    >
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+                <DataTrigger
+                    TargetType="Image"
+                    Binding="{Binding Player.IsAdmin, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
+                    Value="true"
+                    >
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+                <DataTrigger
+                    TargetType="Image"
+                    Binding="{Binding Id}"
+                    Value="0"
+                    >
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </Image.Triggers>
+        </Image>
 
         <Image 
             Source="{OnPlatform Default='team_officer_icon.svg', WinUI='team_officer_icon.png'}"

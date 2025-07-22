@@ -16,7 +16,9 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
     public partial class RoomViewModel : ObservableObject, IRoomViewModel
     {
         IApiFacade _apiFacade;
-        IPlayerDataService _playerDataService;
+
+        [ObservableProperty]
+        ObservablePlayer player;
 
         [ObservableProperty]
         ObservableRoom room;
@@ -46,7 +48,17 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [ObservableProperty]
         string informationDialogMessage = "";
 
-        int TargetTeamId = 0;
+        [ObservableProperty]
+        ObservableTeamSettingsState teamSettingsState;
+
+        [ObservableProperty]
+        int targetTeamId = 0;
+
+        [ObservableProperty]
+        bool isOfficerOrAdmin = true;
+
+        [ObservableProperty]
+        bool isAdmin = false;
 
         public RoomViewModel(
             IValidationHelperFactory validationHelperFactory,
@@ -56,11 +68,12 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             )
         {
             _apiFacade = apiFacade;
-            _playerDataService = playerDataService;
+            Player = playerDataService.Player;
 
             Room = roomDataService.Room;
-            IsCreateTeamButtonVisible = roomDataService.Room.AdminPlayerId == _playerDataService.Player.Id;
+            IsCreateTeamButtonVisible = roomDataService.Room.AdminPlayerId == Player.Id;
 
+            TeamSettingsState = new(validationHelperFactory);
             validationHelperFactory.AddValidations(TeamForm);
         }
 
@@ -74,7 +87,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             PostTeamDto postTeamDto = new PostTeamDto
             {
-                Name = teamForm.Name.Value,
+                Name = TeamForm.Name.Value,
                 RoomId = Room.Id
             };
 
@@ -105,7 +118,10 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [RelayCommand]
         public async Task SwitchTeamConfirmation(int teamId)
         {
+            if (Player.TeamId == teamId) return;
+
             TargetTeamId = teamId;
+
             string teamName = Room.Teams.FirstOrDefault(t => t.Id == teamId)?.Name ?? "Unknown Team";
 
             ConfirmationDialogState.Message = teamId == 0
@@ -216,7 +232,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             PutRoomDto roomDto = new PutRoomDto
             {
-                AdminPlayerId = _playerDataService.Player.Id
+                AdminPlayerId = Player.Id
             };
 
             var result = await _apiFacade.Room.Update(roomDto);
@@ -241,7 +257,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [RelayCommand]
         public async Task TakeOfficerConfirmation(int teamId)
         {
-            if(teamId != _playerDataService.Player.TeamId)
+            if(teamId != Player.TeamId)
             {
                 InformationDialogMessage = "You can only take officer role in your own team.";
                 return;
@@ -256,16 +272,99 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         {
             ConfirmationDialogState.Message = "";
 
-            if (_playerDataService.Player.TeamId is null) return;
+            if (Player.TeamId is null) return;
 
             IsLoading = true;
 
             PutTeamDto teamDto = new()
             {
-                OfficerPlayerId = _playerDataService.Player.Id
+                OfficerPlayerId = Player.Id
             };
 
-            var result = await _apiFacade.Team.Update(teamDto, (int)_playerDataService.Player.TeamId);
+            var result = await _apiFacade.Team.Update(teamDto, (int)Player.TeamId);
+
+            switch (result)
+            {
+                case Success:
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task ShowSettings(int teamId)
+        {
+            TargetTeamId = teamId;
+            var team = Room.Teams.FirstOrDefault(t => t.Id == teamId);
+
+            if (team == null) return;
+
+            TeamSettingsState.Team = team;
+            TeamSettingsState.Players = team.Players;
+            TeamSettingsState.IsVisible = true;
+        }
+
+        [RelayCommand]
+        public async Task UpdateTeam()
+        {
+            if (!TeamSettingsState.TeamForm.Name.IsValid) return;
+
+            IsLoading = true;
+
+            PutTeamDto teamDto = new()
+            {
+                Name = TeamSettingsState.TeamForm.Name.Value,
+                OfficerPlayerId = TeamSettingsState.SelectedPlayerToBecomeOfficer?.Id,
+            };
+
+            var result = await _apiFacade.Team.Update(teamDto, TargetTeamId);
+
+            TeamSettingsState.IsVisible = false;
+
+            switch (result)
+            {
+                case Success:
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task DeleteTeamConfirmation()
+        {
+            string teamName = Room.Teams.FirstOrDefault(t => t.Id == TargetTeamId)?.Name ?? "Unknown Team";
+
+            ConfirmationDialogState.Message = $"Are you sure you want to delete team {teamName}?";
+            ConfirmationDialogState.Command = DeleteTeamCommand;
+        }
+
+        [RelayCommand]
+        public async Task DeleteTeam()
+        {
+            ConfirmationDialogState.Message = "";
+            TeamSettingsState.IsVisible = false;
+
+            IsLoading = true;
+
+            var result = await _apiFacade.Team.Delete(TargetTeamId);
 
             switch (result)
             {

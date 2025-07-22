@@ -15,6 +15,11 @@ namespace AirsoftBmsApp
             {
                 handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
             });
+
+            PickerHandler.Mapper.AppendToMapping(nameof(Picker), (handler, view) =>
+            {
+                handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+            });
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();

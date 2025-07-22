@@ -1,10 +1,15 @@
 ﻿using AirsoftBmsApp.Model.Dto.Team;
 using AirsoftBmsApp.Networking;
+using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
+using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Services.TeamRestService.Abstractions;
 
 namespace AirsoftBmsApp.Services.TeamRestService.Implementations;
 
-public class MockTeamRestService : ITeamRestService
+public class MockTeamRestService(
+    IPlayerDataService playerDataService,
+    IRoomDataService roomDataService
+    ) : ITeamRestService
 {
     public async Task<(HttpResult result, TeamDto? team)> GetByIdAsync(int teamId)
     {
@@ -30,12 +35,14 @@ public class MockTeamRestService : ITeamRestService
 
     public async Task<(HttpResult result, TeamDto? team)> PutAsync(PutTeamDto teamDto, int teamId)
     {
+        var currentTeam = roomDataService.Room.Teams.FirstOrDefault(t => t.Id == teamId);
+
         return (new Success(), new TeamDto
         {
             TeamId = teamId,
-            Name = "Team B",
-            RoomId = 1,
-            OfficerPlayerId = teamDto.OfficerPlayerId,
+            Name = string.IsNullOrEmpty(teamDto.Name) ? currentTeam.Name : teamDto.Name,
+            RoomId = roomDataService.Room.Id,
+            OfficerPlayerId = teamDto.OfficerPlayerId ?? currentTeam.OfficerId,
         });
     }
     public async Task<HttpResult> DeleteAsync(int teamId)
