@@ -22,6 +22,9 @@ public class RoomHandler(
             if (result is Success) { 
                 roomDataService.Room = new ObservableRoom(room);
                 roomDataService.Room.Teams[0].Players.Add(playerDataService.Player);
+
+                playerDataService.Player.RoomId = room.RoomId;
+                playerDataService.Player.IsAdmin = true;
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
 
