@@ -26,10 +26,10 @@ public class MockTeamRestService(
     {
         return (new Success(), new TeamDto
         {
-            TeamId = 1,
+            TeamId = roomDataService.Room.Teams.Count + 1,
             Name = teamDto.Name,
-            RoomId = 1,
-            OfficerPlayerId = 2,
+            RoomId = roomDataService.Room.Id,
+            OfficerPlayerId = null,
         });
     }
 

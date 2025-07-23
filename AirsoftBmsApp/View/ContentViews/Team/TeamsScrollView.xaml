@@ -35,9 +35,8 @@
             <buttons:OutlinedButton 
                 Grid.Row="1"
                 Text="Create Team"
-                IsVisible="{Binding IsCreateTeamButtonVisible, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
+                IsVisible="{Binding Player.IsAdmin, Source={RelativeSource AncestorType={x:Type team:TeamsScrollView}}}"
                 Command="{Binding CreateTeamButtonCommand}"
-
             />
         </Grid>
     </ScrollView>

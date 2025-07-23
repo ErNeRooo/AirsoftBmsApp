@@ -30,9 +30,6 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         bool isLoading = false;
 
         [ObservableProperty]
-        bool isCreateTeamButtonVisible;
-
-        [ObservableProperty]
         bool isCreateTeamDialogVisible = false;
 
         [ObservableProperty]
@@ -71,7 +68,6 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             Player = playerDataService.Player;
 
             Room = roomDataService.Room;
-            IsCreateTeamButtonVisible = roomDataService.Room.AdminPlayerId == Player.Id;
 
             TeamSettingsState = new(validationHelperFactory);
             validationHelperFactory.AddValidations(TeamForm);
@@ -114,7 +110,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             IsLoading = false;
         }
-
+        
         [RelayCommand]
         public async Task SwitchTeamConfirmation(int teamId)
         {
