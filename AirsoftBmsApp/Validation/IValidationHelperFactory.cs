@@ -13,5 +13,6 @@ namespace AirsoftBmsApp.Validation
         void AddValidations(ValidatableCreateRoomForm form);
         void AddValidations(ValidatableJoinRoomForm form);
         void AddValidations(ValidatableTeamForm form);
+        void AddValidations(ValidatableUpdateRoomForm form);
     }
 }

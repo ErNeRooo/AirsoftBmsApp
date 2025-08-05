@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Room;
+using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
@@ -36,17 +37,16 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         string errorMessage = "";
 
         [ObservableProperty]
-        ObservableConfirmationDialogState confirmationDialogState = new()
-        {
-            Message = "",
-            Command = null
-        };
+        ObservableConfirmationDialogState confirmationDialogState = new();
 
         [ObservableProperty]
         string informationDialogMessage = "";
 
         [ObservableProperty]
         ObservableTeamSettingsState teamSettingsState;
+
+        [ObservableProperty]
+        ObservableRoomSettingsState roomSettingsState;
 
         [ObservableProperty]
         int targetTeamId = 0;
@@ -69,7 +69,9 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             Room = roomDataService.Room;
 
-            TeamSettingsState = new(validationHelperFactory);
+            TeamSettingsState = new ObservableTeamSettingsState(validationHelperFactory);
+            RoomSettingsState = new ObservableRoomSettingsState(validationHelperFactory);
+
             validationHelperFactory.AddValidations(TeamForm);
         }
 
@@ -297,7 +299,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         }
 
         [RelayCommand]
-        public async Task ShowSettings(int teamId)
+        public async Task ShowTeamSettings(int teamId)
         {
             TargetTeamId = teamId;
             var team = Room.Teams.FirstOrDefault(t => t.Id == teamId);
@@ -307,6 +309,22 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             TeamSettingsState.Team = team;
             TeamSettingsState.Players = team.Players;
             TeamSettingsState.IsVisible = true;
+        }
+
+        [RelayCommand]
+        public async Task ShowRoomSettings()
+        {
+            RoomSettingsState.Players = new ObservableCollection<ObservablePlayer>();
+
+            foreach (var team in Room.Teams)
+            {
+                foreach(var player in team.Players)
+                {
+                    RoomSettingsState.Players.Add(player);
+                }
+            }
+
+            RoomSettingsState.IsVisible = true;
         }
 
         [RelayCommand]
@@ -361,6 +379,81 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             IsLoading = true;
 
             var result = await _apiFacade.Team.Delete(TargetTeamId);
+
+            switch (result)
+            {
+                case Success:
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task DeleteRoomConfirmation()
+        {
+            ConfirmationDialogState.Message = $"Are you sure you want to delete the room?";
+            ConfirmationDialogState.Command = DeleteRoomCommand;
+        }
+
+        [RelayCommand]
+        public async Task DeleteRoom()
+        {
+            ConfirmationDialogState.Message = "";
+            TeamSettingsState.IsVisible = false;
+
+            IsLoading = true;
+
+            var result = await _apiFacade.Room.Delete();
+
+            switch (result)
+            {
+                case Success:
+                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task UpdateRoom()
+        {
+            if (!RoomSettingsState.RoomForm.JoinCode.IsValid) return;
+            if (!RoomSettingsState.RoomForm.Password.IsValid) return;
+            if (!RoomSettingsState.RoomForm.MaxPlayers.IsValid) return;
+
+            IsLoading = true;
+
+            PutRoomDto roomDto = new()
+            {
+                MaxPlayers = RoomSettingsState.RoomForm.MaxPlayers.Value,
+                JoinCode = RoomSettingsState.RoomForm.JoinCode.Value,
+                Password = RoomSettingsState.RoomForm.Password.Value,
+                AdminPlayerId = RoomSettingsState.SelectedPlayerToBecomeAdmin is null 
+                    ? null
+                    : RoomSettingsState.SelectedPlayerToBecomeAdmin.Id
+            };
+
+            var result = await _apiFacade.Room.Update(roomDto);
+
+            RoomSettingsState.IsVisible = false;
 
             switch (result)
             {

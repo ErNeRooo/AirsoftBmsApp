@@ -15,7 +15,7 @@ namespace AirsoftBmsApp.Model.Observable;
 public partial class ObservableConfirmationDialogState : ObservableObject
 {
     [ObservableProperty]
-    string message;
+    string message = "";
 
     [ObservableProperty]
     ICommand? command;

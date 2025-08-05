@@ -91,11 +91,11 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
             }
         }
 
-        public async Task<HttpResult> DeleteAsync(int roomId)
+        public async Task<HttpResult> DeleteAsync()
         {
             SetAuthorizationHeader();
 
-            var response = await client.DeleteAsync($"id/{roomId}");
+            var response = await client.DeleteAsync("");
 
             if (response.IsSuccessStatusCode)
             {

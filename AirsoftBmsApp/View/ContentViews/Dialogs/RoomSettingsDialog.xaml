@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.RoomSettingsDialog"
+             x:Name="RoomSettingsDialogView"
+             >
+    <Grid   
+         BackgroundColor="#80000000"   
+         VerticalOptions="Fill"  
+         CascadeInputTransparent="False"  
+         HorizontalOptions="Fill">
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer/>
+        </Grid.GestureRecognizers>
+
+        <Border
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="{StaticResource Surface}"
+            Margin="40"
+          
+            StrokeShape="RoundRectangle 30"
+            Stroke="{StaticResource Outline}"
+            WidthRequest="350"
+      >
+            <Grid 
+                 RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+                 RowSpacing="5"
+                 Padding="10,15"
+             >
+                <text:Header Text="Room Settings" Grid.Row="0" Margin="0,0,0,10"/>
+
+                <inputs:ValidatableStyledEntry
+                    Grid.Row="1"
+                    Placeholder="Enter Join Code"
+                    ValidatableObject="{Binding RoomSettings.RoomForm.JoinCode, Source={x:Reference RoomSettingsDialogView}}"
+                    ValidateCommand="{Binding RoomSettings.ValidateJoinCodeCommand, Source={x:Reference RoomSettingsDialogView}}"
+                    />
+
+                <inputs:ValidatableStyledEntry
+                    Grid.Row="2"
+                    Placeholder="Password"
+                    ValidatableObject="{Binding RoomSettings.RoomForm.Password, Source={x:Reference RoomSettingsDialogView}}"
+                    ValidateCommand="{Binding RoomSettings.ValidatePasswordCommand, Source={x:Reference RoomSettingsDialogView}}"
+                    />
+
+                <Grid 
+                     ColumnDefinitions="auto,*" 
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Center"
+                     Grid.Row="3"
+                >
+                    <Label 
+                         Grid.Column="0"
+                         VerticalOptions="Center"
+                         Margin="20, 0"
+                         Text="Max Players"
+                         HorizontalOptions="Center"
+                         FontFamily="{StaticResource GlobalFont}"
+                         TextColor="{StaticResource Outline}"
+                     />
+
+                    <inputs:ValidatableNumberEntry
+                        Grid.Column="1"
+                        Placeholder="Enter max players number"
+                        ValidatableObject="{Binding RoomSettings.RoomForm.MaxPlayers, Mode=TwoWay, Source={x:Reference RoomSettingsDialogView}}"
+                        ValidateCommand="{Binding RoomSettings.ValidateMaxPlayersCommand, Source={x:Reference RoomSettingsDialogView}}"
+                        />
+                </Grid>
+
+                
+
+                <Grid 
+                     ColumnDefinitions="80,*" 
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Center"
+                     Grid.Row="4"
+                >
+                    <Label 
+                         Grid.Column="0"
+                         VerticalOptions="Center"
+                         Text="Admin"
+                         HorizontalOptions="Center"
+                         FontFamily="{StaticResource GlobalFont}"
+                         TextColor="{StaticResource Outline}"
+                     />
+                    <Border
+                         Grid.Column="1"
+                         Stroke="{StaticResource Outline}"
+                         StrokeShape="RoundRectangle 15"
+                    >
+                        <Picker
+                             x:Name="AdminPicker"
+                             HorizontalTextAlignment="Center"
+                             VerticalTextAlignment="Center"
+                             FontFamily="{StaticResource GlobalFont}"
+                             BindingContext="{Binding Source={x:Reference RoomSettingsDialogView}}"
+                             ItemsSource="{Binding RoomSettings.Players}"
+                             ItemDisplayBinding="{Binding Name}"
+                             SelectedItem="{Binding RoomSettings.SelectedPlayerToBecomeAdmin, Mode=TwoWay}"
+                             Title="{OnPlatform Default='Choose Player', WinUI=''}"
+                     />
+                    </Border>
+
+                </Grid>
+
+                <Border
+                     Grid.Row="5"
+                     StrokeShape="RoundRectangle 45"
+                     StrokeThickness="2"
+                     Stroke="{StaticResource Danger}"
+                 >
+                    <Button 
+                         x:Name="Delete"
+                         BackgroundColor="Transparent"
+                         TextColor="{StaticResource Danger}"
+                         BorderWidth="2"
+                         FontFamily="{StaticResource GlobalFont}" 
+                         HorizontalOptions="Fill"
+                         Text="Delete Room"
+                         FontSize="20"
+                         Padding="0"
+                         Command="{Binding DeleteRoomCommand, Source={x:Reference RoomSettingsDialogView}}"
+                 />
+                </Border>
+
+                <Grid 
+                     Grid.Row="6"
+                     ColumnDefinitions="*,*"
+                     HorizontalOptions="Fill"
+                     ColumnSpacing="10"
+                     VerticalOptions="Center">
+
+                    <buttons:OutlinedButton 
+                         Text="Cancel"
+                         Clicked="Cancel"
+                         Grid.Column="0"
+                         HorizontalOptions="Fill"
+                     />
+
+                    <buttons:FilledButton 
+                         Text="Save"
+                         Command="{Binding UpdateRoomCommand, Source={x:Reference RoomSettingsDialogView}}"
+                         Grid.Column="1"
+                         HorizontalOptions="Fill"
+                     />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

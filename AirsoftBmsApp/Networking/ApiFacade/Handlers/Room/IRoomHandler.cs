@@ -12,6 +12,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Room
         public Task<HttpResult> Create(PostRoomDto postRoomDto);
         public Task<HttpResult> Join(JoinRoomDto joinRoomDto);
         public Task<HttpResult> Update(PutRoomDto putRoomDto);
+        public Task<HttpResult> Delete();
         public Task<HttpResult> Leave();
     }
 }

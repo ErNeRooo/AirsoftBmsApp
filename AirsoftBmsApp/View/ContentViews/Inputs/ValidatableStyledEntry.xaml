@@ -46,8 +46,20 @@
             TextColor="{StaticResource Error}"
             FontFamily="{StaticResource GlobalFont}" 
             FontSize="10"
-            Margin="20, 2, 0, 0"
             IsVisible="{Binding ValidatableObject.IsValid, Converter={StaticResource InverseBoolConverter}}"
-            />
+            HeightRequest="0"
+            Margin="0"
+            >
+            <Label.Triggers>
+                <DataTrigger
+                    TargetType="Label"
+                    Binding="{Binding ValidatableObject.IsValid}"
+                    Value="false"
+                    >
+                    <Setter Property="HeightRequest" Value="-1" />
+                    <Setter Property="Margin" Value="20,2,0,0" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
     </VerticalStackLayout>
 </ContentView>

@@ -12,8 +12,6 @@ public partial class RoomMembersPage : ContentPage
         _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
         InitializeComponent();
         BindingContext = viewModel;
-        JoinCodeTitle.Text = $"Room {viewModel.Room.JoinCode}"
-        ;
     }
 
     protected override bool OnBackButtonPressed()

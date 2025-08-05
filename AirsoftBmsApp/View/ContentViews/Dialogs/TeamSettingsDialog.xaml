@@ -50,7 +50,7 @@
                         />
 
                     <inputs:ValidatableStyledEntry
-                        ValidatableObject="{Binding  TeamSettings.TeamForm.Name, Source={x:Reference TeamSettingsDialogView}}"
+                        ValidatableObject="{Binding TeamSettings.TeamForm.Name, Source={x:Reference TeamSettingsDialogView}}"
                         ValidateCommand="{Binding TeamSettings.ValidateCommand, Source={x:Reference TeamSettingsDialogView}}"
                         Grid.Column="1"/>
                 </Grid>

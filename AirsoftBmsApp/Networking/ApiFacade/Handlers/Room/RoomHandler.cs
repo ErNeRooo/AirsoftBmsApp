@@ -113,4 +113,28 @@ public class RoomHandler(
             return new Error(ex.Message);
         }
     }
+
+    public async Task<HttpResult> Delete()
+    {
+        try
+        {
+            HttpResult result = await roomRestService.DeleteAsync();
+
+            if (result is Success)
+            {
+                roomDataService.Room = null;
+                playerDataService.Player.IsAdmin = false;
+                playerDataService.Player.IsOfficer = false;
+                playerDataService.Player.TeamId = 0;
+                playerDataService.Player.RoomId = 0;
+            }
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return new Error(ex.Message);
+        }
+    }
 }

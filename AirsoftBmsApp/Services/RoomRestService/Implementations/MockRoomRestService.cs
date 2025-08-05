@@ -60,26 +60,16 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
 
             return (new Success(), new RoomDto
             {
-                JoinCode = roomDto.JoinCode,
+                JoinCode = string.IsNullOrEmpty(roomDto.JoinCode) ? roomDataService.Room.JoinCode : roomDto.JoinCode,
                 AdminPlayerId = roomDto.AdminPlayerId ?? roomDataService.Room.AdminPlayerId,
+                MaxPlayers = roomDto.MaxPlayers ?? roomDataService.Room.MaxPlayers,
                 RoomId = 1,
             });
         }
 
-        public async Task<HttpResult> DeleteAsync(int roomId)
+        public async Task<HttpResult> DeleteAsync()
         {
-            if(roomId == 400)
-            {
-                return new Failure("Mocked Bad Request");
-            }
-            else if (roomId == 2137)
-            {
-                throw new Exception("Mocked Exception for id 2137");
-            }
-            else
-            {
-                return new Success();
-            }
+            return new Success();
         }
 
         public async Task<(HttpResult result, RoomDto? room)> PostAsync(PostRoomDto roomDto)

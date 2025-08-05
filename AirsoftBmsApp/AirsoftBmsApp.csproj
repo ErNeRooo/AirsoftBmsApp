@@ -119,10 +119,16 @@
 	  <MauiXaml Update="View\ContentViews\Dialogs\InformationDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Dialogs\RoomSettingsDialog.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Dialogs\TeamSettingsDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\ErrorMessageView\ErrorMessageView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Inputs\ValidatableNumberEntry.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Inputs\ValidatableStyledEntry.xaml">

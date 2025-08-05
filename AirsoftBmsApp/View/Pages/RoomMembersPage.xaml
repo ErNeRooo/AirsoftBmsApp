@@ -9,6 +9,7 @@
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:local="clr-namespace:AirsoftBmsApp.View.Pages"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModel:RoomViewModel"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
@@ -30,7 +31,7 @@
                 <HorizontalStackLayout>
                     <Label 
                         x:Name="JoinCodeTitle"
-                        Text="Room 021370"
+                        Text="{Binding Room.JoinCode, StringFormat='Room {0}'}"
                         VerticalOptions="Center" 
                         HorizontalOptions="Center"
                         FontSize="30"
@@ -61,6 +62,36 @@
                             </DataTrigger>
                         </Image.Triggers>
                     </Image>
+
+
+                    <Image 
+                        Source="{OnPlatform Default='settings_icon.svg', WinUI='settings_icon.png'}"
+                        HeightRequest="36"
+                        WidthRequest="36"
+                        Rotation="90"
+                        Margin="10,0,0,0"
+                        IsVisible="False"
+                        >
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior
+                                TintColor="{StaticResource Primary}"
+                                />
+                        </Image.Behaviors>
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ShowRoomSettingsCommand}"
+                                />
+                        </Image.GestureRecognizers>
+                        <Image.Triggers>
+                            <DataTrigger
+                                TargetType="Image"
+                                Binding="{Binding Player.IsAdmin}"
+                                Value="true"
+                                >
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
                 </HorizontalStackLayout>
 
                 <buttons:BackButton
@@ -81,7 +112,7 @@
                 CreateTeamButtonCommand="{Binding CreateTeamButtonClickedCommand}"
                 SwitchTeamCommand="{Binding SwitchTeamConfirmationCommand, Mode=TwoWay}"
                 TakeOfficerCommand="{Binding TakeOfficerConfirmationCommand}"
-                ShowSettingsCommand="{Binding ShowSettingsCommand}"
+                ShowSettingsCommand="{Binding ShowTeamSettingsCommand}"
                 Player="{Binding Player}"
                 />
 
@@ -100,6 +131,13 @@
             IsVisible="{Binding TeamSettingsState.IsVisible, Mode=TwoWay}"
             UpdateTeamCommand="{Binding UpdateTeamCommand}"
             DeleteTeamCommand="{Binding DeleteTeamConfirmationCommand}"
+            />
+
+        <dialogs:RoomSettingsDialog 
+            RoomSettings="{Binding RoomSettingsState, Mode=TwoWay}"
+            IsVisible="{Binding RoomSettingsState.IsVisible, Mode=TwoWay}"
+            UpdateRoomCommand="{Binding UpdateRoomCommand}"
+            DeleteRoomCommand="{Binding DeleteRoomConfirmationCommand}"
             />
 
         <dialogs:ConfirmationDialog 

@@ -37,5 +37,12 @@ namespace AirsoftBmsApp.Validation
 
             validationHelper.AddAllValidations(form);
         }
+
+        public void AddValidations(ValidatableUpdateRoomForm form)
+        {
+            var validationHelper = new UpdateRoomFormValidationHelper();
+
+            validationHelper.AddAllValidations(form);
+        }
     }
 }
