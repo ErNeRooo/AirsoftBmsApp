@@ -126,6 +126,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                             Name = "Eris",
                             TeamId = 1,
                             RoomId = 1,
+                            IsDead = false,
                         },
                         new PlayerDto
                         {
@@ -168,6 +169,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                             Name = "Mikasa",
                             TeamId = 1,
                             RoomId = 1,
+                            IsDead = true,
                         },
                         new PlayerDto
                         {

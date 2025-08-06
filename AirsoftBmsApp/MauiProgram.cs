@@ -25,6 +25,11 @@ using AirsoftBmsApp.ViewModel.RoomViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
+
+#if WINDOWS
+using Microsoft.UI.Xaml.Controls;
+#endif
+
 namespace AirsoftBmsApp
 {
     public static class MauiProgram

@@ -119,6 +119,9 @@
 	  <MauiXaml Update="View\ContentViews\Dialogs\InformationDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Dialogs\PlayerProfileDialog.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Dialogs\RoomSettingsDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

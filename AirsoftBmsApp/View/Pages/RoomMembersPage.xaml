@@ -113,6 +113,7 @@
                 SwitchTeamCommand="{Binding SwitchTeamConfirmationCommand, Mode=TwoWay}"
                 TakeOfficerCommand="{Binding TakeOfficerConfirmationCommand}"
                 ShowSettingsCommand="{Binding ShowTeamSettingsCommand}"
+                ShowPlayerProfileCommand="{Binding ShowPlayerProfileSettingsCommand}"
                 Player="{Binding Player}"
                 />
 
@@ -138,6 +139,14 @@
             IsVisible="{Binding RoomSettingsState.IsVisible, Mode=TwoWay}"
             UpdateRoomCommand="{Binding UpdateRoomCommand}"
             DeleteRoomCommand="{Binding DeleteRoomConfirmationCommand}"
+            />
+
+        <dialogs:PlayerProfileDialog 
+            PlayerProfileState="{Binding PlayerProfileState, Mode=TwoWay}"
+            IsVisible="{Binding PlayerProfileState.IsVisible, Mode=TwoWay}"
+            KickFromRoomCommand="{Binding KickFromRoomCommand}"
+            KickFromTeamCommand="{Binding KickFromTeamCommand}"
+            MoveToAnotherTeamCommand="{Binding MovePlayerToAnotherTeamCommand}"
             />
 
         <dialogs:ConfirmationDialog 

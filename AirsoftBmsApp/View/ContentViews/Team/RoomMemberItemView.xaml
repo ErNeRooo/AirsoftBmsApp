@@ -12,6 +12,12 @@
     Padding="10, 5"
     x:DataType="models:ObservablePlayer"
     >
+    <Border.GestureRecognizers>
+        <TapGestureRecognizer
+            Command="{Binding ShowPlayerProfileCommand, Source={RelativeSource AncestorType={x:Type local:TeamsScrollView}}}"
+            CommandParameter="{Binding Id}">
+        </TapGestureRecognizer>
+    </Border.GestureRecognizers>
 
     <HorizontalStackLayout>
         <Image 

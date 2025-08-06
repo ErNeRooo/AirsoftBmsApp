@@ -49,41 +49,109 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
             }
         }
 
-        public async Task<HttpResult> Update(PutPlayerDto putPlayerDto)
+        public async Task<HttpResult> Update(PutPlayerDto putPlayerDto, int playerId)
         {
             try
             {
-                (HttpResult result, PlayerDto? player) = await playerRestService.PutAsync(putPlayerDto);
+                (HttpResult result, PlayerDto? player) = await playerRestService.PutAsync(putPlayerDto, playerId);
 
                 if (result is Success)
                 {
-                    playerDataService.Player.Name = player?.Name;
-                    playerDataService.Player.IsDead = (bool)player?.IsDead;
+                    ObservablePlayer? playerToUpdate = roomDataService.Room.Teams
+                        .SelectMany(team => team.Players)
+                        .FirstOrDefault(p => p.Id == playerId);
 
-                    if (playerDataService.Player.TeamId != player.TeamId)
+                    playerToUpdate.Name = player?.Name;
+                    playerToUpdate.IsDead = (bool)player?.IsDead;
+
+                    if (playerToUpdate.TeamId != player.TeamId)
                     {
-                        playerDataService.Player.IsOfficer = false;
-
                         ObservableTeam? previousTeam = roomDataService.Room.Teams
-                            .FirstOrDefault(t => t.Id == (playerDataService.Player.TeamId ?? 0));
+                            .FirstOrDefault(t => t.Id == (playerToUpdate.TeamId ?? 0));
 
-                        if(previousTeam.OfficerId == player.PlayerId) previousTeam.OfficerId = 0;
-
-                        for (int i = 0; i < previousTeam.Players.Count; i++)
-                        {
-                            if (previousTeam.Players[i].Id == playerDataService.Player.Id)
-                            {
-                                previousTeam.Players.RemoveAt(i);
-                                break;
-                            }
+                        if(previousTeam.OfficerId == playerToUpdate.Id) {
+                            playerToUpdate.IsOfficer = false;
+                            previousTeam.OfficerId = 0; 
                         }
-                        
-                        playerDataService.Player.TeamId = (int)player?.TeamId;
+
+                        int index = previousTeam.Players.IndexOf(playerToUpdate);
+                        previousTeam.Players.RemoveAt(index);
+
+                        playerToUpdate.TeamId = (int)player?.TeamId;
 
                         roomDataService.Room
                             .Teams.FirstOrDefault(t => t.Id == player?.TeamId)
-                            ?.Players.Add(playerDataService.Player);
+                            ?.Players.Add(playerToUpdate);
                     }
+                }
+                else
+                {
+                    if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+
+                    return result;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.Message);
+            }
+        }
+
+        public async Task<HttpResult> KickFromRoom(int playerId)
+        {
+            try
+            {
+                (HttpResult result, PlayerDto? player) = await playerRestService.KickFromRoomByIdAsync(playerId);
+
+                if (result is Success)
+                {
+                    ObservablePlayer? kickedPlayer = roomDataService.Room.Teams.SelectMany(team => team.Players)
+                        .FirstOrDefault(p => p.Id == playerId);
+
+                    if (kickedPlayer.TeamId is not null && kickedPlayer.TeamId != 0 && kickedPlayer.IsOfficer)
+                    {
+                        roomDataService.Room.Teams.FirstOrDefault(team => team.Id == kickedPlayer.TeamId).OfficerId = 0;
+                    }
+
+                    roomDataService.Room.Teams
+                        .FirstOrDefault(t => t.Id == kickedPlayer?.TeamId)?
+                        .Players.Remove(kickedPlayer);
+                }
+                else
+                {
+                    if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+
+                    return result;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.Message);
+            }
+        }
+
+        public async Task<HttpResult> KickFromTeam(int playerId)
+        {
+            try
+            {
+                (HttpResult result, PlayerDto? player) = await playerRestService.KickFromRoomByIdAsync(playerId);
+
+                if (result is Success)
+                {
+                    ObservablePlayer? kickedPlayer = roomDataService.Room.Teams.SelectMany(team => team.Players)
+                        .FirstOrDefault(p => p.Id == playerId);
+
+                    roomDataService.Room.Teams
+                        .FirstOrDefault(t => t.Id == kickedPlayer?.TeamId)?
+                        .Players.Remove(kickedPlayer);
+
+                    kickedPlayer.TeamId = 0;
+
+                    roomDataService.Room.Teams[0].Players.Add(kickedPlayer);
                 }
                 else
                 {

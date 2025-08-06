@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             x:Name="PlayerProfileDialogView"
+             x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.PlayerProfileDialog">
+    <Grid   
+         BackgroundColor="#80000000"   
+         VerticalOptions="Fill"  
+         CascadeInputTransparent="False"  
+         HorizontalOptions="Fill">
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer/>
+        </Grid.GestureRecognizers>
+
+        <Border
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="{StaticResource Surface}"
+            Margin="40"
+          
+            StrokeShape="RoundRectangle 30"
+            Stroke="{StaticResource Outline}"
+            WidthRequest="350"
+      >
+            <Grid 
+                RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto"
+                ColumnDefinitions="*,*"
+                ColumnSpacing="5"
+                RowSpacing="5"
+                Padding="10,15"
+                BindingContext="{Binding Source={x:Reference PlayerProfileDialogView}}"
+             >
+                <text:Header 
+                    Text="{Binding PlayerProfileState.SelectedPlayer.Name}" 
+                    Grid.Row="0" 
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,10"
+                    />
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="10"
+                    >
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        >
+                        <Label 
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="12"
+                            TextColor="{StaticResource Outline}"
+                            Text="Status"
+                            />
+                        <Label
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="24"
+                            Text="Alive"
+                            >
+                            <Label.Triggers>
+                                <DataTrigger
+                                    TargetType="Label"
+                                    Binding="{Binding PlayerProfileState.SelectedPlayer.IsDead}"
+                                    Value="true"
+                                    >
+                                    <Setter Property="Text" Value="Dead" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="10"
+                    >
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        >
+                        <Label 
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="12"
+                            TextColor="{StaticResource Outline}"
+                            Text="Account Linked"
+                            />
+                        <Label
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="24"
+                            Text="No"
+                            >
+                            <Label.Triggers>
+                                <DataTrigger
+                                    TargetType="Label"
+                                    Binding="{Binding PlayerProfileState.IsAccountLinked}"
+                                    Value="true"
+                                    >
+                                    <Setter Property="Text" Value="Yes" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="10"
+                    >
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        >
+                        <Label 
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="12"
+                            TextColor="{StaticResource Outline}"
+                            Text="Team"
+                            />
+                        <Label
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="24"
+                            Text="{Binding PlayerProfileState.TeamName}"
+                            />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="10"
+                    >
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        >
+                        <Label 
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="12"
+                            TextColor="{StaticResource Outline}"
+                            Text="Kills"
+                            />
+                        <Label
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="24"
+                            Text="0"
+                            />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="10"
+                    >
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        >
+                        <Label 
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="12"
+                            TextColor="{StaticResource Outline}"
+                            Text="Deaths"
+                            />
+                        <Label
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="24"
+                            Text="0"
+                            />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="10"
+                    >
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        >
+                        <Label 
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="12"
+                            TextColor="{StaticResource Outline}"
+                            Text="Is Admin"
+                            />
+                        <Label
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="24"
+                            Text="No"
+                            >
+                            <Label.Triggers>
+                                <DataTrigger
+                                    TargetType="Label"
+                                    Binding="{Binding PlayerProfileState.SelectedPlayer.IsAdmin}"
+                                    Value="true"
+                                    >
+                                    <Setter Property="Text" Value="Yes" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="10"
+                    >
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        >
+                        <Label 
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="12"
+                            TextColor="{StaticResource Outline}"
+                            Text="Is Officer"
+                            />
+                        <Label
+                            FontFamily="{StaticResource GlobalFont}"
+                            FontSize="24"
+                            Text="No"
+                            >
+                            <Label.Triggers>
+                                <DataTrigger
+                                    TargetType="Label"
+                                    Binding="{Binding PlayerProfileState.SelectedPlayer.IsOfficer}"
+                                    Value="true"
+                                    >
+                                    <Setter Property="Text" Value="Yes" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    StrokeShape="RoundRectangle 45"
+                    StrokeThickness="2"
+                    Stroke="{StaticResource Danger}"
+                    IsVisible="{Binding PlayerProfileState.SelfPlayer.IsAdmin}"
+                 >
+                    <Border.Triggers>
+                        <DataTrigger
+                            TargetType="Border"
+                            Binding="{Binding PlayerProfileState.IsSelfSelected}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    
+                    <Button 
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Danger}"
+                        BorderWidth="2"
+                        FontFamily="{StaticResource GlobalFont}" 
+                        HorizontalOptions="Fill"
+                        Text="Kick From Room"
+                        FontSize="20"
+                        Padding="0"
+                        Command="{Binding KickFromRoomCommand}"
+                 />
+                </Border>
+
+                <Border
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    StrokeShape="RoundRectangle 45"
+                    StrokeThickness="2"
+                    Stroke="{StaticResource Danger}"
+                    IsVisible="False"
+                 >
+                    <Border.Triggers>
+                        <DataTrigger
+                            TargetType="Border"
+                            Binding="{Binding PlayerProfileState.IsOfficerOfSelectedPlayer}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                        
+                        <DataTrigger
+                            TargetType="Border"
+                            Binding="{Binding PlayerProfileState.SelfPlayer.IsAdmin}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                        
+                        <DataTrigger
+                            TargetType="Border"
+                            Binding="{Binding PlayerProfileState.IsSelfSelected}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+
+                        <DataTrigger
+                            TargetType="Border"
+                            Binding="{Binding PlayerProfileState.SelectedPlayer.TeamId}"
+                            Value="0"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    
+                    <Button 
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Danger}"
+                        BorderWidth="2"
+                        FontFamily="{StaticResource GlobalFont}" 
+                        HorizontalOptions="Fill"
+                        Text="Kick From Team"
+                        FontSize="20"
+                        Padding="0"
+                        Command="{Binding KickFromTeamCommand}"
+                 />
+                </Border>
+
+                <Border
+                    Grid.Row="7"
+                    Grid.ColumnSpan="2"
+                    StrokeShape="RoundRectangle 45"
+                    StrokeThickness="2"
+                    Stroke="{StaticResource Danger}"
+                    IsVisible="{Binding PlayerProfileState.SelfPlayer.IsAdmin}"
+                 >
+                    <Border.Triggers>
+                        <DataTrigger
+                            TargetType="Border"
+                            Binding="{Binding PlayerProfileState.IsSelfSelected}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    
+                    <Picker 
+                        x:Name="TeamPicker"
+                        BackgroundColor="Transparent"
+                        FontFamily="{StaticResource GlobalFont}" 
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        Title="{OnPlatform Default='Move To Another Team', WinUI=''}"
+                        TitleColor="{StaticResource Danger}"
+                        FontSize="20"
+                        SelectedItem="{Binding PlayerProfileState.SelectedTeam, Mode=TwoWay}"
+                        ItemsSource="{Binding PlayerProfileState.Teams}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedIndexChanged="SelectionChanged"
+                 />
+                </Border>
+
+                <buttons:OutlinedButton 
+                    Grid.Row="8"
+                    Grid.ColumnSpan="2"
+                    Text="Back"
+                    Clicked="Cancel"
+                    />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

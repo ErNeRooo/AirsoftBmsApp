@@ -49,6 +49,9 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         ObservableRoomSettingsState roomSettingsState;
 
         [ObservableProperty]
+        ObservablePlayerProfileState playerProfileState;
+
+        [ObservableProperty]
         int targetTeamId = 0;
 
         [ObservableProperty]
@@ -71,6 +74,8 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             TeamSettingsState = new ObservableTeamSettingsState(validationHelperFactory);
             RoomSettingsState = new ObservableRoomSettingsState(validationHelperFactory);
+            PlayerProfileState = new ObservablePlayerProfileState();
+            PlayerProfileState.SelfPlayer = Player;
 
             validationHelperFactory.AddValidations(TeamForm);
         }
@@ -146,7 +151,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
                 TeamId = TargetTeamId
             };
 
-            var result = await _apiFacade.Player.Update(playerWithSwitchedTeam);
+            var result = await _apiFacade.Player.Update(playerWithSwitchedTeam, Player.Id);
 
             HandleFailures(result);
 
@@ -328,6 +333,25 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         }
 
         [RelayCommand]
+        public async Task ShowPlayerProfileSettings(int playerId)
+        {
+            ObservablePlayer? targetPlayer = Room.Teams.SelectMany(team => team.Players).FirstOrDefault(player => player.Id == playerId);
+
+            if(targetPlayer is not null)
+            {
+                targetPlayer.TeamId ??= 0;
+                PlayerProfileState.SelectedPlayer = targetPlayer;
+                PlayerProfileState.Teams = new(Room.Teams);
+
+                PlayerProfileState.IsVisible = true;
+            }
+            else
+            {
+                InformationDialogMessage = "This player no longer exists. It had never existed...";
+            }
+        }
+
+        [RelayCommand]
         public async Task UpdateTeam()
         {
             if (!TeamSettingsState.TeamForm.Name.IsValid) return;
@@ -458,6 +482,95 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             switch (result)
             {
                 case Success:
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task KickFromRoom()
+        {
+            IsLoading = true;
+
+            var result = await _apiFacade.Player.KickFromRoom(PlayerProfileState.SelectedPlayer.Id);
+
+            RoomSettingsState.IsVisible = false;
+
+            switch (result)
+            {
+                case Success:
+                    PlayerProfileState.IsVisible = false;
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task KickFromTeam()
+        {
+            IsLoading = true;
+
+            var result = await _apiFacade.Player.KickFromTeam(PlayerProfileState.SelectedPlayer.Id);
+
+            RoomSettingsState.IsVisible = false;
+
+            switch (result)
+            {
+                case Success:
+                    PlayerProfileState.IsVisible = false;
+                    break;
+                case Failure failure:
+                    ErrorMessage = failure.errorMessage;
+                    break;
+                case Error error:
+                    ErrorMessage = error.errorMessage;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown result type");
+            }
+
+            IsLoading = false;
+        }
+
+        [RelayCommand]
+        public async Task MovePlayerToAnotherTeam(ObservableTeam team)
+        {
+            int currentTeamId = PlayerProfileState.SelectedPlayer.TeamId ?? 0;
+            if (team.Id == currentTeamId) return;
+
+            IsLoading = true;
+
+            PutPlayerDto playerDto = new()
+            {
+                TeamId = team.Id
+            };
+
+            var result = await _apiFacade.Player.Update(playerDto, PlayerProfileState.SelectedPlayer.Id);
+
+            RoomSettingsState.IsVisible = false;
+
+            switch (result)
+            {
+                case Success:
+                    PlayerProfileState.IsVisible = false;
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;

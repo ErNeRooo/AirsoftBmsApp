@@ -21,8 +21,11 @@ public partial class TeamsScrollView : ContentView
     public static readonly BindableProperty ShowSettingsCommandProperty =
         BindableProperty.Create(nameof(ShowSettingsCommand), typeof(ICommand), typeof(TeamsScrollView));
 
+    public static readonly BindableProperty ShowPlayerProfileCommandProperty =
+        BindableProperty.Create(nameof(ShowPlayerProfileCommand), typeof(ICommand), typeof(TeamsScrollView));
+
     public static readonly BindableProperty PlayerProperty =
-    BindableProperty.Create(nameof(Player), typeof(ObservablePlayer), typeof(TeamsScrollView));
+        BindableProperty.Create(nameof(Player), typeof(ObservablePlayer), typeof(TeamsScrollView));
 
     public ObservablePlayer Player
     {
@@ -59,7 +62,11 @@ public partial class TeamsScrollView : ContentView
         get => (ICommand)GetValue(ShowSettingsCommandProperty);
         set => SetValue(ShowSettingsCommandProperty, value);
     }
-
+    public ICommand ShowPlayerProfileCommand
+    {
+        get => (ICommand)GetValue(ShowPlayerProfileCommandProperty);
+        set => SetValue(ShowPlayerProfileCommandProperty, value);
+    }
     public TeamsScrollView()
 	{
 		InitializeComponent();

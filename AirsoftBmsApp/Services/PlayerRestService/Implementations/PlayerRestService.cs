@@ -47,13 +47,13 @@ public class PlayerRestService(HttpClient client, IJwtTokenService jwtTokenServi
         }
     }
 
-    public async Task<(HttpResult result, PlayerDto? player)> PutAsync(PutPlayerDto playerDto)
+    public async Task<(HttpResult result, PlayerDto? player)> PutAsync(PutPlayerDto playerDto, int playerId)
     {
         SetAuthorizationHeader();
 
         StringContent stringContent = jsonHelper.GetStringContent(playerDto);
 
-        var response = await client.PutAsync("", stringContent);
+        var response = await client.PutAsync($"id/{playerId}", stringContent);
 
         if (response.IsSuccessStatusCode)
         {
@@ -90,11 +90,30 @@ public class PlayerRestService(HttpClient client, IJwtTokenService jwtTokenServi
         }
     }
 
-    public async Task<(HttpResult result, PlayerDto? player)> KickByIdAsync(int playerId)
+    public async Task<(HttpResult result, PlayerDto? player)> KickFromRoomByIdAsync(int playerId)
     {
         SetAuthorizationHeader();
 
-        var response = await client.PostAsync($"kick/playerId/{playerId}", null);
+        var response = await client.PostAsync($"kick-from-room/playerId/{playerId}", null);
+
+        if (response.IsSuccessStatusCode)
+        {
+            PlayerDto player = jsonHelper.DeserializeFromResponseAsync<PlayerDto>(response).Result;
+
+            return (new Success(), player);
+        }
+        else
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            return (new Failure(errorContent), null);
+        }
+    }
+
+    public async Task<(HttpResult result, PlayerDto? player)> KickFromTeamByIdAsync(int playerId)
+    {
+        SetAuthorizationHeader();
+
+        var response = await client.PostAsync($"kick-from-team/playerId/{playerId}", null);
 
         if (response.IsSuccessStatusCode)
         {

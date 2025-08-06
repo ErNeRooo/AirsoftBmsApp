@@ -69,7 +69,16 @@ public class TeamHandler(
                     .Teams.FirstOrDefault(t => t.Id == playerDataService.Player.TeamId)
                     ?.Players.Remove(playerDataService.Player);
 
+                ObservableTeam? previousTeam = roomDataService.Room.Teams
+                    .FirstOrDefault(t => t.Id == (playerDataService.Player.TeamId ?? 0));
+
                 playerDataService.Player.TeamId = 0;
+
+                if (previousTeam.OfficerId == playerDataService.Player.Id)
+                {
+                    playerDataService.Player.IsOfficer = false;
+                    previousTeam.OfficerId = 0;
+                }
 
                 bool isPlayerInUnderNoFlagTeam = roomDataService.Room.Teams[0].Players.Any(p => p.Id == playerDataService.Player.Id);
 
