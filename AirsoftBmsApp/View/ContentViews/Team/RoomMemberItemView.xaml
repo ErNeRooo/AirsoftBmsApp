@@ -43,7 +43,28 @@
             FontFamily="{StaticResource GlobalFont}" 
             FontSize="{OnPlatform Default=12, WinUI=14}"
             TextColor="{Binding BindingContext.TeamTheme.FontColor, Source={RelativeSource AncestorType={x:Type local:TeamView}}}"
+            Margin="0,0,5,0"
             Text="{Binding Name}"
+            >
+            <Label.Triggers>
+                <DataTrigger
+                    TargetType="Label"
+                    Binding="{Binding IsDead}"
+                    Value="true"
+                    >
+                    <Setter Property="TextDecorations" Value="Strikethrough" />
+                    <Setter Property="TextColor" Value="{StaticResource Outline}" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+
+        <Image 
+            x:Name="DeadIcon"
+            Source="{OnPlatform Default='skull_icon.svg', WinUI='skull_icon.png'}"
+            MaximumHeightRequest="{OnPlatform Default=18, WinUI=16}"
+            MinimumWidthRequest="{OnPlatform Default=18, WinUI=16}"
+            
+            IsVisible="{Binding IsDead}"
             />
     </HorizontalStackLayout>
 </Border>
