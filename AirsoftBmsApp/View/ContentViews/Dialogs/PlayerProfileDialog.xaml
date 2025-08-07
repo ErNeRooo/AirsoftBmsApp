@@ -159,7 +159,7 @@
                         <Label
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="24"
-                            Text="0"
+                            Text="{Binding PlayerProfileState.SelectedPlayer.Kills.Count}"
                             />
                     </VerticalStackLayout>
                 </Border>

@@ -1,12 +1,12 @@
-﻿using AirsoftBmsApp.Model.Dto.Death;
+﻿using AirsoftBmsApp.Model.Dto.Kills;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AirsoftBmsApp.Model.Observable;
 
-public partial class ObservableDeath : ObservableObject
+public partial class ObservableKill : ObservableObject
 {
     [ObservableProperty]
-    private int deathId;
+    private int killId;
 
     [ObservableProperty]
     private int locationId;
@@ -32,16 +32,16 @@ public partial class ObservableDeath : ObservableObject
     [ObservableProperty]
     private DateTimeOffset time;
 
-    public ObservableDeath(DeathDto deathDto)
+    public ObservableKill(KillDto killDto)
     {
-        DeathId = deathDto.DeathId;
-        LocationId = deathDto.LocationId;
-        PlayerId = deathDto.PlayerId;
-        BattleId = deathDto.BattleId;
-        Longitude = deathDto.Longitude;
-        Latitude = deathDto.Latitude;
-        Accuracy = deathDto.Accuracy;
-        Bearing = deathDto.Bearing;
-        Time = deathDto.Time;
+        KillId = killDto.KillId;
+        LocationId = killDto.LocationId;
+        PlayerId = killDto.PlayerId;
+        BattleId = killDto.BattleId;
+        Longitude = killDto.Longitude;
+        Latitude = killDto.Latitude;
+        Accuracy = killDto.Accuracy;
+        Bearing = killDto.Bearing;
+        Time = killDto.Time;
     }
 }

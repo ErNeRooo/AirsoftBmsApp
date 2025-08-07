@@ -1,8 +1,8 @@
-﻿namespace AirsoftBmsApp.Model.Dto.Death;
+﻿namespace AirsoftBmsApp.Model.Dto.Kills;
 
-public class DeathDto
+public class KillDto
 {
-    public int DeathId { get; set; }
+    public int KillId { get; set; }
     public int LocationId { get; set; }
     public int PlayerId { get; set; }
     public int BattleId { get; set; }

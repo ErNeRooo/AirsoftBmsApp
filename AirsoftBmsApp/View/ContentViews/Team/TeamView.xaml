@@ -111,8 +111,10 @@
     >
         <VerticalStackLayout>
             <Grid
+                ColumnDefinitions="auto,*,auto,auto"
                 >
                 <Label 
+                    Grid.Column="0"
                     Text="Name"
                     FontFamily="{StaticResource GlobalFont}"
                     IsVisible="True"
@@ -120,6 +122,16 @@
                     VerticalOptions="Center"
                     />
                 <Label 
+                    Grid.Column="2"
+                    Text="K"
+                    FontFamily="{StaticResource GlobalFont}"
+                    IsVisible="True"
+                    Margin="0,0,20,0"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    />
+                <Label 
+                    Grid.Column="3"
                     Text="D"
                     FontFamily="{StaticResource GlobalFont}"
                     IsVisible="True"

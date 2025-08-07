@@ -22,6 +22,9 @@ public partial class ObservablePlayer : ObservableObject, IObservablePlayer
     private ObservableCollection<ObservableDeath> deaths = new();
 
     [ObservableProperty]
+    private ObservableCollection<ObservableKill> kills = new();
+
+    [ObservableProperty]
     private int? teamId;
 
     [ObservableProperty]

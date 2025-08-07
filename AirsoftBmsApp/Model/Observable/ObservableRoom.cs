@@ -85,9 +85,16 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
                 continue;
             }
 
-            observablePlayer.Deaths = new ObservableCollection<ObservableDeath>(
-                room.Deaths.Where(d => d.PlayerId == observablePlayer.Id).Select(d => new ObservableDeath(d))
-            );
+            if (room.Deaths is not null)
+            {
+                observablePlayer.Deaths = new ObservableCollection<ObservableDeath>(
+                    room.Deaths.Where(death => death.PlayerId == observablePlayer.Id).Select(death => new ObservableDeath(death)));
+            }
+            if (room.Kills is not null)
+            {
+                observablePlayer.Kills = new ObservableCollection<ObservableKill>(
+                    room.Kills.Where(kill => kill.PlayerId == observablePlayer.Id).Select(kill => new ObservableKill(kill)));
+            }
 
             var team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
             if (team != null)
