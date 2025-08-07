@@ -25,6 +25,9 @@ public partial class ObservablePlayer : ObservableObject, IObservablePlayer
     private ObservableCollection<ObservableKill> kills = new();
 
     [ObservableProperty]
+    private ObservableCollection<ObservableLocation> locations = new();
+
+    [ObservableProperty]
     private int? teamId;
 
     [ObservableProperty]

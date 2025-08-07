@@ -1,6 +1,7 @@
 ﻿using AirsoftBmsApp.Model.Dto.Battle;
 using AirsoftBmsApp.Model.Dto.Death;
 using AirsoftBmsApp.Model.Dto.Kills;
+using AirsoftBmsApp.Model.Dto.Location;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Team;
 
@@ -17,4 +18,5 @@ public class RoomIncludingRelatedEntitiesDto
     public List<TeamDto> Teams { get; set; }
     public List<DeathDto> Deaths { get; set; }
     public List<KillDto> Kills { get; set; }
+    public List<LocationDto> Locations { get; set; }
 }

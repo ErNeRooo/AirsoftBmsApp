@@ -95,6 +95,11 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
                 observablePlayer.Kills = new ObservableCollection<ObservableKill>(
                     room.Kills.Where(kill => kill.PlayerId == observablePlayer.Id).Select(kill => new ObservableKill(kill)));
             }
+            if (room.Locations is not null)
+            {
+                observablePlayer.Locations = new ObservableCollection<ObservableLocation>(
+                    room.Locations.Where(location => location.PlayerId == observablePlayer.Id).Select(location => new ObservableLocation(location)));
+            }
 
             var team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
             if (team != null)
