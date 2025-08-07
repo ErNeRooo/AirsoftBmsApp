@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Player;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.Model.Observable;
 
@@ -16,6 +17,9 @@ public partial class ObservablePlayer : ObservableObject, IObservablePlayer
 
     [ObservableProperty]
     private ObservableAccount? account;
+
+    [ObservableProperty]
+    private ObservableCollection<ObservableDeath> deaths = new();
 
     [ObservableProperty]
     private int? teamId;

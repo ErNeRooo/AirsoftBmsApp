@@ -85,6 +85,10 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
                 continue;
             }
 
+            observablePlayer.Deaths = new ObservableCollection<ObservableDeath>(
+                room.Deaths.Where(d => d.PlayerId == observablePlayer.Id).Select(d => new ObservableDeath(d))
+            );
+
             var team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
             if (team != null)
             {

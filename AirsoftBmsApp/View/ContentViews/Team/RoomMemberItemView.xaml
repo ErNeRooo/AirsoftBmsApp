@@ -19,9 +19,10 @@
         </TapGestureRecognizer>
     </Border.GestureRecognizers>
 
-    <HorizontalStackLayout>
+    <Grid ColumnDefinitions="auto,auto,auto,auto,*">
         <Image 
             x:Name="AdminIcon"
+            Grid.Column="0"
             Source="{OnPlatform Default='room_admin_icon.svg', WinUI='room_admin_icon.png'}"
             MaximumHeightRequest="{OnPlatform Default=18, WinUI=16}"
             MinimumWidthRequest="{OnPlatform Default=18, WinUI=16}"
@@ -32,6 +33,7 @@
 
         <Image 
             x:Name="OfficerIcon"
+            Grid.Column="1"
             Source="{OnPlatform Default='team_officer_icon.svg', WinUI='team_officer_icon.png'}"
             MaximumHeightRequest="{OnPlatform Default=18, WinUI=16}"
             MinimumWidthRequest="{OnPlatform Default=18, WinUI=16}"
@@ -40,6 +42,7 @@
             />
 
         <Label
+            Grid.Column="2"
             FontFamily="{StaticResource GlobalFont}" 
             FontSize="{OnPlatform Default=12, WinUI=14}"
             TextColor="{Binding BindingContext.TeamTheme.FontColor, Source={RelativeSource AncestorType={x:Type local:TeamView}}}"
@@ -60,11 +63,21 @@
 
         <Image 
             x:Name="DeadIcon"
+            Grid.Column="3"
             Source="{OnPlatform Default='skull_icon.svg', WinUI='skull_icon.png'}"
             MaximumHeightRequest="{OnPlatform Default=18, WinUI=16}"
             MinimumWidthRequest="{OnPlatform Default=18, WinUI=16}"
             
             IsVisible="{Binding IsDead}"
             />
-    </HorizontalStackLayout>
+
+        <Label
+            Grid.Column="4"
+            FontFamily="{StaticResource GlobalFont}"
+            FontSize="{OnPlatform Default=12, WinUI=14}"
+            Margin="0,0,5,0"
+            HorizontalOptions="End"
+            Text="{Binding Deaths.Count}"
+            />
+    </Grid>
 </Border>

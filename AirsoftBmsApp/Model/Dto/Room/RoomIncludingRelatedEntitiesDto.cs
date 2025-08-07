@@ -1,4 +1,5 @@
 ﻿using AirsoftBmsApp.Model.Dto.Battle;
+using AirsoftBmsApp.Model.Dto.Death;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Team;
 using System;
@@ -18,5 +19,6 @@ namespace AirsoftBmsApp.Model.Dto.Room
         public BattleDto Battle { get; set; }
         public List<PlayerDto> Players { get; set; }
         public List<TeamDto> Teams { get; set; }
+        public List<DeathDto> Deaths { get; set; }
     }
 }
