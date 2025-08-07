@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.InformationDialog"
              x:Name="InformationDialogView"
              >
@@ -25,11 +26,11 @@
         </Grid.GestureRecognizers>
 
         <Border
-            Stroke="{StaticResource Outline}"
+            Stroke="{toolkit:AppThemeResource Outline}"
             StrokeShape="RoundRectangle 30"
             HorizontalOptions="Center"
             VerticalOptions="Center"
-            BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+            BackgroundColor="{toolkit:AppThemeResource SurfaceSecond}"
             >
             <Grid 
                 WidthRequest="300"
@@ -43,14 +44,14 @@
                     Text="{Binding Message}"
                     FontSize="16"
                     FontFamily="{StaticResource GlobalFont}"
-                    TextColor="{StaticResource White}"
+                    TextColor="{toolkit:AppThemeResource Text}"
                     />
 
                 <BoxView 
                     Grid.Row="1"
                     HorizontalOptions="Fill"
                     HeightRequest="1"
-                    BackgroundColor="{StaticResource Outline}"
+                    BackgroundColor="{toolkit:AppThemeResource Outline}"
                     />
 
                 <Button
@@ -60,7 +61,7 @@
                     FontSize="16"
                     MaximumHeightRequest="30"
                     BackgroundColor="Transparent"
-                    TextColor="{StaticResource White}"
+                    TextColor="{toolkit:AppThemeResource Text}"
                     FontFamily="{StaticResource GlobalFont}"
                     Clicked="ClearMessage"
                     />

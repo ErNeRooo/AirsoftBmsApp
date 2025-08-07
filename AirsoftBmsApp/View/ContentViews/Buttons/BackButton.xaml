@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              x:Class="AirsoftBmsApp.View.ContentViews.Buttons.BackButton"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              HorizontalOptions="Center">
     <Button 
         Height="30"
         HorizontalOptions="Center"
         BackgroundColor="Transparent"
-        TextColor="{StaticResource SecondaryDarkText}"
+        TextColor="{toolkit:AppThemeResource TextSecond}"
         BorderColor="Transparent"
         BorderWidth="2"
         FontFamily="{StaticResource GlobalFont}" 

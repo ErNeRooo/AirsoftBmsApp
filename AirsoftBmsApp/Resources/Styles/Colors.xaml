@@ -3,27 +3,29 @@
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     >
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="LightAppBackgroundColor">#FFFFFF</Color>
-    <Color x:Key="DarkAppBackgroundColor">#0A0A0A</Color>
 
-    <Color x:Key="Primary">#10B981</Color>
-    <Color x:Key="PrimaryDark">#10B981</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="Tertiary">#10B981</Color>
+    <toolkit:AppThemeColor x:Key="AppBackground" Light="#FFFFFF" Dark="#0A0A0A" />
 
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="SecondaryDarkText">#B5B5B5</Color>
-    <Color x:Key="Outline">#B5B5B5</Color>
-    <Color x:Key="Surface">#141414</Color>
+    <toolkit:AppThemeColor x:Key="Primary" Light="#10B981" Dark="#10B981" />
+    <toolkit:AppThemeColor x:Key="OnPrimary" Light="#FFFFFF" Dark="#000000" />
 
-    <Color x:Key="Danger">#CA3B33</Color>
-    
-    <Color x:Key="Error">#CA3B33</Color>
-    <Color x:Key="OnError">White</Color>
+    <toolkit:AppThemeColor x:Key="Outline" Light="#141414" Dark="#B5B5B5" />
+
+    <toolkit:AppThemeColor x:Key="Surface" Light="#cccccc" Dark="#0A0A0A" />
+    <toolkit:AppThemeColor x:Key="SurfaceSecond" Light="#ededed" Dark="#000000" />
+
+    <toolkit:AppThemeColor x:Key="Danger" Light="#CA3B33" Dark="#CA3B33" />
+
+    <toolkit:AppThemeColor x:Key="Error" Light="#CA3B33" Dark="#CA3B33" />
+    <toolkit:AppThemeColor x:Key="OnError" Light="White" Dark="White" />
+
+    <toolkit:AppThemeColor x:Key="Text" Light="Black" Dark="White" />
+    <toolkit:AppThemeColor x:Key="TextSecond" Light="#1f1f1f" Dark="#C8C8C8" />
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
@@ -40,9 +42,9 @@
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
 
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
-    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#10B981"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="#DFD8F7"/>
+    <SolidColorBrush x:Key="TertiaryBrush" Color="#10B981"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
 

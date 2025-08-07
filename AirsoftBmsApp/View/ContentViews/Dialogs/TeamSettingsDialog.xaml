@@ -4,6 +4,7 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.TeamSettingsDialog"
              x:Name="TeamSettingsDialogView"
              
@@ -21,11 +22,11 @@
         <Border
              HorizontalOptions="Center"
              VerticalOptions="Center"
-             BackgroundColor="{StaticResource Surface}"
+             BackgroundColor="{toolkit:AppThemeResource Surface}"
              Margin="40"
              
              StrokeShape="RoundRectangle 30"
-             Stroke="{StaticResource Outline}"
+             Stroke="{toolkit:AppThemeResource Outline}"
              WidthRequest="350"
          >
             <Grid 
@@ -46,7 +47,7 @@
                         Text="Name"
                         HorizontalOptions="Center"
                         FontFamily="{StaticResource GlobalFont}"
-                        TextColor="{StaticResource Outline}"
+                        TextColor="{toolkit:AppThemeResource Outline}"
                         />
 
                     <inputs:ValidatableStyledEntry
@@ -66,11 +67,11 @@
                         Text="Officer"
                         HorizontalOptions="Center"
                         FontFamily="{StaticResource GlobalFont}"
-                        TextColor="{StaticResource Outline}"
+                        TextColor="{toolkit:AppThemeResource Outline}"
                         />
                     <Border
                         Grid.Column="1"
-                        Stroke="{StaticResource Outline}"
+                        Stroke="{toolkit:AppThemeResource Outline}"
                         StrokeShape="RoundRectangle 15"
                         HeightRequest="45"
                         >
@@ -94,12 +95,12 @@
                     Grid.Row="3"
                     StrokeShape="RoundRectangle 45"
                     StrokeThickness="2"
-                    Stroke="{StaticResource Danger}"
+                    Stroke="{toolkit:AppThemeResource Danger}"
                     >
                     <Button 
                         x:Name="Delete"
                         BackgroundColor="Transparent"
-                        TextColor="{StaticResource Danger}"
+                        TextColor="{toolkit:AppThemeResource Danger}"
                         BorderWidth="2"
                         FontFamily="{StaticResource GlobalFont}" 
                         HorizontalOptions="Fill"

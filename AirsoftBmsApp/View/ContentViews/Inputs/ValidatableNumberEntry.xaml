@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AirsoftBmsApp.View.ContentViews.Inputs.ValidatableNumberEntry"
              x:Name="ValidatableEntry"
@@ -11,7 +12,7 @@
      >
         <Border 
 
-             Stroke="{StaticResource Outline}"
+             Stroke="{toolkit:AppThemeResource Outline}"
              StrokeShape="RoundRectangle 45"
              Padding="20, 0">
             <Border.Triggers>
@@ -20,7 +21,7 @@
                      Binding="{Binding ValidatableObject.IsValid}"
                      Value="False"
                  >
-                    <Setter Property="Stroke" Value="{StaticResource Error}" />
+                    <Setter Property="Stroke" Value="{toolkit:AppThemeResource Error}" />
                 </DataTrigger>
             </Border.Triggers>
             <Entry 
@@ -28,7 +29,7 @@
                  Placeholder="{Binding Placeholder}"
                  Text="{Binding ValidatableObject.Value, Mode=TwoWay}"
                  IsPassword="{Binding IsPassword}"
-                 PlaceholderColor="{StaticResource Outline}"
+                 PlaceholderColor="{toolkit:AppThemeResource Outline}"
                  FontFamily="{StaticResource GlobalFont}" 
                  FontSize="15"
                  TextChanged="OnTextChanged"
@@ -45,7 +46,7 @@
         </Border>
         <Label
              Text="{Binding ValidatableObject.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
-             TextColor="{StaticResource Error}"
+             TextColor="{toolkit:AppThemeResource Error}"
              FontFamily="{StaticResource GlobalFont}" 
              FontSize="10"
              IsVisible="{Binding ValidatableObject.IsValid, Converter={StaticResource InverseBoolConverter}}"

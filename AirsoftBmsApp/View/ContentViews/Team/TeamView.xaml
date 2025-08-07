@@ -126,7 +126,7 @@
                     Text="K"
                     FontFamily="{StaticResource GlobalFont}"
                     IsVisible="True"
-                    Margin="0,0,20,0"
+                    Margin="0,0,18,0"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
                     />

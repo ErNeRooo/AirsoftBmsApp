@@ -7,10 +7,11 @@
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.RoomFormPageViewModel"
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AirsoftBmsApp.RoomFormPage"
              Title="Join or Create Room"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{AppThemeBinding Light={StaticResource LightAppBackgroundColor}, Dark={StaticResource DarkAppBackgroundColor}}"
+             BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:RoomFormViewModel"
              >
     <Grid>

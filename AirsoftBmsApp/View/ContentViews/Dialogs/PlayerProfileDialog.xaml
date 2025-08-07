@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="PlayerProfileDialogView"
              x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.PlayerProfileDialog">
     <Grid   
@@ -18,11 +19,11 @@
         <Border
             HorizontalOptions="Center"
             VerticalOptions="Center"
-            BackgroundColor="{StaticResource Surface}"
+            BackgroundColor="{toolkit:AppThemeResource SurfaceSecond}"
             Margin="40"
           
             StrokeShape="RoundRectangle 30"
-            Stroke="{StaticResource Outline}"
+            Stroke="{toolkit:AppThemeResource Outline}"
             WidthRequest="350"
       >
             <Grid 
@@ -43,7 +44,7 @@
                 <Border
                     Grid.Row="1"
                     Grid.Column="0"
-                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    BackgroundColor="{toolkit:AppThemeResource Surface}"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 15"
                     Padding="10"
@@ -55,7 +56,7 @@
                         <Label 
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
-                            TextColor="{StaticResource Outline}"
+                            TextColor="{toolkit:AppThemeResource Outline}"
                             Text="Status"
                             />
                         <Label
@@ -79,7 +80,7 @@
                 <Border
                     Grid.Row="1"
                     Grid.Column="1"
-                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    BackgroundColor="{toolkit:AppThemeResource Surface}"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 15"
                     Padding="10"
@@ -91,7 +92,7 @@
                         <Label 
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
-                            TextColor="{StaticResource Outline}"
+                            TextColor="{toolkit:AppThemeResource Outline}"
                             Text="Account Linked"
                             />
                         <Label
@@ -115,7 +116,7 @@
                 <Border
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
-                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    BackgroundColor="{toolkit:AppThemeResource Surface}"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 15"
                     Padding="10"
@@ -127,7 +128,7 @@
                         <Label 
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
-                            TextColor="{StaticResource Outline}"
+                            TextColor="{toolkit:AppThemeResource Outline}"
                             Text="Team"
                             />
                         <Label
@@ -141,7 +142,7 @@
                 <Border
                     Grid.Row="3"
                     Grid.Column="0"
-                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    BackgroundColor="{toolkit:AppThemeResource Surface}"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 15"
                     Padding="10"
@@ -153,7 +154,7 @@
                         <Label 
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
-                            TextColor="{StaticResource Outline}"
+                            TextColor="{toolkit:AppThemeResource Outline}"
                             Text="Kills"
                             />
                         <Label
@@ -167,7 +168,7 @@
                 <Border
                     Grid.Row="3"
                     Grid.Column="1"
-                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    BackgroundColor="{toolkit:AppThemeResource Surface}"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 15"
                     Padding="10"
@@ -179,7 +180,7 @@
                         <Label 
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
-                            TextColor="{StaticResource Outline}"
+                            TextColor="{toolkit:AppThemeResource Outline}"
                             Text="Deaths"
                             />
                         <Label
@@ -193,7 +194,7 @@
                 <Border
                     Grid.Row="4"
                     Grid.Column="0"
-                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    BackgroundColor="{toolkit:AppThemeResource Surface}"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 15"
                     Padding="10"
@@ -205,7 +206,7 @@
                         <Label 
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
-                            TextColor="{StaticResource Outline}"
+                            TextColor="{toolkit:AppThemeResource Outline}"
                             Text="Is Admin"
                             />
                         <Label
@@ -229,10 +230,10 @@
                 <Border
                     Grid.Row="4"
                     Grid.Column="1"
-                    BackgroundColor="{StaticResource DarkAppBackgroundColor}"
+                    BackgroundColor="{toolkit:AppThemeResource Surface}"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 15"
-                    Padding="10"
+                    Padding="5"
                     >
                     <VerticalStackLayout
                         VerticalOptions="Center"
@@ -241,7 +242,7 @@
                         <Label 
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
-                            TextColor="{StaticResource Outline}"
+                            TextColor="{toolkit:AppThemeResource Outline}"
                             Text="Is Officer"
                             />
                         <Label
@@ -267,7 +268,7 @@
                     Grid.ColumnSpan="2"
                     StrokeShape="RoundRectangle 45"
                     StrokeThickness="2"
-                    Stroke="{StaticResource Danger}"
+                    Stroke="{toolkit:AppThemeResource Danger}"
                     IsVisible="{Binding PlayerProfileState.SelfPlayer.IsAdmin}"
                  >
                     <Border.Triggers>
@@ -282,7 +283,7 @@
                     
                     <Button 
                         BackgroundColor="Transparent"
-                        TextColor="{StaticResource Danger}"
+                        TextColor="{toolkit:AppThemeResource Danger}"
                         BorderWidth="2"
                         FontFamily="{StaticResource GlobalFont}" 
                         HorizontalOptions="Fill"
@@ -298,7 +299,7 @@
                     Grid.ColumnSpan="2"
                     StrokeShape="RoundRectangle 45"
                     StrokeThickness="2"
-                    Stroke="{StaticResource Danger}"
+                    Stroke="{toolkit:AppThemeResource Danger}"
                     IsVisible="False"
                  >
                     <Border.Triggers>
@@ -337,7 +338,7 @@
                     
                     <Button 
                         BackgroundColor="Transparent"
-                        TextColor="{StaticResource Danger}"
+                        TextColor="{toolkit:AppThemeResource Danger}"
                         BorderWidth="2"
                         FontFamily="{StaticResource GlobalFont}" 
                         HorizontalOptions="Fill"
@@ -353,7 +354,7 @@
                     Grid.ColumnSpan="2"
                     StrokeShape="RoundRectangle 45"
                     StrokeThickness="2"
-                    Stroke="{StaticResource Danger}"
+                    Stroke="{toolkit:AppThemeResource Danger}"
                     IsVisible="{Binding PlayerProfileState.SelfPlayer.IsAdmin}"
                  >
                     <Border.Triggers>
@@ -373,7 +374,7 @@
                         HorizontalTextAlignment="Center"
                         VerticalTextAlignment="Center"
                         Title="{OnPlatform Default='Move To Another Team', WinUI=''}"
-                        TitleColor="{StaticResource Danger}"
+                        TitleColor="{toolkit:AppThemeResource Danger}"
                         FontSize="20"
                         SelectedItem="{Binding PlayerProfileState.SelectedTeam, Mode=TwoWay}"
                         ItemsSource="{Binding PlayerProfileState.Teams}"

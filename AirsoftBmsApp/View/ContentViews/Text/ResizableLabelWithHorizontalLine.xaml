@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AirsoftBmsApp.View.ContentViews.Text.ResizableLabelWithHorizontalLine">
     <FlexLayout 
         Direction="Row" 
@@ -10,13 +11,13 @@
 
         <BoxView 
             HeightRequest="1"
-            Color="{StaticResource Outline}"
+            Color="{toolkit:AppThemeResource Outline}"
             FlexLayout.Grow="1" />
 
         <Label 
             FontFamily="{StaticResource GlobalFont}" 
             FontSize="15" 
-            TextColor="{StaticResource Outline}"
+            TextColor="{toolkit:AppThemeResource Outline}"
             HorizontalTextAlignment="Center"
             VerticalTextAlignment="Center"
             Margin="5, 0"
@@ -24,7 +25,7 @@
 
         <BoxView 
             HeightRequest="1"
-            Color="{StaticResource Outline}"
+            Color="{toolkit:AppThemeResource Outline}"
             FlexLayout.Grow="1" />
     </FlexLayout>
 </ContentView>

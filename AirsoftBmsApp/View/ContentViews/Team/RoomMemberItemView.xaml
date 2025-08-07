@@ -56,7 +56,7 @@
                     Value="true"
                     >
                     <Setter Property="TextDecorations" Value="Strikethrough" />
-                    <Setter Property="TextColor" Value="{StaticResource Outline}" />
+                    <Setter Property="TextColor" Value="{toolkit:AppThemeResource Outline}" />
                 </DataTrigger>
             </Label.Triggers>
         </Label>
