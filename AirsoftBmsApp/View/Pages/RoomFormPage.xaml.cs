@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.View.Pages;
 using AirsoftBmsApp.ViewModel.RoomFormPageViewModel;
@@ -14,7 +15,7 @@ namespace AirsoftBmsApp
             InitializeComponent();
             BindingContext = viewModel;
             _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
-            Title.Text = playerDataService.Player.Name;
+            Title.Text = string.Format(AppResources.WelcomePlayerHeader, playerDataService.Player.Name);
         }
 
         public async void OnJoinRoomButtonClicked(object sender, EventArgs e)

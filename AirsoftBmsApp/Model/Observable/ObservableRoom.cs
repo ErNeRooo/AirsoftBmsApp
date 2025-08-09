@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Room;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Resources.Styles.TeamTheme;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
@@ -31,7 +32,7 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
             new ObservableTeam
             {
                 Id = 0,
-                Name = "Under No Flag",
+                Name = AppResources.UnderNoFlagHeader,
                 Players = new ObservableCollection<ObservablePlayer>(),
                 TeamTheme = TeamThemes.UnderNoFlag,
             },

@@ -1,3 +1,4 @@
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Validation;
 using System.Windows.Input;
 
@@ -6,7 +7,7 @@ namespace AirsoftBmsApp.View.ContentViews.Inputs;
 public partial class ValidatableStyledEntry : ContentView
 {
     public static readonly BindableProperty PlaceholderProperty =
-        BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(StyledEntry), "Enter Text");
+        BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(StyledEntry), AppResources.TextInputPlaceholder);
 
     public static readonly BindableProperty IsPasswordProperty =
         BindableProperty.Create(nameof(IsPassword), typeof(bool), typeof(StyledEntry), false);

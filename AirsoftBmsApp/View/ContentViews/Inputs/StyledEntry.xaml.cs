@@ -1,9 +1,11 @@
+using AirsoftBmsApp.Resources.Languages;
+
 namespace AirsoftBmsApp.View.ContentViews.Inputs;
 
 public partial class StyledEntry : ContentView
 {
     public static readonly BindableProperty PlaceholderProperty =
-        BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(StyledEntry), "Enter Text");
+        BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(StyledEntry), AppResources.TextInputPlaceholder);
 
     public static readonly BindableProperty TextProperty =
         BindableProperty.Create(nameof(Text), typeof(string), typeof(StyledEntry), defaultBindingMode: BindingMode.TwoWay);

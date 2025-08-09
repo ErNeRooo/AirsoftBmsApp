@@ -4,6 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.InformationDialog"
              x:Name="InformationDialogView"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              >
     <ContentView.Triggers>
         <DataTrigger 
@@ -56,7 +57,7 @@
 
                 <Button
                     Grid.Row="2"
-                    Text="Ok"
+                    Text="{Static langs:AppResources.OkButton}"
                     Padding="0"
                     FontSize="16"
                     MaximumHeightRequest="30"

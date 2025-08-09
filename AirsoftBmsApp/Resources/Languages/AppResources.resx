@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccountConfirmPasswordInputPlaceholder" xml:space="preserve">
+    <value>Confirm your password</value>
+  </data>
+  <data name="AccountEmailInputPlaceholder" xml:space="preserve">
+    <value>Enter account email</value>
+  </data>
+  <data name="AccountPasswordInputPlaceholder" xml:space="preserve">
+    <value>Enter account password</value>
+  </data>
+  <data name="AdminLabel" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="BackButton" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConfirmButton" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="CreateButton" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CreateRoomHeader" xml:space="preserve">
+    <value>Create Room</value>
+  </data>
+  <data name="DeleteRoomButton" xml:space="preserve">
+    <value>Delete Room</value>
+  </data>
+  <data name="DeleteTeamConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to delete team {0}?</value>
+  </data>
+  <data name="EmptyTeamText" xml:space="preserve">
+    <value>No one's here</value>
+  </data>
+  <data name="TeamNameIsUnder20CharactersLongValidationMessage" xml:space="preserve">
+    <value>Team name must be 20 characters or fewer.</value>
+  </data>
+  <data name="JoinRoomButton" xml:space="preserve">
+    <value>Join Room</value>
+  </data>
+  <data name="JoinCodeInputPlaceholder" xml:space="preserve">
+    <value>Enter room join code</value>
+  </data>
+  <data name="JoinRoomHeader" xml:space="preserve">
+    <value>Join Room</value>
+  </data>
+  <data name="LeaveButton" xml:space="preserve">
+    <value>Leave</value>
+  </data>
+  <data name="LogInButton" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="LogInHeader" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="MaxPlayersLabel" xml:space="preserve">
+    <value>Max Players</value>
+  </data>
+  <data name="NoButton" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OfficerLabel" xml:space="preserve">
+    <value>Officer</value>
+  </data>
+  <data name="OptionalJoinCodeInputPlaceholder" xml:space="preserve">
+    <value>Enter room join code (optional)</value>
+  </data>
+  <data name="OptionalRoomPasswordInputPlaceholder" xml:space="preserve">
+    <value>Enter room password (optional)</value>
+  </data>
+  <data name="OrLine" xml:space="preserve">
+    <value>OR</value>
+  </data>
+  <data name="PlayerDeathsLabel" xml:space="preserve">
+    <value>D</value>
+  </data>
+  <data name="PlayerKillsLabel" xml:space="preserve">
+    <value>K</value>
+  </data>
+  <data name="PlayerNameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PlayerPicker" xml:space="preserve">
+    <value>Choose Player</value>
+  </data>
+  <data name="RoomJoinCodeHeader" xml:space="preserve">
+    <value>Room {0}</value>
+  </data>
+  <data name="RoomPasswordInputPlaceholder" xml:space="preserve">
+    <value>Enter room password</value>
+  </data>
+  <data name="RoomSettingsHeader" xml:space="preserve">
+    <value>Room Settings</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SignUpButton" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="SignUpHeader" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="TakeAdminRoleConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to take admin role?</value>
+  </data>
+  <data name="TeamNameInputPlaceholder" xml:space="preserve">
+    <value>Enter team name</value>
+  </data>
+  <data name="TeamNameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="TeamSettingsHeader" xml:space="preserve">
+    <value>Team Settings</value>
+  </data>
+  <data name="UnderNoFlagHeader" xml:space="preserve">
+    <value>Under No Flag</value>
+  </data>
+  <data name="UsernameInputPlaceholder" xml:space="preserve">
+    <value>Enter your username</value>
+  </data>
+  <data name="WithAccountHeader" xml:space="preserve">
+    <value>With Account</value>
+  </data>
+  <data name="WithoutAccountHeader" xml:space="preserve">
+    <value>Without Account</value>
+  </data>
+  <data name="YesButton" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="JoinCodeHas6CharactersValidationMessage" xml:space="preserve">
+    <value>Join code must be exactly 6 characters, if provided.</value>
+  </data>
+  <data name="WelcomePlayerHeader" xml:space="preserve">
+    <value>Welcome {0}!</value>
+  </data>
+  <data name="LogOutButton" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
+  <data name="OtherButton" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="PlayerStatusLabel" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="PlayerAccountLabel" xml:space="preserve">
+    <value>Account Linked</value>
+  </data>
+  <data name="PlayerTeamLabel" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="PlayerProfileKillsLabel" xml:space="preserve">
+    <value>Kills</value>
+  </data>
+  <data name="PlayerProfileDeathsLabel" xml:space="preserve">
+    <value>Deaths</value>
+  </data>
+  <data name="PlayerIsAdminLabel" xml:space="preserve">
+    <value>Is Admin</value>
+  </data>
+  <data name="PlayerIsOfficerLabel" xml:space="preserve">
+    <value>Is Officer</value>
+  </data>
+  <data name="YesValue" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="NoValue" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="AliveValue" xml:space="preserve">
+    <value>Alive</value>
+  </data>
+  <data name="DeadValue" xml:space="preserve">
+    <value>Dead</value>
+  </data>
+  <data name="KickFromRoomButton" xml:space="preserve">
+    <value>Kick From Room</value>
+  </data>
+  <data name="KickFromTeamButton" xml:space="preserve">
+    <value>KickFromTeam</value>
+  </data>
+  <data name="TeamPicker" xml:space="preserve">
+    <value>Move To Another Team</value>
+  </data>
+  <data name="MaxPlayersInputPlaceholder" xml:space="preserve">
+    <value>Enter max players number</value>
+  </data>
+  <data name="DeleteTeamButton" xml:space="preserve">
+    <value>Delete Team</value>
+  </data>
+  <data name="ErrorHeader" xml:space="preserve">
+    <value>Networking error occured :/</value>
+  </data>
+  <data name="HideButton" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="TextInputPlaceholder" xml:space="preserve">
+    <value>Enter text</value>
+  </data>
+  <data name="LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="CreateTeamButton" xml:space="preserve">
+    <value>Create Team</value>
+  </data>
+  <data name="CreateTeamHeader" xml:space="preserve">
+    <value>Create Team</value>
+  </data>
+  <data name="NameIsRequiredValidationMessage" xml:space="preserve">
+    <value>Name is required.</value>
+  </data>
+  <data name="PlayerNameIsUnder21CharactersLongValidationMessage" xml:space="preserve">
+    <value>Name must be 20 characters or fewer.</value>
+  </data>
+  <data name="EmailIsRequiredValidationMessage" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="EmailFormatValidationMessage" xml:space="preserve">
+    <value>Wrong Email Format.</value>
+  </data>
+  <data name="PasswordIsRequiredValidationMessage" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="PasswordIsLongerThanValidationMessage" xml:space="preserve">
+    <value>Password must be at least 10 characters long.</value>
+  </data>
+  <data name="PasswordHasDigitValidationMessage" xml:space="preserve">
+    <value>Password must contain at least 1 digit.</value>
+  </data>
+  <data name="PasswordHasLowercaseLetterValidationMessage" xml:space="preserve">
+    <value>Password must contain at least 1 lowercase letter.</value>
+  </data>
+  <data name="PasswordHasUppercaseLetterValidationMessage" xml:space="preserve">
+    <value>Password must contain at least 1 uppercase letter.</value>
+  </data>
+  <data name="PasswordHasSpecialCharacterValidationMessage" xml:space="preserve">
+    <value>Password must contain at least 1 special character.</value>
+  </data>
+  <data name="ConfirmPasswordIsRequiredValidationMessage" xml:space="preserve">
+    <value>Confirm password is required.</value>
+  </data>
+  <data name="PasswordsDontMatchValidationMessage" xml:space="preserve">
+    <value>Passwords do not match.</value>
+  </data>
+  <data name="PasswordIs6CharactersLongIfProvided" xml:space="preserve">
+    <value>Password must be exactly 6 characters, if provided.</value>
+  </data>
+  <data name="MaxPlayersIsNotInRangeValidationMessage" xml:space="preserve">
+    <value>Max players must be between 2 and 99999.</value>
+  </data>
+  <data name="SwitchTeamConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to switch to team {0}?</value>
+  </data>
+  <data name="LeaveTeamConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to leave your team?</value>
+  </data>
+  <data name="YouCanOnlyTakeOfficerInYourTeamInformationMessage" xml:space="preserve">
+    <value>You can only take officer role in your own team.</value>
+  </data>
+  <data name="TakeOfficerConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to take officer role?</value>
+  </data>
+  <data name="PlayerDoesntExistInformationMessage" xml:space="preserve">
+    <value>This player no longer exists. It had never existed...</value>
+  </data>
+  <data name="DeleteRoomConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the room?</value>
+  </data>
+  <data name="UnhandledErrorMessage" xml:space="preserve">
+    <value>Unhandled error</value>
+  </data>
+  <data name="CreateRoomButton" xml:space="preserve">
+    <value>Create Room</value>
+  </data>
+</root>

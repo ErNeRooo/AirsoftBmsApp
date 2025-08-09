@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Room;
 using System.Collections.ObjectModel;
+using AirsoftBmsApp.Resources.Languages;
 
 namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
@@ -128,8 +129,8 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             string teamName = Room.Teams.FirstOrDefault(t => t.Id == teamId)?.Name ?? "Unknown Team";
 
             ConfirmationDialogState.Message = teamId == 0
-                ? "Are you sure you want to leave your team?"
-                : $"Are you sure you want to switch to team {teamName}?";
+                ? AppResources.LeaveTeamConfirmationMessage
+                : string.Format(AppResources.SwitchTeamConfirmationMessage, teamName);
             ConfirmationDialogState.Command = SwitchTeamCommand;
         }
 
@@ -191,7 +192,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [RelayCommand]
         public async Task LeaveRoomConfirmation()
         {
-            ConfirmationDialogState.Message = "Are you sure you want to leave the room?";
+            ConfirmationDialogState.Message = AppResources.LeaveTeamConfirmationMessage;
             ConfirmationDialogState.Command = LeaveRoomCommand;
         }
 
@@ -223,7 +224,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [RelayCommand]
         public async Task TakeAdminConfirmation()
         {
-            ConfirmationDialogState.Message = "Are you sure you want to take admin role?";
+            ConfirmationDialogState.Message = AppResources.TakeAdminRoleConfirmationMessage;
             ConfirmationDialogState.Command = TakeAdminCommand;
         }
 
@@ -262,11 +263,11 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         {
             if(teamId != Player.TeamId)
             {
-                InformationDialogMessage = "You can only take officer role in your own team.";
+                InformationDialogMessage = AppResources.YouCanOnlyTakeOfficerInYourTeamInformationMessage;
                 return;
             }
 
-            ConfirmationDialogState.Message = "Are you sure you want to take officer role?";
+            ConfirmationDialogState.Message = AppResources.TakeOfficerConfirmationMessage;
             ConfirmationDialogState.Command = TakeOfficerCommand;
         }
 
@@ -347,7 +348,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             }
             else
             {
-                InformationDialogMessage = "This player no longer exists. It had never existed...";
+                InformationDialogMessage = AppResources.PlayerDoesntExistInformationMessage;
             }
         }
 
@@ -390,7 +391,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         {
             string teamName = Room.Teams.FirstOrDefault(t => t.Id == TargetTeamId)?.Name ?? "Unknown Team";
 
-            ConfirmationDialogState.Message = $"Are you sure you want to delete team {teamName}?";
+            ConfirmationDialogState.Message = string.Format(AppResources.DeleteTeamConfirmationMessage, teamName);
             ConfirmationDialogState.Command = DeleteTeamCommand;
         }
 
@@ -424,7 +425,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [RelayCommand]
         public async Task DeleteRoomConfirmation()
         {
-            ConfirmationDialogState.Message = $"Are you sure you want to delete the room?";
+            ConfirmationDialogState.Message = AppResources.DeleteRoomConfirmationMessage;
             ConfirmationDialogState.Command = DeleteRoomCommand;
         }
 

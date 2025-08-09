@@ -8,6 +8,7 @@
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              x:Class="AirsoftBmsApp.View.Pages.CreateRoomPage"
              Title="Create Room"
              Shell.NavBarIsVisible="False"
@@ -27,17 +28,17 @@
             MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         >
             <text:Header 
-                Text="Create Room" 
+                Text="{Static langs:AppResources.CreateRoomHeader}" 
             />
 
             <inputs:ValidatableStyledEntry
-                Placeholder="Enter room join code (optional)"
+                Placeholder="{Static langs:AppResources.OptionalJoinCodeInputPlaceholder}"
                 ValidatableObject="{Binding RoomForm.JoinCode}"
                 ValidateCommand="{Binding ValidateJoinCodeCommand}"
             />
 
             <inputs:ValidatableStyledEntry
-                Placeholder="Enter room password (optional)"
+                Placeholder="{Static langs:AppResources.OptionalRoomPasswordInputPlaceholder}"
                 ValidatableObject="{Binding RoomForm.Password}"
                 IsPassword="True"
                 ValidateCommand="{Binding ValidatePasswordCommand}"

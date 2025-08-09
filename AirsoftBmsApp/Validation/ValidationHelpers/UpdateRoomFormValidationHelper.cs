@@ -1,4 +1,5 @@
 ﻿using AirsoftBmsApp.Model.Validatable;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Validation.Rules;
 
 namespace AirsoftBmsApp.Validation.ValidationHelpers
@@ -16,7 +17,7 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
         {
             roomForm.JoinCode.Validations.Add(new OptionalLengthRule<string>
             {
-                ValidationMessage = "Password must be exactly 6 characters, if provided.",
+                ValidationMessage =AppResources.PasswordIs6CharactersLongIfProvided,
                 Length = 6
             });
         }
@@ -31,7 +32,7 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
             roomForm.MaxPlayers.Validations.Add(
                 new IsBetweenOrEqualRule<int>
                 {
-                    ValidationMessage = "Max players must be between 2 and 99999.",
+                    ValidationMessage = AppResources.MaxPlayersIsNotInRangeValidationMessage,
                     MinValue = 2,
                     MaxValue = 99999
                 });

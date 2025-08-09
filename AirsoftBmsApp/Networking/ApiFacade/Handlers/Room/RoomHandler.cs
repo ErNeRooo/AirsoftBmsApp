@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
@@ -26,7 +27,7 @@ public class RoomHandler(
                 playerDataService.Player.RoomId = room.RoomId;
                 playerDataService.Player.IsAdmin = true;
             }
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }
@@ -49,7 +50,7 @@ public class RoomHandler(
 
                 InjectObservablePlayerObjectFromPlayerDataService(roomDataService.Room);
             }
-            else if (joinResult is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (joinResult is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return joinResult;
         }
@@ -82,7 +83,7 @@ public class RoomHandler(
                 playerDataService.Player.IsAdmin = false;
                 playerDataService.Player.IsOfficer = false;
             }
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }
@@ -104,7 +105,7 @@ public class RoomHandler(
                 roomDataService.Room.JoinCode = room.JoinCode;
                 roomDataService.Room.MaxPlayers = room.MaxPlayers;
             }
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }
@@ -128,7 +129,7 @@ public class RoomHandler(
                 playerDataService.Player.TeamId = 0;
                 playerDataService.Player.RoomId = 0;
             }
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }

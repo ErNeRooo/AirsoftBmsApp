@@ -5,7 +5,9 @@
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="PlayerProfileDialogView"
-             x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.PlayerProfileDialog">
+             x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.PlayerProfileDialog"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
+             >
     <Grid   
          BackgroundColor="#80000000"   
          VerticalOptions="Fill"  
@@ -57,12 +59,12 @@
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
                             TextColor="{toolkit:AppThemeResource Outline}"
-                            Text="Status"
+                            Text="{Static langs:AppResources.PlayerStatusLabel}"
                             />
                         <Label
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="24"
-                            Text="Alive"
+                            Text="{Static langs:AppResources.AliveValue}"
                             >
                             <Label.Triggers>
                                 <DataTrigger
@@ -70,7 +72,7 @@
                                     Binding="{Binding PlayerProfileState.SelectedPlayer.IsDead}"
                                     Value="true"
                                     >
-                                    <Setter Property="Text" Value="Dead" />
+                                    <Setter Property="Text" Value="{Static langs:AppResources.DeadValue}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -93,12 +95,12 @@
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
                             TextColor="{toolkit:AppThemeResource Outline}"
-                            Text="Account Linked"
+                            Text="{Static langs:AppResources.PlayerAccountLabel}"
                             />
                         <Label
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="24"
-                            Text="No"
+                            Text="{Static langs:AppResources.NoValue}"
                             >
                             <Label.Triggers>
                                 <DataTrigger
@@ -106,7 +108,7 @@
                                     Binding="{Binding PlayerProfileState.IsAccountLinked}"
                                     Value="true"
                                     >
-                                    <Setter Property="Text" Value="Yes" />
+                                    <Setter Property="Text" Value="{Static langs:AppResources.YesValue}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -129,7 +131,7 @@
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
                             TextColor="{toolkit:AppThemeResource Outline}"
-                            Text="Team"
+                            Text="{Static langs:AppResources.PlayerTeamLabel}"
                             />
                         <Label
                             FontFamily="{StaticResource GlobalFont}"
@@ -155,7 +157,7 @@
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
                             TextColor="{toolkit:AppThemeResource Outline}"
-                            Text="Kills"
+                            Text="{Static langs:AppResources.PlayerProfileKillsLabel}"
                             />
                         <Label
                             FontFamily="{StaticResource GlobalFont}"
@@ -181,7 +183,7 @@
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
                             TextColor="{toolkit:AppThemeResource Outline}"
-                            Text="Deaths"
+                            Text="{Static langs:AppResources.PlayerProfileDeathsLabel}"
                             />
                         <Label
                             FontFamily="{StaticResource GlobalFont}"
@@ -207,12 +209,12 @@
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
                             TextColor="{toolkit:AppThemeResource Outline}"
-                            Text="Is Admin"
+                            Text="{Static langs:AppResources.PlayerIsAdminLabel}"
                             />
                         <Label
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="24"
-                            Text="No"
+                            Text="{Static langs:AppResources.NoValue}"
                             >
                             <Label.Triggers>
                                 <DataTrigger
@@ -220,7 +222,7 @@
                                     Binding="{Binding PlayerProfileState.SelectedPlayer.IsAdmin}"
                                     Value="true"
                                     >
-                                    <Setter Property="Text" Value="Yes" />
+                                    <Setter Property="Text" Value="{Static langs:AppResources.YesValue}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -243,12 +245,12 @@
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="12"
                             TextColor="{toolkit:AppThemeResource Outline}"
-                            Text="Is Officer"
+                            Text="{Static langs:AppResources.PlayerIsOfficerLabel}"
                             />
                         <Label
                             FontFamily="{StaticResource GlobalFont}"
                             FontSize="24"
-                            Text="No"
+                            Text="{Static langs:AppResources.NoValue}"
                             >
                             <Label.Triggers>
                                 <DataTrigger
@@ -256,7 +258,7 @@
                                     Binding="{Binding PlayerProfileState.SelectedPlayer.IsOfficer}"
                                     Value="true"
                                     >
-                                    <Setter Property="Text" Value="Yes" />
+                                    <Setter Property="Text" Value="{Static langs:AppResources.YesValue}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -287,7 +289,7 @@
                         BorderWidth="2"
                         FontFamily="{StaticResource GlobalFont}" 
                         HorizontalOptions="Fill"
-                        Text="Kick From Room"
+                        Text="{Static langs:AppResources.KickFromRoomButton}"
                         FontSize="20"
                         Padding="0"
                         Command="{Binding KickFromRoomCommand}"
@@ -342,7 +344,7 @@
                         BorderWidth="2"
                         FontFamily="{StaticResource GlobalFont}" 
                         HorizontalOptions="Fill"
-                        Text="Kick From Team"
+                        Text="{Static langs:AppResources.KickFromTeamButton}"
                         FontSize="20"
                         Padding="0"
                         Command="{Binding KickFromTeamCommand}"
@@ -373,7 +375,7 @@
                         FontFamily="{StaticResource GlobalFont}" 
                         HorizontalTextAlignment="Center"
                         VerticalTextAlignment="Center"
-                        Title="{OnPlatform Default='Move To Another Team', WinUI=''}"
+                        Title="{OnPlatform Default={Static langs:AppResources.TeamPicker}, WinUI=''}"
                         TitleColor="{toolkit:AppThemeResource Danger}"
                         FontSize="20"
                         SelectedItem="{Binding PlayerProfileState.SelectedTeam, Mode=TwoWay}"
@@ -386,7 +388,7 @@
                 <buttons:OutlinedButton 
                     Grid.Row="8"
                     Grid.ColumnSpan="2"
-                    Text="Back"
+                    Text="{Static langs:AppResources.BackButton}"
                     Clicked="Cancel"
                     />
             </Grid>

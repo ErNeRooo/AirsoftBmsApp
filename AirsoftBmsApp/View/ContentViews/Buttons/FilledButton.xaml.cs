@@ -1,3 +1,4 @@
+using AirsoftBmsApp.Resources.Languages;
 using System.Windows.Input;
 
 namespace AirsoftBmsApp.View.ContentViews.Buttons;
@@ -6,7 +7,7 @@ public partial class FilledButton : ContentView
 {
     public event EventHandler Clicked;
     public static readonly BindableProperty TextProperty =
-        BindableProperty.Create(nameof(Text), typeof(string), typeof(FilledButton), "Confirm");
+        BindableProperty.Create(nameof(Text), typeof(string), typeof(FilledButton), AppResources.ConfirmButton);
 
     public static readonly BindableProperty CommandProperty =
         BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(FilledButton));

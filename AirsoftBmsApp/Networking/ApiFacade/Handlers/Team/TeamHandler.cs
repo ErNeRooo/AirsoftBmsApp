@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Team;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Services.TeamRestService.Abstractions;
@@ -18,7 +19,7 @@ public class TeamHandler(
             (HttpResult result, TeamDto? team) = await teamRestService.PostAsync(postTeamDto);
 
             if (result is Success) roomDataService.Room.Teams.Add(new ObservableTeam(team));
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }
@@ -47,7 +48,7 @@ public class TeamHandler(
 
                 roomDataService.Room.Teams.Remove(teamToRemove);
             }
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }
@@ -85,7 +86,7 @@ public class TeamHandler(
                 if (!isPlayerInUnderNoFlagTeam)
                     roomDataService.Room.Teams[0].Players.Add(playerDataService.Player);
             }
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }
@@ -111,7 +112,7 @@ public class TeamHandler(
                     teamToUpdate.OfficerId = team.OfficerPlayerId;
                 }
             }
-            else if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }

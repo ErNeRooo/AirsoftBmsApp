@@ -5,6 +5,7 @@ using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
+using AirsoftBmsApp.Resources.Languages;
 
 namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Account;
 
@@ -42,7 +43,7 @@ public class AccountHandler(
             }
             else
             {
-                if (logInResult is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+                if (logInResult is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
                 return logInResult;
             }
@@ -81,7 +82,7 @@ public class AccountHandler(
             }
             else
             {
-                if (signUpResult is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+                if (signUpResult is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
                 return signUpResult;
             }

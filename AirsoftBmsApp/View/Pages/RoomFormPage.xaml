@@ -8,6 +8,7 @@
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              x:Class="AirsoftBmsApp.RoomFormPage"
              Title="Join or Create Room"
              Shell.NavBarIsVisible="False"
@@ -27,24 +28,24 @@
             >
             <text:Header
                 x:Name="Title"
-                Text="Welcome ErNeRooo!"/>
+                />
 
             <BoxView Height="10" />
 
             <buttons:FilledButton 
-                Text="Join Room"
+                Text="{Static langs:AppResources.JoinRoomButton}"
                 Clicked="OnJoinRoomButtonClicked"
                 />
 
             <text:ResizableLabelWithHorizontalLine />
 
             <buttons:OutlinedButton 
-                Text="Create Room"
+                Text="{Static langs:AppResources.CreateRoomButton}"
                 Clicked="OnCreateRoomButtonClicked"
                 />
 
             <buttons:BackButton 
-                Text="Log Out"
+                Text="{Static langs:AppResources.LogOutButton}"
                 Command="{Binding LogOutCommand}"
                 />
 

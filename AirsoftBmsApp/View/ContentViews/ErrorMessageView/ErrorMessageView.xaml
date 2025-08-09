@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
     x:Class="AirsoftBmsApp.View.ContentViews.ErrorMessageView.ErrorMessageView"
     MaximumHeightRequest="150"
     VerticalOptions="Start"
@@ -45,7 +46,7 @@
                 FontSize="20"
                 FontFamily="{StaticResource GlobalFont}" 
                 TextColor="{toolkit:AppThemeResource OnError}"
-                Text="Networking error occured :/"
+                Text="{Static langs:AppResources.ErrorHeader}"
                 HorizontalTextAlignment="Center"/>
 
             <ScrollView
@@ -75,7 +76,7 @@
                     BorderWidth="2"
                     FontFamily="{StaticResource GlobalFont}" 
                     HorizontalOptions="Fill"
-                    Text="Hide"
+                    Text="{Static langs:AppResources.HideButton}"
                     Clicked="ClearErrorMessage"
                     FontSize="14"
                     Padding="0"

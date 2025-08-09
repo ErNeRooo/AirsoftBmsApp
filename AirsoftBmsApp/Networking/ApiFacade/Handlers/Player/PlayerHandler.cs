@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
@@ -18,7 +19,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
 
             playerDataService.Player = new ObservablePlayer();
 
-            if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+            if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;
         }
@@ -36,7 +37,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                 };
                 else
                 {
-                    if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+                    if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
                     return result;
                 }
@@ -86,7 +87,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                 }
                 else
                 {
-                    if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+                    if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
                     return result;
                 }
@@ -121,7 +122,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                 }
                 else
                 {
-                    if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+                    if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
                     return result;
                 }
@@ -155,7 +156,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                 }
                 else
                 {
-                    if (result is Failure failure && failure.errorMessage == "") return new Failure("Unhandled error");
+                    if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
                     return result;
                 }

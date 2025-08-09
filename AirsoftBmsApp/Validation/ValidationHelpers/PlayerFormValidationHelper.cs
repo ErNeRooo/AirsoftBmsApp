@@ -1,10 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Validatable;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Validation.Rules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Validation.ValidationHelpers
 {
@@ -22,12 +18,12 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
         {
             playerForm.Name.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
-                ValidationMessage = "Name is required."
+                ValidationMessage = AppResources.NameIsRequiredValidationMessage
             });
 
             playerForm.Name.Validations.Add(new HasMaxLengthRule<string>
             {
-                ValidationMessage = "Name must be 20 characters or fewer.",
+                ValidationMessage = AppResources.PlayerNameIsUnder21CharactersLongValidationMessage,
                 MaxLength = 20
             });
         }
@@ -36,12 +32,12 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
         {
             playerForm.Email.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
-                ValidationMessage = "Email is required."
+                ValidationMessage = AppResources.EmailIsRequiredValidationMessage
             });
 
             playerForm.Email.Validations.Add(new IsEmailRule<string>
             {
-                ValidationMessage = "Wrong Email Format."
+                ValidationMessage = AppResources.EmailFormatValidationMessage
             });
         }
 
@@ -49,36 +45,36 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
         {
             playerForm.Password.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
-                ValidationMessage = "Password is required."
+                ValidationMessage = AppResources.PasswordIsRequiredValidationMessage
             });
 
             playerForm.Password.Validations.Add(new HasMinLengthRule<string>
             {
-                ValidationMessage = "Password must be at least 10 characters long.",
+                ValidationMessage = AppResources.PasswordIsLongerThanValidationMessage,
                 MinLength = 10
             });
 
             playerForm.Password.Validations.Add(new HasMinDigitCountRule<string>
             {
-                ValidationMessage = "Password must contain at least 1 digit.",
+                ValidationMessage = AppResources.PasswordHasDigitValidationMessage,
                 MinCount = 1
             });
 
             playerForm.Password.Validations.Add(new HasMinLowercaseCountRule<string>
             {
-                ValidationMessage = "Password must contain at least 1 lowercase letter.",
+                ValidationMessage = AppResources.PasswordHasLowercaseLetterValidationMessage,
                 MinCount = 1
             });
 
             playerForm.Password.Validations.Add(new HasMinUppercaseCountRule<string>
             {
-                ValidationMessage = "Password must contain at least 1 uppercase letter.",
+                ValidationMessage = AppResources.PasswordHasUppercaseLetterValidationMessage,
                 MinCount = 1
             });
 
             playerForm.Password.Validations.Add(new HasMinSpecialCharCountRule<string>
             {
-                ValidationMessage = "Password must contain at least 1 special character.",
+                ValidationMessage = AppResources.PasswordHasSpecialCharacterValidationMessage,
                 MinCount = 1
             });
         }
@@ -87,12 +83,12 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
         {
             playerForm.ConfirmPassword.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
-                ValidationMessage = "Confirm password is required."
+                ValidationMessage = AppResources.ConfirmPasswordIsRequiredValidationMessage
             });
 
             playerForm.ConfirmPassword.Validations.Add(new MatchPasswordRule(() => playerForm.Password.Value)
             {
-                ValidationMessage = "Passwords do not match."
+                ValidationMessage = AppResources.PasswordsDontMatchValidationMessage
             });
         }
     }

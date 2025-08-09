@@ -10,6 +10,7 @@
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:local="clr-namespace:AirsoftBmsApp.View.Pages"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              x:DataType="viewModel:RoomViewModel"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
@@ -31,7 +32,7 @@
                 <HorizontalStackLayout>
                     <Label 
                         x:Name="JoinCodeTitle"
-                        Text="{Binding Room.JoinCode, StringFormat='Room {0}'}"
+                        Text="{Binding Room.JoinCode, StringFormat={Static langs:AppResources.RoomJoinCodeHeader}}"
                         VerticalOptions="Center" 
                         HorizontalOptions="Center"
                         FontSize="30"
@@ -95,7 +96,7 @@
                 </HorizontalStackLayout>
 
                 <buttons:BackButton
-                    Text="Leave"
+                    Text="{Static langs:AppResources.LeaveButton}"
                     Command="{Binding LeaveRoomConfirmationCommand}"
                     />
             </FlexLayout>

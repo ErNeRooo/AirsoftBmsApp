@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.ConfirmationDialog"
+    xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
     x:Name="ConfirmationDialogView">
 
     <ContentView.Triggers>
@@ -62,7 +63,7 @@
                 <Button
                     Grid.Row="2"
                     Grid.Column="0"
-                    Text="Yes"
+                    Text="{Static langs:AppResources.YesButton}"
                     FontSize="16"
                     FontFamily="{StaticResource GlobalFont}"
                     BackgroundColor="Transparent"
@@ -83,7 +84,7 @@
                 <Button
                     Grid.Row="2"
                     Grid.Column="2"
-                    Text="No"
+                    Text="{Static langs:AppResources.NoButton}"
                     Padding="0"
                     FontSize="16"
                     MaximumHeightRequest="30"

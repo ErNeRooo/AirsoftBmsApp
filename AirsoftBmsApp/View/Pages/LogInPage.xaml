@@ -9,6 +9,7 @@
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              x:Class="AirsoftBmsApp.View.Pages.LogInPage"
              Title="Log In"
              Shell.NavBarIsVisible="False"
@@ -27,23 +28,23 @@
             Spacing="10"
             >
             <text:Header 
-                Text="Log In"
+                Text="{Static langs:AppResources.LogInHeader}"
                 />
 
             <inputs:ValidatableStyledEntry
-                Placeholder="Enter your username"
+                Placeholder="{Static langs:AppResources.UsernameInputPlaceholder}"
                 ValidatableObject="{Binding PlayerForm.Name}"
                 ValidateCommand="{Binding ValidateNameCommand}"
             />
 
             <inputs:ValidatableStyledEntry
-                Placeholder="Enter account email"
+                Placeholder="{Static langs:AppResources.AccountEmailInputPlaceholder}"
                 ValidatableObject="{Binding PlayerForm.Email}"
                 ValidateCommand="{Binding ValidateEmailCommand}"
             />
 
             <inputs:ValidatableStyledEntry
-                Placeholder="Enter account password"
+                Placeholder="{Static langs:AppResources.AccountPasswordInputPlaceholder}"
                 ValidatableObject="{Binding PlayerForm.Password}"
                 ValidateCommand="{Binding ValidatePasswordCommand}"
                 IsPassword="True"

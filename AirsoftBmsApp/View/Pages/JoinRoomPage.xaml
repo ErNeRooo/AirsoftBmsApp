@@ -8,6 +8,7 @@
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              x:DataType="viewModel:JoinRoomFormViewModel"
              x:Class="AirsoftBmsApp.View.Pages.JoinRoomPage"
              Title="Join Room"
@@ -26,24 +27,24 @@
             MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
             >
             <text:Header 
-                Text="Join Room"
+                Text="{Static langs:AppResources.JoinRoomHeader}"
                 />
 
             <inputs:ValidatableStyledEntry
-                Placeholder="Enter room join code"
+                Placeholder="{Static langs:AppResources.JoinCodeInputPlaceholder}"
                 ValidatableObject="{Binding RoomForm.JoinCode}"
                 ValidateCommand="{Binding ValidateJoinCodeCommand}" 
             />
         
             <inputs:ValidatableStyledEntry
-                Placeholder="Enter room password" 
+                Placeholder="{Static langs:AppResources.RoomPasswordInputPlaceholder}" 
                 ValidatableObject="{Binding RoomForm.Password}"
                 ValidateCommand="{Binding ValidatePasswordCommand}" 
                 IsPassword="True"
             />
 
             <buttons:FilledButton
-                Text="Join"
+                Text="{Static langs:AppResources.JoinRoomButton}"
                 Command="{Binding JoinRoomAsyncCommand}"
                 />
 

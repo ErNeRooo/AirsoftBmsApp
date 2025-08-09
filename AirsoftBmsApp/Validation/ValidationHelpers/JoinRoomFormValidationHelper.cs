@@ -1,4 +1,5 @@
 ﻿using AirsoftBmsApp.Model.Validatable;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Validation.Rules;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
         {
             roomForm.JoinCode.Validations.Add(new HasLengthRule<string>
             {
-                ValidationMessage = "Join code must be exactly 6 characters",
+                ValidationMessage = AppResources.JoinCodeHas6CharactersValidationMessage,
                 Length = 6
             });
         }

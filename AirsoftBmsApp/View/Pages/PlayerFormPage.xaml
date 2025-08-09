@@ -9,6 +9,7 @@
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              x:Class="AirsoftBmsApp.PlayerFormPage"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:PlayerFormViewModel"
@@ -22,11 +23,11 @@
             Spacing="10"
             >
             <text:Header
-                Text="Without Account"
+                Text="{Static langs:AppResources.WithoutAccountHeader}"
             />
 
             <inputs:ValidatableStyledEntry
-                Placeholder="Enter your username"
+                Placeholder="{Static langs:AppResources.UsernameInputPlaceholder}"
                 ValidatableObject="{Binding PlayerForm.Name}"
                 ValidateCommand="{Binding ValidateNameCommand}"
                 />
@@ -41,17 +42,17 @@
 
 
             <text:Header
-                Text="With Account"
+                Text="{Static langs:AppResources.WithAccountHeader}"
             />
 
             <buttons:OutlinedButton
                 Clicked="OnLogInButtonClicked"
-                Text="Log In"
+                Text="{Static langs:AppResources.LogInButton}"
                 />
 
             <buttons:OutlinedButton
                 Clicked="OnSignUpButtonClicked"
-                Text="Sign Up"
+                Text="{Static langs:AppResources.SignUpButton}"
                 />
 
         </VerticalStackLayout>

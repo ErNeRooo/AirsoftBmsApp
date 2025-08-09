@@ -1,4 +1,5 @@
 ﻿using AirsoftBmsApp.Model.Validatable;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Validation.Rules;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,9 @@ namespace AirsoftBmsApp.Validation.ValidationHelpers
 
         public void AddNameValidations(ValidatableTeamForm teamForm)
         {
-            teamForm.Name.Validations.Add(new IsNotNullOrEmptyRule<string>
-            {
-                ValidationMessage = "Team name is required."
-            });
-
             teamForm.Name.Validations.Add(new HasMaxLengthRule<string>
             {
-                ValidationMessage = "Team name must be 20 characters or fewer.",
+                ValidationMessage = AppResources.TeamNameIsUnder20CharactersLongValidationMessage,
                 MaxLength = 20
             });
         }
