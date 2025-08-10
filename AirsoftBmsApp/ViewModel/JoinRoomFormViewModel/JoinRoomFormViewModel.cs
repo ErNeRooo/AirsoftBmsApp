@@ -72,7 +72,7 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
             switch (result)
             {
                 case Success:
-                    await Shell.Current.GoToAsync(nameof(RoomMembersPage));
+                    await Shell.Current.GoToAsync(nameof(RoomPage));
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;

@@ -17,6 +17,7 @@ using AirsoftBmsApp.Services.RoomRestService.Implementations;
 using AirsoftBmsApp.Services.TeamRestService.Abstractions;
 using AirsoftBmsApp.Services.TeamRestService.Implementations;
 using AirsoftBmsApp.Validation;
+using AirsoftBmsApp.View.Pages;
 using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.JoinRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.PlayerFormViewModel;
@@ -46,6 +47,10 @@ namespace AirsoftBmsApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("CascadiaCode-VariableFont_wght", "CascadiaCode");
                 });
+
+            builder.Services.AddTransient<RoomMembersPage>();
+            builder.Services.AddTransient<BattlePage>();
+            builder.Services.AddTransient<MapPage>();
 
             builder.Services.AddTransient<IRoomViewModel, RoomViewModel>();
             builder.Services.AddTransient<IRoomFormViewModel, RoomFormViewModel>();

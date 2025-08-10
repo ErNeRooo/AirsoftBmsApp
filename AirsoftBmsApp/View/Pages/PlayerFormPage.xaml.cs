@@ -1,7 +1,7 @@
 ﻿using AirsoftBmsApp.View.Pages;
 using AirsoftBmsApp.ViewModel.PlayerFormViewModel;
 
-namespace AirsoftBmsApp
+namespace AirsoftBmsApp.View.Pages
 {
     public partial class PlayerFormPage : ContentPage
     {

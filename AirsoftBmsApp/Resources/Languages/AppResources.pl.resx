@@ -396,4 +396,13 @@
   <data name="CreateRoomButton" xml:space="preserve">
     <value>Utwórz pokój</value>
   </data>
+  <data name="RoomNavItemText" xml:space="preserve">
+    <value>Pokój</value>
+  </data>
+  <data name="BattleNavItemText" xml:space="preserve">
+    <value>Bitwa</value>
+  </data>
+  <data name="MapNavItemText" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
 </root>

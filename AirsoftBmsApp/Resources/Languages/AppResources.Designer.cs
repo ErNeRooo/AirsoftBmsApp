@@ -115,6 +115,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Battle.
+        /// </summary>
+        internal static string BattleNavItemText {
+            get {
+                return ResourceManager.GetString("BattleNavItemText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string CancelButton {
@@ -381,6 +390,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string LogOutButton {
             get {
                 return ResourceManager.GetString("LogOutButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map.
+        /// </summary>
+        internal static string MapNavItemText {
+            get {
+                return ResourceManager.GetString("MapNavItemText", resourceCulture);
             }
         }
         
@@ -687,6 +705,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string RoomJoinCodeHeader {
             get {
                 return ResourceManager.GetString("RoomJoinCodeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room.
+        /// </summary>
+        internal static string RoomNavItemText {
+            get {
+                return ResourceManager.GetString("RoomNavItemText", resourceCulture);
             }
         }
         

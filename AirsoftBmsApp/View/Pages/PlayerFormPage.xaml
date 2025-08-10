@@ -10,7 +10,7 @@
              xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
-             x:Class="AirsoftBmsApp.PlayerFormPage"
+             x:Class="AirsoftBmsApp.View.Pages.PlayerFormPage"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:PlayerFormViewModel"
              Shell.NavBarIsVisible="False"

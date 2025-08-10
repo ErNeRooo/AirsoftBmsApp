@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirsoftBmsApp.View.Pages.RoomPage"
+             xmlns:local="clr-namespace:AirsoftBmsApp.View.Pages"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
+             Shell.NavBarIsVisible="False"
+             x:Name="TheRoomPage"
+             >
+    <Grid 
+        RowDefinitions="*,Auto"
+        ColumnDefinitions="*,*,*"
+        BindingContext="{Binding Source={x:Reference TheRoomPage}}"
+        >
+
+        <!-- Swipeable area -->
+        <CarouselView 
+            x:Name="MainCarousel" 
+            Grid.ColumnSpan="3"
+            IsSwipeEnabled="True" 
+            Loop="False" 
+            Position="{Binding CarouselPositionSelected, Mode=TwoWay}"
+            >
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView Content="{Binding}"/>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <buttons:BottomNavItem 
+            Grid.Row="1"
+            Grid.Column="0"
+            Text="{Static langs:AppResources.RoomNavItemText}"
+            IconPath="{OnPlatform Default='room_icon.svg', WinUI='room_icon.png'}"
+            Command="{Binding NavItemClickedCommand}" 
+            CommandParameter="0"
+            CurrentPosition="{Binding CarouselPositionSelected}"
+            />
+
+        <buttons:BottomNavItem              
+            Grid.Row="1" 
+            Grid.Column="1"
+            Text="{Static langs:AppResources.BattleNavItemText}" 
+            IconPath="{OnPlatform Default='swords_icon.svg', WinUI='swords_icon.png'}"
+            Command="{Binding NavItemClickedCommand}" 
+            CommandParameter="1"
+            CurrentPosition="{Binding CarouselPositionSelected}"
+            />
+
+        <buttons:BottomNavItem              
+            Grid.Row="1" 
+            Grid.Column="2"
+            Text="{Static langs:AppResources.MapNavItemText}" 
+            IconPath="{OnPlatform Default='map_icon.svg', WinUI='map_icon.png'}"
+            Command="{Binding NavItemClickedCommand}" 
+            CommandParameter="2"
+            CurrentPosition="{Binding CarouselPositionSelected}"
+            />
+
+    </Grid>
+</ContentPage>

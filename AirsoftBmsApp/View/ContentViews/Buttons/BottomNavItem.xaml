@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Border 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AirsoftBmsApp.View.ContentViews.Buttons.BottomNavItem" 
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Name="BottomNavigationItemBorder"
+    BackgroundColor="{toolkit:AppThemeResource Surface}"
+    StrokeThickness="0"
+    Padding="0,10,0,0"
+>
+    <Border.GestureRecognizers>
+        <TapGestureRecognizer 
+            BindingContext="{Binding Source={x:Reference BottomNavigationItemBorder}}"
+            Command="{Binding Command}"
+            CommandParameter="{Binding CommandParameter}"
+            />
+    </Border.GestureRecognizers>
+    <Grid
+        RowDefinitions="auto,auto,2"
+        BindingContext="{Binding Source={x:Reference BottomNavigationItemBorder}}"
+        
+        >
+        <Image 
+            x:Name="NavItemIcon"
+            Grid.Row="0"
+            Source="{Binding IconPath}"
+            WidthRequest="24"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            >
+        </Image>
+        
+        <Label 
+            Text="{Binding Text}" 
+            Grid.Row="1"
+            FontFamily="{StaticResource GlobalFont}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Margin="0,0,0,5"
+            >
+            <Label.Triggers>
+                <DataTrigger
+                    TargetType="Label"
+                    Binding="{Binding IsSelected}"
+                    Value="true"
+                    >
+                    <Setter Property="TextColor" Value="{toolkit:AppThemeResource Primary}" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+        
+        <BoxView 
+            Grid.Row="2"
+            VerticalOptions="End"
+            HeightRequest="1"
+            BackgroundColor="{toolkit:AppThemeResource Outline}"
+        >
+            <BoxView.Triggers>
+                <DataTrigger
+                    TargetType="BoxView"
+                    Binding="{Binding IsSelected}"
+                    Value="true"
+                    >
+                    <Setter Property="HeightRequest" Value="2" />
+                    <Setter Property="BackgroundColor" Value="{toolkit:AppThemeResource Primary}" />
+                </DataTrigger>
+
+            </BoxView.Triggers>
+        </BoxView>
+    </Grid>
+</Border>
