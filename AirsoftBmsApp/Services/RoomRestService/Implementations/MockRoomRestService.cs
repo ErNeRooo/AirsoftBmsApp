@@ -115,12 +115,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                     RoomId = 1,
                     MaxPlayers = 10,
                     AdminPlayer = null,
-                    Battle = new BattleDto
-                    {
-                        BattleId = 1,
-                        IsActive = false,
-                        Name = "Mocked Battle",
-                    },
+                    Battle = null,
                     Players = new List<PlayerDto>
                     {
                         new PlayerDto { PlayerId = 3, Name = "Eris", TeamId = 1, RoomId = 1, IsDead = false },

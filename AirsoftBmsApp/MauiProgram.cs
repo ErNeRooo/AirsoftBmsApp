@@ -18,6 +18,7 @@ using AirsoftBmsApp.Services.TeamRestService.Abstractions;
 using AirsoftBmsApp.Services.TeamRestService.Implementations;
 using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.View.Pages;
+using AirsoftBmsApp.ViewModel.BattleViewModel;
 using AirsoftBmsApp.ViewModel.CreateRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.JoinRoomFormViewModel;
 using AirsoftBmsApp.ViewModel.PlayerFormViewModel;
@@ -53,6 +54,7 @@ namespace AirsoftBmsApp
             builder.Services.AddTransient<MapPage>();
 
             builder.Services.AddTransient<IRoomViewModel, RoomViewModel>();
+            builder.Services.AddTransient<IBattleViewModel, BattleViewModel>();
             builder.Services.AddTransient<IRoomFormViewModel, RoomFormViewModel>();
             builder.Services.AddTransient<IPlayerFormViewModel, PlayerFormViewModel>();
             builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();

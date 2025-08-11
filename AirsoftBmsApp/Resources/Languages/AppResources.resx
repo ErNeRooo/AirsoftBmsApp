@@ -301,7 +301,7 @@
     <value>Kick From Room</value>
   </data>
   <data name="KickFromTeamButton" xml:space="preserve">
-    <value>KickFromTeam</value>
+    <value>Kick From Team</value>
   </data>
   <data name="TeamPicker" xml:space="preserve">
     <value>Move To Another Team</value>
@@ -404,5 +404,35 @@
   </data>
   <data name="MapNavItemText" xml:space="preserve">
     <value>Map</value>
+  </data>
+  <data name="VS" xml:space="preserve">
+    <value>VS</value>
+  </data>
+  <data name="ForcesLabel" xml:space="preserve">
+    <value>Forces:</value>
+  </data>
+  <data name="CasualtiesLabel" xml:space="preserve">
+    <value>Casualties:</value>
+  </data>
+  <data name="ForcesInFieldText" xml:space="preserve">
+    <value>- {0} in field</value>
+  </data>
+  <data name="CasualtiesKilledText" xml:space="preserve">
+    <value>- {0} killed</value>
+  </data>
+  <data name="BattleNameInputPlaceholder" xml:space="preserve">
+    <value>Enter battle name</value>
+  </data>
+  <data name="CreateBattleButton" xml:space="preserve">
+    <value>Create Battle</value>
+  </data>
+  <data name="NoBattleHeader" xml:space="preserve">
+    <value>No Battle Is Going On</value>
+  </data>
+  <data name="BattleNameIsTooShortValidationMessage" xml:space="preserve">
+    <value>Battle name must be under {0} characters long.</value>
+  </data>
+  <data name="BattleNameIsRequiredValidationMessage" xml:space="preserve">
+    <value>Battle name is required.</value>
   </data>
 </root>

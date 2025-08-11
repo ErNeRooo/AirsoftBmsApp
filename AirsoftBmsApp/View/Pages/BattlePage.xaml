@@ -3,12 +3,82 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirsoftBmsApp.View.Pages.BattlePage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.BattleViewModel"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
+             xmlns:teamSummary="clr-namespace:AirsoftBmsApp.View.ContentViews.TeamSummary"
+             xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"
+             xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
+             x:DataType="viewModel:BattleViewModel"
              >
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to BattlePage!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <Grid
+            RowDefinitions="auto,auto,auto"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            IsVisible="{Binding Room.Battle, Converter={StaticResource IsNullConverter}}"
+            Padding="40"
+            RowSpacing="10"
+            >
+            <Label
+                Grid.Row="0"
+                Text="{Static langs:AppResources.NoBattleHeader}"
+                FontFamily="{StaticResource GlobalFont}"
+                FontSize="24"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="0,10"
+                />
+
+            <inputs:ValidatableStyledEntry 
+                Grid.Row="1"
+                Placeholder="{Static langs:AppResources.BattleNameInputPlaceholder}"
+                ValidateCommand="{Binding ValidateBattleNameCommand}"
+                ValidatableObject="{Binding Name}"
+                />
+
+            <buttons:FilledButton
+                Grid.Row="2"
+                Text="{Static langs:AppResources.CreateBattleButton}"
+                Command="{Binding CreateBattleCommand}"
+                IsEnabled="{Binding Name.IsValid}"
+                />
+        </Grid>
+
+        <Grid
+            IsVisible="{Binding Room.Battle, Converter={StaticResource IsNotNullConverter}}"
+            RowDefinitions="auto,*"
+            >
+
+            <Label 
+                Grid.Row="0"
+                Text="{Binding Room.Battle.Name}"
+                FontFamily="{StaticResource GlobalFont}"
+                FontSize="36"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="20"
+                />
+
+            <ScrollView
+                Grid.Row="1"
+                Padding="20"
+                >
+
+                <CollectionView
+                    ItemsSource="{Binding TeamSummaries}"
+                    >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <teamSummary:TeamSummary />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+            </ScrollView>
+        </Grid>
+    </Grid>
 </ContentView>

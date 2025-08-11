@@ -6,4 +6,6 @@
     <local:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
     <local:InverseBoolConverter x:Key="InverseBoolConverter" />
     <local:IsZeroConverter x:Key="IsZeroConverter" />
+    <local:IsNullConverter x:Key="IsNullConverter" />
+    <local:IsNotNullConverter x:Key="IsNotNullConverter" />
 </ResourceDictionary>

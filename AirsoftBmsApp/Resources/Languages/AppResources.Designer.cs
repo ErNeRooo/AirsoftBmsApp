@@ -115,6 +115,33 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter battle name.
+        /// </summary>
+        internal static string BattleNameInputPlaceholder {
+            get {
+                return ResourceManager.GetString("BattleNameInputPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Battle name is required..
+        /// </summary>
+        internal static string BattleNameIsRequiredValidationMessage {
+            get {
+                return ResourceManager.GetString("BattleNameIsRequiredValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Battle name must be under {0} characters long..
+        /// </summary>
+        internal static string BattleNameIsTooShortValidationMessage {
+            get {
+                return ResourceManager.GetString("BattleNameIsTooShortValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Battle.
         /// </summary>
         internal static string BattleNavItemText {
@@ -133,6 +160,24 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to - {0} killed.
+        /// </summary>
+        internal static string CasualtiesKilledText {
+            get {
+                return ResourceManager.GetString("CasualtiesKilledText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Casualties:.
+        /// </summary>
+        internal static string CasualtiesLabel {
+            get {
+                return ResourceManager.GetString("CasualtiesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         internal static string ConfirmButton {
@@ -147,6 +192,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string ConfirmPasswordIsRequiredValidationMessage {
             get {
                 return ResourceManager.GetString("ConfirmPasswordIsRequiredValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Battle.
+        /// </summary>
+        internal static string CreateBattleButton {
+            get {
+                return ResourceManager.GetString("CreateBattleButton", resourceCulture);
             }
         }
         
@@ -277,6 +331,24 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to - {0} in field.
+        /// </summary>
+        internal static string ForcesInFieldText {
+            get {
+                return ResourceManager.GetString("ForcesInFieldText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forces:.
+        /// </summary>
+        internal static string ForcesLabel {
+            get {
+                return ResourceManager.GetString("ForcesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide.
         /// </summary>
         internal static string HideButton {
@@ -331,7 +403,7 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KickFromTeam.
+        ///   Looks up a localized string similar to Kick From Team.
         /// </summary>
         internal static string KickFromTeamButton {
             get {
@@ -435,6 +507,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string NameIsRequiredValidationMessage {
             get {
                 return ResourceManager.GetString("NameIsRequiredValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Battle Is Going On.
+        /// </summary>
+        internal static string NoBattleHeader {
+            get {
+                return ResourceManager.GetString("NoBattleHeader", resourceCulture);
             }
         }
         
@@ -867,6 +948,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string UsernameInputPlaceholder {
             get {
                 return ResourceManager.GetString("UsernameInputPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VS.
+        /// </summary>
+        internal static string VS {
+            get {
+                return ResourceManager.GetString("VS", resourceCulture);
             }
         }
         

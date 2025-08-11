@@ -164,6 +164,9 @@
 	  <MauiXaml Update="View\ContentViews\LoadingScreen\LoadingScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\TeamSummary\TeamSummary.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Team\CreateTeamDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

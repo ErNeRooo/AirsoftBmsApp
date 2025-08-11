@@ -405,4 +405,34 @@
   <data name="MapNavItemText" xml:space="preserve">
     <value>Mapa</value>
   </data>
+  <data name="VS" xml:space="preserve">
+    <value>VS</value>
+  </data>
+  <data name="ForcesLabel" xml:space="preserve">
+    <value>Siły:</value>
+  </data>
+  <data name="CasualtiesLabel" xml:space="preserve">
+    <value>Straty:</value>
+  </data>
+  <data name="ForcesInFieldText" xml:space="preserve">
+    <value>- {0} w polu</value>
+  </data>
+  <data name="CasualtiesKilledText" xml:space="preserve">
+    <value>- {0} zabitych</value>
+  </data>
+  <data name="BattleNameInputPlaceholder" xml:space="preserve">
+    <value>Wpisz nazwę bitwy</value>
+  </data>
+  <data name="CreateBattleButton" xml:space="preserve">
+    <value>Dodaj Bitwę</value>
+  </data>
+  <data name="NoBattleHeader" xml:space="preserve">
+    <value>Obecnie nie trwa żadna bitwa</value>
+  </data>
+  <data name="BattleNameIsTooShortValidationMessage" xml:space="preserve">
+    <value>Nazwa bitwy nie może być dłuższa niż {0} znaków.</value>
+  </data>
+  <data name="BattleNameIsRequiredValidationMessage" xml:space="preserve">
+    <value>Nazwa bitwy jest wymagana.</value>
+  </data>
 </root>
