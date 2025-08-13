@@ -5,118 +5,15 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.BattleViewModel"
              xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
-             xmlns:teamSummary="clr-namespace:AirsoftBmsApp.View.ContentViews.TeamSummary"
-             xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"
-             xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
-             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
-             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
-             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
+             xmlns:battle="clr-namespace:AirsoftBmsApp.View.ContentViews.Battle"
              xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:BattleViewModel"
              >
     <Grid>
-        <Grid
-            VerticalOptions="Fill"
-            HorizontalOptions="Fill"
-            IsVisible="{Binding Room.Battle, Converter={StaticResource IsNullConverter}}"
-            RowSpacing="10"
-            >
-            <error:ErrorMessageView
-                Grid.Row="0"
-                ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
-            />
+        <battle:BattleForm BindingContext="{Binding}" />
 
-            <VerticalStackLayout
-                Padding="40"
-                VerticalOptions="Center"
-                >
-                <Label
-                    Text="{Static langs:AppResources.NoBattleHeader}"
-                    FontFamily="{StaticResource GlobalFont}"
-                    FontSize="24"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    Margin="0,10"
-                />
-
-                <inputs:ValidatableStyledEntry 
-                    IsVisible="{Binding Player.IsAdmin}"
-                    Placeholder="{Static langs:AppResources.BattleNameInputPlaceholder}"
-                    ValidateCommand="{Binding ValidateBattleNameCommand}"
-                    ValidatableObject="{Binding BattleName}"
-                    Margin="0,10"
-                />
-
-                <buttons:FilledButton
-                    IsVisible="{Binding Player.IsAdmin}"
-                    Text="{Static langs:AppResources.CreateBattleButton}"
-                    Command="{Binding CreateBattleCommand}"
-                    IsEnabled="{Binding BattleName.IsValid}"
-                />
-            </VerticalStackLayout>
-        </Grid>
-
-        <Grid
-            IsVisible="{Binding Room.Battle, Converter={StaticResource IsNotNullConverter}}"
-            RowDefinitions="auto,auto,auto,*"
-            >
-
-            <Label 
-                Grid.Row="0"
-                Text="{Binding Room.Battle.Name}"
-                FontFamily="{StaticResource GlobalFont}"
-                FontSize="36"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Margin="10,20,10,0"
-                />
-
-            <Label 
-                Grid.Row="1"
-                Text="{Static langs:AppResources.BattlePausedStatusText}"
-                TextColor="{toolkit:AppThemeResource Primary}"
-                FontFamily="{StaticResource GlobalFont}"
-                FontSize="30"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Margin="20"
-                >
-                <Label.Triggers>
-                    <DataTrigger
-                        TargetType="Label"
-                        Binding="{Binding Room.Battle.IsActive}"
-                        Value="true"
-                        >
-                        <Setter Property="Text" Value="{Static langs:AppResources.BattleFightStatusText}" />
-                        <Setter Property="TextColor" Value="{toolkit:AppThemeResource Danger}" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
-
-            <error:ErrorMessageView
-                Grid.Row="2"
-                ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
-            />
-
-            <ScrollView
-                Grid.Row="3"
-                Padding="20"
-                >
-
-                <CollectionView
-                    ItemsSource="{Binding TeamSummaries}"
-                    >
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <teamSummary:TeamSummary />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
-
-            </ScrollView>
-        </Grid>
+        <battle:BattlePreview BindingContext="{Binding}"/>
 
         <loading:LoadingScreen 
             IsLoading="{Binding IsLoading}"

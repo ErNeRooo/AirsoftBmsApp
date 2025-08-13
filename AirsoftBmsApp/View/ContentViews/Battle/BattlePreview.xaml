@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirsoftBmsApp.View.ContentViews.Battle.BattlePreview"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.BattleViewModel"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
+             xmlns:teamSummary="clr-namespace:AirsoftBmsApp.View.ContentViews.TeamSummary"
+             xmlns:team="clr-namespace:AirsoftBmsApp.View.ContentViews.Team"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
+             x:DataType="viewModel:BattleViewModel"
+             >
+    <Grid
+        IsVisible="{Binding Room.Battle, Converter={StaticResource IsNotNullConverter}}"
+        RowDefinitions="auto,auto,auto,*"
+        >
+
+        <Label 
+            Grid.Row="0"
+            Text="{Binding Room.Battle.Name}"
+            FontFamily="{StaticResource GlobalFont}"
+            FontSize="36"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Margin="10,20,10,0"
+            />
+
+        <Label 
+            Grid.Row="1"
+            Text="{Static langs:AppResources.BattlePausedStatusText}"
+            TextColor="{toolkit:AppThemeResource Primary}"
+            FontFamily="{StaticResource GlobalFont}"
+            FontSize="30"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Margin="20"
+            >
+            <Label.Triggers>
+                <DataTrigger
+                    TargetType="Label"
+                    Binding="{Binding Room.Battle.IsActive}"
+                    Value="true"
+                    >
+                    <Setter Property="Text" Value="{Static langs:AppResources.BattleFightStatusText}" />
+                    <Setter Property="TextColor" Value="{toolkit:AppThemeResource Danger}" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+
+        <error:ErrorMessageView
+            Grid.Row="2"
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+        />
+
+        <ScrollView
+            Grid.Row="3"
+            Padding="20"
+            >
+
+            <CollectionView
+                ItemsSource="{Binding TeamSummaries}"
+                >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <teamSummary:TeamSummary />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </ScrollView>
+    </Grid>
+</ContentView>

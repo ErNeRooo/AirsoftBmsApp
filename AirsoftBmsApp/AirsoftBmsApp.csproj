@@ -119,6 +119,12 @@
 	  <MauiXaml Update="Resources\Styles\Fonts.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Battle\BattlePreview.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Battle\BattleForm.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Buttons\BottomNavItem.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

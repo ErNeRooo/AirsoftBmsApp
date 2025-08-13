@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirsoftBmsApp.View.ContentViews.Battle.BattleForm"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.BattleViewModel"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
+             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
+             x:DataType="viewModel:BattleViewModel"
+             >
+    <Grid
+        VerticalOptions="Fill"
+        HorizontalOptions="Fill"
+        IsVisible="{Binding Room.Battle, Converter={StaticResource IsNullConverter}}"
+        RowSpacing="10"
+    >
+        <error:ErrorMessageView
+            Grid.Row="0"
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+        />
+
+        <VerticalStackLayout
+            Padding="40"
+            VerticalOptions="Center"
+        >
+            <Label
+                Text="{Static langs:AppResources.NoBattleHeader}"
+                FontFamily="{StaticResource GlobalFont}"
+                FontSize="24"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="0,10"
+            />
+
+            <inputs:ValidatableStyledEntry 
+                IsVisible="{Binding Player.IsAdmin}"
+                Placeholder="{Static langs:AppResources.BattleNameInputPlaceholder}"
+                ValidateCommand="{Binding ValidateBattleNameCommand}"
+                ValidatableObject="{Binding BattleName}"
+                Margin="0,10"
+            />
+
+            <buttons:FilledButton
+                IsVisible="{Binding Player.IsAdmin}"
+                Text="{Static langs:AppResources.CreateBattleButton}"
+                Command="{Binding CreateBattleCommand}"
+                IsEnabled="{Binding BattleName.IsValid}"
+            />
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>
