@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.RoomSettingsDialog"
-             x:Name="RoomSettingsDialogView"
+             x:Name="BattleSettingsView"
+             x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.BattleSettingsDialog"
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -30,24 +30,18 @@
             WidthRequest="350"
       >
             <Grid 
-                 RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
-                 RowSpacing="5"
-                 Padding="10,15"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+                RowSpacing="5"
+                Padding="10,15"
+                
              >
-                <text:Header Text="{Static langs:AppResources.RoomSettingsHeader}" Grid.Row="0" Margin="0,0,0,10"/>
+                <text:Header Text="{Static langs:AppResources.BattleSettingsHeader}" Grid.Row="0" Margin="0,0,0,10"/>
 
                 <inputs:ValidatableStyledEntry
                     Grid.Row="1"
-                    Placeholder="{Static langs:AppResources.JoinCodeInputPlaceholder}"
-                    ValidatableObject="{Binding RoomSettings.RoomForm.JoinCode, Source={x:Reference RoomSettingsDialogView}}"
-                    ValidateCommand="{Binding RoomSettings.ValidateJoinCodeCommand, Source={x:Reference RoomSettingsDialogView}}"
-                    />
-
-                <inputs:ValidatableStyledEntry
-                    Grid.Row="2"
-                    Placeholder="{Static langs:AppResources.RoomPasswordInputPlaceholder}"
-                    ValidatableObject="{Binding RoomSettings.RoomForm.Password, Source={x:Reference RoomSettingsDialogView}}"
-                    ValidateCommand="{Binding RoomSettings.ValidatePasswordCommand, Source={x:Reference RoomSettingsDialogView}}"
+                    Placeholder="{Static langs:AppResources.BattleNameInputPlaceholder}"
+                    ValidatableObject="{Binding BattleSettings.BattleForm.Name, Source={x:Reference BattleSettingsView}}"
+                    ValidateCommand="{Binding BattleSettings.ValidateBattleNameCommand, Source={x:Reference BattleSettingsView}}"
                     />
 
                 <Grid 
@@ -60,54 +54,30 @@
                          Grid.Column="0"
                          VerticalOptions="Center"
                          Margin="20, 0"
-                         Text="{Static langs:AppResources.MaxPlayersLabel}"
+                         Text="{Static langs:AppResources.IsBattlePausedLabel}"
                          HorizontalOptions="Center"
                          FontFamily="{StaticResource GlobalFont}"
                          TextColor="{toolkit:AppThemeResource Outline}"
                      />
 
-                    <inputs:ValidatableNumberEntry
+                    <Switch 
                         Grid.Column="1"
-                        Placeholder="{Static langs:AppResources.MaxPlayersInputPlaceholder}"
-                        ValidatableObject="{Binding RoomSettings.RoomForm.MaxPlayers, Mode=TwoWay, Source={x:Reference RoomSettingsDialogView}}"
-                        ValidateCommand="{Binding RoomSettings.ValidateMaxPlayersCommand, Source={x:Reference RoomSettingsDialogView}}"
-                        />
-                </Grid>
-
-                
-
-                <Grid 
-                     ColumnDefinitions="80,*" 
-                     HorizontalOptions="Fill"
-                     VerticalOptions="Center"
-                     Grid.Row="4"
-                >
-                    <Label 
-                         Grid.Column="0"
-                         VerticalOptions="Center"
-                         Text="{Static langs:AppResources.AdminLabel}"
-                         HorizontalOptions="Center"
-                         FontFamily="{StaticResource GlobalFont}"
-                         TextColor="{toolkit:AppThemeResource Outline}"
-                     />
-                    <Border
-                         Grid.Column="1"
-                         Stroke="{toolkit:AppThemeResource Outline}"
-                         StrokeShape="RoundRectangle 15"
-                    >
-                        <Picker
-                             x:Name="AdminPicker"
-                             HorizontalTextAlignment="Center"
-                             VerticalTextAlignment="Center"
-                             FontFamily="{StaticResource GlobalFont}"
-                             BindingContext="{Binding Source={x:Reference RoomSettingsDialogView}}"
-                             ItemsSource="{Binding RoomSettings.Players}"
-                             ItemDisplayBinding="{Binding Name}"
-                             SelectedItem="{Binding RoomSettings.SelectedPlayerToBecomeAdmin, Mode=TwoWay}"
-                             Title="{OnPlatform Default={Static langs:AppResources.PlayerPicker}, WinUI=''}"
-                     />
-                    </Border>
-
+                        IsToggled="{Binding BattleSettings.IsActive, Source={x:Reference BattleSettingsView}, Converter={StaticResource InverseBoolConverter}}"
+                        ThumbColor="{toolkit:AppThemeResource TextSecond}"
+                        OnColor="{toolkit:AppThemeResource Outline}"
+                        HorizontalOptions="End"
+                        >
+                        <Switch.Triggers>
+                            <DataTrigger
+                                TargetType="Switch"
+                                Binding="{Binding BattleSettings.IsActive, Source={x:Reference BattleSettingsView}}"
+                                Value="False"
+                                >
+                                <Setter Property="ThumbColor" Value="{toolkit:AppThemeResource Primary}"/>
+                                <Setter Property="OnColor" Value="{toolkit:AppThemeResource PrimaryDarker}"/>
+                            </DataTrigger>
+                        </Switch.Triggers>
+                    </Switch>
                 </Grid>
 
                 <Border
@@ -126,7 +96,7 @@
                          Text="{Static langs:AppResources.DeleteRoomButton}"
                          FontSize="20"
                          Padding="0"
-                         Command="{Binding DeleteRoomCommand, Source={x:Reference RoomSettingsDialogView}}"
+                         Command="{Binding EndBattleCommand, Source={x:Reference BattleSettingsView}}"
                  />
                 </Border>
 
@@ -146,7 +116,7 @@
 
                     <buttons:FilledButton 
                          Text="{Static langs:AppResources.SaveButton}"
-                         Command="{Binding UpdateRoomCommand, Source={x:Reference RoomSettingsDialogView}}"
+                         Command="{Binding UpdateBattleCommand, Source={x:Reference BattleSettingsView}}"
                          Grid.Column="1"
                          HorizontalOptions="Fill"
                      />

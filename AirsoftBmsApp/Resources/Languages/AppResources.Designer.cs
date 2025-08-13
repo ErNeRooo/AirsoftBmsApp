@@ -169,6 +169,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Battle Settings.
+        /// </summary>
+        internal static string BattleSettingsHeader {
+            get {
+                return ResourceManager.GetString("BattleSettingsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string CancelButton {
@@ -340,6 +349,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to end the battle?.
+        /// </summary>
+        internal static string EndBattleConfirmationDialogMessage {
+            get {
+                return ResourceManager.GetString("EndBattleConfirmationDialogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Networking error occured :/.
         /// </summary>
         internal static string ErrorHeader {
@@ -372,6 +390,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string HideButton {
             get {
                 return ResourceManager.GetString("HideButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Paused.
+        /// </summary>
+        internal static string IsBattlePausedLabel {
+            get {
+                return ResourceManager.GetString("IsBattlePausedLabel", resourceCulture);
             }
         }
         

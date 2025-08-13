@@ -27,19 +27,27 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     ObservableCollection<ObservableTeamSummary> teamSummaries = new();
 
     [ObservableProperty]
+    ObservableConfirmationDialogState confirmationDialogState = new();
+
+    [ObservableProperty]
+    ObservableBattleSettingsState battleSettingsState;
+
+    [ObservableProperty]
     bool isLoading = false;
 
     [ObservableProperty]
     string errorMessage = "";
 
-    public ValidatableObject<string> BattleName { get; set; } = new();
+    public ValidatableObject<string> CreateBattleName { get; set; } = new();
 
     public BattleViewModel(
+        IValidationHelperFactory validationHelperFactory,
         IPlayerDataService playerDataService, 
         IRoomDataService roomDataService,
         IApiFacade apiFacade
         )
     {
+        BattleSettingsState = new ObservableBattleSettingsState(validationHelperFactory);
         _apiFacade = apiFacade;
 
         Player = playerDataService.Player;
@@ -54,13 +62,13 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         UpdatePlayersCollectionChangeHandlers();
         RebuildTeamSummaries();
 
-        BattleName.Validations.Add(new HasMaxLengthRule<string>
+        CreateBattleName.Validations.Add(new HasMaxLengthRule<string>
         {
             ValidationMessage = string.Format(AppResources.BattleNameIsTooShortValidationMessage, 60),
             MaxLength = 60
         });
 
-        BattleName.Validations.Add(new IsNotNullOrEmptyRule<string>
+        CreateBattleName.Validations.Add(new IsNotNullOrEmptyRule<string>
         {
             ValidationMessage = AppResources.BattleNameIsRequiredValidationMessage,
         });
@@ -86,13 +94,13 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     public async Task CreateBattle()
     {
         ValidateBattleName();
-        if (!BattleName.IsValid) return;
+        if (!CreateBattleName.IsValid) return;
 
         IsLoading = true;
 
         PostBattleDto postBattleDto = new()
         {
-            Name = BattleName.Value,
+            Name = CreateBattleName.Value,
             RoomId = Room.Id
         };
 
@@ -117,9 +125,85 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     }
 
     [RelayCommand]
+    public async Task EndBattleConfirmation()
+    {
+        ConfirmationDialogState.Message = AppResources.EndBattleConfirmationDialogMessage;
+        ConfirmationDialogState.Command = EndBattleCommand;
+    }
+
+    [RelayCommand]
+    public async Task EndBattle()
+    {
+        IsLoading = true;
+
+        var result = await _apiFacade.Battle.End(Room.Battle.BattleId);
+
+        switch (result)
+        {
+            case Success:
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        BattleSettingsState.IsVisible = false;
+        ConfirmationDialogState.Message = "";
+        IsLoading = false;
+    }
+
+    [RelayCommand]
+    public async Task UpdateBattle()
+    {
+        BattleSettingsState.ValidateBattleName();
+        if (!BattleSettingsState.BattleForm.Name.IsValid) return;
+
+        IsLoading = true;
+
+        PutBattleDto putBattleDto = new()
+        {
+            Name = BattleSettingsState.BattleForm.Name.Value,
+            IsActive = BattleSettingsState.IsActive
+        };
+
+        var result = await _apiFacade.Battle.Update(putBattleDto, Room.Battle.BattleId);
+
+        switch (result)
+        {
+            case Success:
+
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        BattleSettingsState.IsVisible = false;
+        IsLoading = false;
+    }
+
+    [RelayCommand]
     public async Task ValidateBattleName()
     {
-        BattleName.Validate();
+        CreateBattleName.Validate();
+    }
+
+    [RelayCommand]
+    public async Task ShowBattleSettings()
+    {
+        BattleSettingsState.BattleForm.Name.Value = "";
+        BattleSettingsState.IsActive = Room.Battle.IsActive;
+        BattleSettingsState.IsVisible = true;
     }
 }
 

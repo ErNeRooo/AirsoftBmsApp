@@ -19,6 +19,12 @@ namespace AirsoftBmsApp.Converters
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            => throw new NotImplementedException();
+        {
+            bool canBeParsed = bool.TryParse(value.ToString(), out bool boolValue);
+
+            if (!canBeParsed) return false;
+
+            return !boolValue;
+        }
     }
 }

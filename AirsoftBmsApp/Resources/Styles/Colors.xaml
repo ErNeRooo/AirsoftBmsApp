@@ -14,6 +14,8 @@
     <toolkit:AppThemeColor x:Key="Primary" Light="#10B981" Dark="#10B981" />
     <toolkit:AppThemeColor x:Key="OnPrimary" Light="#FFFFFF" Dark="#000000" />
 
+    <toolkit:AppThemeColor x:Key="PrimaryDarker" Light="#075236" Dark="#075236" />
+
     <toolkit:AppThemeColor x:Key="Outline" Light="#141414" Dark="#B5B5B5" />
 
     <toolkit:AppThemeColor x:Key="Surface" Light="#cccccc" Dark="#0A0A0A" />

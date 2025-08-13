@@ -32,4 +32,25 @@ public class MockBattleRestService(IPlayerDataService playerDataService, IRoomDa
             return (new Success(), battle);
         }
     }
+
+    public async Task<(HttpResult result, BattleDto battle)> PutAsync(PutBattleDto battleDto, int battleId)
+    {
+        if(battleDto.Name == "400")
+        {
+            return (new Failure("Bad Request"), null);
+        }
+
+        return (new Success(), new BattleDto
+        {
+            Name = string.IsNullOrEmpty(battleDto.Name) ? roomDataService.Room.Battle.Name : battleDto.Name,
+            BattleId = battleId,
+            IsActive = battleDto.IsActive ?? roomDataService.Room.Battle.IsActive,
+            RoomId = roomDataService.Room.Id
+        });
+    }
+
+    public async Task<HttpResult> DeleteAsync(int battleId)
+    {
+        return new Success();
+    }
 }

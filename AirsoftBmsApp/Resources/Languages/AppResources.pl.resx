@@ -441,4 +441,13 @@
   <data name="BattleFightStatusText" xml:space="preserve">
     <value>Walcz</value>
   </data>
+  <data name="EndBattleConfirmationDialogMessage" xml:space="preserve">
+    <value>Czy na pewno chcesz zakończyć bitwę?</value>
+  </data>
+  <data name="BattleSettingsHeader" xml:space="preserve">
+    <value>Ustawienia bitwy</value>
+  </data>
+  <data name="IsBattlePausedLabel" xml:space="preserve">
+    <value>Czy trwa przerwa</value>
+  </data>
 </root>
