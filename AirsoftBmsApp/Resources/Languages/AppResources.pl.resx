@@ -435,4 +435,10 @@
   <data name="BattleNameIsRequiredValidationMessage" xml:space="preserve">
     <value>Nazwa bitwy jest wymagana.</value>
   </data>
+  <data name="BattlePausedStatusText" xml:space="preserve">
+    <value>Przerwa</value>
+  </data>
+  <data name="BattleFightStatusText" xml:space="preserve">
+    <value>Walcz</value>
+  </data>
 </root>

@@ -115,6 +115,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fight.
+        /// </summary>
+        internal static string BattleFightStatusText {
+            get {
+                return ResourceManager.GetString("BattleFightStatusText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter battle name.
         /// </summary>
         internal static string BattleNameInputPlaceholder {
@@ -147,6 +156,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string BattleNavItemText {
             get {
                 return ResourceManager.GetString("BattleNavItemText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paused.
+        /// </summary>
+        internal static string BattlePausedStatusText {
+            get {
+                return ResourceManager.GetString("BattlePausedStatusText", resourceCulture);
             }
         }
         

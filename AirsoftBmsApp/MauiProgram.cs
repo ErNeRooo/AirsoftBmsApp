@@ -1,9 +1,11 @@
 ﻿using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Account;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Battle;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
 using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.AccountRestService.Implementations;
+using AirsoftBmsApp.Services.BattleRestService;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerDataService.Implementations;
@@ -26,11 +28,6 @@ using AirsoftBmsApp.ViewModel.RoomFormPageViewModel;
 using AirsoftBmsApp.ViewModel.RoomViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-
-
-#if WINDOWS
-using Microsoft.UI.Xaml.Controls;
-#endif
 
 namespace AirsoftBmsApp
 {
@@ -68,6 +65,7 @@ namespace AirsoftBmsApp
                 builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
                 builder.Services.AddSingleton<IRoomRestService, MockRoomRestService>();
                 builder.Services.AddSingleton<ITeamRestService, MockTeamRestService>();
+                builder.Services.AddSingleton<IBattleRestService, MockBattleRestService>();
             } else
             {
                 string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8080" : "http://localhost:8080";
@@ -91,6 +89,11 @@ namespace AirsoftBmsApp
                 {
                     client.BaseAddress = new Uri($"{baseAddress}/Team/");
                 });
+
+                builder.Services.AddHttpClient<IBattleRestService, BattleRestService>(client =>
+                {
+                    client.BaseAddress = new Uri($"{baseAddress}/Battle/");
+                });
             }
 
             builder.Services.AddSingleton<IValidationHelperFactory, ValidationHelperFactory>();
@@ -104,6 +107,7 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IPlayerHandler, PlayerHandler>();
             builder.Services.AddSingleton<IRoomHandler, RoomHandler>();
             builder.Services.AddSingleton<ITeamHandler, TeamHandler>();
+            builder.Services.AddSingleton<IBattleHandler, BattleHandler>();
 
 #if DEBUG
             builder.Logging.AddDebug();

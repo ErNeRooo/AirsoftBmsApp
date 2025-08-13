@@ -1,4 +1,7 @@
-﻿using AirsoftBmsApp.Model.Observable;
+﻿using AirsoftBmsApp.Model.Dto.Battle;
+using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Networking;
+using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
@@ -12,6 +15,8 @@ namespace AirsoftBmsApp.ViewModel.BattleViewModel;
 
 public partial class BattleViewModel : ObservableObject, IBattleViewModel
 {
+    IApiFacade _apiFacade;
+
     [ObservableProperty]
     ObservablePlayer player;
 
@@ -21,10 +26,22 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     [ObservableProperty]
     ObservableCollection<ObservableTeamSummary> teamSummaries = new();
 
-    public ValidatableObject<string> Name { get; set; } = new();
+    [ObservableProperty]
+    bool isLoading = false;
 
-    public BattleViewModel(IPlayerDataService playerDataService, IRoomDataService roomDataService)
+    [ObservableProperty]
+    string errorMessage = "";
+
+    public ValidatableObject<string> BattleName { get; set; } = new();
+
+    public BattleViewModel(
+        IPlayerDataService playerDataService, 
+        IRoomDataService roomDataService,
+        IApiFacade apiFacade
+        )
     {
+        _apiFacade = apiFacade;
+
         Player = playerDataService.Player;
         Room = roomDataService.Room;
 
@@ -37,13 +54,13 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         UpdatePlayersCollectionChangeHandlers();
         RebuildTeamSummaries();
 
-        Name.Validations.Add(new HasMaxLengthRule<string>
+        BattleName.Validations.Add(new HasMaxLengthRule<string>
         {
             ValidationMessage = string.Format(AppResources.BattleNameIsTooShortValidationMessage, 60),
             MaxLength = 60
         });
 
-        Name.Validations.Add(new IsNotNullOrEmptyRule<string>
+        BattleName.Validations.Add(new IsNotNullOrEmptyRule<string>
         {
             ValidationMessage = AppResources.BattleNameIsRequiredValidationMessage,
         });
@@ -69,13 +86,40 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     public async Task CreateBattle()
     {
         ValidateBattleName();
-        if (!Name.IsValid) return;
+        if (!BattleName.IsValid) return;
+
+        IsLoading = true;
+
+        PostBattleDto postBattleDto = new()
+        {
+            Name = BattleName.Value,
+            RoomId = Room.Id
+        };
+
+        var result = await _apiFacade.Battle.Create(postBattleDto);
+
+        switch (result)
+        {
+            case Success:
+                ErrorMessage = "";
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        IsLoading = false;
     }
 
     [RelayCommand]
     public async Task ValidateBattleName()
     {
-        Name.Validate();
+        BattleName.Validate();
     }
 }
 

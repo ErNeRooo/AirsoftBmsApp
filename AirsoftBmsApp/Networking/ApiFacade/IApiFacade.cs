@@ -1,4 +1,5 @@
 ﻿using AirsoftBmsApp.Networking.ApiFacade.Handlers.Account;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Battle;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
 using System;
@@ -15,5 +16,6 @@ namespace AirsoftBmsApp.Networking.ApiFacade
         public IPlayerHandler Player { get; }
         public ITeamHandler Team { get; }
         public IAccountHandler Account { get; }
+        public IBattleHandler Battle { get; }
     }
 }

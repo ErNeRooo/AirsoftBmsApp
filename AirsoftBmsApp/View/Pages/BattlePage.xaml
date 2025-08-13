@@ -10,46 +10,56 @@
              xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
              xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
+             xmlns:loading="clr-namespace:AirsoftBmsApp.View.ContentViews.LoadingScreen"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:BattleViewModel"
              >
     <Grid>
         <Grid
-            RowDefinitions="auto,auto,auto"
-            VerticalOptions="Center"
+            VerticalOptions="Fill"
             HorizontalOptions="Fill"
             IsVisible="{Binding Room.Battle, Converter={StaticResource IsNullConverter}}"
-            Padding="40"
             RowSpacing="10"
             >
-            <Label
+            <error:ErrorMessageView
                 Grid.Row="0"
-                Text="{Static langs:AppResources.NoBattleHeader}"
-                FontFamily="{StaticResource GlobalFont}"
-                FontSize="24"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Margin="0,10"
+                ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            />
+
+            <VerticalStackLayout
+                Padding="40"
+                VerticalOptions="Center"
+                >
+                <Label
+                    Text="{Static langs:AppResources.NoBattleHeader}"
+                    FontFamily="{StaticResource GlobalFont}"
+                    FontSize="24"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Margin="0,10"
                 />
 
-            <inputs:ValidatableStyledEntry 
-                Grid.Row="1"
-                Placeholder="{Static langs:AppResources.BattleNameInputPlaceholder}"
-                ValidateCommand="{Binding ValidateBattleNameCommand}"
-                ValidatableObject="{Binding Name}"
+                <inputs:ValidatableStyledEntry 
+                    IsVisible="{Binding Player.IsAdmin}"
+                    Placeholder="{Static langs:AppResources.BattleNameInputPlaceholder}"
+                    ValidateCommand="{Binding ValidateBattleNameCommand}"
+                    ValidatableObject="{Binding BattleName}"
+                    Margin="0,10"
                 />
 
-            <buttons:FilledButton
-                Grid.Row="2"
-                Text="{Static langs:AppResources.CreateBattleButton}"
-                Command="{Binding CreateBattleCommand}"
-                IsEnabled="{Binding Name.IsValid}"
+                <buttons:FilledButton
+                    IsVisible="{Binding Player.IsAdmin}"
+                    Text="{Static langs:AppResources.CreateBattleButton}"
+                    Command="{Binding CreateBattleCommand}"
+                    IsEnabled="{Binding BattleName.IsValid}"
                 />
+            </VerticalStackLayout>
         </Grid>
 
         <Grid
             IsVisible="{Binding Room.Battle, Converter={StaticResource IsNotNullConverter}}"
-            RowDefinitions="auto,*"
+            RowDefinitions="auto,auto,auto,*"
             >
 
             <Label 
@@ -59,11 +69,38 @@
                 FontSize="36"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
-                Margin="20"
+                Margin="10,20,10,0"
                 />
 
-            <ScrollView
+            <Label 
                 Grid.Row="1"
+                Text="{Static langs:AppResources.BattlePausedStatusText}"
+                TextColor="{toolkit:AppThemeResource Primary}"
+                FontFamily="{StaticResource GlobalFont}"
+                FontSize="30"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="20"
+                >
+                <Label.Triggers>
+                    <DataTrigger
+                        TargetType="Label"
+                        Binding="{Binding Room.Battle.IsActive}"
+                        Value="true"
+                        >
+                        <Setter Property="Text" Value="{Static langs:AppResources.BattleFightStatusText}" />
+                        <Setter Property="TextColor" Value="{toolkit:AppThemeResource Danger}" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <error:ErrorMessageView
+                Grid.Row="2"
+                ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            />
+
+            <ScrollView
+                Grid.Row="3"
                 Padding="20"
                 >
 
@@ -80,5 +117,9 @@
 
             </ScrollView>
         </Grid>
+
+        <loading:LoadingScreen 
+            IsLoading="{Binding IsLoading}"
+        />
     </Grid>
 </ContentView>

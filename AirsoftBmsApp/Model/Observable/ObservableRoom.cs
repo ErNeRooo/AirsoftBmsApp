@@ -38,7 +38,8 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
             },
         };
 
-    public ObservableBattle? Battle { get; set; }
+    [ObservableProperty]
+    public ObservableBattle? battle;
 
     List<IObservablePlayer> observerablePlayers = new();
 
