@@ -1,36 +1,50 @@
 ﻿using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.ApiFacade;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using AirsoftBmsApp.View.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.ViewModel.RoomFormPageViewModel
 {
-    public partial class RoomFormViewModel(IPlayerDataService playerDataService, IApiFacade apiFacade) : ObservableObject, IRoomFormViewModel
+    public partial class RoomFormViewModel : ObservableObject, IRoomFormViewModel
     {
+        IApiFacade _apiFacade;
+
         [ObservableProperty]
         bool isLoading = false;
 
         [ObservableProperty]
         string errorMessage = "";
 
+        [ObservableProperty]
+        string playerName = "";
+
+        public RoomFormViewModel(IPlayerDataService playerDataService, IApiFacade apiFacade)
+        {
+            _apiFacade = apiFacade;
+            PlayerName = string.Format(AppResources.WelcomePlayerHeader, playerDataService.Player.Name);
+        }
+
         [RelayCommand]
         public async Task LogOut()
         {
             IsLoading = true;
 
-            var result = await apiFacade.Player.LogOut();
+            var result = await _apiFacade.Player.LogOut();
 
             switch (result)
             {
                 case Success:
-                    await Shell.Current.GoToAsync("//PlayerFormPage");
+                    await Redirect("//PlayerFormPage");
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;
@@ -46,9 +60,30 @@ namespace AirsoftBmsApp.ViewModel.RoomFormPageViewModel
         }
 
         [RelayCommand]
+        async Task OnJoinRoomButtonClicked()
+        {
+            await Redirect(nameof(JoinRoomPage));
+        }
+
+        [RelayCommand]
+        async Task OnCreateRoomButtonClicked()
+        {
+            await Redirect(nameof(CreateRoomPage));
+        }
+
+        [RelayCommand]
         async Task Redirect(string path)
         {
+#if DEBUG
+            var ww = Stopwatch.StartNew();
+#endif
+
             await Shell.Current.GoToAsync(path);
+
+#if DEBUG
+            ww.Stop();
+            Debug.WriteLine($"Execution took {ww.Elapsed.TotalMilliseconds} ms");
+#endif
         }
     }
 }

@@ -45,7 +45,7 @@
 
             <buttons:FilledButton
                 Text="{Static langs:AppResources.JoinRoomButton}"
-                Command="{Binding JoinRoomAsyncCommand}"
+                Command="{Binding JoinRoomCommand}"
                 />
 
             <buttons:BackButton 

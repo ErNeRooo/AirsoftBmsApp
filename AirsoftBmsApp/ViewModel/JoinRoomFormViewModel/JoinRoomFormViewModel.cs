@@ -6,6 +6,7 @@ using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.View.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 
 namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
 {
@@ -49,12 +50,21 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
 
         [RelayCommand]
         async Task Redirect(string path)
-        {
+        {                
+#if DEBUG
+            var ww = Stopwatch.StartNew();
+#endif
+            
             await Shell.Current.GoToAsync(path);
+
+#if DEBUG
+            ww.Stop();
+            Debug.WriteLine($"Execution took {ww.Elapsed.TotalMilliseconds} ms");
+#endif
         }
 
         [RelayCommand]
-        async void JoinRoomAsync()
+        async Task JoinRoom()
         {
             Validate();
             if (!roomForm.JoinCode.IsValid || !roomForm.Password.IsValid) return;
@@ -71,8 +81,8 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
 
             switch (result)
             {
-                case Success:
-                    await Shell.Current.GoToAsync(nameof(RoomPage));
+                case Success success:
+                    await Redirect(nameof(RoomPage));
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;

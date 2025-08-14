@@ -6,6 +6,8 @@ using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Model.Dto.Account;
+using System.Diagnostics;
+using AirsoftBmsApp.View.Pages;
 
 namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
 {
@@ -66,6 +68,21 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         }
 
         [RelayCommand]
+        async Task Redirect(string path)
+        {
+#if DEBUG
+            var ww = Stopwatch.StartNew();
+#endif
+
+            await Shell.Current.GoToAsync(path);
+
+#if DEBUG
+            ww.Stop();
+            Debug.WriteLine($"Execution took {ww.Elapsed.TotalMilliseconds} ms");
+#endif
+        }
+
+        [RelayCommand]
         public async Task RegisterPlayerAsync()
         {
             ErrorMessage = "";
@@ -85,7 +102,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             switch (result)
             {
                 case Success:
-                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+                    await Redirect(nameof(RoomFormPage));
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;
@@ -123,7 +140,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             switch (result)
             {
                 case Success:
-                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+                    await Redirect(nameof(RoomFormPage));
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;
@@ -159,7 +176,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             switch (result)
             {
                 case Success:
-                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+                    await Redirect(nameof(RoomFormPage));
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;
@@ -177,7 +194,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
         [RelayCommand]
         async Task GoBack()
         {
-            await Shell.Current.GoToAsync("..");
+            await Redirect("..");
         }
     }
 }

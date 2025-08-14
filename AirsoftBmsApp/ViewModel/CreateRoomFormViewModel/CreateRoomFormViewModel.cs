@@ -6,6 +6,7 @@ using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.View.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 
 namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
 {
@@ -53,7 +54,16 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
         [RelayCommand]
         async Task Redirect(string path)
         {
+#if DEBUG
+            var ww = Stopwatch.StartNew();
+#endif
+
             await Shell.Current.GoToAsync(path);
+
+#if DEBUG
+            ww.Stop();
+            Debug.WriteLine($"Execution took {ww.Elapsed.TotalMilliseconds} ms");
+#endif
         }
 
         [RelayCommand]
@@ -76,7 +86,7 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
             switch (result)
             {
                 case Success:
-                    await Shell.Current.GoToAsync(nameof(RoomPage));
+                    await Redirect(nameof(RoomPage));
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;

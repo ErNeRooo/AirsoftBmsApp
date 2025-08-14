@@ -15,7 +15,6 @@
         BindingContext="{Binding Source={x:Reference TheRoomPage}}"
         >
 
-        <!-- Swipeable area -->
         <CarouselView 
             x:Name="MainCarousel" 
             Grid.ColumnSpan="3"

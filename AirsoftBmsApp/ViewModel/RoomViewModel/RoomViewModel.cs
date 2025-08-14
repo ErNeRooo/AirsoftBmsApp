@@ -12,6 +12,8 @@ using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Room;
 using System.Collections.ObjectModel;
 using AirsoftBmsApp.Resources.Languages;
+using System.Diagnostics;
+using AirsoftBmsApp.View.Pages;
 
 namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
@@ -79,6 +81,21 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             PlayerProfileState.SelfPlayer = Player;
 
             validationHelperFactory.AddValidations(TeamForm);
+        }
+
+        [RelayCommand]
+        async Task Redirect(string path)
+        {
+#if DEBUG
+            var ww = Stopwatch.StartNew();
+#endif
+
+            await Shell.Current.GoToAsync(path);
+
+#if DEBUG
+            ww.Stop();
+            Debug.WriteLine($"Execution took {ww.Elapsed.TotalMilliseconds} ms");
+#endif
         }
 
         [RelayCommand]
@@ -206,7 +223,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             switch (result)
             {
                 case Success:
-                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+                    await Redirect(nameof(RoomFormPage));
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;
@@ -442,7 +459,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             switch (result)
             {
                 case Success:
-                    await Shell.Current.GoToAsync(nameof(RoomFormPage));
+                    await Redirect(nameof(RoomFormPage));
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;

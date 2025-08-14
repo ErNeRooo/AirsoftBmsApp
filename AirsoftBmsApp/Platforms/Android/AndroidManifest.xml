@@ -6,7 +6,19 @@
     android:roundIcon="@mipmap/appicon_round" 
     android:supportsRtl="true"
     android:usesCleartextTraffic="true"           
-  ></application>
+  >
+    <meta-data 
+      android:name="com.google.android.geo.API_KEY"
+      android:value="AIzaSyAXaWLZ_37d-vXC2T9U1-c3biWqm2rsSdc" 
+      />
+    <meta-data 
+      android:name="com.google.android.gms.version" 
+      android:value="@integer/google_play_services_version" 
+      />
+  </application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
