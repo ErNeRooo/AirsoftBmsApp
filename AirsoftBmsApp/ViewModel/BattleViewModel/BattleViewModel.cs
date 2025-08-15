@@ -97,6 +97,7 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         if (!CreateBattleName.IsValid) return;
 
         IsLoading = true;
+        await Task.Yield();
 
         PostBattleDto postBattleDto = new()
         {
@@ -135,6 +136,7 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     public async Task EndBattle()
     {
         IsLoading = true;
+        await Task.Yield();
 
         var result = await _apiFacade.Battle.End(Room.Battle.BattleId);
 
@@ -164,6 +166,7 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         if (!BattleSettingsState.BattleForm.Name.IsValid) return;
 
         IsLoading = true;
+        await Task.Yield();
 
         PutBattleDto putBattleDto = new()
         {

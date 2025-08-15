@@ -73,6 +73,7 @@ namespace AirsoftBmsApp.ViewModel.CreateRoomFormViewModel
             if (!roomForm.JoinCode.IsValid || !roomForm.Password.IsValid) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             var postRoomDto = new PostRoomDto
             {

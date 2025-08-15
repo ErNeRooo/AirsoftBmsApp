@@ -90,7 +90,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             var ww = Stopwatch.StartNew();
 #endif
 
-            await Shell.Current.GoToAsync(path);
+            await Shell.Current.GoToAsync(path, animate: false);
 
 #if DEBUG
             ww.Stop();
@@ -105,6 +105,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             if (!TeamForm.Name.IsValid) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             PostTeamDto postTeamDto = new PostTeamDto
             {
@@ -156,6 +157,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         {
             ConfirmationDialogState.Message = "";
             IsLoading = true;
+            await Task.Yield();
 
             if (TargetTeamId == 0) 
             { 
@@ -180,6 +182,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         public async Task LeaveTeam()
         {
             IsLoading = true;
+            await Task.Yield();
 
             var result = await _apiFacade.Team.Leave();
 
@@ -217,13 +220,14 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         public async Task LeaveRoom()
         {
             IsLoading = true;
+            await Task.Yield();
 
             var result = await _apiFacade.Room.Leave();
 
             switch (result)
             {
                 case Success:
-                    await Redirect(nameof(RoomFormPage));
+                    await Redirect("../..");
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;
@@ -250,6 +254,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         {
             ConfirmationDialogState.Message = "";
             IsLoading = true;
+            await Task.Yield();
 
             PutRoomDto roomDto = new PutRoomDto
             {
@@ -296,6 +301,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             if (Player.TeamId is null) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             PutTeamDto teamDto = new()
             {
@@ -375,6 +381,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             if (!TeamSettingsState.TeamForm.Name.IsValid) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             PutTeamDto teamDto = new()
             {
@@ -419,6 +426,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             TeamSettingsState.IsVisible = false;
 
             IsLoading = true;
+            await Task.Yield();
 
             var result = await _apiFacade.Team.Delete(TargetTeamId);
 
@@ -453,6 +461,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             TeamSettingsState.IsVisible = false;
 
             IsLoading = true;
+            await Task.Yield();
 
             var result = await _apiFacade.Room.Delete();
 
@@ -482,6 +491,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             if (!RoomSettingsState.RoomForm.MaxPlayers.IsValid) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             PutRoomDto roomDto = new()
             {
@@ -518,6 +528,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         public async Task KickFromRoom()
         {
             IsLoading = true;
+            await Task.Yield();
 
             var result = await _apiFacade.Player.KickFromRoom(PlayerProfileState.SelectedPlayer.Id);
 
@@ -545,6 +556,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         public async Task KickFromTeam()
         {
             IsLoading = true;
+            await Task.Yield();
 
             var result = await _apiFacade.Player.KickFromTeam(PlayerProfileState.SelectedPlayer.Id);
 
@@ -575,6 +587,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             if (team.Id == currentTeamId) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             PutPlayerDto playerDto = new()
             {

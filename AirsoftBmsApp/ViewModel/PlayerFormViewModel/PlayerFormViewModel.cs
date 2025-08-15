@@ -74,7 +74,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             var ww = Stopwatch.StartNew();
 #endif
 
-            await Shell.Current.GoToAsync(path);
+            await Shell.Current.GoToAsync(path, animate: false);
 
 #if DEBUG
             ww.Stop();
@@ -91,6 +91,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             if (!playerForm.Name.IsValid) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             var playerDto = new PostPlayerDto
             {
@@ -128,6 +129,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             if (!playerForm.Email.IsValid || !playerForm.Password.IsValid || !playerForm.Name.IsValid) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             var logInAccountDto = new LogInAccountDto
             {
@@ -164,6 +166,7 @@ namespace AirsoftBmsApp.ViewModel.PlayerFormViewModel
             if (!playerForm.Name.IsValid || !playerForm.Email.IsValid || !playerForm.Password.IsValid || !playerForm.ConfirmPassword.IsValid) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             var signUpAccountDto = new SignUpAccountDto
             {

@@ -70,6 +70,7 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
             if (!roomForm.JoinCode.IsValid || !roomForm.Password.IsValid) return;
 
             IsLoading = true;
+            await Task.Yield();
 
             var joinRoomDto = new JoinRoomDto
             {
