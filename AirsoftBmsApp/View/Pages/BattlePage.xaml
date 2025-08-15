@@ -16,10 +16,6 @@
 
         <battle:BattlePreview BindingContext="{Binding}"/>
 
-        <loading:LoadingScreen 
-            IsLoading="{Binding IsLoading}"
-        />
-        
         <dialogs:BattleSettingsDialog
             BattleSettings="{Binding BattleSettingsState, Mode=TwoWay}"
             IsVisible="{Binding BattleSettingsState.IsVisible}"
@@ -31,5 +27,9 @@
             Message="{Binding ConfirmationDialogState.Message, Mode=TwoWay}"
             ConfirmCommand="{Binding ConfirmationDialogState.Command}"
             />
+
+        <loading:LoadingScreen 
+            IsLoading="{Binding IsLoading}"
+        />
     </Grid>
 </ContentView>

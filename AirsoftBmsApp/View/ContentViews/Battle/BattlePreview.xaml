@@ -13,7 +13,7 @@
              >
     <Grid
         IsVisible="{Binding Room.Battle, Converter={StaticResource IsNotNullConverter}}"
-        RowDefinitions="auto,auto,auto,*"
+        RowDefinitions="auto,auto,*"
         >
 
         <Label 
@@ -54,13 +54,8 @@
             </Label.Triggers>
         </Label>
 
-        <error:ErrorMessageView
-            Grid.Row="2"
-            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
-        />
-
         <ScrollView
-            Grid.Row="3"
+            Grid.Row="2"
             Padding="20"
             >
 
@@ -74,5 +69,13 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
+
+        <error:ErrorMessageView
+            Grid.Row="2"
+            ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            MaximumHeightRequest="200"
+            VerticalOptions="Start"
+            Margin="20,10"
+        />
     </Grid>
 </ContentView>

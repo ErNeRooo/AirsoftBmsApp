@@ -21,14 +21,7 @@
                 >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border
-                            BackgroundColor="Transparent"
-                            Margin="0"
-                            Padding="1"
-                            Stroke="Transparent"
-                            >
-                            <team:TeamView></team:TeamView>
-                        </Border>
+                        <team:TeamView></team:TeamView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

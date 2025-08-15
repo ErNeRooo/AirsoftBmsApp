@@ -16,44 +16,49 @@
              x:DataType="viewModel:CreateRoomFormViewModel"
              >
 
-    <Grid>
+    <Grid
+        Padding="20"
+        RowSpacing="10"
+        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+        RowDefinitions="*,auto,auto,auto,auto,auto,*"
+        >
         <error:ErrorMessageView
+            Grid.Row="0"
             ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
             />
-        
-        <VerticalStackLayout 
-            VerticalOptions="Center" 
-            Padding="40"
-            Spacing="10"
-            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-        >
-            <text:Header 
-                Text="{Static langs:AppResources.CreateRoomHeader}" 
-            />
 
-            <inputs:ValidatableStyledEntry
-                Placeholder="{Static langs:AppResources.OptionalJoinCodeInputPlaceholder}"
-                ValidatableObject="{Binding RoomForm.JoinCode}"
-                ValidateCommand="{Binding ValidateJoinCodeCommand}"
-            />
+        <text:Header 
+            Grid.Row="1"
+            Text="{Static langs:AppResources.CreateRoomHeader}" 
+        />
 
-            <inputs:ValidatableStyledEntry
-                Placeholder="{Static langs:AppResources.OptionalRoomPasswordInputPlaceholder}"
-                ValidatableObject="{Binding RoomForm.Password}"
-                IsPassword="True"
-                ValidateCommand="{Binding ValidatePasswordCommand}"
-            />
+        <inputs:ValidatableStyledEntry
+            Grid.Row="2"
+            Placeholder="{Static langs:AppResources.OptionalJoinCodeInputPlaceholder}"
+            ValidatableObject="{Binding RoomForm.JoinCode}"
+            ValidateCommand="{Binding ValidateJoinCodeCommand}"
+        />
 
-            <buttons:FilledButton 
-                Command="{Binding CreateRoomCommand}"
-            />
+        <inputs:ValidatableStyledEntry
+            Grid.Row="3"
+            Placeholder="{Static langs:AppResources.OptionalRoomPasswordInputPlaceholder}"
+            ValidatableObject="{Binding RoomForm.Password}"
+            IsPassword="True"
+            ValidateCommand="{Binding ValidatePasswordCommand}"
+        />
 
-            <buttons:BackButton
-                Command="{Binding RedirectCommand}"/>
+        <buttons:FilledButton 
+            Grid.Row="4"
+            Command="{Binding CreateRoomCommand}"
+        />
 
-        </VerticalStackLayout>
+        <buttons:BackButton
+            Grid.Row="5"
+            Command="{Binding RedirectCommand}"
+        />
 
         <loading:LoadingScreen 
+            Grid.RowSpan="7"
             IsLoading="{Binding IsLoading}"
         />
     </Grid>

@@ -15,44 +15,53 @@
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:RoomFormViewModel"
              >
-    <Grid>
+    <Grid
+        RowDefinitions="*,auto,auto,auto,auto,auto,*"
+        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+        RowSpacing="10"
+        >
+
         <error:ErrorMessageView
+            Grid.Row="0"
             ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            Margin="20"
             />
         
-        <VerticalStackLayout 
-            VerticalOptions="Center" 
-            Padding="40"
-            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-            Spacing="10"
-            >
-            <text:Header
-                Text="{Binding PlayerName}"
-                />
+        <text:Header
+            Grid.Row="1"
+            Text="{Binding PlayerName}"
+            />
+        
+        <buttons:FilledButton 
+            Grid.Row="2"
+            Text="{Static langs:AppResources.JoinRoomButton}"
+            Command="{Binding JoinRoomButtonClickedCommand}"
+            Margin="20,0"
+            />
 
-            <BoxView Height="10" />
+        <text:ResizableLabelWithHorizontalLine 
+            Grid.Row="3"
+            Margin="20,0"
+            />
 
-            <buttons:FilledButton 
-                Text="{Static langs:AppResources.JoinRoomButton}"
-                Command="{Binding JoinRoomButtonClickedCommand}"
-                />
+        <buttons:OutlinedButton 
+            Grid.Row="4"
+            Text="{Static langs:AppResources.CreateRoomButton}"
+            Command="{Binding CreateRoomButtonClickedCommand}"
+            Margin="20,0"
+            />
 
-            <text:ResizableLabelWithHorizontalLine />
-
-            <buttons:OutlinedButton 
-                Text="{Static langs:AppResources.CreateRoomButton}"
-                Command="{Binding CreateRoomButtonClickedCommand}"
-                />
-
-            <buttons:BackButton 
-                Text="{Static langs:AppResources.LogOutButton}"
-                Command="{Binding LogOutCommand}"
-                />
-
-        </VerticalStackLayout>
-
+        <buttons:BackButton 
+            Grid.Row="5"
+            Text="{Static langs:AppResources.LogOutButton}"
+            Command="{Binding LogOutCommand}"
+            Margin="20,0"
+        />
+        
         <loading:LoadingScreen 
+            Grid.RowSpan="7"
             IsLoading="{Binding IsLoading}"
         />
+
     </Grid>
 </ContentPage>

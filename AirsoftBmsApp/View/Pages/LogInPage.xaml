@@ -16,52 +16,57 @@
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:PlayerFormViewModel"
              >
-    <Grid>
+    <Grid
+        Padding="20"
+        MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
+        RowSpacing="10"
+        RowDefinitions="*,auto,auto,auto,auto,auto,auto,*"
+        >
         <error:ErrorMessageView
+            Grid.Row="0"
             ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
-            />
+        />
 
-        <VerticalStackLayout 
-            VerticalOptions="Center" 
-            Padding="40"
-            MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-            Spacing="10"
-            >
-            <text:Header 
-                Text="{Static langs:AppResources.LogInHeader}"
-                />
+        <text:Header 
+            Grid.Row="1"
+            Text="{Static langs:AppResources.LogInHeader}"
+        />
 
-            <inputs:ValidatableStyledEntry
-                Placeholder="{Static langs:AppResources.UsernameInputPlaceholder}"
-                ValidatableObject="{Binding PlayerForm.Name}"
-                ValidateCommand="{Binding ValidateNameCommand}"
-            />
+        <inputs:ValidatableStyledEntry
+            Grid.Row="2"
+            Placeholder="{Static langs:AppResources.UsernameInputPlaceholder}"
+            ValidatableObject="{Binding PlayerForm.Name}"
+            ValidateCommand="{Binding ValidateNameCommand}"
+        />
 
-            <inputs:ValidatableStyledEntry
-                Placeholder="{Static langs:AppResources.AccountEmailInputPlaceholder}"
-                ValidatableObject="{Binding PlayerForm.Email}"
-                ValidateCommand="{Binding ValidateEmailCommand}"
-            />
+        <inputs:ValidatableStyledEntry
+            Grid.Row="3"
+            Placeholder="{Static langs:AppResources.AccountEmailInputPlaceholder}"
+            ValidatableObject="{Binding PlayerForm.Email}"
+            ValidateCommand="{Binding ValidateEmailCommand}"
+        />
 
-            <inputs:ValidatableStyledEntry
-                Placeholder="{Static langs:AppResources.AccountPasswordInputPlaceholder}"
-                ValidatableObject="{Binding PlayerForm.Password}"
-                ValidateCommand="{Binding ValidatePasswordCommand}"
-                IsPassword="True"
-            />
+        <inputs:ValidatableStyledEntry
+            Grid.Row="4"
+            Placeholder="{Static langs:AppResources.AccountPasswordInputPlaceholder}"
+            ValidatableObject="{Binding PlayerForm.Password}"
+            ValidateCommand="{Binding ValidatePasswordCommand}"
+            IsPassword="True"
+        />
 
-            <buttons:FilledButton 
-                Command="{Binding LogInButtonClickedCommand}"
-                />
+        <buttons:FilledButton 
+            Grid.Row="5"
+            Command="{Binding LogInButtonClickedCommand}"
+        />
 
-            <buttons:BackButton 
-                Command="{Binding GoBackCommand}"
-                />
+        <buttons:BackButton 
+            Grid.Row="6"
+            Command="{Binding GoBackCommand}"
+        />
 
-            </VerticalStackLayout>
-
-            <loading:LoadingScreen 
-                IsLoading="{Binding IsLoading}"
-            />
+        <loading:LoadingScreen 
+            Grid.RowSpan="8"
+            IsLoading="{Binding IsLoading}"
+        />
     </Grid>
 </ContentPage>

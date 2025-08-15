@@ -19,7 +19,7 @@ public class MockBattleRestService(IPlayerDataService playerDataService, IRoomDa
         }
         else
         {
-            await Task.Delay(200);
+            await Task.Delay(100);
 
             var battle = new BattleDto
             {
@@ -37,7 +37,7 @@ public class MockBattleRestService(IPlayerDataService playerDataService, IRoomDa
     {
         if(battleDto.Name == "400")
         {
-            return (new Failure("Bad Request"), null);
+            return (new Failure("Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request Bad Request"), null);
         }
 
         return (new Success(), new BattleDto

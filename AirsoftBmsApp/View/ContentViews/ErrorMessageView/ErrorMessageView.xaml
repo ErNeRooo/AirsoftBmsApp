@@ -5,9 +5,6 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
     x:Class="AirsoftBmsApp.View.ContentViews.ErrorMessageView.ErrorMessageView"
-    MaximumHeightRequest="150"
-    VerticalOptions="Start"
-    Margin="40, 20"
     xmlns:local="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
     x:Name="ErrorMessageContentView"
     >
@@ -27,22 +24,21 @@
 
     <Border 
         x:Name="ErrorMessageBorder"
-        VerticalOptions="Start"
         HorizontalOptions="Fill"
 
         BackgroundColor="{toolkit:AppThemeResource Error}"
         StrokeShape="RoundRectangle 25"
         StrokeThickness="0"
-        BindingContext="{Binding Source={RelativeSource AncestorType={x:Type local:ErrorMessageView}}}"
+        BindingContext="{Binding Source={x:Reference ErrorMessageContentView}}"
     >
 
-        <VerticalStackLayout
+        <Grid
+            RowDefinitions="auto,*,auto"
             Padding="10"
             >
 
             <Label 
                 Grid.Row="0"
-                Margin="0"
                 FontSize="20"
                 FontFamily="{StaticResource GlobalFont}" 
                 TextColor="{toolkit:AppThemeResource OnError}"
@@ -50,11 +46,10 @@
                 HorizontalTextAlignment="Center"/>
 
             <ScrollView
-                MaximumHeightRequest="60"
+                Grid.Row="1"
                 >
                 <Label 
 
-                    Margin="0"
                     FontFamily="{StaticResource GlobalFont}" 
                     TextColor="{toolkit:AppThemeResource OnError}"
                     Text="{Binding ErrorMessage}"
@@ -82,6 +77,6 @@
                     Padding="0"
                 />
             </Border>
-        </VerticalStackLayout>
+        </Grid>
     </Border>
 </ContentView>
