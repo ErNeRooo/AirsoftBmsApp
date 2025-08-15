@@ -16,7 +16,6 @@
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              >
     <Grid
-        Padding="20"
         RowSpacing="10"
         MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         RowDefinitions="*,auto,auto,auto,auto,auto,*"
@@ -24,11 +23,13 @@
         <error:ErrorMessageView
             Grid.Row="0"
             ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            Margin="20"
         />
 
         <text:Header 
             Grid.Row="1"
             Text="{Static langs:AppResources.JoinRoomHeader}"
+            Margin="20,0"
         />
 
         <inputs:ValidatableStyledEntry
@@ -36,6 +37,7 @@
             Placeholder="{Static langs:AppResources.JoinCodeInputPlaceholder}"
             ValidatableObject="{Binding RoomForm.JoinCode}"
             ValidateCommand="{Binding ValidateJoinCodeCommand}" 
+            Margin="20,0"
         />
 
         <inputs:ValidatableStyledEntry
@@ -44,17 +46,20 @@
             ValidatableObject="{Binding RoomForm.Password}"
             ValidateCommand="{Binding ValidatePasswordCommand}" 
             IsPassword="True"
+            Margin="20,0"
         />
 
         <buttons:FilledButton
             Grid.Row="4"
             Text="{Static langs:AppResources.JoinRoomButton}"
             Command="{Binding JoinRoomCommand}"
+            Margin="20,0"
         />
 
         <buttons:BackButton 
             Grid.Row="5"
             Command="{Binding RedirectCommand}"
+            Margin="20,0"
         />
 
         <loading:LoadingScreen 

@@ -5,13 +5,32 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
+             xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.MapViewModel"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
+             x:DataType="viewModel:MapViewModel"
              >
-    <Grid>
+    <Grid
+        RowDefinitions="*,auto"
+        ColumnDefinitions="*,*"
+        >
         <maps:Map 
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
             x:Name="map"
             MapType="Satellite"
+            IsShowingUser="True"
+            ItemsSource="{Binding VisiblePlayers}"
             >
+            <maps:Map.ItemTemplate>
+                <DataTemplate x:DataType="maps:Pin">
+                    <maps:Pin
+                        Label="{Binding Label}"
+                        Location="{Binding Location}"
+                        />
+                </DataTemplate>
+            </maps:Map.ItemTemplate>
             <x:Arguments>
                 <maps:MapSpan>
                     <x:Arguments>
@@ -27,5 +46,45 @@
                 </maps:MapSpan>
             </x:Arguments>
         </maps:Map>
+
+        <Border
+            Grid.Row="1"
+            Grid.Column="0"
+            StrokeShape="RoundRectangle 15"
+            StrokeThickness="2"
+            Stroke="{toolkit:AppThemeResource Danger}"
+            Margin="10,10,5,10"
+        >
+            <Button 
+                BackgroundColor="Transparent"
+                TextColor="{toolkit:AppThemeResource Danger}"
+                BorderWidth="2"
+                FontFamily="{StaticResource GlobalFont}" 
+                HorizontalOptions="Fill"
+                Text="{Static langs:AppResources.HitButtonText}"
+                FontSize="20"
+                Padding="0"
+            />
+        </Border>
+
+        <Border
+            Grid.Row="1"
+            Grid.Column="1"
+            StrokeShape="RoundRectangle 15"
+            StrokeThickness="2"
+            Stroke="{toolkit:AppThemeResource Primary}"
+            Margin="5,10,10,10"
+            >
+            <Button 
+                BackgroundColor="Transparent"
+                TextColor="{toolkit:AppThemeResource Primary}"
+                BorderWidth="2"
+                FontFamily="{StaticResource GlobalFont}" 
+                HorizontalOptions="Fill"
+                Text="{Static langs:AppResources.KillButtonText}"
+                FontSize="20"
+                Padding="0"
+            />
+        </Border>
     </Grid>
 </ContentView>

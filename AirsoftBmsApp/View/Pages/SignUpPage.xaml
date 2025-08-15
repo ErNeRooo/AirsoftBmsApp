@@ -17,18 +17,19 @@
              >
     <Grid
         MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
-        Padding="20" 
         RowSpacing="10"
         RowDefinitions="*,auto,auto,auto,auto,auto,auto,auto,*"
         >
         <error:ErrorMessageView
             Grid.Row="0"
             ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            Margin="20"
         />
 
         <text:Header 
             Grid.Row="1"
             Text="{Static langs:AppResources.SignUpHeader}"
+            Margin="20,0"
         />
 
         <inputs:ValidatableStyledEntry
@@ -36,12 +37,14 @@
             Placeholder="{Static langs:AppResources.UsernameInputPlaceholder}"
             ValidatableObject="{Binding PlayerForm.Name}"
             ValidateCommand="{Binding ValidateNameCommand}"
+            Margin="20,0"
         />
         <inputs:ValidatableStyledEntry
             Grid.Row="3"
             Placeholder="{Static langs:AppResources.AccountEmailInputPlaceholder}"
             ValidatableObject="{Binding PlayerForm.Email}"
             ValidateCommand="{Binding ValidateEmailCommand}"
+            Margin="20,0"
         />
         <inputs:ValidatableStyledEntry
             Grid.Row="4"
@@ -49,6 +52,7 @@
             ValidatableObject="{Binding PlayerForm.Password}"
             ValidateCommand="{Binding ValidatePasswordCommand}"
             IsPassword="True"
+            Margin="20,0"
         />
         <inputs:ValidatableStyledEntry
             Grid.Row="5"
@@ -56,17 +60,20 @@
             ValidatableObject="{Binding PlayerForm.ConfirmPassword}"
             ValidateCommand="{Binding ValidateConfirmPasswordCommand}"
             IsPassword="True"
+            Margin="20,0"
         />
 
         <buttons:FilledButton 
             Grid.Row="6"
             Command="{Binding SignUpButtonClickedCommand}"
             Text="{Static langs:AppResources.CreateButton}"
+            Margin="20,0"
         />
 
         <buttons:BackButton 
             Grid.Row="7"
             Command="{Binding GoBackCommand}"
+            Margin="20,0"
             />
 
         <loading:LoadingScreen 

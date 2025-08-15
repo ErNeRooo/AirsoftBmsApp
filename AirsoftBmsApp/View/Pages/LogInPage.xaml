@@ -17,7 +17,6 @@
              x:DataType="viewModel:PlayerFormViewModel"
              >
     <Grid
-        Padding="20"
         MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         RowSpacing="10"
         RowDefinitions="*,auto,auto,auto,auto,auto,auto,*"
@@ -25,11 +24,13 @@
         <error:ErrorMessageView
             Grid.Row="0"
             ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+            Margin="20"
         />
 
         <text:Header 
             Grid.Row="1"
             Text="{Static langs:AppResources.LogInHeader}"
+            Margin="20,0"
         />
 
         <inputs:ValidatableStyledEntry
@@ -37,6 +38,7 @@
             Placeholder="{Static langs:AppResources.UsernameInputPlaceholder}"
             ValidatableObject="{Binding PlayerForm.Name}"
             ValidateCommand="{Binding ValidateNameCommand}"
+            Margin="20,0"
         />
 
         <inputs:ValidatableStyledEntry
@@ -44,6 +46,7 @@
             Placeholder="{Static langs:AppResources.AccountEmailInputPlaceholder}"
             ValidatableObject="{Binding PlayerForm.Email}"
             ValidateCommand="{Binding ValidateEmailCommand}"
+            Margin="20,0"
         />
 
         <inputs:ValidatableStyledEntry
@@ -52,16 +55,19 @@
             ValidatableObject="{Binding PlayerForm.Password}"
             ValidateCommand="{Binding ValidatePasswordCommand}"
             IsPassword="True"
+            Margin="20,0"
         />
 
         <buttons:FilledButton 
             Grid.Row="5"
             Command="{Binding LogInButtonClickedCommand}"
+            Margin="20,0"
         />
 
         <buttons:BackButton 
             Grid.Row="6"
             Command="{Binding GoBackCommand}"
+            Margin="20,0"
         />
 
         <loading:LoadingScreen 

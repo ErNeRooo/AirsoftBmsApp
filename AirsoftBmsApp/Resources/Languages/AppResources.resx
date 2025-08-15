@@ -450,4 +450,10 @@
   <data name="IsBattlePausedLabel" xml:space="preserve">
     <value>Is Paused</value>
   </data>
+  <data name="HitButtonText" xml:space="preserve">
+    <value>I'm Hit</value>
+  </data>
+  <data name="KillButtonText" xml:space="preserve">
+    <value>Target Down!</value>
+  </data>
 </root>

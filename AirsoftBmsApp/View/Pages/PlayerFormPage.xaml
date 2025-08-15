@@ -17,18 +17,19 @@
              >
     <Grid
         RowDefinitions="*,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,*"
-        Padding="20"
         MaximumWidthRequest="{OnPlatform WinUI=600, MacCatalyst=600}"
         RowSpacing="10"
         >
         <error:ErrorMessageView
             Grid.Row="0"
             ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
-            />
+            Margin="20"
+        />
 
         <text:Header
             Grid.Row="1"
             Text="{Static langs:AppResources.WithoutAccountHeader}"
+            Margin="20,0"
         />
 
         <inputs:ValidatableStyledEntry
@@ -36,37 +37,44 @@
             Placeholder="{Static langs:AppResources.UsernameInputPlaceholder}"
             ValidatableObject="{Binding PlayerForm.Name}"
             ValidateCommand="{Binding ValidateNameCommand}"
+            Margin="20,0"
         />
 
         <buttons:FilledButton 
             Grid.Row="3"
             Command="{Binding RegisterPlayerCommand}"
+            Margin="20,0"
         />
 
         <layout:Margin 
             Grid.Row="4"
             Size="10" 
-            />
+            Margin="20,0"
+        />
 
         <text:ResizableLabelWithHorizontalLine 
             Grid.Row="5"
-            />
+            Margin="20,0"
+        />
 
         <text:Header
             Grid.Row="6"
             Text="{Static langs:AppResources.WithAccountHeader}"
+            Margin="20,0"
         />
 
         <buttons:OutlinedButton
             Grid.Row="7"
             Clicked="OnLogInButtonClicked"
             Text="{Static langs:AppResources.LogInButton}"
+            Margin="20,0"
         />
 
         <buttons:OutlinedButton
             Grid.Row="8"
             Clicked="OnSignUpButtonClicked"
             Text="{Static langs:AppResources.SignUpButton}"
+            Margin="20,0"
         />
         
         <loading:LoadingScreen 

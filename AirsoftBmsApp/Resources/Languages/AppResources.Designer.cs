@@ -394,6 +394,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I&apos;m Hit.
+        /// </summary>
+        internal static string HitButtonText {
+            get {
+                return ResourceManager.GetString("HitButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Paused.
         /// </summary>
         internal static string IsBattlePausedLabel {
@@ -453,6 +462,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string KickFromTeamButton {
             get {
                 return ResourceManager.GetString("KickFromTeamButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Down!.
+        /// </summary>
+        internal static string KillButtonText {
+            get {
+                return ResourceManager.GetString("KillButtonText", resourceCulture);
             }
         }
         

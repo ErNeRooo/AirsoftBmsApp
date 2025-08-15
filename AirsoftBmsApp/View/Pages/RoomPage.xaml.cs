@@ -44,6 +44,11 @@ public partial class RoomPage : ContentPage
             battlePage,
             mapPage
         };
+        MainCarousel.CurrentItemChangedCommand = new RelayCommand(() =>
+        {
+            if (CarouselPositionSelected == 2) MainCarousel.IsSwipeEnabled = false;
+            else MainCarousel.IsSwipeEnabled = true;
+        });
 
         NavItemClickedCommand = new RelayCommand<string>(OnNavItemClicked);
     }
