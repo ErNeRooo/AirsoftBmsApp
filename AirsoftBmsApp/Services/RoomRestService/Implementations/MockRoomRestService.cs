@@ -111,7 +111,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
             {
                 return (new Success(), new RoomIncludingRelatedEntitiesDto
                 {
-                    JoinCode = "000000",
+                    JoinCode = roomDto.JoinCode,
                     RoomId = 1,
                     MaxPlayers = 10,
                     AdminPlayer = null,

@@ -391,8 +391,6 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             var result = await _apiFacade.Team.Update(teamDto, TargetTeamId);
 
-            TeamSettingsState.IsVisible = false;
-
             switch (result)
             {
                 case Success:
@@ -407,6 +405,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
                     throw new InvalidOperationException("Unknown result type");
             }
 
+            TeamSettingsState.IsVisible = false;
             IsLoading = false;
         }
 
@@ -505,8 +504,6 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             var result = await _apiFacade.Room.Update(roomDto);
 
-            RoomSettingsState.IsVisible = false;
-
             switch (result)
             {
                 case Success:
@@ -521,6 +518,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
                     throw new InvalidOperationException("Unknown result type");
             }
 
+            RoomSettingsState.IsVisible = false;
             IsLoading = false;
         }
 
@@ -537,7 +535,6 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             switch (result)
             {
                 case Success:
-                    PlayerProfileState.IsVisible = false;
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;
@@ -549,6 +546,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
                     throw new InvalidOperationException("Unknown result type");
             }
 
+            PlayerProfileState.IsVisible = false;
             IsLoading = false;
         }
 

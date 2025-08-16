@@ -108,17 +108,15 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
 
                 if (result is Success)
                 {
-                    ObservablePlayer? kickedPlayer = roomDataService.Room.Teams.SelectMany(team => team.Players)
+                    ObservablePlayer? playerToKick = roomDataService.Room.Teams
+                        .SelectMany(team => team.Players)
                         .FirstOrDefault(p => p.Id == playerId);
 
-                    if (kickedPlayer.TeamId is not null && kickedPlayer.TeamId != 0 && kickedPlayer.IsOfficer)
-                    {
-                        roomDataService.Room.Teams.FirstOrDefault(team => team.Id == kickedPlayer.TeamId).OfficerId = 0;
-                    }
+                    ObservableTeam? teamOfPlayerToKick = roomDataService.Room.Teams.FirstOrDefault(team => team.Id == playerToKick.TeamId);
 
-                    roomDataService.Room.Teams
-                        .FirstOrDefault(t => t.Id == kickedPlayer?.TeamId)?
-                        .Players.Remove(kickedPlayer);
+                    SetTeamOfficerToNotAssigned(playerToKick, teamOfPlayerToKick);
+
+                    teamOfPlayerToKick.Players.Remove(playerToKick);
                 }
                 else
                 {
@@ -139,20 +137,23 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
         {
             try
             {
-                (HttpResult result, PlayerDto? player) = await playerRestService.KickFromRoomByIdAsync(playerId);
+                (HttpResult result, PlayerDto? player) = await playerRestService.KickFromTeamByIdAsync(playerId);
 
                 if (result is Success)
                 {
-                    ObservablePlayer? kickedPlayer = roomDataService.Room.Teams.SelectMany(team => team.Players)
+                    ObservablePlayer? playerToKick = roomDataService.Room.Teams
+                        .SelectMany(team => team.Players)
                         .FirstOrDefault(p => p.Id == playerId);
 
-                    roomDataService.Room.Teams
-                        .FirstOrDefault(t => t.Id == kickedPlayer?.TeamId)?
-                        .Players.Remove(kickedPlayer);
+                    ObservableTeam? teamOfPlayerToKick = roomDataService.Room.Teams.FirstOrDefault(team => team.Id == playerToKick.TeamId);
 
-                    kickedPlayer.TeamId = 0;
+                    SetTeamOfficerToNotAssigned(playerToKick, teamOfPlayerToKick);
 
-                    roomDataService.Room.Teams[0].Players.Add(kickedPlayer);
+                    teamOfPlayerToKick?.Players.Remove(playerToKick);
+
+                    playerToKick.TeamId = 0;
+
+                    roomDataService.Room.Teams[0].Players.Add(playerToKick);
                 }
                 else
                 {
@@ -167,6 +168,16 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
             {
                 return new Error(ex.Message);
             }
+        }
+
+        private ObservableTeam SetTeamOfficerToNotAssigned(ObservablePlayer player, ObservableTeam playersTeam)
+        {
+            if (player.TeamId != 0 && player.IsOfficer)
+            {
+                playersTeam.OfficerId = 0;
+            }
+
+            return playersTeam;
         }
     }
 }
