@@ -3,6 +3,7 @@ using AirsoftBmsApp.Networking.ApiFacade.Handlers.Account;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Battle;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
+
 using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.AccountRestService.Implementations;
 using AirsoftBmsApp.Services.BattleRestService;
@@ -46,6 +47,14 @@ namespace AirsoftBmsApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("CascadiaCode-VariableFont_wght", "CascadiaCode");
+                })
+                .ConfigureMauiHandlers(handlers =>
+                {
+#if ANDROID
+                    handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, AirsoftBmsApp.Platforms.Android.CustomMapHandler>();
+#elif IOS
+                    handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, AirsoftBmsApp.Platforms.iOS.CustomMapHandler>();
+#endif
                 });
 
             builder.Services.AddTransient<RoomMembersPage>();

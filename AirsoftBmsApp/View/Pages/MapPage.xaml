@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AirsoftBmsApp.View.Pages.MapPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.MapViewModel"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:customMap="clr-namespace:AirsoftBmsApp.View.ContentViews.CustomMap"
+             xmlns:android="clr-namespace:AirsoftBmsApp.Platforms.Android"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:MapViewModel"
              >
@@ -15,37 +16,15 @@
         RowDefinitions="*,auto"
         ColumnDefinitions="*,*"
         >
-        <maps:Map 
+        <customMap:CustomMap 
             Grid.Row="0"
             Grid.ColumnSpan="2"
             x:Name="map"
             MapType="Satellite"
             IsShowingUser="True"
-            ItemsSource="{Binding VisiblePlayers}"
-            >
-            <maps:Map.ItemTemplate>
-                <DataTemplate x:DataType="maps:Pin">
-                    <maps:Pin
-                        Label="{Binding Label}"
-                        Location="{Binding Location}"
-                        />
-                </DataTemplate>
-            </maps:Map.ItemTemplate>
-            <x:Arguments>
-                <maps:MapSpan>
-                    <x:Arguments>
-                        <sensors:Location>
-                            <x:Arguments>
-                                <x:Double>53.1407109649361</x:Double>
-                                <x:Double>21.050706505558843</x:Double>
-                            </x:Arguments>
-                        </sensors:Location>
-                        <x:Double>0.01</x:Double>
-                        <x:Double>0.01</x:Double>
-                    </x:Arguments>
-                </maps:MapSpan>
-            </x:Arguments>
-        </maps:Map>
+            CustomPins="{Binding VisiblePlayers}"
+            BindableMapElements="{Binding MapElements}"
+            />
 
         <Border
             Grid.Row="1"
