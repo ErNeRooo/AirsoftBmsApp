@@ -8,7 +8,6 @@
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.MapViewModel"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:customMap="clr-namespace:AirsoftBmsApp.View.ContentViews.CustomMap"
-             xmlns:android="clr-namespace:AirsoftBmsApp.Platforms.Android"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:MapViewModel"
              >
@@ -52,6 +51,7 @@
                 HorizontalOptions="Fill"
                 Text="{Static langs:AppResources.HitButtonText}"
                 IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+                Command="{Binding ReportDeathCommand}"
                 FontSize="20"
                 Padding="0"
             >

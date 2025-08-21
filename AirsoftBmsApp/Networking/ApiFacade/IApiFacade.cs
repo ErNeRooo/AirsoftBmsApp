@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Networking.ApiFacade.Handlers.Account;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Battle;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Death;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Kill;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
@@ -19,5 +20,6 @@ namespace AirsoftBmsApp.Networking.ApiFacade
         public IAccountHandler Account { get; }
         public IBattleHandler Battle { get; }
         public IKillHandler Kill { get; }
+        public IDeathHandler Death { get; }
     }
 }

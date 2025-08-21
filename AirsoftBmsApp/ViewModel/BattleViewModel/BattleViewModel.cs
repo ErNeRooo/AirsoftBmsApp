@@ -87,7 +87,9 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     public void UpdatePlayersCollectionChangeHandlers()
     {
         foreach (var team in Room.Teams.Skip(1))
-            team.Players.CollectionChanged += (s, e) => RebuildTeamSummaries();
+        { 
+            team.Players.CollectionChanged += (s, e) => RebuildTeamSummaries(); 
+        }
     }
 
     [RelayCommand]

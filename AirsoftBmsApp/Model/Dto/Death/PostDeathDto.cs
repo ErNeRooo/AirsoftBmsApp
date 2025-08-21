@@ -1,15 +1,10 @@
 ﻿namespace AirsoftBmsApp.Model.Dto.Death;
 
-public class DeathDto
+public class PostDeathDto
 {
-    public int DeathId { get; set; }
-    public int LocationId { get; set; }
-    public int PlayerId { get; set; }
-    public int BattleId { get; set; }
     public double Longitude { get; set; }
     public double Latitude { get; set; }
     public double Accuracy { get; set; }
     public double Bearing { get; set; }
     public DateTimeOffset Time { get; set; }
 }
-
