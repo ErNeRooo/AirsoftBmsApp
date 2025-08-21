@@ -1,4 +1,8 @@
-﻿using AirsoftBmsApp.Model.Observable;
+﻿using AirsoftBmsApp.Model.Dto.Kills;
+using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Networking;
+using AirsoftBmsApp.Networking.ApiFacade;
+using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.View.ContentViews.CustomMap;
@@ -12,6 +16,8 @@ namespace AirsoftBmsApp.ViewModel.MapViewModel;
 
 public partial class MapViewModel : ObservableObject, IMapViewModel
 {
+    IApiFacade _apiFacade;
+
     [ObservableProperty]
     ObservableRoom room;
 
@@ -27,8 +33,15 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [ObservableProperty]
     CustomPin? cursorPin;
 
-    public MapViewModel(IRoomDataService roomDataService, IPlayerDataService playerDataService)
+    [ObservableProperty]
+    bool isLoading = false;
+
+    [ObservableProperty]
+    string errorMessage = "";
+
+    public MapViewModel(IRoomDataService roomDataService, IPlayerDataService playerDataService, IApiFacade apiFacade)
     {
+        _apiFacade = apiFacade;
         Room = roomDataService.Room;
         Player = playerDataService.Player;
         
@@ -122,6 +135,49 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     private void PingMarkClicked(CustomPin pin)
     {
 
+    }
+
+    [RelayCommand]
+    public async Task ReportKill()
+    {
+        IsLoading = true;
+        await Task.Yield();
+
+        Location? playersLocation = await Geolocation.GetLocationAsync();
+
+        if (playersLocation is null)
+        {
+            ErrorMessage = AppResources.LocationNotAvailableErrorMessage;
+            IsLoading = false;
+            return;
+        }
+
+        PostKillDto postKillDto = new()
+        {
+            Longitude = playersLocation.Longitude,
+            Latitude = playersLocation.Latitude,
+            Accuracy = playersLocation.Accuracy ?? 0,
+            Bearing = playersLocation.Course ?? 0,
+            Time = DateTimeOffset.Now
+        };
+
+        var result = await _apiFacade.Kill.Create(postKillDto);
+
+        switch (result)
+        {
+            case Success:
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        IsLoading = false;
     }
 
     public void MapClicked(object sender, MapClickedEventArgs e)

@@ -27,7 +27,7 @@ public partial class ObservableKill : ObservableObject
     private double accuracy;
 
     [ObservableProperty]
-    private Int16 bearing;
+    private double bearing;
 
     [ObservableProperty]
     private DateTimeOffset time;

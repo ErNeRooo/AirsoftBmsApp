@@ -456,4 +456,7 @@
   <data name="KillButtonText" xml:space="preserve">
     <value>Jednego Mniej!</value>
   </data>
+  <data name="LocationNotAvailableErrorMessage" xml:space="preserve">
+    <value>Lokalizacja jest niedostępna :/</value>
+  </data>
 </root>

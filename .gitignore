@@ -250,3 +250,4 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/AirsoftBmsApp/Platforms/Android/Resources/values/secrets.xml

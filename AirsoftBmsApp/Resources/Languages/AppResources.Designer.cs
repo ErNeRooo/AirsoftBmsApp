@@ -502,6 +502,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location is not available :/.
+        /// </summary>
+        internal static string LocationNotAvailableErrorMessage {
+            get {
+                return ResourceManager.GetString("LocationNotAvailableErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log In.
         /// </summary>
         internal static string LogInButton {
