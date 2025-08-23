@@ -88,6 +88,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Spawn Zone.
+        /// </summary>
+        internal static string AddSpawnZoneButtonText {
+            get {
+                return ResourceManager.GetString("AddSpawnZoneButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Admin.
         /// </summary>
         internal static string AdminLabel {
@@ -214,6 +223,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose Action.
+        /// </summary>
+        internal static string ChooseActionTitle {
+            get {
+                return ResourceManager.GetString("ChooseActionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         internal static string ConfirmButton {
@@ -291,6 +309,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string DeadValue {
             get {
                 return ResourceManager.GetString("DeadValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defend.
+        /// </summary>
+        internal static string DefendButtonText {
+            get {
+                return ResourceManager.GetString("DefendButtonText", resourceCulture);
             }
         }
         
@@ -556,6 +583,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mark Enemy.
+        /// </summary>
+        internal static string MarkEnemyText {
+            get {
+                return ResourceManager.GetString("MarkEnemyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter max players number.
         /// </summary>
         internal static string MaxPlayersInputPlaceholder {
@@ -579,6 +615,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string MaxPlayersLabel {
             get {
                 return ResourceManager.GetString("MaxPlayersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        internal static string MoveButtonText {
+            get {
+                return ResourceManager.GetString("MoveButtonText", resourceCulture);
             }
         }
         
@@ -651,6 +696,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string OptionalRoomPasswordInputPlaceholder {
             get {
                 return ResourceManager.GetString("OptionalRoomPasswordInputPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order {0} to.
+        /// </summary>
+        internal static string OrderPlayerText {
+            get {
+                return ResourceManager.GetString("OrderPlayerText", resourceCulture);
             }
         }
         

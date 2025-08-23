@@ -32,7 +32,13 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     ObservableCollection<MapElement> mapElements = new();
 
     [ObservableProperty]
+    ObservableActionDialogState actionDialogState;
+
+    [ObservableProperty]
     CustomPin? cursorPin;
+
+    [ObservableProperty]
+    CustomPin? selectedPlayerPin;
 
     [ObservableProperty]
     bool isLoading = false;
@@ -45,7 +51,8 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         _apiFacade = apiFacade;
         Room = roomDataService.Room;
         Player = playerDataService.Player;
-        
+        ActionDialogState = new ObservableActionDialogState(null, Player);
+
         Player.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(ObservablePlayer.TeamId))
@@ -63,15 +70,6 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
         UpdateVisiblePlayers();
         UpdatePlayersCollectionChangeHandlers();
-
-        MapElements.Add(new Circle
-        {
-            Center = new Location(53.1407114016577, 21.05076719059483),
-            Radius = new Distance(50),
-            StrokeColor = Color.FromArgb("#10B981FF"),
-            StrokeWidth = 3,
-            FillColor = Color.FromArgb("#10B98140")
-        });
     }
 
     public void UpdatePlayersCollectionChangeHandlers()
@@ -105,7 +103,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                     Location = new Location(lastLocation.Latitude, lastLocation.Longitude),
                     IconSource = player.IsDead ? "dead_player" : "ally_player",
                     Type = PinType.Generic,
-                    ClickedCommand = MapPinClickedCommand,
+                    ClickedCommand = PlayerPinClickedCommand,
                 };
 
                 Circle circle = new()
@@ -127,13 +125,58 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     }
 
     [RelayCommand]
-    private void MapPinClicked(CustomPin pin)
+    private void PlayerPinClicked(CustomPin pin)
+    {
+        SelectedPlayerPin = pin;
+    }
+
+    public void MapClicked(object sender, MapClickedEventArgs e)
+    {
+        CustomPin pin = new()
+        {
+            Location = e.Location,
+            IconSource = "crosshair_icon",
+            Type = PinType.Place,
+            ClickedCommand = CursorPinClickedCommand,
+        };
+
+        var newList = new List<CustomPin>(VisiblePlayers);
+
+        newList.Remove(CursorPin);
+        newList.Add(pin);
+
+        CursorPin = pin;
+
+        VisiblePlayers = newList;
+    }
+
+    [RelayCommand]
+    private void CursorPinClicked(CustomPin pin)
+    {
+        ActionDialogState.IsVisible = true;
+        ActionDialogState.SelectedPlayerPin = SelectedPlayerPin;
+    }
+
+    [RelayCommand]
+    public async Task MarkEnemy()
+    { 
+    
+    }
+
+    [RelayCommand]
+    public async Task OrderMove()
     {
 
     }
 
     [RelayCommand]
-    private void PingMarkClicked(CustomPin pin)
+    public async Task OrderDefend()
+    {
+
+    }
+
+    [RelayCommand]
+    public async Task AddSpawnZone()
     {
 
     }
@@ -222,36 +265,5 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         }
 
         IsLoading = false;
-    }
-
-    public void MapClicked(object sender, MapClickedEventArgs e)
-    {
-        
-
-        CustomPin pin = new()
-        {
-            Location = e.Location,
-            IconSource = "swords_icon",
-            Type = PinType.Place,
-            ClickedCommand = PingMarkClickedCommand,
-        };
-
-        Circle circle = new()
-        {
-            Center = e.Location,
-            Radius = new Distance(50),
-            StrokeColor = Color.FromArgb("#10B981FF"),
-            StrokeWidth = 3,
-            FillColor = Color.FromArgb("#10B98140")
-        };
-
-        var newList = new List<CustomPin>(VisiblePlayers);
-        
-        newList.Remove(CursorPin);
-        newList.Add(pin);
-        
-        CursorPin = pin;
-        
-        VisiblePlayers = newList;
     }
 }

@@ -6,7 +6,7 @@ namespace AirsoftBmsApp.View.ContentViews.Dialogs;
 public partial class BattleSettingsDialog : ContentView
 {
     public static readonly BindableProperty BattleSettingsProperty =
-    BindableProperty.Create(nameof(BattleSettings), typeof(ObservableBattleSettingsState), typeof(BattleSettingsDialog));
+        BindableProperty.Create(nameof(BattleSettings), typeof(ObservableBattleSettingsState), typeof(BattleSettingsDialog));
 
     public static readonly BindableProperty UpdateBattleCommandProperty =
         BindableProperty.Create(nameof(UpdateBattleCommand), typeof(ICommand), typeof(BattleSettingsDialog));

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AirsoftBmsApp.View.ContentViews.Dialogs.MapActionDialog"
+             x:Name="MapActions"
+             xmlns:text="clr-namespace:AirsoftBmsApp.View.ContentViews.Text"
+             xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:inputs="clr-namespace:AirsoftBmsApp.View.ContentViews.Inputs"
+             xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
+             IsVisible="{Binding ActionDialogState.IsVisible, Source={x:Reference MapActions}}"
+             >
+    <Grid   
+        BackgroundColor="#80000000"   
+        VerticalOptions="Fill"  
+        CascadeInputTransparent="False"  
+        HorizontalOptions="Fill">
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer/>
+        </Grid.GestureRecognizers>
+
+        <Border
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="{toolkit:AppThemeResource SurfaceSecond}"
+            Margin="40"
+       
+            StrokeShape="RoundRectangle 30"
+            Stroke="{toolkit:AppThemeResource Outline}"
+            WidthRequest="350"
+        >
+            <Grid 
+                RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+                Padding="10,15"
+                BindingContext="{Binding Source={x:Reference MapActions}}"
+                >
+
+                <text:Header Text="{Static langs:AppResources.ChooseActionTitle}" Grid.Row="0" Margin="0,0,0,10"/>
+                
+                <Border
+                    Grid.Row="1"
+                    StrokeShape="RoundRectangle 45"
+                    StrokeThickness="2"
+                    Stroke="{toolkit:AppThemeResource Danger}"
+                    Margin="0,0,0,10"
+                >
+                    <Button 
+                        BackgroundColor="Transparent"
+                        TextColor="{toolkit:AppThemeResource Danger}"
+                        BorderWidth="2"
+                        FontFamily="{StaticResource GlobalFont}" 
+                        HorizontalOptions="Fill"
+                        Text="{Static langs:AppResources.MarkEnemyText}"
+                        FontSize="20"
+                        Padding="0"
+                        Command="{Binding MarkEnemyCommand}"
+                />
+                </Border>
+
+                <Label 
+                    Grid.Row="2"
+                    IsVisible="True" 
+                    Text="{Binding ActionDialogState.SelectedPlayerPin.Label, StringFormat={Static langs:AppResources.OrderPlayerText}}"
+                    FontFamily="{StaticResource GlobalFont}"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Margin="0,0,0,10"
+                >
+                    <Label.Triggers>
+                        <DataTrigger 
+                            TargetType="Label"
+                            Binding="{Binding ActionDialogState.SelectedPlayerPin, Converter={StaticResource IsNullConverter}}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+
+                        <DataTrigger 
+                            TargetType="Label"
+                            Binding="{Binding ActionDialogState.Player.IsOfficer}"
+                            Value="false"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <Border
+                    Grid.Row="3"
+                    StrokeShape="RoundRectangle 45"
+                    StrokeThickness="2"
+                    Stroke="{toolkit:AppThemeResource Text}"
+                    Margin="0,0,0,10"
+                    IsVisible="True" 
+                >
+                    <Border.Triggers>
+                        <DataTrigger 
+                            TargetType="Border"
+                            Binding="{Binding ActionDialogState.SelectedPlayerPin, Converter={StaticResource IsNullConverter}}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+
+                        <DataTrigger 
+                            TargetType="Border"
+                            Binding="{Binding ActionDialogState.Player.IsOfficer}"
+                            Value="false"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
+
+                    <Button 
+                        BackgroundColor="Transparent"
+                        TextColor="{toolkit:AppThemeResource Text}"
+                        BorderWidth="2"
+                        FontFamily="{StaticResource GlobalFont}" 
+                        HorizontalOptions="Fill"
+                        Text="{Static langs:AppResources.MoveButtonText}"
+                        FontSize="20"
+                        Padding="0"
+                        Command="{Binding OrderToMoveCommand}"
+                />
+                </Border>
+
+                <Border
+                    Grid.Row="4"
+                    StrokeShape="RoundRectangle 45"
+                    StrokeThickness="2"
+                    Stroke="{toolkit:AppThemeResource Text}"
+                    Margin="0,0,0,10"
+                    IsVisible="True"
+                >
+                    <Border.Triggers>
+                        <DataTrigger 
+                            TargetType="Border"
+                            Binding="{Binding ActionDialogState.SelectedPlayerPin, Converter={StaticResource IsNullConverter}}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+
+                        <DataTrigger 
+                            TargetType="Border"
+                            Binding="{Binding ActionDialogState.Player.IsOfficer}"
+                            Value="false"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    
+                    <Button 
+                        BackgroundColor="Transparent"
+                        TextColor="{toolkit:AppThemeResource Text}"
+                        BorderWidth="2"
+                        FontFamily="{StaticResource GlobalFont}" 
+                        HorizontalOptions="Fill"
+                        Text="{Static langs:AppResources.DefendButtonText}"
+                        FontSize="20"
+                        Padding="0"
+                        Command="{Binding OrderToDefendCommand}"
+                />
+                </Border>
+
+                <Border
+                    Grid.Row="5"
+                    StrokeShape="RoundRectangle 45"
+                    StrokeThickness="2"
+                    Stroke="{toolkit:AppThemeResource Text}"
+                    Margin="0,0,0,10"
+                    IsVisible="{Binding ActionDialogState.Player.IsAdmin}"
+                >
+                    <Button 
+                        BackgroundColor="Transparent"
+                        TextColor="{toolkit:AppThemeResource Text}"
+                        BorderWidth="2"
+                        FontFamily="{StaticResource GlobalFont}" 
+                        HorizontalOptions="Fill"
+                        Text="{Static langs:AppResources.AddSpawnZoneButtonText}"
+                        FontSize="20"
+                        Padding="0"
+                        Command="{Binding AddSpawnZoneCommand}"
+                />
+                </Border>
+
+                <buttons:OutlinedButton 
+                    Grid.Row="6"
+                    Text="{Static langs:AppResources.BackButton}"
+                    Clicked="Cancel"
+                />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

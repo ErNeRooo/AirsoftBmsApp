@@ -115,7 +115,13 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                     RoomId = 1,
                     MaxPlayers = 10,
                     AdminPlayer = null,
-                    Battle = null,
+                    Battle = new BattleDto
+                    {
+                        BattleId = 1,
+                        RoomId = 1,
+                        Name = "Bitwa Pod Słabogórą",
+                        IsActive = true
+                    },
                     Players = new List<PlayerDto>
                     {
                         new PlayerDto { PlayerId = 3, Name = "Eris", TeamId = 1, RoomId = 1, IsDead = false },
@@ -222,7 +228,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         new LocationDto { LocationId = 19, PlayerId = 19, BattleId = 1, Longitude = 21.0447, Latitude = 53.1311, Accuracy = 24.1, Bearing = 195, Time = DateTimeOffset.Now.AddMinutes(-2) },
                         new LocationDto { LocationId = 20, PlayerId = 21, BattleId = 1, Longitude = 21.0422, Latitude = 53.1321, Accuracy = 19.4, Bearing = 15, Time = DateTimeOffset.Now.AddMinutes(-1) },
                     }
-                    
+
                 });
             }
         }

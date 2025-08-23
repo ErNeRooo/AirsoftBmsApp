@@ -462,4 +462,22 @@
   <data name="BattleIsPausedMapMessage" xml:space="preserve">
     <value>Bitwa jest zatrzymana</value>
   </data>
+  <data name="ChooseActionTitle" xml:space="preserve">
+    <value>Wybierz Akcję</value>
+  </data>
+  <data name="MarkEnemyText" xml:space="preserve">
+    <value>Oznacz Przeciwnika</value>
+  </data>
+  <data name="OrderPlayerText" xml:space="preserve">
+    <value>Wydaj rozkaz dla {0} </value>
+  </data>
+  <data name="DefendButtonText" xml:space="preserve">
+    <value>Broń się</value>
+  </data>
+  <data name="MoveButtonText" xml:space="preserve">
+    <value>Idź</value>
+  </data>
+  <data name="AddSpawnZoneButtonText" xml:space="preserve">
+    <value>Dodaj strefę odradzania</value>
+  </data>
 </root>

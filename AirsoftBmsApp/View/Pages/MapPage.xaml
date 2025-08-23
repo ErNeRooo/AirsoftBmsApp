@@ -7,6 +7,7 @@
              xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.MapViewModel"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
+             xmlns:dialogs="clr-namespace:AirsoftBmsApp.View.ContentViews.Dialogs"
              xmlns:customMap="clr-namespace:AirsoftBmsApp.View.ContentViews.CustomMap"
              BackgroundColor="{toolkit:AppThemeResource AppBackground}"
              x:DataType="viewModel:MapViewModel"
@@ -108,6 +109,16 @@
                 </Button.Triggers>
             </Button>
         </Border>
+
+        <dialogs:MapActionDialog 
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="2"
+            ActionDialogState="{Binding ActionDialogState, Mode=TwoWay}"
+            MarkEnemyCommand="{Binding MarkEnemyCommand}"
+            OrderToMoveCommand="{Binding OrderMoveCommand}"
+            OrderToDefendCommand="{Binding OrderDefendCommand}"
+            AddSpawnZoneCommand="{Binding AddSpawnZoneCommand}"
+            />
 
         <Grid 
             Grid.Row="0"
