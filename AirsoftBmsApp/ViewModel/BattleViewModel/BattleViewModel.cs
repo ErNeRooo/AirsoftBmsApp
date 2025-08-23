@@ -9,6 +9,7 @@ using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.Validation.Rules;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MethodTimer;
 using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.ViewModel.BattleViewModel;
@@ -74,6 +75,7 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         });
     }
 
+    [Time]
     private void RebuildTeamSummaries()
     {
         TeamSummaries.Clear();
@@ -84,11 +86,20 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
             TeamSummaries.Last().IsLast = true;
     }
 
+    [Time]
     public void UpdatePlayersCollectionChangeHandlers()
     {
         foreach (var team in Room.Teams.Skip(1))
-        { 
-            team.Players.CollectionChanged += (s, e) => RebuildTeamSummaries(); 
+        {
+            team.Players.CollectionChanged += (s, e) => { 
+                RebuildTeamSummaries();
+                UpdatePlayersCollectionChangeHandlers();
+            };
+
+            foreach (var player in team.Players)
+            {
+                player.Deaths.CollectionChanged += (s, e) => RebuildTeamSummaries();
+            }
         }
     }
 

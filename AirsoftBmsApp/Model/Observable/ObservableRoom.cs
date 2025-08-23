@@ -3,12 +3,7 @@ using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Resources.Styles.TeamTheme;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Model.Observable;
 
@@ -72,7 +67,7 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
 
         foreach (PlayerDto player in room.Players)
         {
-            ObservablePlayer observablePlayer = new ObservablePlayer(player);
+            ObservablePlayer observablePlayer = new(player);
 
             if (room.AdminPlayer is not null && player.PlayerId == room.AdminPlayer.PlayerId)
             {
