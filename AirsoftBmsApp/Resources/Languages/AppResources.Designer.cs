@@ -124,6 +124,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Battle is paused.
+        /// </summary>
+        internal static string BattleIsPausedMapMessage {
+            get {
+                return ResourceManager.GetString("BattleIsPausedMapMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter battle name.
         /// </summary>
         internal static string BattleNameInputPlaceholder {

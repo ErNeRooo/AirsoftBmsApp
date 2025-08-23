@@ -108,5 +108,25 @@
                 </Button.Triggers>
             </Button>
         </Border>
+
+        <Grid 
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#80000000" 
+            IsVisible="{Binding Room.Battle.IsActive, Converter={StaticResource InverseBoolConverter}}"
+            >
+
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer/>
+            </Grid.GestureRecognizers>
+
+            <Label Text="{Static langs:AppResources.BattleIsPausedMapMessage}"
+            TextColor="White"
+            FontSize="24"
+            FontFamily="{StaticResource GlobalFont}" 
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+        </Grid>
     </Grid>
 </ContentView>

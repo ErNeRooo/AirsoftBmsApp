@@ -459,4 +459,7 @@
   <data name="LocationNotAvailableErrorMessage" xml:space="preserve">
     <value>Location is not available :/</value>
   </data>
+  <data name="BattleIsPausedMapMessage" xml:space="preserve">
+    <value>The Battle is paused</value>
+  </data>
 </root>
