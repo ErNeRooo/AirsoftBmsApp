@@ -217,6 +217,8 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     [RelayCommand]
     public async Task ShowBattleSettings()
     {
+        if (!Player.IsAdmin) return;
+
         BattleSettingsState.BattleForm.Name.Value = "";
         BattleSettingsState.IsActive = Room.Battle.IsActive;
         BattleSettingsState.IsVisible = true;

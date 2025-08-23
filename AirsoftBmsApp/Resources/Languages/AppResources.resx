@@ -480,4 +480,7 @@
   <data name="AddSpawnZoneButtonText" xml:space="preserve">
     <value>Add Spawn Zone</value>
   </data>
+  <data name="CannotSwitchTeamDuringABattleInformationMessage" xml:space="preserve">
+    <value>Cannot switch team during a battle</value>
+  </data>
 </root>

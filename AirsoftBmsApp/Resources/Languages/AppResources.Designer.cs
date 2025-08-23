@@ -205,6 +205,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot switch team during a battle.
+        /// </summary>
+        internal static string CannotSwitchTeamDuringABattleInformationMessage {
+            get {
+                return ResourceManager.GetString("CannotSwitchTeamDuringABattleInformationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to - {0} killed.
         /// </summary>
         internal static string CasualtiesKilledText {

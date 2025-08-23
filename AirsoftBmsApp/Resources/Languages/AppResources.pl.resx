@@ -480,4 +480,7 @@
   <data name="AddSpawnZoneButtonText" xml:space="preserve">
     <value>Dodaj strefę odradzania</value>
   </data>
+  <data name="CannotSwitchTeamDuringABattleInformationMessage" xml:space="preserve">
+    <value>Nie można zmieniać drużyny podczas bitwy</value>
+  </data>
 </root>
