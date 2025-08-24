@@ -8,8 +8,6 @@ namespace AirsoftBmsApp.Platforms.Android
 {
     public class CustomMapHandler : MapHandler
     {
-        private const int _iconSize = 40;
-
         private readonly Dictionary<string, BitmapDescriptor> _iconMap = [];
 
         public static new IPropertyMapper<CustomMap, CustomMapHandler> Mapper = new PropertyMapper<CustomMap, CustomMapHandler>(MapHandler.Mapper)
@@ -52,7 +50,7 @@ namespace AirsoftBmsApp.Platforms.Android
             }
         }
 
-        private BitmapDescriptor GetIcon(string icon)
+        private BitmapDescriptor GetIcon(string icon, int iconSizeInPixels)
         {
             if (_iconMap.TryGetValue(icon, out BitmapDescriptor? value))
             {
@@ -61,7 +59,7 @@ namespace AirsoftBmsApp.Platforms.Android
 
             var drawable = Context.Resources.GetIdentifier(icon, "drawable", Context.PackageName);
             var bitmap = BitmapFactory.DecodeResource(Context.Resources, drawable);
-            var scaled = Bitmap.CreateScaledBitmap(bitmap, _iconSize, _iconSize, false);
+            var scaled = Bitmap.CreateScaledBitmap(bitmap, iconSizeInPixels, iconSizeInPixels, false);
             bitmap.Recycle();
             var descriptor = BitmapDescriptorFactory.FromBitmap(scaled);
 
@@ -78,7 +76,7 @@ namespace AirsoftBmsApp.Platforms.Android
                 {
                     var markerOption = new MarkerOptions();
                     markerOption.SetTitle(pin.Label);
-                    markerOption.SetIcon(GetIcon(pin.IconSource));
+                    markerOption.SetIcon(GetIcon(pin.IconSource, pin.IconSizeInPixels));
                     markerOption.SetPosition(new LatLng(pin.Location.Latitude, pin.Location.Longitude));
                     markerOption.Anchor(0.5f, 0.5f);
                     var marker = Map.AddMarker(markerOption);
@@ -87,8 +85,6 @@ namespace AirsoftBmsApp.Platforms.Android
                 }
             }
         }
-
-
 
         public void MarkerClick(object sender, GoogleMap.MarkerClickEventArgs args)
         {

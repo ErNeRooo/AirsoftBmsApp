@@ -3,6 +3,7 @@ using AirsoftBmsApp.Networking.ApiFacade.Handlers.Account;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Battle;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Death;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Kill;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Location;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
 
@@ -12,6 +13,7 @@ using AirsoftBmsApp.Services.BattleRestService;
 using AirsoftBmsApp.Services.DeathRestService;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.KillRestService;
+using AirsoftBmsApp.Services.LocationRestService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerDataService.Implementations;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
@@ -84,6 +86,7 @@ namespace AirsoftBmsApp
                 builder.Services.AddSingleton<IBattleRestService, MockBattleRestService>();
                 builder.Services.AddSingleton<IKillRestService, MockKillRestService>();
                 builder.Services.AddSingleton<IDeathRestService, MockDeathRestService>();
+                builder.Services.AddSingleton<ILocationRestService, MockLocationRestService>();
             } 
             else
             {
@@ -123,6 +126,11 @@ namespace AirsoftBmsApp
                 {
                     client.BaseAddress = new Uri($"{baseAddress}/Death/");
                 });
+
+                builder.Services.AddHttpClient<ILocationRestService, LocationRestService>(client =>
+                {
+                    client.BaseAddress = new Uri($"{baseAddress}/Location/");
+                });
             }
 
             builder.Services.AddSingleton<IValidationHelperFactory, ValidationHelperFactory>();
@@ -139,6 +147,7 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IBattleHandler, BattleHandler>();
             builder.Services.AddSingleton<IKillHandler, KillHandler>();
             builder.Services.AddSingleton<IDeathHandler, DeathHandler>();
+            builder.Services.AddSingleton<ILocationHandler, LocationHandler>();
 
 #if DEBUG
             builder.Logging.AddDebug();

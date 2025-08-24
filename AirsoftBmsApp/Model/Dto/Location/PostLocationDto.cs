@@ -1,10 +1,7 @@
 ﻿namespace AirsoftBmsApp.Model.Dto.Location;
 
-public class LocationDto
+public class PostLocationDto
 {
-    public int LocationId { get; set; }
-    public int PlayerId { get; set; }
-    public int BattleId { get; set; }
     public double Longitude { get; set; }
     public double Latitude { get; set; }
     public double Accuracy { get; set; }
@@ -12,4 +9,3 @@ public class LocationDto
     public DateTimeOffset Time { get; set; }
     public string Type { get; set; }
 }
-

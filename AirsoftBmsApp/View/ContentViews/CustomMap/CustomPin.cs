@@ -7,4 +7,5 @@ public class CustomPin : Pin
 {
     public ICommand ClickedCommand { get; set; }
     public string IconSource { get; set; }
+    public int IconSizeInPixels { get; set; } = 40;
 }

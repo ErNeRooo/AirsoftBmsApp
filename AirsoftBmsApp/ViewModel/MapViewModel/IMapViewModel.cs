@@ -8,7 +8,7 @@ public interface IMapViewModel
 {
     ObservableRoom Room { get; }
     ObservablePlayer Player { get; }
-    List<CustomPin> VisiblePlayers { get; }
+    List<CustomPin> MapPins { get; }
 
     public void MapClicked(object sender, MapClickedEventArgs e);
 }

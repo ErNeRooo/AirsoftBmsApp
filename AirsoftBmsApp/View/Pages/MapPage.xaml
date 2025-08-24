@@ -22,7 +22,7 @@
             x:Name="map"
             MapType="Satellite"
             IsShowingUser="True"
-            CustomPins="{Binding VisiblePlayers}"
+            CustomPins="{Binding MapPins}"
             BindableMapElements="{Binding MapElements}"
             />
 

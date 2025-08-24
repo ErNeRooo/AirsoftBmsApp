@@ -26,11 +26,18 @@ public partial class ObservableLocation : ObservableObject
     private double accuracy;
 
     [ObservableProperty]
-    private Int16 bearing;
+    private double bearing;
 
     [ObservableProperty]
     private DateTimeOffset time;
 
+    [ObservableProperty]
+    private string type;
+
+    public ObservableLocation()
+    {
+        
+    }
     public ObservableLocation(LocationDto locationDto)
     {
         LocationId = locationDto.LocationId;
@@ -41,5 +48,6 @@ public partial class ObservableLocation : ObservableObject
         Accuracy = locationDto.Accuracy;
         Bearing = locationDto.Bearing;
         Time = locationDto.Time;
+        Type = locationDto.Type;
     }
 }
