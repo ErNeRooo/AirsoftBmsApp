@@ -33,6 +33,7 @@
             StrokeThickness="2"
             Stroke="{toolkit:AppThemeResource Danger}"
             Margin="10,10,5,10"
+            IsVisible="True"
         >
             <Border.Triggers>
                 <DataTrigger
@@ -41,6 +42,13 @@
                         Value="true"
                         >
                     <Setter Property="Stroke" Value="{toolkit:AppThemeResource Outline}"/>
+                </DataTrigger>
+                <DataTrigger
+                        TargetType="Border"
+                        Binding="{Binding Player.IsDead}"
+                        Value="true"
+                        >
+                    <Setter Property="IsVisible" Value="False"/>
                 </DataTrigger>
             </Border.Triggers>
 
@@ -75,6 +83,7 @@
             StrokeThickness="2"
             Stroke="{toolkit:AppThemeResource Primary}"
             Margin="5,10,10,10"
+            IsVisible="True"
             >
             <Border.Triggers>
                 <DataTrigger
@@ -83,6 +92,13 @@
                         Value="true"
                         >
                     <Setter Property="Stroke" Value="{toolkit:AppThemeResource Outline}"/>
+                </DataTrigger>
+                <DataTrigger
+                        TargetType="Border"
+                        Binding="{Binding Player.IsDead}"
+                        Value="true"
+                        >
+                    <Setter Property="IsVisible" Value="False"/>
                 </DataTrigger>
             </Border.Triggers>
 
@@ -94,6 +110,56 @@
                 HorizontalOptions="Fill"
                 Text="{Static langs:AppResources.KillButtonText}"
                 Command="{Binding ReportKillCommand}"
+                IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+                FontSize="20"
+                Padding="0"
+            >
+                <Button.Triggers>
+                    <DataTrigger
+                        TargetType="Button"
+                        Binding="{Binding IsLoading}"
+                        Value="true"
+                        >
+                        <Setter Property="TextColor" Value="{toolkit:AppThemeResource Outline}"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </Border>
+
+        <Border
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            StrokeShape="RoundRectangle 15"
+            StrokeThickness="2"
+            Stroke="{toolkit:AppThemeResource Danger}"
+            Margin="5,10,10,10"
+            IsVisible="False"
+            >
+            <Border.Triggers>
+                <DataTrigger
+                        TargetType="Border"
+                        Binding="{Binding IsLoading}"
+                        Value="true"
+                        >
+                    <Setter Property="Stroke" Value="{toolkit:AppThemeResource Outline}"/>
+                </DataTrigger>
+                <DataTrigger
+                        TargetType="Border"
+                        Binding="{Binding Player.IsDead}"
+                        Value="true"
+                        >
+                    <Setter Property="IsVisible" Value="True"/>
+                </DataTrigger>
+            </Border.Triggers>
+
+            <Button 
+                BackgroundColor="Transparent"
+                TextColor="{toolkit:AppThemeResource Danger}"
+                BorderWidth="2"
+                FontFamily="{StaticResource GlobalFont}" 
+                HorizontalOptions="Fill"
+                Text="{Static langs:AppResources.RespawnButtonText}"
+                Command="{Binding RespawnCommand}"
                 IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
                 FontSize="20"
                 Padding="0"

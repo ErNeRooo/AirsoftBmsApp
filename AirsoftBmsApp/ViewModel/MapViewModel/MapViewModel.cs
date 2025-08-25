@@ -1,6 +1,7 @@
 ﻿using AirsoftBmsApp.Model.Dto.Death;
 using AirsoftBmsApp.Model.Dto.Kills;
 using AirsoftBmsApp.Model.Dto.Location;
+using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.ApiFacade;
@@ -222,6 +223,37 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         };
 
         var result = await _apiFacade.Location.Create(postLocationDto);
+
+        switch (result)
+        {
+            case Success:
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        ActionDialogState.IsVisible = false;
+        IsLoading = false;
+    }
+
+    [RelayCommand]
+    public async Task Respawn()
+    {
+        IsLoading = true;
+        await Task.Yield();
+
+        PutPlayerDto putPlayerDto = new()
+        {
+            IsDead = false
+        };
+
+        var result = await _apiFacade.Player.Update(putPlayerDto, Player.Id);
 
         switch (result)
         {

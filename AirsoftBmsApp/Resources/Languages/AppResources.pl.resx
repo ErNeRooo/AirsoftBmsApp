@@ -483,4 +483,7 @@
   <data name="CannotSwitchTeamDuringABattleInformationMessage" xml:space="preserve">
     <value>Nie można zmieniać drużyny podczas bitwy</value>
   </data>
+  <data name="RespawnButtonText" xml:space="preserve">
+    <value>Respawn</value>
+  </data>
 </root>

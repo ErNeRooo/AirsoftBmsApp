@@ -17,6 +17,7 @@ public class DeathHandler(IDeathRestService DeathRestService, IPlayerDataService
             if (result is Success)
             {
                 playerDataService.Player.Deaths.Add(new ObservableDeath(Death));
+                playerDataService.Player.IsDead = true;
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 

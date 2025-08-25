@@ -925,6 +925,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Respawn.
+        /// </summary>
+        internal static string RespawnButtonText {
+            get {
+                return ResourceManager.GetString("RespawnButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Room {0}.
         /// </summary>
         internal static string RoomJoinCodeHeader {
