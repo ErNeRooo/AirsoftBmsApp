@@ -498,4 +498,7 @@
   <data name="MaxZoneVerticesReachedMessage" xml:space="preserve">
     <value>You have reached the maximum number of zone vertices.</value>
   </data>
+  <data name="CannotRespawnWhenOutsideSpawnZoneErrorMessage" xml:space="preserve">
+    <value>You cannot respawn outside the spawn zone.</value>
+  </data>
 </root>

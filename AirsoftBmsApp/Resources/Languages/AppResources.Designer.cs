@@ -205,6 +205,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot respawn outside the spawn zone..
+        /// </summary>
+        internal static string CannotRespawnWhenOutsideSpawnZoneErrorMessage {
+            get {
+                return ResourceManager.GetString("CannotRespawnWhenOutsideSpawnZoneErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot switch team during a battle.
         /// </summary>
         internal static string CannotSwitchTeamDuringABattleInformationMessage {

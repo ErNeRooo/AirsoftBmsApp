@@ -86,10 +86,12 @@ namespace AirsoftBmsApp.Platforms.Android
                             CircleMap.Add(aCircle.Id, (aCircle, circle));
                             break;
                         case Polygon polygon:
+                            if (polygon.Geopath.Count < 1) break;
                             var aPolygon = AddPolygon(polygon);
                             PolygonMap.Add(aPolygon.Id, (aPolygon, polygon));
                             break;
                         case Polyline polyline:
+                            if (polyline.Geopath.Count < 1) break;
                             var aPolyline = AddPolyline(polyline);
                             PolylineMap.Add(aPolyline.Id, (aPolyline, polyline));
                             break;

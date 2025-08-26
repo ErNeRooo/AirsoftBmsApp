@@ -9,6 +9,7 @@ using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
+using AirsoftBmsApp.Utils;
 using AirsoftBmsApp.View.ContentViews.CustomMap;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -367,6 +368,25 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         IsLoading = true;
         await Task.Yield();
 
+        Location? playersLocation = await Geolocation.GetLocationAsync();
+
+        if (playersLocation is null)
+        {
+            ErrorMessage = AppResources.LocationNotAvailableErrorMessage;
+            IsLoading = false;
+            return;
+        }
+
+        Polygon? spawnZone = Room.Teams.FirstOrDefault(t => t.Id == Player.TeamId)?.SpawnZone;
+        bool canRespawn = spawnZone is null ? true : spawnZone.IsPointInPolygon(playersLocation);
+
+        if (!canRespawn)
+        {
+            InformationMessage = AppResources.CannotRespawnWhenOutsideSpawnZoneErrorMessage;
+            IsLoading = false;
+            return;
+        }
+
         PutPlayerDto putPlayerDto = new()
         {
             IsDead = false
@@ -388,7 +408,6 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                 throw new InvalidOperationException("Unknown result type");
         }
 
-        ActionDialogState.IsVisible = false;
         IsLoading = false;
     }
 
