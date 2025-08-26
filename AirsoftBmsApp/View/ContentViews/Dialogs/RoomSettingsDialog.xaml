@@ -96,16 +96,17 @@
                          StrokeShape="RoundRectangle 15"
                     >
                         <Picker
-                             x:Name="AdminPicker"
-                             HorizontalTextAlignment="Center"
-                             VerticalTextAlignment="Center"
-                             FontFamily="{StaticResource GlobalFont}"
-                             BindingContext="{Binding Source={x:Reference RoomSettingsDialogView}}"
-                             ItemsSource="{Binding RoomSettings.Players}"
-                             ItemDisplayBinding="{Binding Name}"
-                             SelectedItem="{Binding RoomSettings.SelectedPlayerToBecomeAdmin, Mode=TwoWay}"
-                             Title="{OnPlatform Default={Static langs:AppResources.PlayerPicker}, WinUI=''}"
-                     />
+                            x:Name="AdminPicker"
+                            HorizontalOptions="Fill"
+                            Margin="10,0,0,0"
+                            VerticalTextAlignment="Center"
+                            FontFamily="{StaticResource GlobalFont}"
+                            BindingContext="{Binding Source={x:Reference RoomSettingsDialogView}}"
+                            ItemsSource="{Binding RoomSettings.Players}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding RoomSettings.SelectedPlayerToBecomeAdmin, Mode=TwoWay}"
+                            Title="{OnPlatform Default={Static langs:AppResources.PlayerPicker}, WinUI=''}"
+                        />
                     </Border>
 
                 </Grid>

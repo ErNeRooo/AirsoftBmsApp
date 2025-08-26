@@ -1,6 +1,7 @@
 ﻿using AirsoftBmsApp.Model.Dto.Team;
 using AirsoftBmsApp.Resources.Styles.TeamTheme;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Maui.Controls.Maps;
 using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.Model.Observable;
@@ -25,6 +26,9 @@ public partial class ObservableTeam : ObservableObject, IObservableTeam
     [ObservableProperty]
     private ITeamTheme teamTheme = TeamThemes.UnderNoFlag;
 
+    [ObservableProperty]
+    private Polygon? spawnZone = null;
+
     public ObservableTeam()
     {
         
@@ -36,6 +40,22 @@ public partial class ObservableTeam : ObservableObject, IObservableTeam
         RoomId = team.RoomId;
         OfficerId = team.OfficerPlayerId ?? 0;
         Name = team.Name;
+
+        if (team.SpawnZoneVertices?.Count() > 0)
+        {
+            Polygon polygon = new() 
+            {
+                StrokeColor = TeamTheme.TitleColor,
+                FillColor = TeamTheme.TitleColor.WithAlpha(0.4f),
+            };
+
+            foreach (var vertex in team.SpawnZoneVertices)
+            {
+                polygon.Geopath.Add(new Location(vertex.Latitude, vertex.Longitude));
+            }
+
+            SpawnZone = polygon;
+        }
     }
 
     public void Attach(ObservablePlayer observer)

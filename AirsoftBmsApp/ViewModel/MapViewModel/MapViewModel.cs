@@ -2,6 +2,7 @@
 using AirsoftBmsApp.Model.Dto.Kills;
 using AirsoftBmsApp.Model.Dto.Location;
 using AirsoftBmsApp.Model.Dto.Player;
+using AirsoftBmsApp.Model.Dto.Team;
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.ApiFacade;
@@ -13,6 +14,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.ViewModel.MapViewModel;
 
@@ -30,10 +32,16 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     List<CustomPin> mapPins = new();
 
     [ObservableProperty]
-    List<MapElement> mapElements = new();
+    ObservableCollection<MapElement> mapElements = new();
+
+    [ObservableProperty]
+    Polygon? zoneSelection;
 
     [ObservableProperty]
     ObservableActionDialogState actionDialogState;
+
+    [ObservableProperty]
+    ObservableCreateSpawnZoneDialogState createSpawnZoneDialogState;
 
     [ObservableProperty]
     CustomPin? cursorPin;
@@ -47,12 +55,19 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [ObservableProperty]
     string errorMessage = "";
 
+    [ObservableProperty]
+    string informationMessage = "";
+
+    [ObservableProperty]
+    bool isSpawnCreationMode = false;
+
     public MapViewModel(IRoomDataService roomDataService, IPlayerDataService playerDataService, IApiFacade apiFacade)
     {
         _apiFacade = apiFacade;
         Room = roomDataService.Room;
         Player = playerDataService.Player;
         ActionDialogState = new ObservableActionDialogState(null, Player);
+        CreateSpawnZoneDialogState = new ObservableCreateSpawnZoneDialogState(Room.Teams);
 
         Player.PropertyChanged += (s, e) =>
         {
@@ -99,10 +114,12 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         List<MapElement> elements = new();
 
         (List<CustomPin> pinsWithPlayerLocations, List<MapElement> elementsWithPlayerLocations) = AddPlayerLocations(pins, elements);
-        List<CustomPin> pinsWithEnemyPings = MapEnemyPings(pinsWithPlayerLocations);
+        List<CustomPin> pinsWithEnemyPings = AddEnemyPings(pinsWithPlayerLocations);
+        List<MapElement> mapElementsWithSpawnZones = AddSpawnZones(elementsWithPlayerLocations);
+        (List<CustomPin> updatedPins, List<MapElement> updatedElements) = AddSelectionZone(pinsWithEnemyPings, mapElementsWithSpawnZones);
 
-        MapPins = pinsWithEnemyPings;
-        MapElements = elementsWithPlayerLocations;
+        MapPins = updatedPins;
+        MapElements = new(updatedElements);
     }
 
     private (List<CustomPin> updatedPins, List<MapElement> updatedElements) AddPlayerLocations(List<CustomPin> pins, List<MapElement> elements)
@@ -145,7 +162,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         return (pins, elements);
     }
 
-    private List<CustomPin> MapEnemyPings(List<CustomPin> pins)
+    private List<CustomPin> AddEnemyPings(List<CustomPin> pins)
     {
         List<ObservableLocation> enemyPingLocations = Room.Teams
             .Skip(1)
@@ -172,6 +189,75 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         return pins;
     }
 
+    private List<MapElement> AddSpawnZones(List<MapElement> mapElements)
+    {
+        var updated = new List<MapElement>(mapElements);
+
+        List<Polygon> spawns = Room.Teams
+            .Where(t => t.SpawnZone is not null)
+            .Select(t => t.SpawnZone)
+            .ToList();
+
+        if (spawns.Count == 0) return updated;
+
+        foreach (Polygon zone in spawns)
+        {
+            Polygon newPolygon = new()
+            {
+                StrokeColor = zone.StrokeColor,
+                FillColor = zone.FillColor,
+            };
+
+            foreach(Location location in zone.Geopath)
+            {
+                newPolygon.Geopath.Add(location);
+            }
+
+            updated.Add(newPolygon);
+        }
+
+        return updated;
+    }
+
+    private (List<CustomPin> updatedPins, List<MapElement> updatedElements) AddSelectionZone(List<CustomPin> pins, List<MapElement> elements)
+    {
+        if (ZoneSelection is null) return (pins, elements);
+
+        foreach (Location location in ZoneSelection.Geopath)
+        {
+            pins.Add(new CustomPin()
+            {
+                Location = location,
+                VerticalAnchor = 1.0f,
+                IconSource = "zone_vertex_icon",
+                IconSizeInPixels = 40,
+                Type = PinType.Place,
+                ClickedCommand = ZoneVertexClickedCommand,
+            });
+        }
+
+        elements.Add(ZoneSelection);
+
+        return (pins, elements);
+    }
+
+    [RelayCommand]
+    private void ZoneVertexClicked(CustomPin pin)
+    {
+        Location? vertexToRemove = ZoneSelection.Geopath.FirstOrDefault(
+            location => location.Latitude == pin.Location.Latitude 
+            && location.Longitude == pin.Location.Longitude);
+
+        if (vertexToRemove is not null)
+        {
+            Polygon polygon = GetNewPolygon();
+            polygon.Geopath.Remove(vertexToRemove);
+
+            ZoneSelection = polygon;
+            UpdateMap();
+        }
+    }
+
     [RelayCommand]
     private void PlayerPinClicked(CustomPin pin)
     {
@@ -179,6 +265,39 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     }
 
     public void MapClicked(object sender, MapClickedEventArgs e)
+    {
+        if(IsSpawnCreationMode && ZoneSelection?.Count >= 20) InformationMessage = AppResources.MaxZoneVerticesReachedMessage;
+        else if (IsSpawnCreationMode) AddZoneVertex(e);
+        else ChangeCursorPosition(e);
+    }
+    public void AddZoneVertex(MapClickedEventArgs e)
+    {
+        Polygon polygon = GetNewPolygon();
+        polygon.Geopath.Add(e.Location);
+
+        ZoneSelection = polygon;
+
+        UpdateMap();
+    }
+
+    public Polygon GetNewPolygon()
+    {
+        Polygon polygon = new()
+        {
+            StrokeColor = Color.FromArgb("#FF3B82F6"),
+            StrokeWidth = 3,
+            FillColor = Color.FromArgb("#403B82F6"),
+        };
+
+        foreach (var location in ZoneSelection?.Geopath ?? [])
+        {
+            polygon.Geopath.Add(location);
+        }
+
+        return polygon;
+    }
+
+    public void ChangeCursorPosition(MapClickedEventArgs e)
     {
         CustomPin pin = new()
         {
@@ -292,13 +411,79 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [RelayCommand]
     public async Task OrderDefend()
     {
-
+        MapElements = new();
     }
 
     [RelayCommand]
-    public async Task AddSpawnZone()
+    public async Task SaveSpawnZone()
     {
+        if (ZoneSelection is null || ZoneSelection.Geopath.Count < 1) return;
 
+        IsLoading = true;
+        await Task.Yield();
+
+        PutTeamDto teamDto = new()
+        {
+            SpawnZoneVertices = ZoneSelection.Geopath.Select(location => new PostLocationDto()
+            {
+                Longitude = location.Longitude,
+                Latitude = location.Latitude,
+                Accuracy = location.Accuracy ?? 0,
+                Bearing = location.Course ?? 0,
+                Time = DateTimeOffset.Now,
+                Type = "spawn-zone-vertex"
+            }).ToArray()
+        };
+
+        var result = await _apiFacade.Team.Update(teamDto, CreateSpawnZoneDialogState.SelectedTeam.Id);
+
+        switch (result)
+        {
+            case Success:
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        ZoneSelection = null;
+        UpdateMap();
+        IsSpawnCreationMode = false;
+        IsLoading = false;
+    }
+
+    [RelayCommand]
+    public async Task ShowCreateSpawnDialog()
+    {
+        CreateSpawnZoneDialogState.Teams = new(Room.Teams.Skip(1));
+        CreateSpawnZoneDialogState.IsVisible = true;
+    }
+
+    [RelayCommand]
+    public async Task HideCreateSpawnDialog()
+    {
+        CreateSpawnZoneDialogState.IsVisible = false;
+    }
+
+    [RelayCommand]
+    public async Task TurnOnSpawnCreationMode()
+    {
+        IsSpawnCreationMode = true;
+        CreateSpawnZoneDialogState.IsVisible = false;
+        ActionDialogState.IsVisible = false;
+    }
+
+    [RelayCommand]
+    public async Task TurnOffSpawnCreationMode()
+    {
+        ZoneSelection = null;
+        UpdateMap();
+        IsSpawnCreationMode = false;
     }
 
     [RelayCommand]

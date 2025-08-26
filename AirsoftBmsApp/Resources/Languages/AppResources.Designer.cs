@@ -295,6 +295,24 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tap to add spawn vertex.
+        /// </summary>
+        internal static string CreateSpawnModeTitle {
+            get {
+                return ResourceManager.GetString("CreateSpawnModeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Spawn Zone.
+        /// </summary>
+        internal static string CreateSpawnTitle {
+            get {
+                return ResourceManager.GetString("CreateSpawnTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Team.
         /// </summary>
         internal static string CreateTeamButton {
@@ -624,6 +642,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string MaxPlayersLabel {
             get {
                 return ResourceManager.GetString("MaxPlayersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have reached the maximum number of zone vertices..
+        /// </summary>
+        internal static string MaxZoneVerticesReachedMessage {
+            get {
+                return ResourceManager.GetString("MaxZoneVerticesReachedMessage", resourceCulture);
             }
         }
         
@@ -1056,6 +1083,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string TeamPicker {
             get {
                 return ResourceManager.GetString("TeamPicker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose Team.
+        /// </summary>
+        internal static string TeamPickerText {
+            get {
+                return ResourceManager.GetString("TeamPickerText", resourceCulture);
             }
         }
         

@@ -146,6 +146,9 @@
 	  <MauiXaml Update="View\ContentViews\Dialogs\ConfirmationDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ContentViews\Dialogs\CreateSpawnZoneDialog.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ContentViews\Dialogs\InformationDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

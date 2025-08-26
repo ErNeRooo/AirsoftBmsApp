@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirsoftBmsApp.Model.Dto.Location;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace AirsoftBmsApp.Model.Dto.Team
     {
         public string Name { get; set; }
         public int? OfficerPlayerId { get; set; }
+        public PostLocationDto[]? SpawnZoneVertices { get; set; }
     }
 }

@@ -43,6 +43,7 @@ public class MockTeamRestService(
             Name = string.IsNullOrEmpty(teamDto.Name) ? currentTeam.Name : teamDto.Name,
             RoomId = roomDataService.Room.Id,
             OfficerPlayerId = teamDto.OfficerPlayerId ?? currentTeam.OfficerId,
+            SpawnZoneVertices = teamDto.SpawnZoneVertices ?? null
         });
     }
     public async Task<HttpResult> DeleteAsync(int teamId)

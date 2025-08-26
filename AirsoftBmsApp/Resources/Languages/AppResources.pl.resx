@@ -486,4 +486,17 @@
   <data name="RespawnButtonText" xml:space="preserve">
     <value>Respawn</value>
   </data>
+  <data name="CreateSpawnModeTitle" xml:space="preserve">
+    <value>Kliknij aby dodać wierzchołek punktu odrodzeń</value>
+  </data>
+  <data name="TeamPickerText" xml:space="preserve">
+    <value>Wybierz drużynę</value>
+  </data>
+  <data name="CreateSpawnTitle" xml:space="preserve">
+    <value>Utwórz spawn</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="MaxZoneVerticesReachedMessage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
 </root>

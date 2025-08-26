@@ -486,4 +486,16 @@
   <data name="RespawnButtonText" xml:space="preserve">
     <value>Respawn</value>
   </data>
+  <data name="CreateSpawnModeTitle" xml:space="preserve">
+    <value>Tap to add spawn vertex</value>
+  </data>
+  <data name="TeamPickerText" xml:space="preserve">
+    <value>Choose Team</value>
+  </data>
+  <data name="CreateSpawnTitle" xml:space="preserve">
+    <value>Create Spawn Zone</value>
+  </data>
+  <data name="MaxZoneVerticesReachedMessage" xml:space="preserve">
+    <value>You have reached the maximum number of zone vertices.</value>
+  </data>
 </root>

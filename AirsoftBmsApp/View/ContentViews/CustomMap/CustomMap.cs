@@ -11,16 +11,7 @@ public class CustomMap : Microsoft.Maui.Controls.Maps.Map
         BindableProperty.Create(
             nameof(BindableMapElements),
             typeof(IEnumerable<MapElement>),
-            typeof(CustomMap),
-            propertyChanged: (bindable, oldValue, newValue) =>
-            {
-                if (bindable is CustomMap map && newValue is IEnumerable<MapElement> elements)
-                {
-                    map.MapElements.Clear();
-                    foreach (var e in elements)
-                        map.MapElements.Add(e);
-                }
-            });
+            typeof(CustomMap));
 
     public List<CustomPin> CustomPins
     {

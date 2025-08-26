@@ -78,7 +78,8 @@
                         >
                         <Picker
                             x:Name="OfficerPicker"
-                            HorizontalTextAlignment="Center"
+                            HorizontalOptions="Fill"
+                            Margin="10,0,0,0"
                             VerticalTextAlignment="Center"
                             HeightRequest="10"
                             FontFamily="{StaticResource GlobalFont}"
