@@ -182,12 +182,10 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                 Location playerLocation = new Location(playerObservableLocation.Latitude, playerObservableLocation.Longitude);
                 Location orderLocation = new Location(order.Latitude, order.Longitude);
 
-                double lineAngle = GetAngleOfTwoPointsRelativeToYPositiveAxis(playerLocation, orderLocation);
-
                 CustomPin pin = new()
                 {
                     Location = new Location(order.Latitude, order.Longitude),
-                    IconSource = "move_icon",
+                    IconSource = order.Type == "move-order" ? "move_icon" : "defend_icon",
                     HorizontalAnchor = 0.5f,
                     VerticalAnchor = 1f,
                     IconSizeInPixels = 60,
@@ -211,22 +209,6 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         }
 
         return (pins, elements);
-    }
-
-    private double GetAngleOfTwoPointsRelativeToYPositiveAxis(Location a, Location b)
-    {
-        double deltaX = b.Longitude - a.Longitude;
-        double deltaY = b.Latitude - a.Latitude;
-
-        double angleInRadians = Math.Atan2(deltaX, deltaY);
-        double angleInDegrees = angleInRadians * (180.0 / Math.PI);
-
-        if (angleInDegrees < 0)
-        {
-            angleInDegrees += 360;
-        }
-
-        return angleInDegrees;
     }
 
     private List<CustomPin> AddEnemyPings(List<CustomPin> pins)
@@ -537,7 +519,48 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [RelayCommand]
     public async Task OrderDefend()
     {
-        MapElements = new();
+        if (SelectedPlayer is null) return;
+
+        IsLoading = true;
+        await Task.Yield();
+
+        if (CursorPin?.Location is null)
+        {
+            ErrorMessage = AppResources.LocationNotAvailableErrorMessage;
+            IsLoading = false;
+            return;
+        }
+
+        PostOrderDto postOrderDto = new()
+        {
+            PlayerId = SelectedPlayer.Id,
+            Longitude = CursorPin.Location.Longitude,
+            Latitude = CursorPin.Location.Latitude,
+            Accuracy = CursorPin.Location.Accuracy ?? 0,
+            Bearing = CursorPin.Location.Course ?? 0,
+            Time = DateTimeOffset.Now,
+            Type = "defend-order"
+        };
+
+        var result = await _apiFacade.Order.Create(postOrderDto);
+
+        switch (result)
+        {
+            case Success:
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        UpdateMap();
+        ActionDialogState.IsVisible = false;
+        IsLoading = false;
     }
 
     [RelayCommand]
