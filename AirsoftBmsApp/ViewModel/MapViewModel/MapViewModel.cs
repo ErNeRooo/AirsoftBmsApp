@@ -1,6 +1,7 @@
 ﻿using AirsoftBmsApp.Model.Dto.Death;
 using AirsoftBmsApp.Model.Dto.Kills;
 using AirsoftBmsApp.Model.Dto.Location;
+using AirsoftBmsApp.Model.Dto.Order;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Team;
 using AirsoftBmsApp.Model.Observable;
@@ -48,7 +49,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     CustomPin? cursorPin;
 
     [ObservableProperty]
-    CustomPin? selectedPlayerPin;
+    ObservablePlayer? selectedPlayer;
 
     [ObservableProperty]
     bool isLoading = false;
@@ -115,8 +116,9 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         List<MapElement> elements = new();
 
         (List<CustomPin> pinsWithPlayerLocations, List<MapElement> elementsWithPlayerLocations) = AddPlayerLocations(pins, elements);
-        List<CustomPin> pinsWithEnemyPings = AddEnemyPings(pinsWithPlayerLocations);
-        List<MapElement> mapElementsWithSpawnZones = AddSpawnZones(elementsWithPlayerLocations);
+        (List<CustomPin> pinsWithOrders, List<MapElement> elementsWithOrders) = AddOrders(pinsWithPlayerLocations, elementsWithPlayerLocations);
+        List<CustomPin> pinsWithEnemyPings = AddEnemyPings(pinsWithOrders);
+        List<MapElement> mapElementsWithSpawnZones = AddSpawnZones(elementsWithOrders);
         (List<CustomPin> updatedPins, List<MapElement> updatedElements) = AddSelectionZone(pinsWithEnemyPings, mapElementsWithSpawnZones);
 
         MapPins = updatedPins;
@@ -161,6 +163,70 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         }
 
         return (pins, elements);
+    }
+
+    private (List<CustomPin> updatedPins, List<MapElement> updatedElements) AddOrders(List<CustomPin> pins, List<MapElement> elements)
+    {
+        var players = Room.Teams
+            .Skip(1)
+            .SelectMany(t => t.Players)
+            .Where(p => p.Id != Player.Id && (p.IsDead || p.TeamId == Player.TeamId))
+            .ToList();
+
+        foreach (var player in players)
+        {
+            foreach (var order in player.Orders)
+            {
+                ObservableLocation playerObservableLocation = player.Locations.Last();
+
+                Location playerLocation = new Location(playerObservableLocation.Latitude, playerObservableLocation.Longitude);
+                Location orderLocation = new Location(order.Latitude, order.Longitude);
+
+                double lineAngle = GetAngleOfTwoPointsRelativeToYPositiveAxis(playerLocation, orderLocation);
+
+                CustomPin pin = new()
+                {
+                    Location = new Location(order.Latitude, order.Longitude),
+                    IconSource = "move_icon",
+                    HorizontalAnchor = 0.5f,
+                    VerticalAnchor = 1f,
+                    IconSizeInPixels = 60,
+                    Type = PinType.Generic,
+                };
+
+                Polyline polyline = new()
+                {
+                    StrokeColor = Color.FromArgb("#FFCA3B33"),
+                    StrokeWidth = 5,
+                    Geopath =
+                    {
+                        playerLocation,
+                        orderLocation
+                    }
+                };
+
+                pins.Add(pin);
+                elements.Add(polyline);
+            }
+        }
+
+        return (pins, elements);
+    }
+
+    private double GetAngleOfTwoPointsRelativeToYPositiveAxis(Location a, Location b)
+    {
+        double deltaX = b.Longitude - a.Longitude;
+        double deltaY = b.Latitude - a.Latitude;
+
+        double angleInRadians = Math.Atan2(deltaX, deltaY);
+        double angleInDegrees = angleInRadians * (180.0 / Math.PI);
+
+        if (angleInDegrees < 0)
+        {
+            angleInDegrees += 360;
+        }
+
+        return angleInDegrees;
     }
 
     private List<CustomPin> AddEnemyPings(List<CustomPin> pins)
@@ -262,7 +328,17 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [RelayCommand]
     private void PlayerPinClicked(CustomPin pin)
     {
-        SelectedPlayerPin = pin;
+        var players = Room.Teams.SelectMany(t => t.Players).ToList();
+
+        ObservablePlayer? player = players.FirstOrDefault(
+            p => p.Locations.LastOrDefault()?.Latitude == pin.Location.Latitude
+            && p.Locations.LastOrDefault()?.Longitude == pin.Location.Longitude
+            && p.Name == pin.Label);
+        
+        if (player is not null)
+        {
+            SelectedPlayer = player;
+        }
     }
 
     public void MapClicked(object sender, MapClickedEventArgs e)
@@ -323,7 +399,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     private void CursorPinClicked(CustomPin pin)
     {
         ActionDialogState.IsVisible = true;
-        ActionDialogState.SelectedPlayerPin = SelectedPlayerPin;
+        ActionDialogState.SelectedPlayer = SelectedPlayer;
     }
 
     [RelayCommand]
@@ -414,17 +490,48 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [RelayCommand]
     public async Task OrderMove()
     {
-        var a = Room.Teams.SelectMany(t => t.Players).ToList().FirstOrDefault(p => p.Name == SelectedPlayerPin?.Label);
+        if (SelectedPlayer is null) return;
 
-        a.Locations.Add(new ObservableLocation()
+        IsLoading = true;
+        await Task.Yield();
+
+        if (CursorPin?.Location is null)
         {
-            Latitude = CursorPin.Location.Latitude,
+            ErrorMessage = AppResources.LocationNotAvailableErrorMessage;
+            IsLoading = false;
+            return;
+        }
+
+        PostOrderDto postOrderDto = new()
+        {
+            PlayerId = SelectedPlayer.Id,
             Longitude = CursorPin.Location.Longitude,
+            Latitude = CursorPin.Location.Latitude,
             Accuracy = CursorPin.Location.Accuracy ?? 0,
             Bearing = CursorPin.Location.Course ?? 0,
             Time = DateTimeOffset.Now,
-            Type = "player-location"
-        });
+            Type = "move-order"
+        };
+
+        var result = await _apiFacade.Order.Create(postOrderDto);
+
+        switch (result)
+        {
+            case Success:
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        UpdateMap();
+        ActionDialogState.IsVisible = false;
+        IsLoading = false;
     }
 
     [RelayCommand]

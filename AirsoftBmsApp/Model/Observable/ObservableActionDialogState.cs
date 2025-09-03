@@ -3,14 +3,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AirsoftBmsApp.Model.Observable;
 
-public partial class ObservableActionDialogState(CustomPin _selectedPlayerPin, ObservablePlayer _player) : ObservableObject
+public partial class ObservableActionDialogState(ObservablePlayer? _selectedPlayer, ObservablePlayer _selfPlayer) : ObservableObject
 {
     [ObservableProperty]
     private bool isVisible = false;
 
     [ObservableProperty]
-    private CustomPin? selectedPlayerPin = _selectedPlayerPin;
+    private ObservablePlayer? selectedPlayer = _selectedPlayer;
 
     [ObservableProperty]
-    private ObservablePlayer player = _player;
+    private ObservablePlayer selfPlayer = _selfPlayer;
 }

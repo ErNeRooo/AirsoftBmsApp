@@ -190,6 +190,7 @@ namespace AirsoftBmsApp.Platforms.Android
                     markerOption.SetTitle(pin.Label);
                     markerOption.SetIcon(GetIcon(pin.IconSource, pin.IconSizeInPixels));
                     markerOption.SetPosition(new LatLng(pin.Location.Latitude, pin.Location.Longitude));
+                    markerOption.SetRotation(pin.Rotation);
                     markerOption.Anchor(pin.HorizontalAnchor, pin.VerticalAnchor);
                     var marker = Map.AddMarker(markerOption);
 

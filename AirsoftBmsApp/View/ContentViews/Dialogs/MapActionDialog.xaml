@@ -61,7 +61,7 @@
                 <Label 
                     Grid.Row="2"
                     IsVisible="True" 
-                    Text="{Binding ActionDialogState.SelectedPlayerPin.Label, StringFormat={Static langs:AppResources.OrderPlayerText}}"
+                    Text="{Binding ActionDialogState.SelectedPlayer.Name, StringFormat={Static langs:AppResources.OrderPlayerText}}"
                     FontFamily="{StaticResource GlobalFont}"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
@@ -70,7 +70,7 @@
                     <Label.Triggers>
                         <DataTrigger 
                             TargetType="Label"
-                            Binding="{Binding ActionDialogState.SelectedPlayerPin, Converter={StaticResource IsNullConverter}}"
+                            Binding="{Binding ActionDialogState.SelectedPlayer, Converter={StaticResource IsNullConverter}}"
                             Value="true"
                             >
                             <Setter Property="IsVisible" Value="False" />
@@ -78,7 +78,7 @@
 
                         <DataTrigger 
                             TargetType="Label"
-                            Binding="{Binding ActionDialogState.Player.IsOfficer}"
+                            Binding="{Binding ActionDialogState.SelfPlayer.IsOfficer}"
                             Value="false"
                             >
                             <Setter Property="IsVisible" Value="False" />
@@ -97,7 +97,7 @@
                     <Border.Triggers>
                         <DataTrigger 
                             TargetType="Border"
-                            Binding="{Binding ActionDialogState.SelectedPlayerPin, Converter={StaticResource IsNullConverter}}"
+                            Binding="{Binding ActionDialogState.SelectedPlayer, Converter={StaticResource IsNullConverter}}"
                             Value="true"
                             >
                             <Setter Property="IsVisible" Value="False" />
@@ -105,7 +105,7 @@
 
                         <DataTrigger 
                             TargetType="Border"
-                            Binding="{Binding ActionDialogState.Player.IsOfficer}"
+                            Binding="{Binding ActionDialogState.SelfPlayer.IsOfficer}"
                             Value="false"
                             >
                             <Setter Property="IsVisible" Value="False" />
@@ -136,7 +136,7 @@
                     <Border.Triggers>
                         <DataTrigger 
                             TargetType="Border"
-                            Binding="{Binding ActionDialogState.SelectedPlayerPin, Converter={StaticResource IsNullConverter}}"
+                            Binding="{Binding ActionDialogState.SelectedPlayer, Converter={StaticResource IsNullConverter}}"
                             Value="true"
                             >
                             <Setter Property="IsVisible" Value="False" />
@@ -144,7 +144,7 @@
 
                         <DataTrigger 
                             TargetType="Border"
-                            Binding="{Binding ActionDialogState.Player.IsOfficer}"
+                            Binding="{Binding ActionDialogState.SelfPlayer.IsOfficer}"
                             Value="false"
                             >
                             <Setter Property="IsVisible" Value="False" />
@@ -170,7 +170,7 @@
                     StrokeThickness="2"
                     Stroke="{toolkit:AppThemeResource Text}"
                     Margin="0,0,0,10"
-                    IsVisible="{Binding ActionDialogState.Player.IsAdmin}"
+                    IsVisible="{Binding ActionDialogState.SelfPlayer.IsAdmin}"
                 >
                     <Button 
                         BackgroundColor="Transparent"

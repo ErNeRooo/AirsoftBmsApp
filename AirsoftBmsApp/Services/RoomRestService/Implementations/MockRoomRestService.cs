@@ -120,7 +120,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         BattleId = 1,
                         RoomId = 1,
                         Name = "Bitwa Pod Słabogórą",
-                        IsActive = true
+                        IsActive = false
                     },
                     Players = new List<PlayerDto>
                     {
