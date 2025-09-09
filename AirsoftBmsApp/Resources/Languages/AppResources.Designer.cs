@@ -367,6 +367,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete this order?.
+        /// </summary>
+        internal static string DeleteOrderConfirmationMessage {
+            get {
+                return ResourceManager.GetString("DeleteOrderConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Room.
         /// </summary>
         internal static string DeleteRoomButton {

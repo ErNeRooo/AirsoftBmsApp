@@ -504,4 +504,7 @@
   <data name="DeleteEnemyPingConfirmationMessage" xml:space="preserve">
     <value>Czy chcesz usunąć ten znacznik wroga?</value>
   </data>
+  <data name="DeleteOrderConfirmationMessage" xml:space="preserve">
+    <value>Czy chcesz usunąć ten rozkaz?</value>
+  </data>
 </root>

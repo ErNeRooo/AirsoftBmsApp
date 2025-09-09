@@ -37,4 +37,31 @@ public class OrderHandler(IOrderRestService OrderRestService, IRoomDataService r
             return new Error(ex.Message);
         }
     }
+
+    public async Task<HttpResult> Delete(int id)
+    {
+        try
+        {
+            HttpResult result = await OrderRestService.DeleteAsync(id);
+
+            if (result is Success)
+            {
+                roomDataService.Room.Teams.SelectMany(t => t.Players).ToList().ForEach(p =>
+                {
+                    var orderToRemove = p.Orders.FirstOrDefault(o => o.OrderId == id);
+                    if (orderToRemove != null)
+                    {
+                        p.Orders.Remove(orderToRemove);
+                    }
+                });
+            }
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return new Error(ex.Message);
+        }
+    }
 }

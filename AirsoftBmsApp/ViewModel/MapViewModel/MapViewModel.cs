@@ -12,12 +12,13 @@ using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Utils;
 using AirsoftBmsApp.View.ContentViews.CustomMap;
-using AirsoftBmsApp.View.ContentViews.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
 using System.Collections.ObjectModel;
+using System.Net.NetworkInformation;
 
 namespace AirsoftBmsApp.ViewModel.MapViewModel;
 
@@ -194,6 +195,8 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                     VerticalAnchor = 1f,
                     IconSizeInPixels = 60,
                     Type = PinType.Generic,
+                    DataObject = order,
+                    ClickedCommand = DeleteOrderConfirmationCommand,
                 };
 
                 Polyline polyline = new()
@@ -565,6 +568,42 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
         UpdateMap();
         ActionDialogState.IsVisible = false;
+        IsLoading = false;
+    }
+
+    [RelayCommand]
+    public async Task DeleteOrderConfirmation(CustomPin pin)
+    {
+        if (pin.DataObject is not ObservableOrder order) return;
+
+        ConfirmationDialogState.Message = AppResources.DeleteOrderConfirmationMessage;
+        ConfirmationDialogState.Command = new AsyncRelayCommand(async () => await DeleteOrder(order));
+    }
+
+    [RelayCommand]
+    public async Task DeleteOrder(ObservableOrder order)
+    {
+        IsLoading = true;
+        await Task.Yield();
+
+        var result = await _apiFacade.Order.Delete(order.OrderId);
+
+        switch (result)
+        {
+            case Success:
+                UpdateMap();
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        ConfirmationDialogState.Message = "";
         IsLoading = false;
     }
 

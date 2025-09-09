@@ -29,6 +29,23 @@ public class OrderRestService(IJwtTokenService jwtTokenService, IJsonHelperServi
         }
     }
 
+    public async Task<HttpResult> DeleteAsync(int id)
+    {
+        SetAuthorizationHeader();
+
+        var response = await client.DeleteAsync($"id/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            return (new Success());
+        }
+        else
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            return (new Failure(errorContent));
+        }
+    }
+
     private void SetAuthorizationHeader()
     {
         if (!string.IsNullOrEmpty(jwtTokenService.Token))
