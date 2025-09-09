@@ -358,6 +358,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete this enemy marker?.
+        /// </summary>
+        internal static string DeleteEnemyPingConfirmationMessage {
+            get {
+                return ResourceManager.GetString("DeleteEnemyPingConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Room.
         /// </summary>
         internal static string DeleteRoomButton {

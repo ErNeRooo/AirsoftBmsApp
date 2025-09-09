@@ -501,4 +501,7 @@
   <data name="CannotRespawnWhenOutsideSpawnZoneErrorMessage" xml:space="preserve">
     <value>You cannot respawn outside the spawn zone.</value>
   </data>
+  <data name="DeleteEnemyPingConfirmationMessage" xml:space="preserve">
+    <value>Do you want to delete this enemy marker?</value>
+  </data>
 </root>

@@ -11,4 +11,5 @@ public class CustomPin : Pin
     public float HorizontalAnchor { get; set; } = 0.5f;
     public float VerticalAnchor { get; set; } = 0.5f;
     public float Rotation { get; set; } = 0;
+    public object DataObject { get; set; }
 }

@@ -495,11 +495,13 @@
   <data name="CreateSpawnTitle" xml:space="preserve">
     <value>Utwórz spawn</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="MaxZoneVerticesReachedMessage" xml:space="preserve">
     <value>Osiągnięto maksymalną liczbę wierzchołków strefy.</value>
   </data>
   <data name="CannotRespawnWhenOutsideSpawnZoneErrorMessage" xml:space="preserve">
     <value>Nie możesz się odrodzić poza strefą odrodzenia.</value>
+  </data>
+  <data name="DeleteEnemyPingConfirmationMessage" xml:space="preserve">
+    <value>Czy chcesz usunąć ten znacznik wroga?</value>
   </data>
 </root>

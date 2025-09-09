@@ -27,4 +27,29 @@ public class LocationHandler(ILocationRestService LocationRestService, IPlayerDa
             return new Error(ex.Message);
         }
     }
+
+    public async Task<HttpResult> Delete(int id)
+    {
+        try
+        {
+            HttpResult result = await LocationRestService.DeleteAsync(id);
+
+            if (result is Success)
+            {
+                ObservableLocation? locationToDelete = playerDataService.Player.Locations.FirstOrDefault(location => location.LocationId == id);
+
+                if (locationToDelete != null)
+                {
+                    playerDataService.Player.Locations.Remove(locationToDelete);
+                }
+            }
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return new Error(ex.Message);
+        }
+    }
 }

@@ -12,6 +12,7 @@ using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Utils;
 using AirsoftBmsApp.View.ContentViews.CustomMap;
+using AirsoftBmsApp.View.ContentViews.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Maps;
@@ -41,6 +42,9 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
     [ObservableProperty]
     ObservableActionDialogState actionDialogState;
+
+    [ObservableProperty]
+    ObservableConfirmationDialogState confirmationDialogState = new();
 
     [ObservableProperty]
     ObservableCreateSpawnZoneDialogState createSpawnZoneDialogState;
@@ -230,6 +234,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                 IconSizeInPixels = 60,
                 IconSource = "enemy_ping_icon",
                 ClickedCommand = EnemyPingClickedCommand,
+                DataObject = location,
             };
 
             pins.Add(pin);
@@ -636,9 +641,38 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     }
 
     [RelayCommand]
-    public async Task EnemyPingClicked()
+    public async Task EnemyPingClicked(CustomPin pin)
     {
+        if (pin.DataObject is not ObservableLocation location) return;
 
+        ConfirmationDialogState.Message = AppResources.DeleteEnemyPingConfirmationMessage;
+        ConfirmationDialogState.Command = new AsyncRelayCommand(async () => await DeleteLocation(location));
+    }
+
+    [RelayCommand]
+    public async Task DeleteLocation(ObservableLocation location)
+    {
+        IsLoading = true;
+        await Task.Yield();
+
+        var result = await _apiFacade.Location.Delete(location.LocationId);
+
+        switch (result)
+        {
+            case Success:
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        ConfirmationDialogState.Message = "";
+        IsLoading = false;
     }
 
     [RelayCommand]

@@ -296,6 +296,13 @@
             OkCommand="{Binding TurnOnSpawnCreationModeCommand}"
             />
 
+        <dialogs:ConfirmationDialog 
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="3"
+            Message="{Binding ConfirmationDialogState.Message, Mode=TwoWay}"
+            ConfirmCommand="{Binding ConfirmationDialogState.Command}"
+            />
+
         <dialogs:InformationDialog 
             Grid.ColumnSpan="2"
             Grid.RowSpan="3"
