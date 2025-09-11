@@ -113,7 +113,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                 {
                     JoinCode = roomDto.JoinCode,
                     RoomId = 1,
-                    MaxPlayers = 10,
+                    MaxPlayers = 50,
                     AdminPlayer = null,
                     Battle = new BattleDto
                     {

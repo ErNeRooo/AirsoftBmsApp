@@ -673,6 +673,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The maximum number of players must be larger than the current number of players in the room..
+        /// </summary>
+        internal static string MaxPlayersMustBeLargerThanCurrentNumberOfPlayersInRoom {
+            get {
+                return ResourceManager.GetString("MaxPlayersMustBeLargerThanCurrentNumberOfPlayersInRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have reached the maximum number of zone vertices..
         /// </summary>
         internal static string MaxZoneVerticesReachedMessage {

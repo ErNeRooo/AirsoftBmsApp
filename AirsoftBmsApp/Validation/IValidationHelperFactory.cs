@@ -1,9 +1,4 @@
 ﻿using AirsoftBmsApp.Model.Validatable;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirsoftBmsApp.Validation
 {
@@ -13,7 +8,7 @@ namespace AirsoftBmsApp.Validation
         void AddValidations(ValidatableCreateRoomForm form);
         void AddValidations(ValidatableJoinRoomForm form);
         void AddValidations(ValidatableTeamForm form);
-        void AddValidations(ValidatableUpdateRoomForm form);
+        void AddValidations(ValidatableUpdateRoomForm form, int currentNumberOfPlayersInRoom);
         void AddValidations(ValidatableUpdateBattleForm form);
     }
 }

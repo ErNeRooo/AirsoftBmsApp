@@ -76,7 +76,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             Room = roomDataService.Room;
 
             TeamSettingsState = new ObservableTeamSettingsState(validationHelperFactory);
-            RoomSettingsState = new ObservableRoomSettingsState(validationHelperFactory);
+            RoomSettingsState = new ObservableRoomSettingsState(validationHelperFactory, Room.MaxPlayers);
             PlayerProfileState = new ObservablePlayerProfileState();
             PlayerProfileState.SelfPlayer = Player;
 
@@ -349,16 +349,17 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [RelayCommand]
         public async Task ShowRoomSettings()
         {
-            RoomSettingsState.Players = new ObservableCollection<ObservablePlayer>();
+            var newPlayers = new ObservableCollection<ObservablePlayer>();
 
             foreach (var team in Room.Teams)
             {
                 foreach(var player in team.Players)
                 {
-                    RoomSettingsState.Players.Add(player);
+                    newPlayers.Add(player);
                 }
             }
 
+            RoomSettingsState.Players = newPlayers;
             RoomSettingsState.IsVisible = true;
         }
 

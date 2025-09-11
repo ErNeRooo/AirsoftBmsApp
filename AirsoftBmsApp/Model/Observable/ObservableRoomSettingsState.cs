@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Validation;
+using AirsoftBmsApp.Validation.ValidationHelpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -25,9 +26,11 @@ namespace AirsoftBmsApp.Model.Observable
         [ObservableProperty]
         ObservableCollection<ObservablePlayer> players = new();
 
-        public ObservableRoomSettingsState(IValidationHelperFactory validationHelperFactory)
+        public ObservableRoomSettingsState(IValidationHelperFactory validationHelperFactory, int maxPlayers)
         {
-            validationHelperFactory.AddValidations(RoomForm);
+            validationHelperFactory.AddValidations(RoomForm, Players.Count);
+            
+            RoomForm.MaxPlayers.Value = maxPlayers;
         }
 
         partial void OnPlayersChanged(ObservableCollection<ObservablePlayer> value)
@@ -35,6 +38,10 @@ namespace AirsoftBmsApp.Model.Observable
             ObservablePlayer? adminPlayer = value.FirstOrDefault(p => p.IsAdmin);
 
             SelectedPlayerToBecomeAdmin = adminPlayer;
+
+            RoomForm.MaxPlayers.Validations.Clear();
+            var validationHelper = new UpdateRoomFormValidationHelper();
+            validationHelper.AddMaxPlayersValidations(RoomForm, Players.Count);
         }
 
         [RelayCommand]

@@ -1,8 +1,9 @@
 ﻿namespace AirsoftBmsApp.Validation.Rules;
 
-public class IsIntegerRule<T> : IValidationRule<T>
+public class IsLargerThan<T> : IValidationRule<T>
 {
     public string ValidationMessage { get; set; }
+    public int MinValue { get; set; }
 
     public bool Check(T value)
     {
@@ -10,8 +11,8 @@ public class IsIntegerRule<T> : IValidationRule<T>
             return false;
 
         var str = value.ToString();
-        bool isParseable = int.TryParse(str, out int intValue);
+        int intValue = int.Parse(str);
 
-        return isParseable;
+        return intValue > MinValue;
     }
 }
