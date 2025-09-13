@@ -31,9 +31,6 @@ public partial class ObservableLocation : ObservableObject
     [ObservableProperty]
     private DateTimeOffset time;
 
-    [ObservableProperty]
-    private string type;
-
     public ObservableLocation()
     {
         
@@ -48,6 +45,5 @@ public partial class ObservableLocation : ObservableObject
         Accuracy = locationDto.Accuracy;
         Bearing = locationDto.Bearing;
         Time = locationDto.Time;
-        Type = locationDto.Type;
     }
 }

@@ -17,6 +17,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Net.NetworkInformation;
 
@@ -142,7 +143,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         {
             if (player.Locations.Count > 0)
             {
-                ObservableLocation lastLocation = player.Locations.Where(l => l.Type == "player-location").Last();
+                ObservableLocation lastLocation = player.Locations.Last();
 
                 CustomPin pin = new()
                 {
@@ -172,72 +173,70 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
     private (List<CustomPin> updatedPins, List<MapElement> updatedElements) AddOrders(List<CustomPin> pins, List<MapElement> elements)
     {
-        var players = Room.Teams
-            .Skip(1)
-            .SelectMany(t => t.Players)
-            .Where(p => p.Id != Player.Id && (p.IsDead || p.TeamId == Player.TeamId))
-            .ToList();
+        List<ObservableOrder>? orders = Room.Teams
+            .FirstOrDefault(t => t.Id == Player.TeamId)?.Orders
+            .Where(o => o.Type == OrderTypes.MOVE || o.Type == OrderTypes.DEFEND).ToList();
 
-        foreach (var player in players)
+        if(orders is null || orders.Count == 0) return (pins, elements);
+
+        foreach (var order in orders)
         {
-            foreach (var order in player.Orders)
+            ObservablePlayer? player = Room.Teams
+                .SelectMany(t => t.Players)
+                .FirstOrDefault(p => p.Id == order.PlayerId);
+
+            ObservableLocation playerLastLocation = player.Locations.Last();
+
+            Location playerLocation = new Location(playerLastLocation.Latitude, playerLastLocation.Longitude);
+            Location orderLocation = new Location(order.Latitude, order.Longitude);
+
+            CustomPin pin = new()
             {
-                ObservableLocation playerObservableLocation = player.Locations.Last();
+                Location = new Location(order.Latitude, order.Longitude),
+                IconSource = order.Type == OrderTypes.MOVE ? "move_icon" : "defend_icon",
+                HorizontalAnchor = 0.5f,
+                VerticalAnchor = 1f,
+                IconSizeInPixels = 60,
+                Type = PinType.Generic,
+                DataObject = order,
+                ClickedCommand = DeleteOrderConfirmationCommand,
+            };
 
-                Location playerLocation = new Location(playerObservableLocation.Latitude, playerObservableLocation.Longitude);
-                Location orderLocation = new Location(order.Latitude, order.Longitude);
-
-                CustomPin pin = new()
+            Polyline polyline = new()
+            {
+                StrokeColor = Color.FromArgb("#FFCA3B33"),
+                StrokeWidth = 5,
+                Geopath =
                 {
-                    Location = new Location(order.Latitude, order.Longitude),
-                    IconSource = order.Type == "move-order" ? "move_icon" : "defend_icon",
-                    HorizontalAnchor = 0.5f,
-                    VerticalAnchor = 1f,
-                    IconSizeInPixels = 60,
-                    Type = PinType.Generic,
-                    DataObject = order,
-                    ClickedCommand = DeleteOrderConfirmationCommand,
-                };
+                    playerLocation,
+                    orderLocation
+                }
+            };
 
-                Polyline polyline = new()
-                {
-                    StrokeColor = Color.FromArgb("#FFCA3B33"),
-                    StrokeWidth = 5,
-                    Geopath =
-                    {
-                        playerLocation,
-                        orderLocation
-                    }
-                };
-
-                pins.Add(pin);
-                elements.Add(polyline);
-            }
+            pins.Add(pin);
+            elements.Add(polyline);
         }
-
+        
         return (pins, elements);
     }
 
     private List<CustomPin> AddEnemyPings(List<CustomPin> pins)
     {
-        List<ObservableLocation> enemyPingLocations = Room.Teams
-            .Skip(1)
-            .SelectMany(t => t.Players)
-            .Where(p => p.TeamId == Player.TeamId)
-            .SelectMany(p => p.Locations)
-            .Where(l => l.Type == "enemy-ping")
+        List<ObservableOrder>? enemyPings = Room.Teams
+            .FirstOrDefault(t => t.Id == Player.TeamId)?.Orders
+            .Where(l => l.Type == OrderTypes.MARKENEMY)
             .ToList();
 
-        foreach(ObservableLocation location in enemyPingLocations)
+        foreach(ObservableOrder order in enemyPings ?? [])
         {
             CustomPin pin = new()
             {
                 Label = "Enemy Spotted",
-                Location = new Location(location.Latitude, location.Longitude),
+                Location = new Location(order.Latitude, order.Longitude),
                 IconSizeInPixels = 60,
                 IconSource = "enemy_ping_icon",
                 ClickedCommand = EnemyPingClickedCommand,
-                DataObject = location,
+                DataObject = order,
             };
 
             pins.Add(pin);
@@ -398,17 +397,18 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         IsLoading = true;
         await Task.Yield();
 
-        PostLocationDto postLocationDto = new()
+        PostOrderDto postOrderDto = new()
         {
+            PlayerId = Player.Id,
             Longitude = CursorPin.Location.Longitude,
             Latitude = CursorPin.Location.Latitude,
             Accuracy = CursorPin.Location.Accuracy ?? 0,
             Bearing = CursorPin.Location.Course ?? 0,
             Time = DateTimeOffset.Now,
-            Type = "enemy-ping"
+            Type = OrderTypes.MARKENEMY
         };
 
-        var result = await _apiFacade.Location.Create(postLocationDto);
+        var result = await _apiFacade.Order.Create(postOrderDto);
 
         switch (result)
         {
@@ -424,6 +424,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                 throw new InvalidOperationException("Unknown result type");
         }
 
+        UpdateMap();
         ActionDialogState.IsVisible = false;
         IsLoading = false;
     }
@@ -500,7 +501,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
             Accuracy = CursorPin.Location.Accuracy ?? 0,
             Bearing = CursorPin.Location.Course ?? 0,
             Time = DateTimeOffset.Now,
-            Type = "move-order"
+            Type = OrderTypes.MOVE
         };
 
         var result = await _apiFacade.Order.Create(postOrderDto);
@@ -547,7 +548,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
             Accuracy = CursorPin.Location.Accuracy ?? 0,
             Bearing = CursorPin.Location.Course ?? 0,
             Time = DateTimeOffset.Now,
-            Type = "defend-order"
+            Type = OrderTypes.DEFEND
         };
 
         var result = await _apiFacade.Order.Create(postOrderDto);

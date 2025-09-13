@@ -24,6 +24,9 @@ public partial class ObservableTeam : ObservableObject, IObservableTeam
     private ObservableCollection<ObservablePlayer> players = new();
 
     [ObservableProperty]
+    private ObservableCollection<ObservableOrder> orders = new();
+
+    [ObservableProperty]
     private ITeamTheme teamTheme = TeamThemes.UnderNoFlag;
 
     [ObservableProperty]

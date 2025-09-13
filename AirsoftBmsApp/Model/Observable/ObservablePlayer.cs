@@ -28,9 +28,6 @@ public partial class ObservablePlayer : ObservableObject, IObservablePlayer
     private ObservableCollection<ObservableLocation> locations = new();
 
     [ObservableProperty]
-    private ObservableCollection<ObservableOrder> orders = new();
-
-    [ObservableProperty]
     private int? teamId;
 
     [ObservableProperty]

@@ -7,7 +7,7 @@ using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 
 namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Order;
 
-public class OrderHandler(IOrderRestService OrderRestService, IRoomDataService roomDataService) : IOrderHandler
+public class OrderHandler(IOrderRestService OrderRestService, IRoomDataService roomDataService, IPlayerDataService playerDataService) : IOrderHandler
 {
     public async Task<HttpResult> Create(PostOrderDto postOrderDto)
     {
@@ -17,15 +17,11 @@ public class OrderHandler(IOrderRestService OrderRestService, IRoomDataService r
 
             if (result is Success)
             {
-                var players = roomDataService.Room.Teams.SelectMany(t => t.Players);
-                    
-                foreach (var player in players)
+                ObservableTeam? team = roomDataService.Room.Teams.FirstOrDefault(t => t.Id == playerDataService.Player.TeamId);
+
+                if (team != null)
                 {
-                    if (player.Id == Order?.PlayerId)
-                    {
-                        player.Orders.Add(new ObservableOrder(Order));
-                        break;
-                    }
+                    team.Orders.Add(new ObservableOrder(Order));
                 }
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
@@ -46,14 +42,12 @@ public class OrderHandler(IOrderRestService OrderRestService, IRoomDataService r
 
             if (result is Success)
             {
-                roomDataService.Room.Teams.SelectMany(t => t.Players).ToList().ForEach(p =>
-                {
-                    var orderToRemove = p.Orders.FirstOrDefault(o => o.OrderId == id);
-                    if (orderToRemove != null)
-                    {
-                        p.Orders.Remove(orderToRemove);
-                    }
-                });
+                var team = roomDataService.Room.Teams
+                    .FirstOrDefault(t => t.Id == playerDataService.Player.TeamId);
+
+                var orderToRemove = team?.Orders.FirstOrDefault(o => o.OrderId == id);
+
+                if(orderToRemove is not null && team is not null) team.Orders.Remove(orderToRemove);
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 

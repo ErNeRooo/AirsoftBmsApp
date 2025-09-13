@@ -3,6 +3,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AirsoftBmsApp.Model.Observable;
 
+public interface OrderTypes { 
+    public const string MOVE = "MOVE";
+    public const string DEFEND = "DEFEND";
+    public const string MARKENEMY = "MARKENEMY";
+}
+
 public partial class ObservableOrder : ObservableObject
 {
 
