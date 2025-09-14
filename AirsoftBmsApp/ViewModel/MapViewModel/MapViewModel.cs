@@ -126,6 +126,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         List<CustomPin> pinsWithEnemyPings = AddEnemyPings(pinsWithOrders);
         List<MapElement> mapElementsWithSpawnZones = AddSpawnZones(elementsWithOrders);
         (List<CustomPin> updatedPins, List<MapElement> updatedElements) = AddSelectionZone(pinsWithEnemyPings, mapElementsWithSpawnZones);
+        if(CursorPin is not null) updatedPins.Add(CursorPin);
 
         MapPins = updatedPins;
         MapElements = new(updatedElements);
@@ -413,6 +414,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         switch (result)
         {
             case Success:
+                CursorPin = null;
                 break;
             case Failure failure:
                 ErrorMessage = failure.errorMessage;
@@ -509,6 +511,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         switch (result)
         {
             case Success:
+                CursorPin = null;
                 break;
             case Failure failure:
                 ErrorMessage = failure.errorMessage;
@@ -556,6 +559,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         switch (result)
         {
             case Success:
+                CursorPin = null;
                 break;
             case Failure failure:
                 ErrorMessage = failure.errorMessage;
@@ -667,6 +671,8 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     public async Task TurnOnSpawnCreationMode()
     {
         IsSpawnCreationMode = true;
+        CursorPin = null;
+        UpdateMap();
         CreateSpawnZoneDialogState.IsVisible = false;
         ActionDialogState.IsVisible = false;
     }
@@ -682,10 +688,10 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [RelayCommand]
     public async Task EnemyPingClicked(CustomPin pin)
     {
-        if (pin.DataObject is not ObservableLocation location) return;
+        if (pin.DataObject is not ObservableOrder ping) return;
 
         ConfirmationDialogState.Message = AppResources.DeleteEnemyPingConfirmationMessage;
-        ConfirmationDialogState.Command = new AsyncRelayCommand(async () => await DeleteLocation(location));
+        ConfirmationDialogState.Command = new AsyncRelayCommand(async () => await DeleteOrder(ping));
     }
 
     [RelayCommand]

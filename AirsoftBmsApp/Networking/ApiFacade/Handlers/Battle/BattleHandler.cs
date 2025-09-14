@@ -46,11 +46,20 @@ public class BattleHandler(
 
             if (result is Success)
             {
-                Action OnBattleActivated= async () => await geolocationService.Start();
-                Action OnBattleDeactivated = geolocationService.Stop;
-                var updatedBattle = new ObservableBattle(battle, OnBattleActivated, OnBattleDeactivated);
+                if (roomDataService.Room.Battle is { } existingBattle)
+                {
+                    existingBattle.Name = battle.Name;
+                    existingBattle.BattleId = battle.BattleId;
+                    existingBattle.IsActive = battle.IsActive;
+                    existingBattle.RoomId = battle.RoomId;
+                }
+                else
+                {
+                    Action OnBattleActivated = async () => await geolocationService.Start();
+                    Action OnBattleDeactivated = geolocationService.Stop;
+                    roomDataService.Room.Battle = new ObservableBattle(battle, OnBattleActivated, OnBattleDeactivated);
+                }
 
-                roomDataService.Room.Battle = updatedBattle;
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
