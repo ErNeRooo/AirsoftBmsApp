@@ -7,5 +7,4 @@ public class PostLocationDto
     public double Accuracy { get; set; }
     public double Bearing { get; set; }
     public DateTimeOffset Time { get; set; }
-    public string Type { get; set; }
 }

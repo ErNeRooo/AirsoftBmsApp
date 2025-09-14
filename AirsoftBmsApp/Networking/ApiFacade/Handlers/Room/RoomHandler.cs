@@ -1,6 +1,7 @@
 ﻿using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Resources.Languages;
+using AirsoftBmsApp.Services.GeolocationService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
@@ -11,7 +12,8 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
 public class RoomHandler(
     IRoomRestService roomRestService,
     IRoomDataService roomDataService,
-    IPlayerDataService playerDataService
+    IPlayerDataService playerDataService,
+    IGeolocationService geolocationService
     ) : IRoomHandler
 {
     public async Task<HttpResult> Create(PostRoomDto postRoomDto)
@@ -46,7 +48,13 @@ public class RoomHandler(
             if (joinResult is Success && room is not null)
             {
                 playerDataService.Player.RoomId = room.RoomId;
-                roomDataService.Room = new ObservableRoom(room);
+
+                Action OnBattleActivated = async () => await geolocationService.Start();
+                Action OnBattleDeactivated = geolocationService.Stop;
+
+                var observableRoom = new ObservableRoom(room, OnBattleActivated, OnBattleDeactivated);
+
+                roomDataService.Room = observableRoom;
 
                 InjectObservablePlayerObjectFromPlayerDataService(roomDataService.Room);
             }

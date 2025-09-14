@@ -19,7 +19,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
     public partial class RoomViewModel : ObservableObject, IRoomViewModel
     {
-        IApiFacade _apiFacade;
+        private readonly IApiFacade _apiFacade;
 
         [ObservableProperty]
         ObservablePlayer player;

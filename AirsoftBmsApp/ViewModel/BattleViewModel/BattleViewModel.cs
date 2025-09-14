@@ -3,6 +3,7 @@ using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Resources.Languages;
+using AirsoftBmsApp.Services.GeolocationService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Validation;
@@ -16,7 +17,7 @@ namespace AirsoftBmsApp.ViewModel.BattleViewModel;
 
 public partial class BattleViewModel : ObservableObject, IBattleViewModel
 {
-    IApiFacade _apiFacade;
+    private readonly IApiFacade _apiFacade;
 
     [ObservableProperty]
     ObservablePlayer player;
@@ -50,7 +51,6 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     {
         BattleSettingsState = new ObservableBattleSettingsState(validationHelperFactory);
         _apiFacade = apiFacade;
-
         Player = playerDataService.Player;
         Room = roomDataService.Room;
 
@@ -192,7 +192,6 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         switch (result)
         {
             case Success:
-
                 break;
             case Failure failure:
                 ErrorMessage = failure.errorMessage;

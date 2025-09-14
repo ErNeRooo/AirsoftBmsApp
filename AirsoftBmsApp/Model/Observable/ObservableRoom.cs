@@ -51,14 +51,14 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
         AdminPlayerId = room.AdminPlayerId;
     }
 
-    public ObservableRoom(RoomIncludingRelatedEntitiesDto room)
+    public ObservableRoom(RoomIncludingRelatedEntitiesDto room, Action OnBattleActivated, Action OnBattleDeactivated)
     {
         Id = room.RoomId;
         MaxPlayers = room.MaxPlayers;
         JoinCode = room.JoinCode;
         AdminPlayerId = room.AdminPlayer is null ? 0 : room.AdminPlayer.PlayerId;
 
-        Battle = room.Battle is null ? null : new ObservableBattle(room.Battle);
+        Battle = room.Battle is null ? null : new ObservableBattle(room.Battle, OnBattleActivated, OnBattleDeactivated);
 
         var fetchedTeams = room.Teams.Select(team => new ObservableTeam(team));
         foreach (var team in fetchedTeams) Teams.Add(team);

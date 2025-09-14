@@ -1,10 +1,10 @@
 ﻿using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
-
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AirsoftBmsApp.Services.PlayerDataService.Implementations;
 
-public class PlayerDataService : IPlayerDataService
+public partial class PlayerDataService : IPlayerDataService 
 {
     public ObservablePlayer Player { get; set; } = new();
 }

@@ -28,7 +28,6 @@ public class MockLocationRestService(IPlayerDataService playerDataService, IRoom
             Accuracy = postLocationDto.Accuracy,
             Bearing = postLocationDto.Bearing,
             Time = postLocationDto.Time,
-            Type = postLocationDto.Type
         });
     }
 }

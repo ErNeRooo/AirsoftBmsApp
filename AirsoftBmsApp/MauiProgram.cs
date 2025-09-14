@@ -11,6 +11,7 @@ using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.AccountRestService.Implementations;
 using AirsoftBmsApp.Services.BattleRestService;
 using AirsoftBmsApp.Services.DeathRestService;
+using AirsoftBmsApp.Services.GeolocationService;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.KillRestService;
 using AirsoftBmsApp.Services.LocationRestService;
@@ -145,6 +146,7 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IRoomDataService, RoomDataService>();
             builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
             builder.Services.AddSingleton<IJsonHelperService, JsonHelperService>();
+            builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
 
             builder.Services.AddSingleton<IApiFacade, ApiFacade>();
             builder.Services.AddSingleton<IAccountHandler, AccountHandler>();

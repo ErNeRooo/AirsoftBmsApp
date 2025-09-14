@@ -2,6 +2,9 @@
 using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.ApiFacade;
+using AirsoftBmsApp.Services.GeolocationService;
+using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
+using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.View.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,7 +15,9 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
 {
     public partial class JoinRoomFormViewModel : ObservableObject, IJoinRoomFormViewModel
     {
-        IApiFacade _apiFacade;
+        private readonly IApiFacade _apiFacade;
+        private readonly IRoomDataService _roomDataService;
+        private readonly IGeolocationService _geolocationService;
 
         [ObservableProperty]
         ValidatableJoinRoomForm roomForm = new();
@@ -23,10 +28,12 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
         [ObservableProperty]
         string errorMessage = "";
 
-        public JoinRoomFormViewModel(IValidationHelperFactory validationHelperFactory, IApiFacade apiFacade)
+        public JoinRoomFormViewModel(IValidationHelperFactory validationHelperFactory, IApiFacade apiFacade, IRoomDataService roomDataService, IGeolocationService geolocationService)
         {
             validationHelperFactory.AddValidations(roomForm);
             _apiFacade = apiFacade;
+            _roomDataService = roomDataService;
+            _geolocationService = geolocationService;
         }
 
         [RelayCommand]

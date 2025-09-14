@@ -1,14 +1,17 @@
 ﻿using AirsoftBmsApp.Model.Dto.Battle;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Location;
 using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.BattleRestService;
+using AirsoftBmsApp.Services.GeolocationService;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 
 namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Battle;
 
 public class BattleHandler(
     IBattleRestService battleRestService,
-    IRoomDataService roomDataService
+    IRoomDataService roomDataService,
+    IGeolocationService geolocationService
     ) : IBattleHandler
 {
     public async Task<HttpResult> Create(PostBattleDto postBattleDto)
@@ -19,7 +22,11 @@ public class BattleHandler(
 
             if (result is Success)
             {
-                roomDataService.Room.Battle = new ObservableBattle(battle);
+                Action OnBattleActivated = async () => await geolocationService.Start();
+                Action OnBattleDeactivated = geolocationService.Stop;
+                var newBattle = new ObservableBattle(battle, OnBattleActivated, OnBattleDeactivated);
+
+                roomDataService.Room.Battle = newBattle;
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
@@ -39,7 +46,11 @@ public class BattleHandler(
 
             if (result is Success)
             {
-                roomDataService.Room.Battle = new ObservableBattle(battle);
+                Action OnBattleActivated= async () => await geolocationService.Start();
+                Action OnBattleDeactivated = geolocationService.Stop;
+                var updatedBattle = new ObservableBattle(battle, OnBattleActivated, OnBattleDeactivated);
+
+                roomDataService.Room.Battle = updatedBattle;
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 

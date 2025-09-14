@@ -249,7 +249,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     {
         var updated = new List<MapElement>(mapElements);
 
-        List<Polygon> spawns = Room.Teams
+        List<Polygon?> spawns = Room.Teams
             .Where(t => t.SpawnZone is not null)
             .Select(t => t.SpawnZone)
             .ToList();
@@ -625,7 +625,6 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                 Accuracy = location.Accuracy ?? 0,
                 Bearing = location.Course ?? 0,
                 Time = DateTimeOffset.Now,
-                Type = "spawn-zone-vertex"
             }).ToArray()
         };
 
