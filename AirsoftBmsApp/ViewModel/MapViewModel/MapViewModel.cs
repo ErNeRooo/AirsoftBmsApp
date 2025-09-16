@@ -14,6 +14,7 @@ using AirsoftBmsApp.Utils;
 using AirsoftBmsApp.View.ContentViews.CustomMap;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MethodTimer;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
@@ -96,18 +97,21 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         UpdatePlayersCollectionChangeHandlers();
     }
 
+    [Time]
     public void UpdatePlayersCollectionChangeHandlers()
     {
         foreach (var team in Room.Teams.Skip(1))
         {
-            team.Players.CollectionChanged += (s, e) =>
-            {
-                UpdateMap();
-                UpdatePlayersCollectionChangeHandlers();
-            };
+            team.Players.CollectionChanged -= Players_CollectionChanged;
+            team.Players.CollectionChanged += Players_CollectionChanged;
 
             foreach (var player in team.Players)
             {
+                player.Locations.CollectionChanged -= (s, e) => UpdateMap();
+                player.Deaths.CollectionChanged -= (s, e) => UpdateMap();
+                player.Kills.CollectionChanged -= (s, e) => UpdateMap();
+                player.PropertyChanged -= (s, e) => UpdateMap();
+
                 player.Locations.CollectionChanged += (s, e) => UpdateMap();
                 player.Deaths.CollectionChanged += (s, e) => UpdateMap();
                 player.Kills.CollectionChanged += (s, e) => UpdateMap();
@@ -116,6 +120,13 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         }
     }
 
+    private void Players_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        UpdateMap();
+        UpdatePlayersCollectionChangeHandlers();
+    }
+
+    [Time]
     private void UpdateMap()
     {
         List<CustomPin> pins = new();

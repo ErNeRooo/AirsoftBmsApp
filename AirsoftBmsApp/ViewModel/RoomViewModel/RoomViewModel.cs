@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using AirsoftBmsApp.Resources.Languages;
 using System.Diagnostics;
 using AirsoftBmsApp.View.Pages;
+using MethodTimer;
 
 namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
@@ -136,7 +137,8 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             IsLoading = false;
         }
-        
+
+        [Time]
         [RelayCommand]
         public async Task SwitchTeamConfirmation(int teamId)
         {
@@ -158,6 +160,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             ConfirmationDialogState.Command = SwitchTeamCommand;
         }
 
+        [Time]
         [RelayCommand]
         public async Task SwitchTeam()
         {
@@ -184,6 +187,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             IsLoading = false;
         }
 
+        [Time]
         [RelayCommand]
         public async Task LeaveTeam()
         {
@@ -529,6 +533,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             IsLoading = false;
         }
 
+        [Time]
         [RelayCommand]
         public async Task KickFromRoom()
         {
@@ -557,6 +562,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             IsLoading = false;
         }
 
+        [Time]
         [RelayCommand]
         public async Task KickFromTeam()
         {
@@ -585,6 +591,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             IsLoading = false;
         }
 
+        [Time]
         [RelayCommand]
         public async Task MovePlayerToAnotherTeam(ObservableTeam team)
         {

@@ -4,6 +4,8 @@ using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
+using MethodTimer;
+using System.Diagnostics;
 
 namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
 {
@@ -50,6 +52,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
             }
         }
 
+        [Time]
         public async Task<HttpResult> Update(PutPlayerDto putPlayerDto, int playerId)
         {
             try
@@ -68,15 +71,16 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                     if (playerToUpdate.TeamId != player.TeamId)
                     {
                         ObservableTeam? previousTeam = roomDataService.Room.Teams
-                            .FirstOrDefault(t => t.Id == (playerToUpdate.TeamId ?? 0));
+                            .FirstOrDefault(team => team.Id == (playerToUpdate.TeamId ?? 0));
 
-                        if(previousTeam.OfficerId == playerToUpdate.Id) {
+                        if(previousTeam?.OfficerId == playerToUpdate.Id) {
                             playerToUpdate.IsOfficer = false;
                             previousTeam.OfficerId = 0; 
                         }
 
                         int index = previousTeam.Players.IndexOf(playerToUpdate);
-                        previousTeam.Players.RemoveAt(index);
+                        if (index >= 0)
+                            previousTeam.Players.RemoveAt(index);
 
                         playerToUpdate.TeamId = (int)player?.TeamId;
 
@@ -100,6 +104,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
             }
         }
 
+        [Time]
         public async Task<HttpResult> KickFromRoom(int playerId)
         {
             try
@@ -133,6 +138,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
             }
         }
 
+        [Time]
         public async Task<HttpResult> KickFromTeam(int playerId)
         {
             try

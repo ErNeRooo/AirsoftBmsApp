@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MethodTimer;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace AirsoftBmsApp.ViewModel.BattleViewModel;
 
@@ -54,11 +55,8 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         Player = playerDataService.Player;
         Room = roomDataService.Room;
 
-        Room.Teams.CollectionChanged += (s, e) =>
-        {
-            UpdatePlayersCollectionChangeHandlers();
-            RebuildTeamSummaries();
-        };
+        Room.Teams.CollectionChanged -= Teams_CollectionChanged;
+        Room.Teams.CollectionChanged += Teams_CollectionChanged;
 
         UpdatePlayersCollectionChangeHandlers();
         RebuildTeamSummaries();
@@ -91,16 +89,35 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     {
         foreach (var team in Room.Teams.Skip(1))
         {
-            team.Players.CollectionChanged += (s, e) => { 
-                RebuildTeamSummaries();
-                UpdatePlayersCollectionChangeHandlers();
-            };
+            team.Players.CollectionChanged -= Players_CollectionChanged;
+            team.Players.CollectionChanged += Players_CollectionChanged;
 
             foreach (var player in team.Players)
             {
-                player.Deaths.CollectionChanged += (s, e) => RebuildTeamSummaries();
+                player.Deaths.CollectionChanged -= PlayerDeathsChanged;
+                player.Deaths.CollectionChanged += PlayerDeathsChanged;
             }
         }
+    }
+
+    [Time]
+    private void Teams_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        RebuildTeamSummaries();
+        UpdatePlayersCollectionChangeHandlers();
+    }
+
+    [Time]
+    private void Players_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        RebuildTeamSummaries();
+        UpdatePlayersCollectionChangeHandlers();
+    }
+
+    [Time]
+    private void PlayerDeathsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        RebuildTeamSummaries();
     }
 
     [RelayCommand]
