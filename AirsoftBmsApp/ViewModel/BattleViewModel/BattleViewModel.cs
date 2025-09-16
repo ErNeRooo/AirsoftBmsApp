@@ -55,7 +55,6 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         Player = playerDataService.Player;
         Room = roomDataService.Room;
 
-        Room.Teams.CollectionChanged -= Teams_CollectionChanged;
         Room.Teams.CollectionChanged += Teams_CollectionChanged;
 
         UpdatePlayersCollectionChangeHandlers();
@@ -89,6 +88,9 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
     {
         foreach (var team in Room.Teams.Skip(1))
         {
+            team.PropertyChanged -= Team_PropertyChanged;
+            team.PropertyChanged += Team_PropertyChanged;
+
             team.Players.CollectionChanged -= Players_CollectionChanged;
             team.Players.CollectionChanged += Players_CollectionChanged;
 
@@ -98,6 +100,11 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
                 player.Deaths.CollectionChanged += PlayerDeathsChanged;
             }
         }
+    }
+
+    private void Team_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        RebuildTeamSummaries();
     }
 
     [Time]

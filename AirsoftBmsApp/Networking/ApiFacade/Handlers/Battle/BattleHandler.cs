@@ -80,6 +80,14 @@ public class BattleHandler(
             if (result is Success)
             {
                 roomDataService.Room.Battle = null;
+
+                foreach(ObservablePlayer player in roomDataService.Room.Teams.SelectMany(team => team.Players))
+                {
+                    player.Deaths.Clear();
+                    player.Kills.Clear();
+                    player.Locations.Clear();
+                    player.IsDead = false;
+                }
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
