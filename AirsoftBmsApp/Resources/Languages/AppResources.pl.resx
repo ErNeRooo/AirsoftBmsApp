@@ -510,4 +510,10 @@
   <data name="MaxPlayersMustBeLargerThanCurrentNumberOfPlayersInRoom" xml:space="preserve">
     <value>Maksymalna liczba graczy musi być większa niż obecna liczba graczy w pokoju.</value>
   </data>
+  <data name="DeleteBattleButton" xml:space="preserve">
+    <value>Usuń bitwę</value>
+  </data>
+  <data name="BattleSettingsClickHint" xml:space="preserve">
+    <value>(Kliknij aby pokazać ustawienia bitwy)</value>
+  </data>
 </root>

@@ -31,6 +31,17 @@
                     />
             </Label.GestureRecognizers>
         </Label>
+        
+        <Label 
+            Grid.Row="1"
+            Text="{Static langs:AppResources.BattleSettingsClickHint}"
+            FontFamily="{StaticResource GlobalFont}"
+            TextColor="{toolkit:AppThemeResource TextSecond}"
+            FontSize="12"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding Player.IsAdmin}"
+            />
 
         <Label 
             Grid.Row="1"
@@ -52,6 +63,12 @@
                     <Setter Property="TextColor" Value="{toolkit:AppThemeResource Danger}" />
                 </DataTrigger>
             </Label.Triggers>
+            
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer 
+                    Command="{Binding ShowBattleSettingsCommand}"
+                    />
+            </Label.GestureRecognizers>
         </Label>
 
         <ScrollView

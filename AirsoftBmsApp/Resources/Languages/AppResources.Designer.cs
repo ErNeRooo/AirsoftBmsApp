@@ -187,6 +187,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (Click to show battle settings).
+        /// </summary>
+        internal static string BattleSettingsClickHint {
+            get {
+                return ResourceManager.GetString("BattleSettingsClickHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Battle Settings.
         /// </summary>
         internal static string BattleSettingsHeader {
@@ -354,6 +363,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string DefendButtonText {
             get {
                 return ResourceManager.GetString("DefendButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Battle.
+        /// </summary>
+        internal static string DeleteBattleButton {
+            get {
+                return ResourceManager.GetString("DeleteBattleButton", resourceCulture);
             }
         }
         

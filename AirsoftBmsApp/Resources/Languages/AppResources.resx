@@ -510,4 +510,10 @@
   <data name="MaxPlayersMustBeLargerThanCurrentNumberOfPlayersInRoom" xml:space="preserve">
     <value>The maximum number of players must be larger than the current number of players in the room.</value>
   </data>
+  <data name="DeleteBattleButton" xml:space="preserve">
+    <value>Delete Battle</value>
+  </data>
+  <data name="BattleSettingsClickHint" xml:space="preserve">
+    <value>(Click to show battle settings)</value>
+  </data>
 </root>

@@ -128,7 +128,7 @@
                     Text="{Static langs:AppResources.PlayerKillsLabel}"
                     FontFamily="{StaticResource GlobalFont}"
                     IsVisible="True"
-                    Margin="0,0,18,0"
+                    Margin="0,0,37,0"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
                     />
@@ -137,7 +137,7 @@
                     Text="{Static langs:AppResources.PlayerDeathsLabel}"
                     FontFamily="{StaticResource GlobalFont}"
                     IsVisible="True"
-                    Margin="0,0,15,0"
+                    Margin="0,0,29,0"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
                     />

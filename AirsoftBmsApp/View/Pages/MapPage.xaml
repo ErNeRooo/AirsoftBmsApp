@@ -46,10 +46,10 @@
             >
                 <Label.Triggers>
                     <DataTrigger
-                   TargetType="Label"
-                   Binding="{Binding IsSpawnCreationMode}"
-                   Value="true"
-                   >
+                        TargetType="Label"
+                        Binding="{Binding IsSpawnCreationMode}"
+                        Value="true"
+                        >
                         <Setter Property="IsVisible" Value="True"/>
                     </DataTrigger>
                 </Label.Triggers>
@@ -311,7 +311,7 @@
 
         <Grid 
             Grid.Row="0"
-            Grid.RowSpan="2"
+            Grid.RowSpan="3"
             Grid.ColumnSpan="2"
             BackgroundColor="#80000000" 
             IsVisible="{Binding Room.Battle.IsActive, Converter={StaticResource InverseBoolConverter}}"

@@ -93,7 +93,7 @@
                          BorderWidth="2"
                          FontFamily="{StaticResource GlobalFont}" 
                          HorizontalOptions="Fill"
-                         Text="{Static langs:AppResources.DeleteRoomButton}"
+                         Text="{Static langs:AppResources.DeleteBattleButton}"
                          FontSize="20"
                          Padding="0"
                          Command="{Binding EndBattleCommand, Source={x:Reference BattleSettingsView}}"
