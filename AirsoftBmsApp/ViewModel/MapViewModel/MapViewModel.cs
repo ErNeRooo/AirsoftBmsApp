@@ -1,13 +1,17 @@
 ﻿using AirsoftBmsApp.Model.Dto.Death;
 using AirsoftBmsApp.Model.Dto.Kills;
 using AirsoftBmsApp.Model.Dto.Location;
+using AirsoftBmsApp.Model.Dto.MapPing;
 using AirsoftBmsApp.Model.Dto.Order;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Model.Dto.Zone;
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Resources.Languages;
+using AirsoftBmsApp.Services.HubConnectionService;
+using AirsoftBmsApp.Services.HubNotificationHandlerService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Utils;
@@ -15,18 +19,17 @@ using AirsoftBmsApp.View.ContentViews.CustomMap;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MethodTimer;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Net.NetworkInformation;
 
 namespace AirsoftBmsApp.ViewModel.MapViewModel;
 
 public partial class MapViewModel : ObservableObject, IMapViewModel
 {
     IApiFacade _apiFacade;
+    IHubConnectionService _hubConnectionService;
 
     [ObservableProperty]
     ObservableRoom room;
@@ -70,8 +73,15 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [ObservableProperty]
     bool isSpawnCreationMode = false;
 
-    public MapViewModel(IRoomDataService roomDataService, IPlayerDataService playerDataService, IApiFacade apiFacade)
+    public MapViewModel(
+        IRoomDataService roomDataService, 
+        IPlayerDataService playerDataService, 
+        IApiFacade apiFacade,
+        IHubConnectionService hubConnectionService,
+        IHubNotificationHandlerService notificationHandlers
+        )
     {
+        _hubConnectionService = hubConnectionService;
         _apiFacade = apiFacade;
         Room = roomDataService.Room;
         Player = playerDataService.Player;
@@ -93,8 +103,52 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
             UpdatePlayersCollectionChangeHandlers();
         };
 
+        SetNotificationHandlers(notificationHandlers);
+
         UpdateMap();
         UpdatePlayersCollectionChangeHandlers();
+    }
+
+    void SetNotificationHandlers(IHubNotificationHandlerService notificationHandlers)
+    {
+        _hubConnectionService.HubConnection.On<LocationDto>(
+            HubNotifications.LocationCreated,
+            (locationDto) => notificationHandlers.Location.OnLocationCreated(locationDto, Room));
+
+        _hubConnectionService.HubConnection.On<int>(
+            HubNotifications.LocationDeleted,
+            (locationId) => notificationHandlers.Location.OnLocationDeleted(locationId, Room));
+
+
+        _hubConnectionService.HubConnection.On<MapPingDto>(
+            HubNotifications.MapPingCreated,
+            (mapPingDto) => notificationHandlers.MapPing.OnMapPingCreated(mapPingDto, Room));
+
+        _hubConnectionService.HubConnection.On<int>(
+            HubNotifications.MapPingDeleted,
+            (mapPingId) => notificationHandlers.MapPing.OnMapPingDeleted(mapPingId, Room));
+
+
+        _hubConnectionService.HubConnection.On<OrderDto>(
+            HubNotifications.OrderCreated,
+            (orderDto) => notificationHandlers.Order.OnOrderCreated(orderDto, Room));
+
+        _hubConnectionService.HubConnection.On<int>(
+            HubNotifications.OrderDeleted,
+            (orderId) => notificationHandlers.Order.OnOrderDeleted(orderId, Room));
+
+
+        _hubConnectionService.HubConnection.On<ZoneDto>(
+            HubNotifications.ZoneCreated,
+            (zoneDto) => notificationHandlers.Zone.OnZoneCreated(zoneDto, Room));
+
+        _hubConnectionService.HubConnection.On<ZoneDto>(
+            HubNotifications.ZoneUpdated,
+            (zoneDto) => notificationHandlers.Zone.OnZoneUpdated(zoneDto, Room));
+
+        _hubConnectionService.HubConnection.On<int>(
+            HubNotifications.ZoneDeleted,
+            (zoneId) => notificationHandlers.Zone.OnZoneDeleted(zoneId, Room));
     }
 
     [Time]
@@ -234,21 +288,20 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
     private List<CustomPin> AddEnemyPings(List<CustomPin> pins)
     {
-        List<ObservableOrder>? enemyPings = Room.Teams
-            .FirstOrDefault(t => t.Id == Player.TeamId)?.Orders
-            .Where(l => l.Type == OrderTypes.MARKENEMY)
+        List<ObservableMapPing>? mapPings = Room.Teams
+            .FirstOrDefault(t => t.Id == Player.TeamId)?.MapPings
             .ToList();
 
-        foreach(ObservableOrder order in enemyPings ?? [])
+        foreach(ObservableMapPing mapPing in mapPings ?? [])
         {
             CustomPin pin = new()
             {
                 Label = "Enemy Spotted",
-                Location = new Location(order.Latitude, order.Longitude),
+                Location = new Location(mapPing.Latitude, mapPing.Longitude),
                 IconSizeInPixels = 60,
                 IconSource = "enemy_ping_icon",
                 ClickedCommand = EnemyPingClickedCommand,
-                DataObject = order,
+                DataObject = mapPing,
             };
 
             pins.Add(pin);
@@ -409,7 +462,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         IsLoading = true;
         await Task.Yield();
 
-        PostOrderDto postOrderDto = new()
+        PostMapPingDto postMapPingDto = new()
         {
             PlayerId = Player.Id,
             Longitude = CursorPin.Location.Longitude,
@@ -417,10 +470,9 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
             Accuracy = CursorPin.Location.Accuracy ?? 0,
             Bearing = CursorPin.Location.Course ?? 0,
             Time = DateTimeOffset.Now,
-            Type = OrderTypes.MARKENEMY
         };
 
-        var result = await _apiFacade.Order.Create(postOrderDto);
+        var result = await _apiFacade.MapPing.Create(postMapPingDto);
 
         switch (result)
         {
@@ -624,6 +676,33 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     }
 
     [RelayCommand]
+    public async Task DeleteMapPing(ObservableMapPing mapPing)
+    {
+        IsLoading = true;
+        await Task.Yield();
+
+        var result = await _apiFacade.MapPing.Delete(mapPing.MapPingId);
+
+        switch (result)
+        {
+            case Success:
+                UpdateMap();
+                break;
+            case Failure failure:
+                ErrorMessage = failure.errorMessage;
+                break;
+            case Error error:
+                ErrorMessage = error.errorMessage;
+                break;
+            default:
+                throw new InvalidOperationException("Unknown result type");
+        }
+
+        ConfirmationDialogState.Message = "";
+        IsLoading = false;
+    }
+
+    [RelayCommand]
     public async Task SaveSpawnZone()
     {
         if (ZoneSelection is null || ZoneSelection.Geopath.Count < 1) return;
@@ -699,10 +778,10 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     [RelayCommand]
     public async Task EnemyPingClicked(CustomPin pin)
     {
-        if (pin.DataObject is not ObservableOrder ping) return;
+        if (pin.DataObject is not ObservableMapPing ping) return;
 
         ConfirmationDialogState.Message = AppResources.DeleteEnemyPingConfirmationMessage;
-        ConfirmationDialogState.Command = new AsyncRelayCommand(async () => await DeleteOrder(ping));
+        ConfirmationDialogState.Command = new AsyncRelayCommand(async () => await DeleteMapPing(ping));
     }
 
     [RelayCommand]

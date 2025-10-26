@@ -22,9 +22,9 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
     private int? adminPlayerId;
 
     public ObservableCollection<ObservableTeam> Teams { get; set; } = 
-        new ObservableCollection<ObservableTeam>()
+        new()
         {
-            new ObservableTeam
+            new()
             {
                 Id = 0,
                 Name = AppResources.UnderNoFlagHeader,
@@ -32,6 +32,8 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
                 TeamTheme = TeamThemes.UnderNoFlag,
             },
         };
+
+    public ObservableCollection<ObservableZone> Zones { get; set; } = new();
 
     [ObservableProperty]
     public ObservableBattle? battle;

@@ -27,6 +27,9 @@ public partial class ObservableTeam : ObservableObject, IObservableTeam
     private ObservableCollection<ObservableOrder> orders = new();
 
     [ObservableProperty]
+    private ObservableCollection<ObservableMapPing> mapPings = new();
+    
+    [ObservableProperty]
     private ITeamTheme teamTheme = TeamThemes.UnderNoFlag;
 
     [ObservableProperty]
@@ -41,7 +44,7 @@ public partial class ObservableTeam : ObservableObject, IObservableTeam
     {
         Id = team.TeamId;
         RoomId = team.RoomId;
-        OfficerId = team.OfficerPlayerId ?? 0;
+        OfficerId = team.OfficerPlayerId;
         Name = team.Name;
 
         if (team.SpawnZoneVertices?.Count() > 0)

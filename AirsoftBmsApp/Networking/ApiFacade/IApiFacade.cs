@@ -3,6 +3,7 @@ using AirsoftBmsApp.Networking.ApiFacade.Handlers.Battle;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Death;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Kill;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Location;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.MapPing;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Order;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
@@ -20,4 +21,5 @@ public interface IApiFacade
     public IDeathHandler Death { get; }
     public ILocationHandler Location { get; }
     public IOrderHandler Order { get; }
+    public IMapPingHandler MapPing { get; }
 }

@@ -4,6 +4,7 @@ public class OrderDto
 {
     public int OrderId { get; set; }
     public int PlayerId { get; set; }
+    public int LocationId { get; set; }
     public int BattleId { get; set; }
     public double Longitude { get; set; }
     public double Latitude { get; set; }

@@ -4,6 +4,7 @@ using AirsoftBmsApp.Networking.ApiFacade.Handlers.Battle;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Death;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Kill;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Location;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.MapPing;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Order;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
@@ -12,9 +13,22 @@ using AirsoftBmsApp.Services.AccountRestService.Implementations;
 using AirsoftBmsApp.Services.BattleRestService;
 using AirsoftBmsApp.Services.DeathRestService;
 using AirsoftBmsApp.Services.GeolocationService;
+using AirsoftBmsApp.Services.HubConnectionService;
+using AirsoftBmsApp.Services.HubNotificationHandlerService;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.BattleNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.DeathNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.KillNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.LocationNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.MapPingNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.OrderNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.PlayerNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.RoomNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.TeamNotificationHandler;
+using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.ZoneNotificationHandler;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.KillRestService;
 using AirsoftBmsApp.Services.LocationRestService;
+using AirsoftBmsApp.Services.MapPingRestService;
 using AirsoftBmsApp.Services.OrderRestService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerDataService.Implementations;
@@ -27,6 +41,7 @@ using AirsoftBmsApp.Services.RoomDataService.Implementations;
 using AirsoftBmsApp.Services.RoomRestService.Implementations;
 using AirsoftBmsApp.Services.TeamRestService.Abstractions;
 using AirsoftBmsApp.Services.TeamRestService.Implementations;
+using AirsoftBmsApp.Services.ZoneRestService;
 using AirsoftBmsApp.Validation;
 using AirsoftBmsApp.View.Pages;
 using AirsoftBmsApp.ViewModel.BattleViewModel;
@@ -90,6 +105,8 @@ namespace AirsoftBmsApp
                 builder.Services.AddSingleton<IDeathRestService, MockDeathRestService>();
                 builder.Services.AddSingleton<ILocationRestService, MockLocationRestService>();
                 builder.Services.AddSingleton<IOrderRestService, MockOrderRestService>();
+                builder.Services.AddSingleton<IMapPingRestService, MockMapPingRestService>();
+                builder.Services.AddSingleton<IZoneRestService, MockZoneRestService>();
             } 
             else
             {
@@ -139,6 +156,16 @@ namespace AirsoftBmsApp
                 {
                     client.BaseAddress = new Uri($"{baseAddress}/Order/");
                 });
+
+                builder.Services.AddHttpClient<IMapPingRestService, MapPingRestService>(client =>
+                {
+                    client.BaseAddress = new Uri($"{baseAddress}/map-ping/");
+                });
+
+                builder.Services.AddHttpClient<IZoneRestService, ZoneRestService>(client =>
+                {
+                    client.BaseAddress = new Uri($"{baseAddress}/Zone/");
+                });
             }
 
             builder.Services.AddSingleton<IValidationHelperFactory, ValidationHelperFactory>();
@@ -147,6 +174,7 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
             builder.Services.AddSingleton<IJsonHelperService, JsonHelperService>();
             builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
+            builder.Services.AddSingleton<IHubConnectionService, HubConnectionService>();
 
             builder.Services.AddSingleton<IApiFacade, ApiFacade>();
             builder.Services.AddSingleton<IAccountHandler, AccountHandler>();
@@ -158,6 +186,20 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IDeathHandler, DeathHandler>();
             builder.Services.AddSingleton<ILocationHandler, LocationHandler>();
             builder.Services.AddSingleton<IOrderHandler, OrderHandler>();
+            builder.Services.AddSingleton<IMapPingHandler, MapPingHandler>();
+
+            builder.Services.AddSingleton<IHubNotificationHandlerService, HubNotificationHandlerService>();
+
+            builder.Services.AddSingleton<IBattleNotificationHandler, BattleNotificationHandler>();
+            builder.Services.AddSingleton<IDeathNotificationHandler, DeathNotificationHandler>();
+            builder.Services.AddSingleton<IKillNotificationHandler, KillNotificationHandler>();
+            builder.Services.AddSingleton<IMapPingNotificationHandler, MapPingNotificationHandler>();
+            builder.Services.AddSingleton<IOrderNotificationHandler, OrderNotificationHandler>();
+            builder.Services.AddSingleton<ILocationNotificationHandler, LocationNotificationHandler>();
+            builder.Services.AddSingleton<IPlayerNotificationHandler, PlayerNotificationHandler>();
+            builder.Services.AddSingleton<IRoomNotificationHandler, RoomNotificationHandler>();
+            builder.Services.AddSingleton<ITeamNotificationHandler, TeamNotificationHandler>();
+            builder.Services.AddSingleton<IZoneNotificationHandler, ZoneNotificationHandler>();
 
 #if DEBUG
             builder.Logging.AddDebug();

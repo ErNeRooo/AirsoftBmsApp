@@ -18,6 +18,6 @@ public partial class ObservableCreateSpawnZoneDialogState : ObservableObject
     {
         Teams = new(teams.Skip(1).ToList());
 
-        if (teams.Count > 0) SelectedTeam = Teams[0];
+        if (teams.Count > 0) SelectedTeam = Teams.FirstOrDefault();
     }
 }

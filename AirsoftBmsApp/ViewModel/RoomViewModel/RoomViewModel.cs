@@ -15,12 +15,18 @@ using AirsoftBmsApp.Resources.Languages;
 using System.Diagnostics;
 using AirsoftBmsApp.View.Pages;
 using MethodTimer;
+using AirsoftBmsApp.Services.HubConnectionService;
+using Microsoft.AspNetCore.SignalR.Client;
+using AirsoftBmsApp.Model.Dto.Death;
+using AirsoftBmsApp.Services.HubNotificationHandlerService;
+using AirsoftBmsApp.Model.Dto.Kills;
 
 namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
     public partial class RoomViewModel : ObservableObject, IRoomViewModel
     {
         private readonly IApiFacade _apiFacade;
+        private readonly IHubConnectionService _hubConnectionService;
 
         [ObservableProperty]
         ObservablePlayer player;
@@ -68,9 +74,12 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             IValidationHelperFactory validationHelperFactory,
             IRoomDataService roomDataService,
             IApiFacade apiFacade,
-            IPlayerDataService playerDataService
+            IPlayerDataService playerDataService,
+            IHubConnectionService hubConnection,
+            IHubNotificationHandlerService notificationHandlers
             )
         {
+            _hubConnectionService = hubConnection;
             _apiFacade = apiFacade;
             Player = playerDataService.Player;
 
@@ -82,6 +91,82 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             PlayerProfileState.SelfPlayer = Player;
 
             validationHelperFactory.AddValidations(TeamForm);
+
+            SetNotificationHandlers(notificationHandlers, roomDataService);
+
+            Task.Run(() =>
+            {
+                _hubConnectionService.StartConnection();
+            });
+        }
+
+        void SetNotificationHandlers(
+            IHubNotificationHandlerService notificationHandlers,
+            IRoomDataService roomDataService
+            )
+        {
+            _hubConnectionService.HubConnection.On<DeathDto>(
+                HubNotifications.DeathCreated,
+                (deathDto) => notificationHandlers.Death.OnDeathCreated(deathDto, Room));
+
+            _hubConnectionService.HubConnection.On<int>(
+                HubNotifications.DeathDeleted, 
+                (deathId) => notificationHandlers.Death.OnDeathDeleted(deathId, Room));
+
+
+            _hubConnectionService.HubConnection.On<KillDto>(
+                HubNotifications.KillCreated,
+                (killDto) => notificationHandlers.Kill.OnKillCreated(killDto, Room));
+
+            _hubConnectionService.HubConnection.On<int>(
+                HubNotifications.KillDeleted,
+                (killId) => notificationHandlers.Kill.OnKillDeleted(killId, Room));
+
+
+            _hubConnectionService.HubConnection.On<PlayerDto>(
+                HubNotifications.PlayerUpdated,
+                (playerDto) => notificationHandlers.Player.OnPlayerUpdated(playerDto, Room));
+
+            _hubConnectionService.HubConnection.On<int>(
+                HubNotifications.PlayerDeleted,
+                (playerId) => notificationHandlers.Player.OnPlayerDeleted(playerId, Room));
+
+            _hubConnectionService.HubConnection.On<int>(
+                HubNotifications.PlayerLeftTeam,
+                (playerId) => notificationHandlers.Player.OnPlayerLeftTeam(playerId, Room));
+
+            _hubConnectionService.HubConnection.On<int>(
+                HubNotifications.PlayerLeftRoom,
+                (playerId) => notificationHandlers.Player.OnPlayerLeftRoom(playerId, Room));
+
+
+            _hubConnectionService.HubConnection.On<PlayerDto>(
+                HubNotifications.RoomJoined,
+                (playerDto) => notificationHandlers.Room.OnRoomJoined(playerDto, Room));
+
+            _hubConnectionService.HubConnection.On<RoomDto>(
+                HubNotifications.RoomUpdated,
+                (roomDto) => notificationHandlers.Room.OnRoomUpdated(roomDto, Room));
+
+            _hubConnectionService.HubConnection.On(
+                HubNotifications.RoomDeleted, 
+                () =>
+                {
+                    notificationHandlers.Room.OnRoomDeleted(roomDataService);
+                });
+
+
+            _hubConnectionService.HubConnection.On<TeamDto>(
+                HubNotifications.TeamCreated,
+                (playerDto) => notificationHandlers.Team.OnTeamCreated(playerDto, Room));
+
+            _hubConnectionService.HubConnection.On<TeamDto>(
+                HubNotifications.TeamUpdated,
+                (teamDto) => notificationHandlers.Team.OnTeamUpdated(teamDto, Room));
+
+            _hubConnectionService.HubConnection.On<int>(
+                HubNotifications.TeamDeleted,
+                (teamId) => notificationHandlers.Team.OnTeamDeleted(teamId, Room));
         }
 
         [RelayCommand]

@@ -3,7 +3,6 @@
 public class DeathDto
 {
     public int DeathId { get; set; }
-    public int LocationId { get; set; }
     public int PlayerId { get; set; }
     public int BattleId { get; set; }
     public double Longitude { get; set; }

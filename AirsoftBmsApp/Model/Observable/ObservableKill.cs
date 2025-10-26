@@ -9,9 +9,6 @@ public partial class ObservableKill : ObservableObject
     private int killId;
 
     [ObservableProperty]
-    private int locationId;
-
-    [ObservableProperty]
     private int playerId;
 
     [ObservableProperty]
@@ -32,10 +29,14 @@ public partial class ObservableKill : ObservableObject
     [ObservableProperty]
     private DateTimeOffset time;
 
+    public ObservableKill()
+    {
+        
+    }
+
     public ObservableKill(KillDto killDto)
     {
         KillId = killDto.KillId;
-        LocationId = killDto.LocationId;
         PlayerId = killDto.PlayerId;
         BattleId = killDto.BattleId;
         Longitude = killDto.Longitude;

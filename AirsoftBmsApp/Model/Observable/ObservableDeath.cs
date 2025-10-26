@@ -9,9 +9,6 @@ public partial class ObservableDeath : ObservableObject
     private int deathId;
 
     [ObservableProperty]
-    private int locationId;
-
-    [ObservableProperty]
     private int playerId;
 
     [ObservableProperty]
@@ -32,10 +29,13 @@ public partial class ObservableDeath : ObservableObject
     [ObservableProperty]
     private DateTimeOffset time;
 
+    public ObservableDeath()
+    {
+        
+    }
     public ObservableDeath(DeathDto deathDto)
     {
         DeathId = deathDto.DeathId;
-        LocationId = deathDto.LocationId;
         PlayerId = deathDto.PlayerId;
         BattleId = deathDto.BattleId;
         Longitude = deathDto.Longitude;

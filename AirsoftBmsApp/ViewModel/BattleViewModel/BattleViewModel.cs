@@ -4,6 +4,8 @@ using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.GeolocationService;
+using AirsoftBmsApp.Services.HubConnectionService;
+using AirsoftBmsApp.Services.HubNotificationHandlerService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Validation;
@@ -11,6 +13,7 @@ using AirsoftBmsApp.Validation.Rules;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MethodTimer;
+using Microsoft.AspNetCore.SignalR.Client;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
@@ -19,6 +22,7 @@ namespace AirsoftBmsApp.ViewModel.BattleViewModel;
 public partial class BattleViewModel : ObservableObject, IBattleViewModel
 {
     private readonly IApiFacade _apiFacade;
+    private readonly IHubConnectionService _hubConnectionService;
 
     [ObservableProperty]
     ObservablePlayer player;
@@ -47,9 +51,12 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         IValidationHelperFactory validationHelperFactory,
         IPlayerDataService playerDataService, 
         IRoomDataService roomDataService,
-        IApiFacade apiFacade
+        IApiFacade apiFacade,
+        IHubConnectionService hubConnection,
+        IHubNotificationHandlerService notificationHandlers
         )
     {
+        _hubConnectionService = hubConnection;
         BattleSettingsState = new ObservableBattleSettingsState(validationHelperFactory);
         _apiFacade = apiFacade;
         Player = playerDataService.Player;
@@ -70,6 +77,24 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         {
             ValidationMessage = AppResources.BattleNameIsRequiredValidationMessage,
         });
+
+        SetNotificationHandlers(notificationHandlers);
+    }
+
+    void SetNotificationHandlers(IHubNotificationHandlerService notificationHandlers)
+    {
+        _hubConnectionService.HubConnection.On<int>(
+            HubNotifications.BattleDeleted,
+            (battleId) => notificationHandlers.Battle.OnBattleDeleted(battleId, Room)
+        );
+        _hubConnectionService.HubConnection.On<BattleDto>(
+            HubNotifications.BattleUpdated,
+            (battleDto) => notificationHandlers.Battle.OnBattleUpdated(battleDto, Room)
+        );
+        _hubConnectionService.HubConnection.On<BattleDto>(
+            HubNotifications.BattleCreated,
+            (battleDto) => notificationHandlers.Battle.OnBattleCreated(battleDto, Room)
+        );
     }
 
     [Time]
