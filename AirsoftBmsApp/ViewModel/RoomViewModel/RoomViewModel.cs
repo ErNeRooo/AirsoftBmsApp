@@ -227,7 +227,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         [RelayCommand]
         public async Task SwitchTeamConfirmation(int teamId)
         {
-            if(Room.Battle.IsActive) 
+            if(Room.Battle is not null && Room.Battle.IsActive) 
             {
                 InformationDialogMessage = AppResources.CannotSwitchTeamDuringABattleInformationMessage;
                 return;

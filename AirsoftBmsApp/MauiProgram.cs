@@ -93,7 +93,7 @@ namespace AirsoftBmsApp
             builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
             builder.Services.AddTransient<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
 
-            bool isUsingMockRestServices = true;
+            bool isUsingMockRestServices = false;
 
             if (isUsingMockRestServices)
             {
