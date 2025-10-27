@@ -45,6 +45,15 @@
                     Stroke="{toolkit:AppThemeResource Danger}"
                     Margin="0,0,0,10"
                 >
+                    <Border.Triggers>
+                        <DataTrigger
+                            TargetType="Border"
+                            Binding="{Binding ActionDialogState.SelfPlayer.TeamId, Converter={toolkit:IsNullConverter}}"
+                            Value="true"
+                            >
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
                     <Button 
                         BackgroundColor="Transparent"
                         TextColor="{toolkit:AppThemeResource Danger}"
