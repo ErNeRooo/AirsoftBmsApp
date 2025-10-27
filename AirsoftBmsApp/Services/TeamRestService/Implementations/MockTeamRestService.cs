@@ -1,4 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Model.Dto.Vertex;
+using AirsoftBmsApp.Model.Dto.Zone;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
@@ -42,8 +44,7 @@ public class MockTeamRestService(
             TeamId = teamId,
             Name = string.IsNullOrEmpty(teamDto.Name) ? currentTeam.Name : teamDto.Name,
             RoomId = roomDataService.Room.Id,
-            OfficerPlayerId = teamDto.OfficerPlayerId ?? currentTeam.OfficerId,
-            SpawnZoneVertices = teamDto.SpawnZoneVertices ?? null
+            OfficerPlayerId = teamDto.OfficerPlayerId ?? currentTeam.OfficerId
         });
     }
     public async Task<HttpResult> DeleteAsync(int teamId)
@@ -54,5 +55,22 @@ public class MockTeamRestService(
     public async Task<HttpResult> LeaveAsync()
     {
         return new Success(); 
+    }
+
+    public async Task<(HttpResult result, ZoneDto? team)> PostSpawnAsync(PostZoneDto postZoneDto, int teamId)
+    {
+
+        return (new Success(), new ZoneDto
+        {
+            ZoneId = Random.Shared.Next(0,10000),
+            Type = postZoneDto.Type,
+            Name = postZoneDto.Name,
+            BattleId = postZoneDto.BattleId,
+            Vertices = postZoneDto.Vertices.Select(v => new VertexDto
+            {
+                Latitude = v.Latitude,
+                Longitude = v.Longitude
+            }).ToList()
+        });
     }
 }

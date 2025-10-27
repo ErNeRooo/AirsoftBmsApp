@@ -6,5 +6,4 @@ public class PutTeamDto
 {
     public string Name { get; set; }
     public int? OfficerPlayerId { get; set; }
-    public PostLocationDto[]? SpawnZoneVertices { get; set; }
 }

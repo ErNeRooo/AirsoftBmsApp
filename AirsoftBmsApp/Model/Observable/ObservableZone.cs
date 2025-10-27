@@ -4,6 +4,10 @@ using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.Model.Observable;
 
+public static class ZoneTypes
+{
+    public const string SPAWN = "SPAWN";
+}
 public partial class ObservableZone : ObservableObject
 {
     [ObservableProperty]

@@ -8,6 +8,7 @@ using AirsoftBmsApp.Networking.ApiFacade.Handlers.MapPing;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Order;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Zone;
 using AirsoftBmsApp.Services.AccountRestService.Abstractions;
 using AirsoftBmsApp.Services.AccountRestService.Implementations;
 using AirsoftBmsApp.Services.BattleRestService;
@@ -187,6 +188,7 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<ILocationHandler, LocationHandler>();
             builder.Services.AddSingleton<IOrderHandler, OrderHandler>();
             builder.Services.AddSingleton<IMapPingHandler, MapPingHandler>();
+            builder.Services.AddSingleton<IZoneHandler, ZoneHandler>();
 
             builder.Services.AddSingleton<IHubNotificationHandlerService, HubNotificationHandlerService>();
 

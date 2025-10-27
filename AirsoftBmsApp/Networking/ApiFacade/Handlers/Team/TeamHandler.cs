@@ -1,9 +1,12 @@
 ﻿using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Model.Dto.Vertex;
+using AirsoftBmsApp.Model.Dto.Zone;
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Services.TeamRestService.Abstractions;
+using Microsoft.Maui.Controls.Maps;
 
 namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
 
@@ -19,6 +22,39 @@ public class TeamHandler(
             (HttpResult result, TeamDto? team) = await teamRestService.PostAsync(postTeamDto);
 
             if (result is Success) roomDataService.Room.Teams.Add(new ObservableTeam(team));
+            else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return new Error(ex.Message);
+        }
+    }
+
+    public async Task<HttpResult> CreateSpawn(PostZoneDto postZoneDto, int teamId)
+    {
+        try
+        {
+            (HttpResult result, ZoneDto? zone) = await teamRestService.PostSpawnAsync(postZoneDto, teamId);
+
+            if (result is Success) 
+            { 
+                ObservableTeam? team = roomDataService.Room.Teams.FirstOrDefault(t => t.Id == teamId);
+
+                Polygon polygon = new()
+                {
+                    StrokeColor = team!.TeamTheme.TitleColor,
+                    FillColor = team.TeamTheme.TitleColor.WithAlpha(0.4f)
+                };
+
+                foreach (VertexDto vertex in zone!.Vertices)
+                {
+                    polygon.Geopath.Add(new Microsoft.Maui.Devices.Sensors.Location(vertex.Latitude, vertex.Longitude));
+                }
+
+                if (team is not null) team.SpawnZone = polygon;
+            }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
             return result;

@@ -7,6 +7,7 @@ using AirsoftBmsApp.Networking.ApiFacade.Handlers.MapPing;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Order;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Player;
 using AirsoftBmsApp.Networking.ApiFacade.Handlers.Room;
+using AirsoftBmsApp.Networking.ApiFacade.Handlers.Zone;
 
 namespace AirsoftBmsApp.Networking.ApiFacade;
 
@@ -22,4 +23,5 @@ public interface IApiFacade
     public ILocationHandler Location { get; }
     public IOrderHandler Order { get; }
     public IMapPingHandler MapPing { get; }
+    public IZoneHandler Zone { get; }
 }

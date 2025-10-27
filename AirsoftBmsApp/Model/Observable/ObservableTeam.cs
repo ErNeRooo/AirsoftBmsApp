@@ -46,22 +46,6 @@ public partial class ObservableTeam : ObservableObject, IObservableTeam
         RoomId = team.RoomId;
         OfficerId = team.OfficerPlayerId;
         Name = team.Name;
-
-        if (team.SpawnZoneVertices?.Count() > 0)
-        {
-            Polygon polygon = new() 
-            {
-                StrokeColor = TeamTheme.TitleColor,
-                FillColor = TeamTheme.TitleColor.WithAlpha(0.4f),
-            };
-
-            foreach (var vertex in team.SpawnZoneVertices)
-            {
-                polygon.Geopath.Add(new Location(vertex.Latitude, vertex.Longitude));
-            }
-
-            SpawnZone = polygon;
-        }
     }
 
     public void Attach(ObservablePlayer observer)

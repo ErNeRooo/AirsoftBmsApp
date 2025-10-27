@@ -5,6 +5,7 @@ using AirsoftBmsApp.Model.Dto.MapPing;
 using AirsoftBmsApp.Model.Dto.Order;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Model.Dto.Vertex;
 using AirsoftBmsApp.Model.Dto.Zone;
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Networking;
@@ -148,7 +149,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
         _hubConnectionService.HubConnection.On<int>(
             HubNotifications.ZoneDeleted,
-            (zoneId) => notificationHandlers.Zone.OnZoneDeleted(zoneId, Room));
+            (zoneId ) => notificationHandlers.Zone.OnZoneDeleted(zoneId, Room));
     }
 
     [Time]
@@ -710,19 +711,18 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         IsLoading = true;
         await Task.Yield();
 
-        PutTeamDto teamDto = new()
+        PostZoneDto postZoneDto = new()
         {
-            SpawnZoneVertices = ZoneSelection.Geopath.Select(location => new PostLocationDto()
+            Type = ZoneTypes.SPAWN,
+            BattleId = Room.Battle.BattleId,
+            Vertices = ZoneSelection.Geopath.Select(location => new PostVertexDto
             {
-                Longitude = location.Longitude,
                 Latitude = location.Latitude,
-                Accuracy = location.Accuracy ?? 0,
-                Bearing = location.Course ?? 0,
-                Time = DateTimeOffset.Now,
-            }).ToArray()
+                Longitude = location.Longitude
+            }).ToList()
         };
 
-        var result = await _apiFacade.Team.Update(teamDto, CreateSpawnZoneDialogState.SelectedTeam.Id);
+        var result = await _apiFacade.Team.CreateSpawn(postZoneDto, CreateSpawnZoneDialogState.SelectedTeam.Id);
 
         switch (result)
         {

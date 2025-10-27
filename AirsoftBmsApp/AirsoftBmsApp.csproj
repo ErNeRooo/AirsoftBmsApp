@@ -236,8 +236,4 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Networking\ApiFacade\Handlers\Zone\" />
-	</ItemGroup>
-
 </Project>

@@ -1,4 +1,5 @@
 ﻿using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Model.Dto.Zone;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.JwtTokenService;
 using AirsoftBmsApp.Services.RestHelperService.Abstractions;
@@ -7,7 +8,11 @@ using System.Net.Http.Headers;
 
 namespace AirsoftBmsApp.Services.TeamRestService.Implementations
 {
-    public class TeamRestService(HttpClient client, IJsonHelperService jsonHelper, IJwtTokenService jwtTokenService) : ITeamRestService
+    public class TeamRestService(
+        HttpClient client, 
+        IJsonHelperService jsonHelper, 
+        IJwtTokenService jwtTokenService
+        ) : ITeamRestService
     {
         public async Task<(HttpResult result, TeamDto? team)> GetByIdAsync(int teamId)
         {
@@ -98,6 +103,26 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
                 return new Failure(errorContent);
+            }
+        }
+
+        public async Task<(HttpResult result, ZoneDto? team)> PostSpawnAsync(PostZoneDto postZoneDto, int teamId)
+        {
+            SetAuthorizationHeader();
+
+            var content = jsonHelper.GetStringContent(postZoneDto);
+
+            var response = await client.PostAsync($"spawn/teamId/{teamId}", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var zone = await jsonHelper.DeserializeFromResponseAsync<ZoneDto>(response);
+                return (new Success(), zone);
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return (new Failure(errorContent), null);
             }
         }
 
