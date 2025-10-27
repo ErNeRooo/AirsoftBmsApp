@@ -8,6 +8,7 @@
         FontFamily="{StaticResource GlobalFont}" 
         FontSize="30" 
         HorizontalOptions="Center"
+        HorizontalTextAlignment="Center"
         Text="{Binding Text,Source={RelativeSource AncestorType={x:Type local:Header}}}"
         />
 </ContentView>
