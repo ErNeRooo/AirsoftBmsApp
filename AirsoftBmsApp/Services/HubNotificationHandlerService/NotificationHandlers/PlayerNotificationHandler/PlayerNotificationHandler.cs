@@ -43,23 +43,30 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
     public void OnPlayerUpdated(PlayerDto playerDto, ObservableRoom contextRoom)
     {
         List<ObservablePlayer> players = contextRoom.Teams.SelectMany(t => t.Players).ToList();
-        ObservablePlayer? oldPlayer = players.FirstOrDefault(p => p.Id == playerDto.PlayerId);
+        ObservablePlayer? player = players.FirstOrDefault(p => p.Id == playerDto.PlayerId);
 
-        if (oldPlayer is null) return;
+        if (player is null) return;
 
-        if (oldPlayer.TeamId != playerDto.TeamId)
+        if (player.TeamId != playerDto.TeamId)
         {
-            ObservableTeam? previousTeam = contextRoom.Teams.FirstOrDefault(t => t.Id == oldPlayer.TeamId);
+            ObservableTeam? previousTeam = contextRoom.Teams.FirstOrDefault(t => t.Id == (player.TeamId ?? 0));
             ObservableTeam? newTeam = contextRoom.Teams.FirstOrDefault(t => t.Id == playerDto.TeamId);
+
             if (previousTeam is not null && newTeam is not null)
             {
-                previousTeam.Players.Remove(oldPlayer);
-                newTeam.Players.Add(oldPlayer);
+                previousTeam.Players.Remove(player);
+                newTeam.Players.Add(player);
+
+                if (player.IsOfficer)
+                {
+                    player.IsOfficer = false;
+                    previousTeam.OfficerId = 0;
+                }
             }
         }
 
-        oldPlayer.Name = playerDto.Name;
-        oldPlayer.IsDead = playerDto.IsDead;
-        oldPlayer.TeamId = playerDto.TeamId;
+        player.Name = playerDto.Name;
+        player.IsDead = playerDto.IsDead;
+        player.TeamId = playerDto.TeamId;
     }
 }
