@@ -9,7 +9,7 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
     {
         List<ObservablePlayer> players = contextRoom.Teams.SelectMany(t => t.Players).ToList();
         ObservablePlayer? player = players.FirstOrDefault(p => p.Id == playerId);
-        ObservableTeam? team = contextRoom.Teams.FirstOrDefault(t => t.Id == player?.TeamId);
+        ObservableTeam? team = contextRoom.Teams.FirstOrDefault(t => t.Id == (player?.TeamId ?? 0));
 
         if(player is not null) team?.Players.Remove(player);
     }
@@ -18,7 +18,7 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
     {
         List<ObservablePlayer> players = contextRoom.Teams.SelectMany(t => t.Players).ToList();
         ObservablePlayer? player = players.FirstOrDefault(p => p.Id == playerId);
-        ObservableTeam? team = contextRoom.Teams.FirstOrDefault(t => t.Id == player?.TeamId);
+        ObservableTeam? team = contextRoom.Teams.FirstOrDefault(t => t.Id == (player?.TeamId ?? 0));
 
         if (player is not null) team?.Players.Remove(player);
     }
@@ -27,7 +27,7 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
     {
         List<ObservablePlayer> players = contextRoom.Teams.SelectMany(t => t.Players).ToList();
         ObservablePlayer? player = players.FirstOrDefault(p => p.Id == playerId);
-        ObservableTeam? previousTeam = contextRoom.Teams.FirstOrDefault(t => t.Id == player?.TeamId);
+        ObservableTeam? previousTeam = contextRoom.Teams.FirstOrDefault(t => t.Id == (player?.TeamId ?? 0));
         ObservableTeam underNoFlagTeam = contextRoom.Teams[0];
 
         if (player is not null && previousTeam is not null && previousTeam.Id != 0) 

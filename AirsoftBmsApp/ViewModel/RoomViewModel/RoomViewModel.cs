@@ -461,7 +461,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             {
                 targetPlayer.TeamId ??= 0;
                 PlayerProfileState.SelectedPlayer = targetPlayer;
-                PlayerProfileState.Teams = new(Room.Teams);
+                PlayerProfileState.Teams = new(Room.Teams.Skip(1));
 
                 PlayerProfileState.IsVisible = true;
             }
@@ -694,11 +694,11 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             var result = await _apiFacade.Player.Update(playerDto, PlayerProfileState.SelectedPlayer.Id);
 
             RoomSettingsState.IsVisible = false;
+            PlayerProfileState.IsVisible = false;
 
             switch (result)
             {
                 case Success:
-                    PlayerProfileState.IsVisible = false;
                     break;
                 case Failure failure:
                     ErrorMessage = failure.errorMessage;

@@ -53,7 +53,7 @@ public class PlayerRestService(HttpClient client, IJwtTokenService jwtTokenServi
 
         StringContent stringContent = jsonHelper.GetStringContent(playerDto);
 
-        var response = await client.PutAsync("", stringContent);
+        var response = await client.PutAsync($"playerid/{playerId}", stringContent);
 
         if (response.IsSuccessStatusCode)
         {
