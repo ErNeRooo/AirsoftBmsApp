@@ -30,6 +30,16 @@ public class TeamNotificationHandler : ITeamNotificationHandler
         if (previousTeam is null) return;
 
         previousTeam.Name = teamDto.Name;
-        previousTeam.OfficerId = teamDto.OfficerPlayerId;
+        
+        if (previousTeam.OfficerId != teamDto.OfficerPlayerId)
+        {
+            ObservablePlayer? oldOfficerPlayer = contextRoom.Teams.SelectMany(t => t.Players).FirstOrDefault(p => p.Id == previousTeam.OfficerId);
+            ObservablePlayer? newOfficerPlayer = contextRoom.Teams.SelectMany(t => t.Players).FirstOrDefault(p => p.Id == teamDto.OfficerPlayerId);
+
+            previousTeam.OfficerId = teamDto.OfficerPlayerId;
+
+            if (oldOfficerPlayer is not null) oldOfficerPlayer.IsOfficer = false;
+            if (newOfficerPlayer is not null) newOfficerPlayer.IsOfficer = true;
+        }
     }
 }

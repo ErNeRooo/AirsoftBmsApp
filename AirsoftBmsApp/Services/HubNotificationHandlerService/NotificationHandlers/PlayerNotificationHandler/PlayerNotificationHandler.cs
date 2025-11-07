@@ -21,6 +21,8 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
         ObservableTeam? team = contextRoom.Teams.FirstOrDefault(t => t.Id == (player?.TeamId ?? 0));
 
         if (player is not null) team?.Players.Remove(player);
+        if (player?.IsAdmin == true) contextRoom.AdminPlayerId = 0;
+        if (team is not null && player?.IsOfficer == true) team.OfficerId = 0;
     }
 
     public void OnPlayerLeftTeam(int playerId, ObservableRoom contextRoom)
