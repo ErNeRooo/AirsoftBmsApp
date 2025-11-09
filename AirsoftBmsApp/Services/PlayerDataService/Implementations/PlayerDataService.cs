@@ -6,5 +6,17 @@ namespace AirsoftBmsApp.Services.PlayerDataService.Implementations;
 
 public partial class PlayerDataService : IPlayerDataService 
 {
-    public ObservablePlayer Player { get; set; } = new();
+
+    private ObservablePlayer _player = new();
+    public ObservablePlayer Player
+    {
+        get => _player;
+        set
+        {
+            _player = value;
+            PlayerChanged?.Invoke(this, _player);
+        }
+    }
+
+    public event EventHandler<ObservablePlayer>? PlayerChanged;
 }

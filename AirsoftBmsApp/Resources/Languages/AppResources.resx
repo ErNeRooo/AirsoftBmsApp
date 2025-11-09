@@ -516,4 +516,10 @@
   <data name="BattleSettingsClickHint" xml:space="preserve">
     <value>(Click to show battle settings)</value>
   </data>
+  <data name="RoomDeletedMessage" xml:space="preserve">
+    <value>This room has been deleted</value>
+  </data>
+  <data name="PlayerKickedFromRoomMessage" xml:space="preserve">
+    <value>You have been kicked from room</value>
+  </data>
 </root>

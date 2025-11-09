@@ -3,6 +3,7 @@ using AirsoftBmsApp.Model.Validatable;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Networking.ApiFacade;
 using AirsoftBmsApp.Services.GeolocationService;
+using AirsoftBmsApp.Services.HubConnectionService;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 using AirsoftBmsApp.Validation;
@@ -18,6 +19,7 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
         private readonly IApiFacade _apiFacade;
         private readonly IRoomDataService _roomDataService;
         private readonly IGeolocationService _geolocationService;
+        private readonly IHubConnectionService _hubConnectionService;
 
         [ObservableProperty]
         ValidatableJoinRoomForm roomForm = new();
@@ -28,12 +30,19 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
         [ObservableProperty]
         string errorMessage = "";
 
-        public JoinRoomFormViewModel(IValidationHelperFactory validationHelperFactory, IApiFacade apiFacade, IRoomDataService roomDataService, IGeolocationService geolocationService)
+        public JoinRoomFormViewModel(
+            IValidationHelperFactory validationHelperFactory, 
+            IApiFacade apiFacade, 
+            IRoomDataService roomDataService, 
+            IGeolocationService geolocationService,
+            IHubConnectionService hubConnectionService
+            )
         {
             validationHelperFactory.AddValidations(roomForm);
             _apiFacade = apiFacade;
             _roomDataService = roomDataService;
             _geolocationService = geolocationService;
+            _hubConnectionService = hubConnectionService;
         }
 
         [RelayCommand]
@@ -90,6 +99,7 @@ namespace AirsoftBmsApp.ViewModel.JoinRoomFormViewModel
             switch (result)
             {
                 case Success success:
+                    await _hubConnectionService.StartConnection();
                     await Redirect(nameof(RoomPage));
                     break;
                 case Failure failure:

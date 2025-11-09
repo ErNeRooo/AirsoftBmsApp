@@ -27,6 +27,8 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
     {
         private readonly IApiFacade _apiFacade;
         private readonly IHubConnectionService _hubConnectionService;
+        private readonly IRoomDataService _roomDataService;
+        private readonly IPlayerDataService _playerDataService; 
 
         [ObservableProperty]
         ObservablePlayer player;
@@ -75,15 +77,19 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             IRoomDataService roomDataService,
             IApiFacade apiFacade,
             IPlayerDataService playerDataService,
-            IHubConnectionService hubConnection,
+            IHubConnectionService hubConnectionService,
             IHubNotificationHandlerService notificationHandlers
             )
         {
-            _hubConnectionService = hubConnection;
+            _hubConnectionService = hubConnectionService;
             _apiFacade = apiFacade;
-            Player = playerDataService.Player;
+            _roomDataService = roomDataService;
+            _playerDataService = playerDataService;
 
+            Player = playerDataService.Player;
+            playerDataService.PlayerChanged += (_, newPlayer) => Player = newPlayer;
             Room = roomDataService.Room;
+            roomDataService.RoomChanged += (_, newRoom) => Room = newRoom;
 
             TeamSettingsState = new ObservableTeamSettingsState(validationHelperFactory);
             RoomSettingsState = new ObservableRoomSettingsState(validationHelperFactory, Room.MaxPlayers);
@@ -92,17 +98,14 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             validationHelperFactory.AddValidations(TeamForm);
 
-            SetNotificationHandlers(notificationHandlers, roomDataService);
-
-            Task.Run(() =>
-            {
-                _hubConnectionService.StartConnection();
-            });
+            SetNotificationHandlers(notificationHandlers, hubConnectionService, roomDataService, playerDataService);
         }
 
         void SetNotificationHandlers(
             IHubNotificationHandlerService notificationHandlers,
-            IRoomDataService roomDataService
+            IHubConnectionService hubConnectionService,
+            IRoomDataService roomDataService,
+            IPlayerDataService playerDataService
             )
         {
             _hubConnectionService.HubConnection.On<DeathDto>(
@@ -137,7 +140,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             _hubConnectionService.HubConnection.On<int>(
                 HubNotifications.PlayerLeftRoom,
-                (playerId) => notificationHandlers.Player.OnPlayerLeftRoom(playerId, Room));
+                (playerId) => notificationHandlers.Player.OnPlayerLeftRoom(playerId, roomDataService, playerDataService, hubConnectionService));
 
 
             _hubConnectionService.HubConnection.On<PlayerDto>(
@@ -152,7 +155,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
                 HubNotifications.RoomDeleted, 
                 () =>
                 {
-                    notificationHandlers.Room.OnRoomDeleted(roomDataService);
+                    notificationHandlers.Room.OnRoomDeleted(roomDataService, playerDataService, hubConnectionService);
                 });
 
 
@@ -322,6 +325,13 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             switch (result)
             {
                 case Success:
+                    _roomDataService.Room = new();
+                    _playerDataService.Player = new() { Id = Player.Id, Name = Player.Name };
+
+                    ConfirmationDialogState.Message = "";
+                    ConfirmationDialogState.Command = null;
+
+                    await _hubConnectionService.StopConnection();
                     await Redirect("../..");
                     break;
                 case Failure failure:

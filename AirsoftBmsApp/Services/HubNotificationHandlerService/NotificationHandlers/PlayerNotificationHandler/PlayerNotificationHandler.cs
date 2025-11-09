@@ -1,5 +1,9 @@
 ﻿using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Resources.Languages;
+using AirsoftBmsApp.Services.HubConnectionService;
+using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
+using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 
 namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.PlayerNotificationHandler;
 
@@ -14,8 +18,9 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
         if(player is not null) team?.Players.Remove(player);
     }
 
-    public void OnPlayerLeftRoom(int playerId, ObservableRoom contextRoom)
+    public async Task OnPlayerLeftRoom(int playerId, IRoomDataService roomDataService, IPlayerDataService playerDataService, IHubConnectionService hubConnectionService)
     {
+        ObservableRoom contextRoom = roomDataService.Room;
         List<ObservablePlayer> players = contextRoom.Teams.SelectMany(t => t.Players).ToList();
         ObservablePlayer? player = players.FirstOrDefault(p => p.Id == playerId);
         ObservableTeam? team = contextRoom.Teams.FirstOrDefault(t => t.Id == (player?.TeamId ?? 0));
@@ -23,6 +28,16 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
         if (player is not null) team?.Players.Remove(player);
         if (player?.IsAdmin == true) contextRoom.AdminPlayerId = 0;
         if (team is not null && player?.IsOfficer == true) team.OfficerId = 0;
+
+        if (playerId == playerDataService.Player.Id)
+        {
+            ObservablePlayer oldPlayer = playerDataService.Player;
+            roomDataService.Room = new();
+            playerDataService.Player = new() { Id = oldPlayer.Id, Name = oldPlayer.Name };
+
+            await hubConnectionService.StopConnection();
+            await Shell.Current.GoToAsync("../..", animate: false);
+        }
     }
 
     public void OnPlayerLeftTeam(int playerId, ObservableRoom contextRoom)

@@ -85,7 +85,7 @@ namespace AirsoftBmsApp
             builder.Services.AddTransient<BattlePage>();
             builder.Services.AddTransient<MapPage>();
 
-            builder.Services.AddTransient<IRoomViewModel, RoomViewModel>();
+            builder.Services.AddSingleton<IRoomViewModel, RoomViewModel>();
             builder.Services.AddTransient<IBattleViewModel, BattleViewModel>();
             builder.Services.AddTransient<IMapViewModel, MapViewModel>();
             builder.Services.AddTransient<IRoomFormViewModel, RoomFormViewModel>();

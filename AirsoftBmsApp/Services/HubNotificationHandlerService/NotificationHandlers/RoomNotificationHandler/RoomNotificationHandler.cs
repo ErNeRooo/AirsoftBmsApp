@@ -1,15 +1,23 @@
 ﻿using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Resources.Languages;
+using AirsoftBmsApp.Services.HubConnectionService;
+using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
 
 namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.RoomNotificationHandler;
 
 public class RoomNotificationHandler : IRoomNotificationHandler
 {
-    public void OnRoomDeleted(IRoomDataService roomDataService)
+    public async Task OnRoomDeleted(IRoomDataService roomDataService, IPlayerDataService playerDataService, IHubConnectionService hubConnectionService)
     {
-        roomDataService.Room = null;
+        ObservablePlayer oldPlayer = playerDataService.Player;
+        roomDataService.Room = new();
+        playerDataService.Player = new() { Id = oldPlayer.Id, Name = oldPlayer.Name };
+
+        await hubConnectionService.StopConnection();
+        await Shell.Current.GoToAsync("../..", animate: false);
     }
 
     public void OnRoomJoined(PlayerDto playerDto, ObservableRoom contextRoom)

@@ -516,4 +516,10 @@
   <data name="BattleSettingsClickHint" xml:space="preserve">
     <value>(Kliknij aby pokazać ustawienia bitwy)</value>
   </data>
+  <data name="RoomDeletedMessage" xml:space="preserve">
+    <value>Ten pokój został usunięty</value>
+  </data>
+  <data name="PlayerKickedFromRoomMessage" xml:space="preserve">
+    <value>Zostałeś wyrzucony z pokoju</value>
+  </data>
 </root>

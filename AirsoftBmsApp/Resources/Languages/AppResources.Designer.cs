@@ -934,6 +934,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have been kicked from room.
+        /// </summary>
+        internal static string PlayerKickedFromRoomMessage {
+            get {
+                return ResourceManager.GetString("PlayerKickedFromRoomMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to K.
         /// </summary>
         internal static string PlayerKillsLabel {
@@ -1011,6 +1020,15 @@ namespace AirsoftBmsApp.Resources.Languages {
         internal static string RespawnButtonText {
             get {
                 return ResourceManager.GetString("RespawnButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This room has been deleted.
+        /// </summary>
+        internal static string RoomDeletedMessage {
+            get {
+                return ResourceManager.GetString("RoomDeletedMessage", resourceCulture);
             }
         }
         
