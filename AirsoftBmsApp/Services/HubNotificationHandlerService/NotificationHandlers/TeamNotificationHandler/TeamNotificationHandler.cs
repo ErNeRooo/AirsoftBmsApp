@@ -20,6 +20,14 @@ public class TeamNotificationHandler : ITeamNotificationHandler
 
         if (team is null) return;
 
+        foreach(var player in team.Players)
+        {
+            if(player.IsOfficer) player.IsOfficer = false;
+            player.TeamId = 0;
+
+            contextRoom.Teams[0].Players.Add(player);
+        }
+
         contextRoom.Teams.Remove(team);
     }
 
