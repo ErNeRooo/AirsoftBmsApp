@@ -9,15 +9,6 @@ namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandl
 
 public class PlayerNotificationHandler : IPlayerNotificationHandler
 {
-    public void OnPlayerDeleted(int playerId, ObservableRoom contextRoom)
-    {
-        List<ObservablePlayer> players = contextRoom.Teams.SelectMany(t => t.Players).ToList();
-        ObservablePlayer? player = players.FirstOrDefault(p => p.Id == playerId);
-        ObservableTeam? team = contextRoom.Teams.FirstOrDefault(t => t.Id == (player?.TeamId ?? 0));
-
-        if(player is not null) team?.Players.Remove(player);
-    }
-
     public async Task OnPlayerLeftRoom(int playerId, IRoomDataService roomDataService, IPlayerDataService playerDataService, IHubConnectionService hubConnectionService)
     {
         ObservableRoom contextRoom = roomDataService.Room;

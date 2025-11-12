@@ -131,10 +131,6 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
                 (playerDto) => notificationHandlers.Player.OnPlayerUpdated(playerDto, Room));
 
             _hubConnectionService.HubConnection.On<int>(
-                HubNotifications.PlayerDeleted,
-                (playerId) => notificationHandlers.Player.OnPlayerDeleted(playerId, Room));
-
-            _hubConnectionService.HubConnection.On<int>(
                 HubNotifications.PlayerLeftTeam,
                 (playerId) => notificationHandlers.Player.OnPlayerLeftTeam(playerId, Room));
 

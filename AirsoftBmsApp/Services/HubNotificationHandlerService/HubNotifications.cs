@@ -21,7 +21,6 @@ public static class HubNotifications
     public const string OrderDeleted = "OrderDeleted";
 
     public const string PlayerUpdated = "PlayerUpdated";
-    public const string PlayerDeleted = "PlayerDeleted";
     public const string PlayerLeftTeam = "PlayerLeftTeam";
     public const string PlayerLeftRoom = "PlayerLeftRoom";
 
