@@ -36,7 +36,7 @@ public class PlayerNotificationHandler_OnPlayerLeftTeam_Tests
                             TeamId = 1
                         }
                     }
-                }
+                },
             }
         };
 
@@ -52,5 +52,49 @@ public class PlayerNotificationHandler_OnPlayerLeftTeam_Tests
         player.TeamId.ShouldBe(0);
         room.Teams[0].Players.Count.ShouldBe(1);
         room.Teams[1].Players.Count.ShouldBe(expectedPlayersCount);
+    }
+
+    [Theory]
+    [InlineData(1, 1)]
+    public void OnPlayerLeftTeam_WhenThePlayerIsOfficer_ShouldClearOfficerId(int targetPlayerId, int leftTeamId)
+    {
+        // Arrange
+        ObservableRoom room = new()
+        {
+            Teams = new()
+            {
+                new ObservableTeam { Id = 0 },
+                new ObservableTeam
+                {
+                    Id = 1,
+                    OfficerId = 1,
+                    Players = new()
+                    {
+                        new ObservablePlayer
+                        {
+                            Id = 1,
+                            TeamId = 1,
+                            IsOfficer = true
+                        },
+                    }
+                }
+            }
+        };
+
+        // Act
+        _playerNotificationHandler.OnPlayerLeftTeam(targetPlayerId, room);
+
+        // Assert
+        ObservablePlayer? player = room.Teams
+            .SelectMany(t => t.Players)
+            .FirstOrDefault(p => p.Id == targetPlayerId);
+
+        ObservableTeam? team = room.Teams
+            .FirstOrDefault(t => t.Id == leftTeamId);
+
+        player.ShouldNotBeNull();
+        player.TeamId.ShouldBe(0);
+        player.IsOfficer.ShouldBeFalse();
+        team.OfficerId.ShouldBe(0);
     }
 }

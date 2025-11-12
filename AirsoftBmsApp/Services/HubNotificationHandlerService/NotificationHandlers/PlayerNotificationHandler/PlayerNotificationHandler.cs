@@ -49,6 +49,12 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
 
         if (player is not null && previousTeam is not null && previousTeam.Id != 0) 
         {
+            if(player.IsOfficer)
+            {
+                player.IsOfficer = false;
+                previousTeam.OfficerId = 0;
+            }
+
             player.TeamId = 0;
             previousTeam?.Players.Remove(player);
             underNoFlagTeam.Players.Add(player);
