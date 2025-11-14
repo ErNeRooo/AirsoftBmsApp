@@ -87,6 +87,7 @@ public class RoomHandler(
             HttpResult result = await roomRestService.LeaveAsync();
 
             if (result is Success) {
+                geolocationService.Stop();
                 roomDataService.Room = new ObservableRoom();
                 playerDataService.Player.IsAdmin = false;
                 playerDataService.Player.IsOfficer = false;

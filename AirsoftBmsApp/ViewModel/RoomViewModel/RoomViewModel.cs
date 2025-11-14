@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using AirsoftBmsApp.Model.Dto.Death;
 using AirsoftBmsApp.Services.HubNotificationHandlerService;
 using AirsoftBmsApp.Model.Dto.Kills;
+using AirsoftBmsApp.Services.GeolocationService;
 
 namespace AirsoftBmsApp.ViewModel.RoomViewModel
 {
@@ -78,7 +79,8 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             IApiFacade apiFacade,
             IPlayerDataService playerDataService,
             IHubConnectionService hubConnectionService,
-            IHubNotificationHandlerService notificationHandlers
+            IHubNotificationHandlerService notificationHandlers, 
+            IGeolocationService geolocationService
             )
         {
             _hubConnectionService = hubConnectionService;
@@ -98,14 +100,15 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             validationHelperFactory.AddValidations(TeamForm);
 
-            SetNotificationHandlers(notificationHandlers, hubConnectionService, roomDataService, playerDataService);
+            SetNotificationHandlers(notificationHandlers, hubConnectionService, roomDataService, playerDataService, geolocationService);
         }
 
         void SetNotificationHandlers(
             IHubNotificationHandlerService notificationHandlers,
             IHubConnectionService hubConnectionService,
             IRoomDataService roomDataService,
-            IPlayerDataService playerDataService
+            IPlayerDataService playerDataService, 
+            IGeolocationService geolocationService
             )
         {
             _hubConnectionService.HubConnection.On<DeathDto>(
@@ -136,7 +139,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
 
             _hubConnectionService.HubConnection.On<int>(
                 HubNotifications.PlayerLeftRoom,
-                (playerId) => notificationHandlers.Player.OnPlayerLeftRoom(playerId, roomDataService, playerDataService, hubConnectionService));
+                (playerId) => notificationHandlers.Player.OnPlayerLeftRoom(playerId, roomDataService, playerDataService, hubConnectionService, geolocationService));
 
 
             _hubConnectionService.HubConnection.On<PlayerDto>(

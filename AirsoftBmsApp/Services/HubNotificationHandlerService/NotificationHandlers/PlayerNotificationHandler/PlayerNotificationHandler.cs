@@ -1,6 +1,7 @@
 ﻿using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Resources.Languages;
+using AirsoftBmsApp.Services.GeolocationService;
 using AirsoftBmsApp.Services.HubConnectionService;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.RoomDataService.Abstractions;
@@ -9,7 +10,13 @@ namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandl
 
 public class PlayerNotificationHandler : IPlayerNotificationHandler
 {
-    public async Task OnPlayerLeftRoom(int playerId, IRoomDataService roomDataService, IPlayerDataService playerDataService, IHubConnectionService hubConnectionService)
+    public async Task OnPlayerLeftRoom(
+        int playerId, 
+        IRoomDataService roomDataService, 
+        IPlayerDataService playerDataService, 
+        IHubConnectionService hubConnectionService, 
+        IGeolocationService geolocationService
+        )
     {
         ObservableRoom contextRoom = roomDataService.Room;
         List<ObservablePlayer> players = contextRoom.Teams.SelectMany(t => t.Players).ToList();
@@ -26,6 +33,7 @@ public class PlayerNotificationHandler : IPlayerNotificationHandler
             roomDataService.Room = new();
             playerDataService.Player = new() { Id = oldPlayer.Id, Name = oldPlayer.Name };
 
+            geolocationService.Stop();
             await hubConnectionService.StopConnection();
             await Shell.Current.GoToAsync("../..", animate: false);
         }

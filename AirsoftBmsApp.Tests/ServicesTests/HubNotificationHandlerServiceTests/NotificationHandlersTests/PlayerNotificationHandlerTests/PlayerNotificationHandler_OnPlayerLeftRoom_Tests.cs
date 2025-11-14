@@ -1,4 +1,5 @@
 ﻿using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Services.GeolocationService;
 using AirsoftBmsApp.Services.HubConnectionService;
 using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.PlayerNotificationHandler;
 using AirsoftBmsApp.Services.PlayerDataService.Implementations;
@@ -57,9 +58,10 @@ public class PlayerNotificationHandler_OnPlayerLeftRoom_Tests
             }
         };
         IHubConnectionService hubConnectionService = new MockHubConnectionService();
+        IGeolocationService geolocationService = new MockGeolocationService();
 
         // Act
-        _playerNotificationHandler.OnPlayerLeftRoom(targetPlayerId, roomDataService, playerDataService, hubConnectionService);
+        _playerNotificationHandler.OnPlayerLeftRoom(targetPlayerId, roomDataService, playerDataService, hubConnectionService, geolocationService);
 
         // Assert
         ObservablePlayer? player = roomDataService.Room.Teams
@@ -118,9 +120,10 @@ public class PlayerNotificationHandler_OnPlayerLeftRoom_Tests
             }
         };
         IHubConnectionService hubConnectionService = new MockHubConnectionService();
+        IGeolocationService geolocationService = new MockGeolocationService();
 
         // Act
-        _playerNotificationHandler.OnPlayerLeftRoom(targetPlayerId, roomDataService, playerDataService, hubConnectionService);
+        _playerNotificationHandler.OnPlayerLeftRoom(targetPlayerId, roomDataService, playerDataService, hubConnectionService, geolocationService);
 
         // Assert
         ObservablePlayer? player = roomDataService.Room.Teams
@@ -150,6 +153,19 @@ public class PlayerNotificationHandler_OnPlayerLeftRoom_Tests
         public Task StopConnection()
         {
             return Task.CompletedTask;
+        }
+    }
+
+    private class MockGeolocationService : IGeolocationService
+    {
+        public Task Start()
+        {
+            return Task.CompletedTask;
+        }
+
+        public void Stop()
+        {
+            return;
         }
     }
 }
