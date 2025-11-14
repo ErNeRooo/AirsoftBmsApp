@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Battle;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.Model.Observable;
 
@@ -22,6 +23,8 @@ public partial class ObservableBattle : ObservableObject
 
     [ObservableProperty]
     public Action? onBattleDeactivated;
+
+    public ObservableCollection<ObservableZone> Zones { get; set; } = new();
 
     public ObservableBattle()
     {

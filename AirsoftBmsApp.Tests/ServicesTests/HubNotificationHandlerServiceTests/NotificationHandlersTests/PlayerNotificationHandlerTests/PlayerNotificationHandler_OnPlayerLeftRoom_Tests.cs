@@ -72,7 +72,7 @@ public class PlayerNotificationHandler_OnPlayerLeftRoom_Tests
         roomDataService.Room.Id.ShouldBe(0);
         roomDataService.Room.MaxPlayers.ShouldBe(0);
         roomDataService.Room.AdminPlayerId.ShouldBeNull();
-        roomDataService.Room.Zones.Count.ShouldBe(0);
+        roomDataService.Room.Battle?.Zones.Count.ShouldBe(0);
         roomDataService.Room.Teams.Count.ShouldBe(1);
     }
 

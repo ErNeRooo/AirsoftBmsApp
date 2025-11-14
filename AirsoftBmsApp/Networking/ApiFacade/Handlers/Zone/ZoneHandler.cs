@@ -22,7 +22,7 @@ public class ZoneHandler(
 
             if (result is Success)
             {
-                roomDataService.Room.Zones.Add(new ObservableZone(zone));
+                roomDataService.Room.Battle?.Zones.Add(new ObservableZone(zone));
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 

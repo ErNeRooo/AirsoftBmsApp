@@ -33,6 +33,9 @@ public partial class ObservableTeam : ObservableObject, IObservableTeam
     private ITeamTheme teamTheme = TeamThemes.UnderNoFlag;
 
     [ObservableProperty]
+    private int? spawnZoneId;
+
+    [ObservableProperty]
     private Polygon? spawnZone = null;
 
     public ObservableTeam()
@@ -46,6 +49,7 @@ public partial class ObservableTeam : ObservableObject, IObservableTeam
         RoomId = team.RoomId;
         OfficerId = team.OfficerPlayerId;
         Name = team.Name;
+        SpawnZoneId = team.SpawnZoneId;
     }
 
     public void Attach(ObservablePlayer observer)

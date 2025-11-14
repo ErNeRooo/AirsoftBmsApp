@@ -59,8 +59,11 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         _hubConnectionService = hubConnection;
         BattleSettingsState = new ObservableBattleSettingsState(validationHelperFactory);
         _apiFacade = apiFacade;
+
         Player = playerDataService.Player;
+        playerDataService.PlayerChanged += (_, newPlayer) => Player = newPlayer;
         Room = roomDataService.Room;
+        roomDataService.RoomChanged += (_, newRoom) => Room = newRoom;
 
         Room.Teams.CollectionChanged += Teams_CollectionChanged;
 

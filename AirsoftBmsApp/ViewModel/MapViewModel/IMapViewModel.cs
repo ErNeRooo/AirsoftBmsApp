@@ -11,4 +11,5 @@ public interface IMapViewModel
     List<CustomPin> MapPins { get; }
 
     public void MapClicked(object sender, MapClickedEventArgs e);
+    public void UpdateMap();
 }

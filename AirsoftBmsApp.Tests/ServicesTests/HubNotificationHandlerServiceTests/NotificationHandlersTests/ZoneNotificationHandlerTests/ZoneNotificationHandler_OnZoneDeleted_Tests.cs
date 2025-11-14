@@ -16,20 +16,23 @@ public class ZoneNotificationHandler_OnZoneDeleted_Tests
         ObservableRoom room = new()
         {
             Id = 1,
-            Zones = new ObservableCollection<ObservableZone>()
+            Battle = new()
             {
-                new()
+                Zones = new ObservableCollection<ObservableZone>()
                 {
-                    ZoneId = 10,
-                    Name = "Test Zone",
-                    Type = "Test Type",
-                    BattleId = 1,
-                    Vertices = new ObservableCollection<ObservableVertex>()
+                    new()
                     {
-                        new() { Latitude = 1, Longitude = 1 },
-                        new() { Latitude = 2, Longitude = 2 },
-                        new() { Latitude = 3, Longitude = 3 },
-                    },
+                        ZoneId = 10,
+                        Name = "Test Zone",
+                        Type = "Test Type",
+                        BattleId = 1,
+                        Vertices = new ObservableCollection<ObservableVertex>()
+                        {
+                            new() { Latitude = 1, Longitude = 1 },
+                            new() { Latitude = 2, Longitude = 2 },
+                            new() { Latitude = 3, Longitude = 3 },
+                        },
+                    }
                 }
             }
         };
@@ -39,9 +42,9 @@ public class ZoneNotificationHandler_OnZoneDeleted_Tests
         _zoneNotificationHandler.OnZoneDeleted(targetZoneId, room);
 
         // Assert
-        ObservableZone? zone = room.Zones.FirstOrDefault(z => z.ZoneId == targetZoneId);
+        ObservableZone? zone = room.Battle.Zones.FirstOrDefault(z => z.ZoneId == targetZoneId);
 
-        room.Zones.Count.ShouldBe(0);
+        room.Battle.Zones.Count.ShouldBe(0);
         zone.ShouldBeNull();
     }
 }

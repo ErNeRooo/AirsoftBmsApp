@@ -19,7 +19,10 @@ public class ZoneNotificationHandler_OnZoneCreated_Tests
         ObservableRoom room = new()
         {
             Id = 1,
-            Zones = new ObservableCollection<ObservableZone>()
+            Battle = new()
+            {
+                Zones = new ObservableCollection<ObservableZone>()
+            }
         };
         ZoneDto zoneDto = new()
         {
@@ -39,9 +42,9 @@ public class ZoneNotificationHandler_OnZoneCreated_Tests
         _zoneNotificationHandler.OnZoneCreated(zoneDto, room);
 
         // Assert
-        ObservableZone? zone = room.Zones.FirstOrDefault(z => z.ZoneId == zoneDto.ZoneId);
+        ObservableZone? zone = room.Battle.Zones.FirstOrDefault(z => z.ZoneId == zoneDto.ZoneId);
 
-        room.Zones.Count.ShouldBe(1);
+        room.Battle.Zones.Count.ShouldBe(1);
         zone.ShouldNotBeNull();
         zone.ZoneId.ShouldBe(zoneDto.ZoneId);
         zone.Name.ShouldBe(zoneDto.Name);
@@ -57,20 +60,23 @@ public class ZoneNotificationHandler_OnZoneCreated_Tests
         ObservableRoom room = new()
         {
             Id = 1,
-            Zones = new ObservableCollection<ObservableZone>()
+            Battle = new()
             {
-                new()
+                Zones = new ObservableCollection<ObservableZone>()
                 {
-                    ZoneId = 10,
-                    Name = "Test Zone",
-                    Type = "Test Type",
-                    BattleId = 1,
-                    Vertices = new ObservableCollection<ObservableVertex>()
+                    new()
                     {
-                        new() { Latitude = 1, Longitude = 1 },
-                        new() { Latitude = 2, Longitude = 2 },
-                        new() { Latitude = 3, Longitude = 3 },
-                    },
+                        ZoneId = 10,
+                        Name = "Test Zone",
+                        Type = "Test Type",
+                        BattleId = 1,
+                        Vertices = new ObservableCollection<ObservableVertex>()
+                        {
+                            new() { Latitude = 1, Longitude = 1 },
+                            new() { Latitude = 2, Longitude = 2 },
+                            new() { Latitude = 3, Longitude = 3 },
+                        },
+                    }
                 }
             }
         };
@@ -83,9 +89,9 @@ public class ZoneNotificationHandler_OnZoneCreated_Tests
         _zoneNotificationHandler.OnZoneCreated(zoneDto, room);
 
         // Assert
-        ObservableZone? zone = room.Zones.FirstOrDefault(z => z.ZoneId == zoneDto.ZoneId);
+        ObservableZone? zone = room.Battle.Zones.FirstOrDefault(z => z.ZoneId == zoneDto.ZoneId);
 
-        room.Zones.Count.ShouldBe(1);
+        room.Battle.Zones.Count.ShouldBe(1);
         zone.ShouldNotBeNull();
         zone.ZoneId.ShouldBe(zoneDto.ZoneId);
         zone.Name.ShouldBe("Test Zone");

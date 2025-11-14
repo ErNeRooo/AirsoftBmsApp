@@ -84,8 +84,12 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     {
         _hubConnectionService = hubConnectionService;
         _apiFacade = apiFacade;
-        Room = roomDataService.Room;
+
         Player = playerDataService.Player;
+        playerDataService.PlayerChanged += (_, newPlayer) => Player = newPlayer;
+        Room = roomDataService.Room;
+        roomDataService.RoomChanged += (_, newRoom) => { Room = newRoom; UpdateMap(); };
+
         ActionDialogState = new ObservableActionDialogState(null, Player);
         CreateSpawnZoneDialogState = new ObservableCreateSpawnZoneDialogState(Room.Teams);
 
@@ -182,7 +186,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
     }
 
     [Time]
-    private void UpdateMap()
+    public void UpdateMap()
     {
         List<CustomPin> pins = new();
         List<MapElement> elements = new();
@@ -713,6 +717,7 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
         PostZoneDto postZoneDto = new()
         {
+            Name = $"{CreateSpawnZoneDialogState.SelectedTeam?.Name} Spawn",
             Type = ZoneTypes.SPAWN,
             BattleId = Room.Battle.BattleId,
             Vertices = ZoneSelection.Geopath.Select(location => new PostVertexDto

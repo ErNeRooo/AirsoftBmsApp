@@ -2,8 +2,11 @@
 using AirsoftBmsApp.Model.Dto.Death;
 using AirsoftBmsApp.Model.Dto.Kills;
 using AirsoftBmsApp.Model.Dto.Location;
+using AirsoftBmsApp.Model.Dto.MapPing;
+using AirsoftBmsApp.Model.Dto.Order;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Model.Dto.Zone;
 
 namespace AirsoftBmsApp.Model.Dto.Room;
 
@@ -19,4 +22,7 @@ public class RoomIncludingRelatedEntitiesDto
     public List<DeathDto> Deaths { get; set; }
     public List<KillDto> Kills { get; set; }
     public List<LocationDto> Locations { get; set; }
+    public List<MapPingDto> MapPings { get; set; }
+    public List<OrderDto> Orders { get; set; }
+    public List<ZoneDto> Zones { get; set; }
 }

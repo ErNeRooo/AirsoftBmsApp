@@ -1,8 +1,10 @@
 ﻿using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Room;
+using AirsoftBmsApp.Model.Dto.Vertex;
 using AirsoftBmsApp.Resources.Languages;
 using AirsoftBmsApp.Resources.Styles.TeamTheme;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Maui.Controls.Maps;
 using System.Collections.ObjectModel;
 
 namespace AirsoftBmsApp.Model.Observable;
@@ -32,8 +34,6 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
                 TeamTheme = TeamThemes.UnderNoFlag,
             },
         };
-
-    public ObservableCollection<ObservableZone> Zones { get; set; } = new();
 
     [ObservableProperty]
     public ObservableBattle? battle;
@@ -78,10 +78,23 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
 
             observerablePlayers.Add(observablePlayer);
 
+            ObservableTeam? team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
+
             if (player.TeamId is null)
             {
                 Teams[0].Players.Add(observablePlayer);
-                continue;
+            }
+            else
+            {
+                if (team != null && team.Id != 0)
+                {
+                    if (player.PlayerId == team.OfficerId)
+                    {
+                        observablePlayer.IsOfficer = true;
+                    }
+
+                    team.Players.Add(observablePlayer);
+                }
             }
 
             if (room.Deaths is not null)
@@ -99,19 +112,58 @@ public partial class ObservableRoom : ObservableObject, IObservableRoom
                 observablePlayer.Locations = new ObservableCollection<ObservableLocation>(
                     room.Locations.Where(location => location.PlayerId == observablePlayer.Id).Select(location => new ObservableLocation(location)));
             }
-
-            var team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
-            if (team != null)
+            if (room.MapPings is not null && team is not null)
             {
-                if (player.PlayerId == team.OfficerId)
-                {
-                    observablePlayer.IsOfficer = true;
-                }
+                List<ObservableMapPing> playerMapPings = room.MapPings
+                    .Where(mapPing => mapPing.PlayerId == observablePlayer.Id)
+                    .Select(mapPing => new ObservableMapPing(mapPing))
+                    .ToList();
 
-                team.Players.Add(observablePlayer);
+                foreach (ObservableMapPing mapPing in playerMapPings)
+                {
+                    team.MapPings.Add(mapPing);
+                }
+            }
+            if (room.Orders is not null && team is not null)
+            {
+                List<ObservableOrder> playerOrders = room.Orders
+                    .Where(order => order.PlayerId == observablePlayer.Id)
+                    .Select(order => new ObservableOrder(order))
+                    .ToList();
+
+                foreach (ObservableOrder order in playerOrders)
+                {
+                    team.Orders.Add(order);
+                }
             }
         }
 
+        if (Battle is not null)
+        {
+            Battle.Zones = new ObservableCollection<ObservableZone>(
+                room.Zones.Select(zone => {
+                    foreach (var team in Teams)
+                    {
+                        if (team.SpawnZoneId == zone.ZoneId)
+                        {
+                            Polygon polygon = new()
+                            {
+                                StrokeColor = team!.TeamTheme.TitleColor,
+                                FillColor = team.TeamTheme.TitleColor.WithAlpha(0.4f)
+                            };
+
+                            foreach (VertexDto vertex in zone.Vertices)
+                            {
+                                polygon.Geopath.Add(new Location(vertex.Latitude, vertex.Longitude));
+                            }
+
+                            team.SpawnZone = polygon;
+                        }
+                    }
+                    
+                    return new ObservableZone(zone);
+                }));
+        }
     }
 
     public void Attach(IObservablePlayer observer)
