@@ -1,3 +1,5 @@
+using System.Windows.Input;
+
 namespace AirsoftBmsApp.View.ContentViews.ErrorMessageView;
 
 public partial class ErrorMessageView : ContentView
@@ -8,19 +10,22 @@ public partial class ErrorMessageView : ContentView
         typeof(ErrorMessageView),
         default(string));
 
+    public ICommand ClearErrorMessageCommand { get; private set; }
+
     public string ErrorMessage
     {
         get => (string)GetValue(ErrorMessageProperty);
         set => SetValue(ErrorMessageProperty, value);
     }
 
-    public async void ClearErrorMessage(object sender, EventArgs e)
+    public void ClearErrorMessage()
     {
         ErrorMessage = "";
     }
 
     public ErrorMessageView()
 	{
-		InitializeComponent();
+        ClearErrorMessageCommand = new Command(ClearErrorMessage);
+        InitializeComponent();
 	}
 }

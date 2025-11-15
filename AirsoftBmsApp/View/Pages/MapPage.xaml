@@ -6,6 +6,7 @@
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              xmlns:langs="clr-namespace:AirsoftBmsApp.Resources.Languages"
              xmlns:viewModel="clr-namespace:AirsoftBmsApp.ViewModel.MapViewModel"
+             xmlns:error="clr-namespace:AirsoftBmsApp.View.ContentViews.ErrorMessageView"
              xmlns:buttons="clr-namespace:AirsoftBmsApp.View.ContentViews.Buttons"
              xmlns:dialogs="clr-namespace:AirsoftBmsApp.View.ContentViews.Dialogs"
              xmlns:customMap="clr-namespace:AirsoftBmsApp.View.ContentViews.CustomMap"
@@ -81,6 +82,18 @@
             </Border>
         </Grid>
 
+        <Grid 
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            RowDefinitions="auto"
+            >
+            <error:ErrorMessageView
+                x:Name="errorView"
+                Grid.Row="0"
+                ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"
+                Margin="20"
+            />
+        </Grid>
 
 
         <Border

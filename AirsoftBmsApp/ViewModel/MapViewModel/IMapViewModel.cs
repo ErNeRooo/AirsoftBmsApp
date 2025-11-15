@@ -9,6 +9,7 @@ public interface IMapViewModel
     ObservableRoom Room { get; }
     ObservablePlayer Player { get; }
     List<CustomPin> MapPins { get; }
+    string ErrorMessage { get; set; }
 
     public void MapClicked(object sender, MapClickedEventArgs e);
     public void UpdateMap();

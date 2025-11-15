@@ -2,9 +2,14 @@
 using AirsoftBmsApp.Model.Dto.Death;
 using AirsoftBmsApp.Model.Dto.Kills;
 using AirsoftBmsApp.Model.Dto.Location;
+using AirsoftBmsApp.Model.Dto.MapPing;
+using AirsoftBmsApp.Model.Dto.Order;
 using AirsoftBmsApp.Model.Dto.Player;
 using AirsoftBmsApp.Model.Dto.Room;
 using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Model.Dto.Vertex;
+using AirsoftBmsApp.Model.Dto.Zone;
+using AirsoftBmsApp.Model.Observable;
 using AirsoftBmsApp.Networking;
 using AirsoftBmsApp.Services.PlayerDataService.Abstractions;
 using AirsoftBmsApp.Services.PlayerRestService.Abstractions;
@@ -120,7 +125,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         BattleId = 1,
                         RoomId = 1,
                         Name = "Bitwa Pod Słabogórą",
-                        IsActive = false
+                        IsActive = true
                     },
                     Players = new List<PlayerDto>
                     {
@@ -153,12 +158,14 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                             TeamId = 1,
                             Name = "Team A",
                             OfficerPlayerId = 4,
+                            SpawnZoneId = 1,
                         },
                         new TeamDto
                         {
                             TeamId = 2,
                             Name = "Team B",
                             OfficerPlayerId = null,
+                            SpawnZoneId = 2,
                         },
                         new TeamDto
                         {
@@ -227,7 +234,89 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         new LocationDto { LocationId = 18, PlayerId = 18, BattleId = 1, Longitude = 21.0433, Latitude = 53.1308, Accuracy = 10.6, Bearing = 330, Time = DateTimeOffset.Now.AddMinutes(-3), Type = "player-location" },
                         new LocationDto { LocationId = 19, PlayerId = 19, BattleId = 1, Longitude = 21.0447, Latitude = 53.1311, Accuracy = 24.1, Bearing = 195, Time = DateTimeOffset.Now.AddMinutes(-2), Type = "player-location" },
                         new LocationDto { LocationId = 20, PlayerId = 21, BattleId = 1, Longitude = 21.0422, Latitude = 53.1321, Accuracy = 19.4, Bearing = 15, Time = DateTimeOffset.Now.AddMinutes(-1), Type = "player-location" },
-                    }
+                    },
+                    Orders = new List<OrderDto>() 
+                    {
+                        new OrderDto
+                        {
+                            OrderId = 1,
+                            BattleId = 1,
+                            Longitude = 21.0425,
+                            Latitude = 53.1313,
+                            Accuracy = 0,
+                            Bearing = 0,
+                            Time = DateTimeOffset.Now,
+                            Type =OrderTypes.MOVE
+                        },
+                        new OrderDto
+                        {
+                            OrderId = 2,
+                            BattleId = 9,
+                            Longitude = 21.0425,
+                            Latitude = 53.1313,
+                            Accuracy = 0,
+                            Bearing = 0,
+                            Time = DateTimeOffset.Now,
+                            Type =OrderTypes.MOVE
+                        },
+                    },
+                    MapPings = new List<MapPingDto>()
+                    {
+                        new MapPingDto
+                        {
+                            MapPingId = 1,
+                            PlayerId = 1,
+                            BattleId = 1,
+                            Longitude = 21.0500,
+                            Latitude = 53.1350,
+                            Accuracy = 5.0,
+                            Bearing = 0,
+                            Time = DateTimeOffset.Now.AddMinutes(-1)
+                        },
+                        new MapPingDto
+                        {
+                            MapPingId = 2,
+                            PlayerId = 9,
+                            BattleId = 1,
+                            Longitude = 21.0510,
+                            Latitude = 53.1360,
+                            Accuracy = 6.0,
+                            Bearing = 90,
+                            Time = DateTimeOffset.Now.AddMinutes(-2)
+                        },
+
+                    },
+                    Zones = new List<ZoneDto>()
+                    {
+                        new ZoneDto
+                        {
+                            ZoneId = 1,
+                            Type = ZoneTypes.SPAWN,
+                            Name = "Spawn Team A",
+                            BattleId = 1,
+                            Vertices = new List<VertexDto>
+                            {
+                                new VertexDto { Longitude = 21.0400, Latitude = 53.1300 },
+                                new VertexDto { Longitude = 21.0500, Latitude = 53.1300 },
+                                new VertexDto { Longitude = 21.0500, Latitude = 53.1400 },
+                                new VertexDto { Longitude = 21.0400, Latitude = 53.1400 },
+                            }
+                        },
+                        new ZoneDto
+                        {
+                            ZoneId = 2,
+                            Type = ZoneTypes.SPAWN,
+                            Name = "Spawn Team B",
+                            BattleId = 1,
+                            Vertices = new List<VertexDto>
+                            {
+                                new VertexDto { Longitude = 21.0600, Latitude = 53.1300 },
+                                new VertexDto { Longitude = 21.0700, Latitude = 53.1300 },
+                                new VertexDto { Longitude = 21.0700, Latitude = 53.1400 },
+                                new VertexDto { Longitude = 21.0600, Latitude = 53.1400 },
+                            }
+                        },
+                    },
                 });
             }
         }

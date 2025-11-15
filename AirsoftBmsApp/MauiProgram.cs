@@ -93,10 +93,13 @@ namespace AirsoftBmsApp
             builder.Services.AddTransient<ICreateRoomFormViewModel, CreateRoomFormViewModel>();
             builder.Services.AddTransient<IJoinRoomFormViewModel, JoinRoomFormViewModel>();
 
-            bool isUsingMockRestServices = false;
+            bool isUsingMockRestServices = true;
 
             if (isUsingMockRestServices)
             {
+                builder.Services.AddSingleton<IGeolocationService, MockGeolocationService>();
+                builder.Services.AddSingleton<IHubConnectionService, MockHubConnectionService>();
+
                 builder.Services.AddSingleton<IAccountRestService, MockAccountRestService>();
                 builder.Services.AddSingleton<IPlayerRestService, MockPlayerRestService>();
                 builder.Services.AddSingleton<IRoomRestService, MockRoomRestService>();
@@ -112,6 +115,9 @@ namespace AirsoftBmsApp
             else
             {
                 string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8080" : "http://localhost:8080";
+
+                builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
+                builder.Services.AddSingleton<IHubConnectionService, HubConnectionService>();
 
                 builder.Services.AddHttpClient<IAccountRestService, AccountRestService>(client =>
                 {
@@ -174,8 +180,6 @@ namespace AirsoftBmsApp
             builder.Services.AddSingleton<IRoomDataService, RoomDataService>();
             builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
             builder.Services.AddSingleton<IJsonHelperService, JsonHelperService>();
-            builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
-            builder.Services.AddSingleton<IHubConnectionService, HubConnectionService>();
 
             builder.Services.AddSingleton<IApiFacade, ApiFacade>();
             builder.Services.AddSingleton<IAccountHandler, AccountHandler>();

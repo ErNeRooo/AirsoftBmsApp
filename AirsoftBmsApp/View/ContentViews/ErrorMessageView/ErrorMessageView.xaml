@@ -64,15 +64,19 @@
                 Margin="0,10,0,0"
                 HeightRequest="30"
                 Stroke="{toolkit:AppThemeResource OnError}"
+                BackgroundColor="Transparent"
                 >
-                <Button 
-                    BackgroundColor="Transparent"
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ClearErrorMessageCommand}" />
+                </Border.GestureRecognizers>
+
+                <Label 
                     TextColor="{toolkit:AppThemeResource OnError}"
-                    BorderWidth="2"
                     FontFamily="{StaticResource GlobalFont}" 
                     HorizontalOptions="Fill"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
                     Text="{Static langs:AppResources.HideButton}"
-                    Clicked="ClearErrorMessage"
                     FontSize="14"
                     Padding="0"
                 />
