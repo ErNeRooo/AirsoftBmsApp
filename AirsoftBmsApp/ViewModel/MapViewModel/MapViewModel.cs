@@ -834,8 +834,8 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         {
             Longitude = playersLocation.Longitude,
             Latitude = playersLocation.Latitude,
-            Accuracy = playersLocation.Accuracy ?? 0,
-            Bearing = playersLocation.Course ?? 0,
+            Accuracy = (short)(playersLocation.Accuracy ?? 0),
+            Bearing = (short)(playersLocation.Course ?? 0),
             Time = DateTimeOffset.Now
         };
 
@@ -877,8 +877,8 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
         {
             Longitude = playersLocation.Longitude,
             Latitude = playersLocation.Latitude,
-            Accuracy = playersLocation.Accuracy ?? 0,
-            Bearing = playersLocation.Course ?? 0,
+            Accuracy = (short)(playersLocation.Accuracy ?? 0),
+            Bearing = (short)(playersLocation.Course ?? 0),
             Time = DateTimeOffset.Now
         };
 
