@@ -65,8 +65,10 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                         .SelectMany(team => team.Players)
                         .FirstOrDefault(p => p.Id == playerId);
 
-                    playerToUpdate.Name = player?.Name;
-                    playerToUpdate.IsDead = (bool)player?.IsDead;
+                    if (player is null || playerToUpdate is null) return new Failure("Player is null");
+
+                    playerToUpdate.Name = player.Name;
+                    playerToUpdate.IsDead = player.IsDead;
 
                     if (playerToUpdate.TeamId != player.TeamId)
                     {
@@ -79,13 +81,12 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                         }
 
                         int index = previousTeam.Players.IndexOf(playerToUpdate);
-                        if (index >= 0)
-                            previousTeam.Players.RemoveAt(index);
+                        if (index >= 0) previousTeam.Players.RemoveAt(index);
 
-                        playerToUpdate.TeamId = (int)player?.TeamId;
+                        playerToUpdate.TeamId = player.TeamId;
 
                         roomDataService.Room
-                            .Teams.FirstOrDefault(t => t.Id == player?.TeamId)
+                            .Teams.FirstOrDefault(t => t.Id == player.TeamId)
                             ?.Players.Add(playerToUpdate);
                     }
                 }

@@ -240,6 +240,7 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         new OrderDto
                         {
                             OrderId = 1,
+                            PlayerId = 1,
                             BattleId = 1,
                             Longitude = 21.0425,
                             Latitude = 53.1313,
@@ -251,7 +252,8 @@ namespace AirsoftBmsApp.Services.RoomRestService.Implementations
                         new OrderDto
                         {
                             OrderId = 2,
-                            BattleId = 9,
+                            PlayerId = 9,
+                            BattleId = 1,
                             Longitude = 21.0425,
                             Latitude = 53.1313,
                             Accuracy = 0,

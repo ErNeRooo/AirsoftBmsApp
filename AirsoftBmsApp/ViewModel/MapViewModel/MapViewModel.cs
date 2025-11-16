@@ -4,7 +4,6 @@ using AirsoftBmsApp.Model.Dto.Location;
 using AirsoftBmsApp.Model.Dto.MapPing;
 using AirsoftBmsApp.Model.Dto.Order;
 using AirsoftBmsApp.Model.Dto.Player;
-using AirsoftBmsApp.Model.Dto.Team;
 using AirsoftBmsApp.Model.Dto.Vertex;
 using AirsoftBmsApp.Model.Dto.Zone;
 using AirsoftBmsApp.Model.Observable;
@@ -256,9 +255,8 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                 .SelectMany(t => t.Players)
                 .FirstOrDefault(p => p.Id == order.PlayerId);
 
-            ObservableLocation playerLastLocation = player.Locations.Last();
+            ObservableLocation? playerLastLocation = player.Locations.LastOrDefault();
 
-            Location playerLocation = new Location(playerLastLocation.Latitude, playerLastLocation.Longitude);
             Location orderLocation = new Location(order.Latitude, order.Longitude);
 
             CustomPin pin = new()
@@ -273,19 +271,25 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
                 ClickedCommand = DeleteOrderConfirmationCommand,
             };
 
-            Polyline polyline = new()
+            if(playerLastLocation is not null)
             {
-                StrokeColor = Color.FromArgb("#FFCA3B33"),
-                StrokeWidth = 5,
-                Geopath =
+                Location playerLocation = new Location(playerLastLocation.Latitude, playerLastLocation.Longitude);
+
+                Polyline polyline = new()
+                {
+                    StrokeColor = Color.FromArgb("#FFCA3B33"),
+                    StrokeWidth = 5,
+                    Geopath =
                 {
                     playerLocation,
                     orderLocation
                 }
-            };
+                };
+
+                elements.Add(polyline);
+            }
 
             pins.Add(pin);
-            elements.Add(polyline);
         }
         
         return (pins, elements);
