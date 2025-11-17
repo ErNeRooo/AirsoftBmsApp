@@ -116,8 +116,8 @@ namespace AirsoftBmsApp.Services.TeamRestService.Implementations
 
             if (response.IsSuccessStatusCode)
             {
-                var zone = await jsonHelper.DeserializeFromResponseAsync<ZoneDto>(response);
-                return (new Success(), zone);
+                TeamDto team = await jsonHelper.DeserializeFromResponseAsync<TeamDto>(response);
+                return (new Success(), team.SpawnZone);
             }
             else
             {
