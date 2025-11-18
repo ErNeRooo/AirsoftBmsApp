@@ -112,24 +112,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
             {
                 (HttpResult result, PlayerDto? player) = await playerRestService.KickFromRoomByIdAsync(playerId);
 
-                if (result is Success)
-                {
-                    ObservablePlayer? playerToKick = roomDataService.Room.Teams
-                        .SelectMany(team => team.Players)
-                        .FirstOrDefault(p => p.Id == playerId);
-
-                    ObservableTeam? teamOfPlayerToKick = roomDataService.Room.Teams.FirstOrDefault(team => team.Id == playerToKick.TeamId);
-
-                    SetTeamOfficerToNotAssigned(playerToKick, teamOfPlayerToKick);
-
-                    teamOfPlayerToKick.Players.Remove(playerToKick);
-                }
-                else
-                {
-                    if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
-
-                    return result;
-                }
+                if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
                 return result;
             }
