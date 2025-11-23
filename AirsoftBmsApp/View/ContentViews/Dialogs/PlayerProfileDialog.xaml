@@ -381,15 +381,16 @@
                         SelectedItem="{Binding PlayerProfileState.SelectedTeam, Mode=TwoWay}"
                         ItemsSource="{Binding PlayerProfileState.Teams}"
                         ItemDisplayBinding="{Binding Name}"
-                        SelectedIndexChanged="SelectionChanged"
-                 />
+                        Focused="TeamPickerFocused"
+                        Unfocused="TeamPickerUnfocused"
+                    />
                 </Border>
 
                 <buttons:OutlinedButton 
                     Grid.Row="8"
                     Grid.ColumnSpan="2"
-                    Text="{Static langs:AppResources.BackButton}"
-                    Clicked="Cancel"
+                    Text="{Static langs:AppResources.OkButton}"
+                    Clicked="Hide"
                     />
             </Grid>
         </Border>

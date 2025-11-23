@@ -5,6 +5,8 @@ namespace AirsoftBmsApp.View.ContentViews.Dialogs;
 
 public partial class PlayerProfileDialog : ContentView
 {
+    int _pickerIndexBeforeFocus = -1;
+
     public static readonly BindableProperty PlayerProfileStateProperty =
         BindableProperty.Create(nameof(PlayerProfileState), typeof(ObservablePlayerProfileState), typeof(PlayerProfileDialog));
 
@@ -41,17 +43,25 @@ public partial class PlayerProfileDialog : ContentView
         set => SetValue(MoveToAnotherTeamCommandProperty, value);
     }
 
-    public void Cancel(object sender, EventArgs e)
+    public void Hide(object sender, EventArgs e)
     {
         PlayerProfileState.IsVisible = false;
     }
 
-    public void SelectionChanged(object sender, EventArgs e)
+    public void TeamPickerFocused(object? sender, FocusEventArgs e)
     {
-        if (MoveToAnotherTeamCommand?.CanExecute(PlayerProfileState.SelectedTeam) == true)
+        _pickerIndexBeforeFocus = TeamPicker.SelectedIndex;
+    }
+
+    public void TeamPickerUnfocused(object? sender, FocusEventArgs e)
+    {
+        if (TeamPicker.SelectedIndex != _pickerIndexBeforeFocus)
         {
-            MoveToAnotherTeamCommand.Execute(PlayerProfileState.SelectedTeam);
+            if (MoveToAnotherTeamCommand?.CanExecute(PlayerProfileState.SelectedTeam) == true)
+                MoveToAnotherTeamCommand.Execute(PlayerProfileState.SelectedTeam);
         }
+
+        _pickerIndexBeforeFocus = -1;
     }
 
     public PlayerProfileDialog()

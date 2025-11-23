@@ -690,7 +690,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
         public async Task MovePlayerToAnotherTeam(ObservableTeam team)
         {
             int currentTeamId = PlayerProfileState.SelectedPlayer.TeamId ?? 0;
-            if (team.Id == currentTeamId) return;
+            if (team is null || team.Id == currentTeamId) return;
 
             IsLoading = true;
             await Task.Yield();
