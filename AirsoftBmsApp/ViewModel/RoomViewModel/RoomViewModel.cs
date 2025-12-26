@@ -469,6 +469,7 @@ namespace AirsoftBmsApp.ViewModel.RoomViewModel
             if(targetPlayer is not null)
             {
                 targetPlayer.TeamId ??= 0;
+                PlayerProfileState.SelfPlayer = Player;
                 PlayerProfileState.SelectedPlayer = targetPlayer;
                 PlayerProfileState.Teams = new(Room.Teams.Skip(1));
 

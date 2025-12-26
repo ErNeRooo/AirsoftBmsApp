@@ -65,7 +65,7 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
                         .SelectMany(team => team.Players)
                         .FirstOrDefault(p => p.Id == playerId);
 
-                    if (player is null || playerToUpdate is null) return new Failure("Player is null");
+                    if (player is null || playerToUpdate is null) throw new Exception("Player is null");
 
                     playerToUpdate.Name = player.Name;
                     playerToUpdate.IsDead = player.IsDead;
@@ -85,9 +85,9 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
 
                         playerToUpdate.TeamId = player.TeamId;
 
-                        roomDataService.Room
-                            .Teams.FirstOrDefault(t => t.Id == player.TeamId)
-                            ?.Players.Add(playerToUpdate);
+                        ObservableTeam? targetTeam = roomDataService.Room.Teams.FirstOrDefault(t => t.Id == player.TeamId);
+
+                        if (targetTeam is not null) targetTeam.Players.Add(playerToUpdate);
                     }
                 }
                 else
