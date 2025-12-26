@@ -112,6 +112,25 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
             {
                 (HttpResult result, PlayerDto? player) = await playerRestService.KickFromRoomByIdAsync(playerId);
 
+                if (result is Success)
+                {
+                    ObservablePlayer? playerToKick = roomDataService.Room.Teams
+                        .SelectMany(team => team.Players)
+                        .FirstOrDefault(p => p.Id == playerId);
+
+                    if (playerToKick is null) return result;
+
+                    
+                    SetRoomAdminToNotAssigned(playerToKick, roomDataService.Room);
+
+                    ObservableTeam? team = roomDataService.Room.Teams.FirstOrDefault(t => t.Id == (playerToKick.TeamId ?? 0));
+
+                    if (team is not null) 
+                    { 
+                        SetTeamOfficerToNotAssigned(playerToKick, team);
+                        team?.Players.Remove(playerToKick);
+                    }
+                }
                 if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);
 
                 return result;
@@ -168,6 +187,16 @@ namespace AirsoftBmsApp.Networking.ApiFacade.Handlers.Player
             }
 
             return playersTeam;
+        }
+
+        private ObservableRoom SetRoomAdminToNotAssigned(ObservablePlayer player, ObservableRoom playersRoom)
+        {
+            if (player.TeamId != 0 && player.IsOfficer)
+            {
+                playersRoom.AdminPlayerId = 0;
+            }
+
+            return playersRoom;
         }
     }
 }
