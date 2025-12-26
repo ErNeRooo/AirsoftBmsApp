@@ -1,4 +1,5 @@
 ﻿using AirsoftBmsApp.Model.Dto.Team;
+using AirsoftBmsApp.Model.Dto.Vertex;
 using AirsoftBmsApp.Model.Observable;
 
 namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.TeamNotificationHandler;
@@ -31,7 +32,7 @@ public class TeamNotificationHandler : ITeamNotificationHandler
         contextRoom.Teams.Remove(team);
     }
 
-    public void OnTeamUpdated(TeamDto teamDto, ObservableRoom contextRoom)
+    public void OnTeamUpdated(TeamDto teamDto, ObservableRoom contextRoom, Action refreshMap)
     {
         ObservableTeam? previousTeam = contextRoom.Teams.FirstOrDefault(t => t.Id == teamDto.TeamId);
 
@@ -49,5 +50,28 @@ public class TeamNotificationHandler : ITeamNotificationHandler
             if (oldOfficerPlayer is not null) oldOfficerPlayer.IsOfficer = false;
             if (newOfficerPlayer is not null) newOfficerPlayer.IsOfficer = true;
         }
+
+        if(teamDto.SpawnZone is null) previousTeam.SpawnZone = null;
+        else
+        {
+            previousTeam.SpawnZoneId = teamDto.SpawnZone.ZoneId;
+            previousTeam.SpawnZone = new Microsoft.Maui.Controls.Maps.Polygon()
+            {
+                StrokeColor = previousTeam.TeamTheme.TitleColor,
+                FillColor = previousTeam.TeamTheme.TitleColor.WithAlpha(0.4f)
+            };
+
+            foreach (VertexDto location in teamDto.SpawnZone.Vertices)
+            {
+                previousTeam.SpawnZone.Geopath.Add(
+                    new Location
+                    {
+                        Longitude = location.Longitude,
+                        Latitude = location.Latitude
+                    });
+            }
+        }
+
+        refreshMap();
     }
 }

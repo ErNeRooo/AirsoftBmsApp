@@ -6,7 +6,7 @@ namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandl
 
 public class ZoneNotificationHandler : IZoneNotificationHandler
 {
-    public void OnZoneCreated(ZoneDto zoneDto, ObservableRoom contextRoom)
+    public void OnZoneCreated(ZoneDto zoneDto, ObservableRoom contextRoom, Action refreshMap)
     {
         if(contextRoom.Battle is null) return;
 
@@ -15,9 +15,11 @@ public class ZoneNotificationHandler : IZoneNotificationHandler
         if (doesZoneExist) return;
 
         contextRoom.Battle.Zones.Add(new ObservableZone(zoneDto));
+
+        refreshMap();
     }
 
-    public void OnZoneDeleted(int zoneId, ObservableRoom contextRoom)
+    public void OnZoneDeleted(int zoneId, ObservableRoom contextRoom, Action refreshMap)
     {
         if (contextRoom.Battle is null) return;
 
@@ -26,9 +28,11 @@ public class ZoneNotificationHandler : IZoneNotificationHandler
         if (zone is null) return;
 
         contextRoom.Battle.Zones.Remove(zone);
+
+        refreshMap();
     }
 
-    public void OnZoneUpdated(ZoneDto zoneDto, ObservableRoom contextRoom)
+    public void OnZoneUpdated(ZoneDto zoneDto, ObservableRoom contextRoom, Action refreshMap)
     {
         if (contextRoom.Battle is null) return;
 
@@ -39,5 +43,7 @@ public class ZoneNotificationHandler : IZoneNotificationHandler
         previousZone.BattleId = zoneDto.BattleId;
         previousZone.Name = zoneDto.Name;
         previousZone.Type = zoneDto.Type;
+
+        refreshMap();
     }
 }

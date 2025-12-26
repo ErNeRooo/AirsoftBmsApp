@@ -46,7 +46,7 @@ public class ZoneNotificationHandler_OnZoneUpdated_Tests
         };
 
         // Act
-        _zoneNotificationHandler.OnZoneUpdated(zoneDto, room);
+        _zoneNotificationHandler.OnZoneUpdated(zoneDto, room, () => { });
 
         // Assert
         ObservableZone? zone = room.Battle.Zones.FirstOrDefault(z => z.ZoneId == zoneDto.ZoneId);

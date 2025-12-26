@@ -5,6 +5,6 @@ namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandl
 
 public interface IMapPingNotificationHandler
 {
-    void OnMapPingCreated(MapPingDto mapPingDto, ObservableRoom contextRoom);
-    void OnMapPingDeleted(int mapPingId, ObservableRoom contextRoom);
+    void OnMapPingCreated(MapPingDto mapPingDto, ObservableRoom contextRoom, Action refreshMap);
+    void OnMapPingDeleted(int mapPingId, ObservableRoom contextRoom, Action refreshMap);
 }

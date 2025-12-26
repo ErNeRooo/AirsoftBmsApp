@@ -5,6 +5,6 @@ namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandl
 
 public interface IOrderNotificationHandler
 {
-    void OnOrderCreated(OrderDto orderDto, ObservableRoom contextRoom);
-    void OnOrderDeleted(int orderId, ObservableRoom contextRoom);
+    void OnOrderCreated(OrderDto orderDto, ObservableRoom contextRoom, Action refreshMap);
+    void OnOrderDeleted(int orderId, ObservableRoom contextRoom, Action refreshMap);
 }

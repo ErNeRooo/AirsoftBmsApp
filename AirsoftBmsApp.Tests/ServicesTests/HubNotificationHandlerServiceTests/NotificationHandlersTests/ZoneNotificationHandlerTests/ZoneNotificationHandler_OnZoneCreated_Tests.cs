@@ -39,7 +39,7 @@ public class ZoneNotificationHandler_OnZoneCreated_Tests
         };
 
         // Act
-        _zoneNotificationHandler.OnZoneCreated(zoneDto, room);
+        _zoneNotificationHandler.OnZoneCreated(zoneDto, room, () => { });
 
         // Assert
         ObservableZone? zone = room.Battle.Zones.FirstOrDefault(z => z.ZoneId == zoneDto.ZoneId);
@@ -86,7 +86,7 @@ public class ZoneNotificationHandler_OnZoneCreated_Tests
         };
 
         // Act
-        _zoneNotificationHandler.OnZoneCreated(zoneDto, room);
+        _zoneNotificationHandler.OnZoneCreated(zoneDto, room, () => { });
 
         // Assert
         ObservableZone? zone = room.Battle.Zones.FirstOrDefault(z => z.ZoneId == zoneDto.ZoneId);

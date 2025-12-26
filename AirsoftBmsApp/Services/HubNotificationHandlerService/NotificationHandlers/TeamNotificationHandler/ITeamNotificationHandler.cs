@@ -6,6 +6,6 @@ namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandl
 public interface ITeamNotificationHandler
 {
     void OnTeamCreated(TeamDto teamDto, ObservableRoom contextRoom);
-    void OnTeamUpdated(TeamDto teamDto, ObservableRoom contextRoom);
+    void OnTeamUpdated(TeamDto teamDto, ObservableRoom contextRoom, Action refreshMap);
     void OnTeamDeleted(int teamId, ObservableRoom contextRoom);
 }

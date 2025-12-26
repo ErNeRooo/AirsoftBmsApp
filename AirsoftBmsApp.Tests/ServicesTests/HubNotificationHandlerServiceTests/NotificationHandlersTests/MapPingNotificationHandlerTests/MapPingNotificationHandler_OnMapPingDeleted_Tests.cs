@@ -50,7 +50,7 @@ public class MapPingNotificationHandler_OnMapPingDeleted_Tests
         };
 
         // Act
-        _mapPingNotificationHandler.OnMapPingDeleted(targetMapPingId, room);
+        _mapPingNotificationHandler.OnMapPingDeleted(targetMapPingId, room, () => { });
 
         // Assert
         ObservableTeam? team = room.Teams

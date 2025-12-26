@@ -39,7 +39,7 @@ public class ZoneNotificationHandler_OnZoneDeleted_Tests
         int targetZoneId = 10;
 
         // Act
-        _zoneNotificationHandler.OnZoneDeleted(targetZoneId, room);
+        _zoneNotificationHandler.OnZoneDeleted(targetZoneId, room, () => { });
 
         // Assert
         ObservableZone? zone = room.Battle.Zones.FirstOrDefault(z => z.ZoneId == targetZoneId);

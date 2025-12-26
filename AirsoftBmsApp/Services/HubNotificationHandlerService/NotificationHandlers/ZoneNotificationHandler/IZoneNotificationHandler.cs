@@ -5,7 +5,7 @@ namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandl
 
 public interface IZoneNotificationHandler
 {
-    void OnZoneCreated(ZoneDto zoneDto, ObservableRoom contextRoom);
-    void OnZoneUpdated(ZoneDto zoneDto, ObservableRoom contextRoom);
-    void OnZoneDeleted(int zoneId, ObservableRoom contextRoom);
+    void OnZoneCreated(ZoneDto zoneDto, ObservableRoom contextRoom, Action refreshMap);
+    void OnZoneUpdated(ZoneDto zoneDto, ObservableRoom contextRoom, Action refreshMap);
+    void OnZoneDeleted(int zoneId, ObservableRoom contextRoom, Action refreshMap);
 }

@@ -51,7 +51,7 @@ public class MapPingNotificationHandler_OnMapPingCreated_Tests
         };
 
         // Act
-        _mapPingNotificationHandler.OnMapPingCreated(mapPingDto, room);
+        _mapPingNotificationHandler.OnMapPingCreated(mapPingDto, room, () => { });
 
         // Assert
         int? playersTeamId = room.Teams
@@ -121,7 +121,7 @@ public class MapPingNotificationHandler_OnMapPingCreated_Tests
         };
 
         // Act
-        _mapPingNotificationHandler.OnMapPingCreated(mapPingDto, room);
+        _mapPingNotificationHandler.OnMapPingCreated(mapPingDto, room, () => { });
 
         // Assert
         int? playersTeamId = room.Teams

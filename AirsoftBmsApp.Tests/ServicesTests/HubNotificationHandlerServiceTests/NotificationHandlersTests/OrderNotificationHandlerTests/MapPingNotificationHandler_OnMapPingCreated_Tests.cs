@@ -52,7 +52,7 @@ public class OrderNotificationHandler_OnOrderCreated_Tests
         };
 
         // Act
-        _orderNotificationHandler.OnOrderCreated(orderDto, room);
+        _orderNotificationHandler.OnOrderCreated(orderDto, room, () => { });
 
         // Assert
         int? playersTeamId = room.Teams
@@ -121,7 +121,7 @@ public class OrderNotificationHandler_OnOrderCreated_Tests
         };
 
         // Act
-        _orderNotificationHandler.OnOrderCreated(orderDto, room);
+        _orderNotificationHandler.OnOrderCreated(orderDto, room, () => { });
 
         // Assert
         int? playersTeamId = room.Teams

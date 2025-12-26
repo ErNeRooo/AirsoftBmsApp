@@ -50,7 +50,7 @@ public class OrderNotificationHandler_OnOrderDeleted_Tests
         };
 
         // Act
-        _orderNotificationHandler.OnOrderDeleted(targetOrderId, room);
+        _orderNotificationHandler.OnOrderDeleted(targetOrderId, room, () => { });
 
         // Assert
         ObservableTeam? team = room.Teams

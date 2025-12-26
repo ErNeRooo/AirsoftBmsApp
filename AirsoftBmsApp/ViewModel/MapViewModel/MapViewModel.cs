@@ -4,6 +4,7 @@ using AirsoftBmsApp.Model.Dto.Location;
 using AirsoftBmsApp.Model.Dto.MapPing;
 using AirsoftBmsApp.Model.Dto.Order;
 using AirsoftBmsApp.Model.Dto.Player;
+using AirsoftBmsApp.Model.Dto.Team;
 using AirsoftBmsApp.Model.Dto.Vertex;
 using AirsoftBmsApp.Model.Dto.Zone;
 using AirsoftBmsApp.Model.Observable;
@@ -126,33 +127,38 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
         _hubConnectionService.HubConnection.On<MapPingDto>(
             HubNotifications.MapPingCreated,
-            (mapPingDto) => notificationHandlers.MapPing.OnMapPingCreated(mapPingDto, Room));
+            (mapPingDto) => notificationHandlers.MapPing.OnMapPingCreated(mapPingDto, Room, UpdateMap));
 
         _hubConnectionService.HubConnection.On<int>(
             HubNotifications.MapPingDeleted,
-            (mapPingId) => notificationHandlers.MapPing.OnMapPingDeleted(mapPingId, Room));
+            (mapPingId) => notificationHandlers.MapPing.OnMapPingDeleted(mapPingId, Room, UpdateMap));
 
 
         _hubConnectionService.HubConnection.On<OrderDto>(
             HubNotifications.OrderCreated,
-            (orderDto) => notificationHandlers.Order.OnOrderCreated(orderDto, Room));
+            (orderDto) => notificationHandlers.Order.OnOrderCreated(orderDto, Room, UpdateMap));
 
         _hubConnectionService.HubConnection.On<int>(
             HubNotifications.OrderDeleted,
-            (orderId) => notificationHandlers.Order.OnOrderDeleted(orderId, Room));
+            (orderId) => notificationHandlers.Order.OnOrderDeleted(orderId, Room, UpdateMap));
 
 
         _hubConnectionService.HubConnection.On<ZoneDto>(
             HubNotifications.ZoneCreated,
-            (zoneDto) => notificationHandlers.Zone.OnZoneCreated(zoneDto, Room));
+            (zoneDto) => notificationHandlers.Zone.OnZoneCreated(zoneDto, Room, UpdateMap));
 
         _hubConnectionService.HubConnection.On<ZoneDto>(
             HubNotifications.ZoneUpdated,
-            (zoneDto) => notificationHandlers.Zone.OnZoneUpdated(zoneDto, Room));
+            (zoneDto) => notificationHandlers.Zone.OnZoneUpdated(zoneDto, Room, UpdateMap));
 
         _hubConnectionService.HubConnection.On<int>(
             HubNotifications.ZoneDeleted,
-            (zoneId ) => notificationHandlers.Zone.OnZoneDeleted(zoneId, Room));
+            (zoneId ) => notificationHandlers.Zone.OnZoneDeleted(zoneId, Room, UpdateMap));
+
+
+        _hubConnectionService.HubConnection.On<TeamDto>(
+            HubNotifications.TeamUpdated,
+            (teamDto) => notificationHandlers.Team.OnTeamUpdated(teamDto, Room, UpdateMap));
     }
 
     [Time]
