@@ -114,8 +114,11 @@ namespace AirsoftBmsApp
             } 
             else
             {
+#if RELEASE
+                string baseAddress = "https://airsoft-map-api-ane3ayhgdvd4bpeg.polandcentral-01.azurewebsites.net/";
+#else
                 string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8080" : "http://localhost:8080";
-
+#endif
                 builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
                 builder.Services.AddSingleton<IHubConnectionService, HubConnectionService>();
 
