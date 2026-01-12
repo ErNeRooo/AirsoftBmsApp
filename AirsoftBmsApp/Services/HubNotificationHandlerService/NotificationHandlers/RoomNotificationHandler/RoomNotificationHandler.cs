@@ -31,7 +31,7 @@ public class RoomNotificationHandler : IRoomNotificationHandler
 
     public void OnRoomUpdated(RoomDto roomDto, ObservableRoom contextRoom)
     {
-        if(contextRoom.AdminPlayerId != roomDto.AdminPlayerId)
+        if(contextRoom.AdminPlayerId != roomDto?.AdminPlayerId)
         {
             ObservablePlayer? oldAdminPlayer = contextRoom.Teams.SelectMany(t => t.Players).FirstOrDefault(p => p.Id == contextRoom.AdminPlayerId);
             ObservablePlayer? newAdminPlayer = contextRoom.Teams.SelectMany(t => t.Players).FirstOrDefault(p => p.Id == roomDto.AdminPlayerId);

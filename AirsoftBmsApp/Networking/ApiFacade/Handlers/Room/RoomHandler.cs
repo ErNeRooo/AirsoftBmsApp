@@ -110,7 +110,17 @@ public class RoomHandler(
 
             if (result is Success)
             {
-                roomDataService.Room.AdminPlayerId = room.AdminPlayerId;
+                if (roomDataService.Room.AdminPlayerId != room?.AdminPlayerId)
+                {
+                    ObservablePlayer? oldAdminPlayer = roomDataService.Room.Teams.SelectMany(t => t.Players).FirstOrDefault(p => p.Id == roomDataService.Room.AdminPlayerId);
+                    ObservablePlayer? newAdminPlayer = roomDataService.Room.Teams.SelectMany(t => t.Players).FirstOrDefault(p => p.Id == room.AdminPlayerId);
+
+                    roomDataService.Room.AdminPlayerId = room.AdminPlayerId;
+
+                    if (oldAdminPlayer is not null) oldAdminPlayer.IsAdmin = false;
+                    if (newAdminPlayer is not null) newAdminPlayer.IsAdmin = true;
+                }
+
                 roomDataService.Room.JoinCode = room.JoinCode;
                 roomDataService.Room.MaxPlayers = room.MaxPlayers;
             }
