@@ -7,10 +7,10 @@ public class HubConnectionService : IHubConnectionService
 {
     public HubConnection HubConnection { get; private set; }
 
-    public HubConnectionService(IJwtTokenService jwtTokenService)
+    public HubConnectionService(IJwtTokenService jwtTokenService, string baseAddress)
     {
         HubConnection = new HubConnectionBuilder()
-            .WithUrl("http://10.0.2.2:8080/roomHub", options =>
+            .WithUrl($"{baseAddress}/roomHub", options =>
             {
                 options.AccessTokenProvider = async () => 
                 {

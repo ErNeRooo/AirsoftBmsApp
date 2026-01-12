@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Battle;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Services.GeolocationService;
 
 namespace AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.BattleNotificationHandler;
 
@@ -10,8 +11,20 @@ public class BattleNotificationHandler : IBattleNotificationHandler
         contextRoom.Battle = null;
     }
 
-    public void OnBattleUpdated(BattleDto battleDto, ObservableRoom contextRoom)
+    public void OnBattleUpdated(BattleDto battleDto, ObservableRoom contextRoom, IGeolocationService geolocationService)
     {
+        if (contextRoom.Battle is not null)
+        {
+            if (contextRoom.Battle.IsActive && !battleDto.IsActive)
+            {
+                geolocationService.Stop();
+            }
+            else if (!contextRoom.Battle.IsActive && battleDto.IsActive)
+            {
+                geolocationService.Start();
+            }
+        }
+
         contextRoom.Battle = new ObservableBattle(battleDto);
     }
 

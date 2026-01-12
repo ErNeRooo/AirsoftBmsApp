@@ -29,7 +29,7 @@ public class GeolocationService(ILocationHandler locationApiHandler) : IGeolocat
             Longitude = e.Location.Longitude,
             Latitude = e.Location.Latitude,
             Accuracy = e.Location.Accuracy ?? 0,
-            Bearing = (int)e.Location.Course,
+            Bearing = e.Location.Course is null ? 0 : (int)e.Location.Course,
             Time = e.Location.Timestamp,
         };
 

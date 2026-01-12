@@ -79,7 +79,7 @@ namespace AirsoftBmsApp.Services.PlayerRestService.Implementations
 
             if (response.IsSuccessStatusCode)
             {
-                var room = jsonHelper.DeserializeFromResponseAsync<RoomDto>(response).Result;
+                var room = await jsonHelper.DeserializeFromResponseAsync<RoomDto>(response);
 
                 return (new Success(), room);
             }

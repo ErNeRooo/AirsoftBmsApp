@@ -53,7 +53,8 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         IRoomDataService roomDataService,
         IApiFacade apiFacade,
         IHubConnectionService hubConnection,
-        IHubNotificationHandlerService notificationHandlers
+        IHubNotificationHandlerService notificationHandlers,
+        IGeolocationService geolocationService
         )
     {
         _hubConnectionService = hubConnection;
@@ -81,10 +82,10 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
             ValidationMessage = AppResources.BattleNameIsRequiredValidationMessage,
         });
 
-        SetNotificationHandlers(notificationHandlers);
+        SetNotificationHandlers(notificationHandlers, geolocationService);
     }
 
-    void SetNotificationHandlers(IHubNotificationHandlerService notificationHandlers)
+    void SetNotificationHandlers(IHubNotificationHandlerService notificationHandlers, IGeolocationService geolocationService)
     {
         _hubConnectionService.HubConnection.On<int>(
             HubNotifications.BattleDeleted,
@@ -92,7 +93,7 @@ public partial class BattleViewModel : ObservableObject, IBattleViewModel
         );
         _hubConnectionService.HubConnection.On<BattleDto>(
             HubNotifications.BattleUpdated,
-            (battleDto) => notificationHandlers.Battle.OnBattleUpdated(battleDto, Room)
+            (battleDto) => notificationHandlers.Battle.OnBattleUpdated(battleDto, Room, geolocationService)
         );
         _hubConnectionService.HubConnection.On<BattleDto>(
             HubNotifications.BattleCreated,

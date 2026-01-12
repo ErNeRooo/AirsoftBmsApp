@@ -61,7 +61,8 @@ namespace AirsoftBmsApp
     {
         public static MauiApp CreateMauiApp()
         {
-            var builder = MauiApp.CreateBuilder();
+            var builder = MauiApp.CreateBuilder();  
+
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
@@ -80,6 +81,7 @@ namespace AirsoftBmsApp
                     handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, AirsoftBmsApp.Platforms.iOS.CustomMapHandler>();
 #endif
                 });
+
 
             builder.Services.AddTransient<RoomMembersPage>();
             builder.Services.AddTransient<BattlePage>();
@@ -115,12 +117,19 @@ namespace AirsoftBmsApp
             else
             {
 #if RELEASE
-                string baseAddress = "https://airsoft-map-api-ane3ayhgdvd4bpeg.polandcentral-01.azurewebsites.net/";
+                string baseAddress = "https://airsoft-map-api-ane3ayhgdvd4bpeg.polandcentral-01.azurewebsites.net";
 #else
                 string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8080" : "http://localhost:8080";
 #endif
+
                 builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
-                builder.Services.AddSingleton<IHubConnectionService, HubConnectionService>();
+                builder.Services.AddSingleton<IHubConnectionService>(sp =>
+                {
+                    return new HubConnectionService(
+                        sp.GetRequiredService<IJwtTokenService>(),
+                        baseAddress
+                    );
+                });
 
                 builder.Services.AddHttpClient<IAccountRestService, AccountRestService>(client =>
                 {

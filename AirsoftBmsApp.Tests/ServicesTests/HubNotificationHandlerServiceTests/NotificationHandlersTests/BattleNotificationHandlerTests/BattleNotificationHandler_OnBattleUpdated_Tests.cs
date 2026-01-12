@@ -1,5 +1,6 @@
 ﻿using AirsoftBmsApp.Model.Dto.Battle;
 using AirsoftBmsApp.Model.Observable;
+using AirsoftBmsApp.Services.GeolocationService;
 using AirsoftBmsApp.Services.HubNotificationHandlerService.NotificationHandlers.BattleNotificationHandler;
 using Shouldly;
 
@@ -32,8 +33,10 @@ public class BattleNotificationHandler_OnBattleUpdated_Tests
             RoomId = 1,
         };
 
+        IGeolocationService geolocationService = new MockGeolocationService();
+
         // Act
-        _battleNotificationHandler.OnBattleUpdated(battleDto, room);
+        _battleNotificationHandler.OnBattleUpdated(battleDto, room, geolocationService);
 
         // Assert
         room.Battle.ShouldNotBeNull();
@@ -41,5 +44,18 @@ public class BattleNotificationHandler_OnBattleUpdated_Tests
         room.Battle.RoomId.ShouldBe(battleDto.RoomId);
         room.Battle.BattleId.ShouldBe(battleDto.BattleId);
         room.Battle.IsActive.ShouldBe(false);
+    }
+
+    private class MockGeolocationService : IGeolocationService
+    {
+        public Task Start()
+        {
+            return Task.CompletedTask;
+        }
+
+        public void Stop()
+        {
+            return;
+        }
     }
 }
