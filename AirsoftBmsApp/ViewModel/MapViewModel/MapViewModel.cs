@@ -24,6 +24,8 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace AirsoftBmsApp.ViewModel.MapViewModel;
 
@@ -171,20 +173,29 @@ public partial class MapViewModel : ObservableObject, IMapViewModel
 
             foreach (var player in team.Players)
             {
-                player.Locations.CollectionChanged -= (s, e) => UpdateMap();
-                player.Deaths.CollectionChanged -= (s, e) => UpdateMap();
-                player.Kills.CollectionChanged -= (s, e) => UpdateMap();
-                player.PropertyChanged -= (s, e) => UpdateMap();
+                player.Locations.CollectionChanged -= UpdateMapCollectionChangedHandler;
+                player.Deaths.CollectionChanged -= UpdateMapCollectionChangedHandler;
+                player.Kills.CollectionChanged -= UpdateMapCollectionChangedHandler;
+                player.PropertyChanged -= Players_PropertyChanged;
 
-                player.Locations.CollectionChanged += (s, e) => UpdateMap();
-                player.Deaths.CollectionChanged += (s, e) => UpdateMap();
-                player.Kills.CollectionChanged += (s, e) => UpdateMap();
-                player.PropertyChanged += (s, e) => UpdateMap();
+                player.Locations.CollectionChanged += UpdateMapCollectionChangedHandler;
+                player.Deaths.CollectionChanged += UpdateMapCollectionChangedHandler;
+                player.Kills.CollectionChanged += UpdateMapCollectionChangedHandler;
+                player.PropertyChanged += Players_PropertyChanged;
             }
         }
     }
 
-    private void Players_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void UpdateMapCollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        UpdateMap();
+    }
+
+    private void Players_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        UpdateMap();
+    }
+    private void Players_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         UpdateMap();
         UpdatePlayersCollectionChangeHandlers();
