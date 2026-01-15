@@ -70,12 +70,18 @@ public class RoomHandler(
 
     private void InjectObservablePlayerObjectFromPlayerDataService(ObservableRoom room)
     {
-        ObservablePlayer oldPlayerObject = room.Teams.FindPlayerWithId(playerDataService.Player.Id);
+        ObservablePlayer oldPlayer = room.Teams.FindPlayerWithId(playerDataService.Player.Id);
 
-        if (oldPlayerObject is null) return;
+        if (oldPlayer is null) return;
 
-        playerDataService.Player.IsAdmin = oldPlayerObject.IsAdmin;
-        room.Detach(oldPlayerObject);
+        playerDataService.Player.IsAdmin = oldPlayer.IsAdmin;
+        playerDataService.Player.Locations = oldPlayer.Locations;
+        playerDataService.Player.Deaths = oldPlayer.Deaths;
+        playerDataService.Player.Kills = oldPlayer.Kills;
+        playerDataService.Player.Account = oldPlayer.Account;
+        playerDataService.Player.RoomId = oldPlayer.RoomId;
+
+        room.Detach(oldPlayer);
         room.Teams.ReplacePlayerWithId(playerDataService.Player.Id, playerDataService.Player);
         room.Attach(playerDataService.Player);
     }
