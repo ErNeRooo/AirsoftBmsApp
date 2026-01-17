@@ -141,13 +141,30 @@ public class TeamHandler(
             if (result is Success && team is not null)
             {
                 ObservableTeam? teamToUpdate = roomDataService.Room.Teams.FirstOrDefault(t => t.Id == teamId);
-                ObservableTeam updatedTeam = new(team);
 
                 if (teamToUpdate is not null)
                 {
                     teamToUpdate.Name = team.Name;
                     teamToUpdate.OfficerId = team.OfficerPlayerId;
-                    teamToUpdate.SpawnZone = updatedTeam.SpawnZone;
+
+                    teamToUpdate.SpawnZone = new Polygon()
+                    {
+                        StrokeColor = teamToUpdate.TeamTheme.TitleColor,
+                        FillColor = teamToUpdate.TeamTheme.TitleColor.WithAlpha(0.4f)
+                    };
+
+                    if(team.SpawnZone?.Vertices is not null)
+                    {
+                        foreach (VertexDto location in team.SpawnZone.Vertices)
+                        {
+                            teamToUpdate.SpawnZone.Geopath.Add(
+                                new Microsoft.Maui.Devices.Sensors.Location
+                                {
+                                    Longitude = location.Longitude,
+                                    Latitude = location.Latitude
+                                });
+                        }
+                    }
                 }
             }
             else if (result is Failure failure && failure.errorMessage == "") return new Failure(AppResources.UnhandledErrorMessage);

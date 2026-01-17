@@ -9,7 +9,7 @@ public class GeolocationService(ILocationHandler locationApiHandler) : IGeolocat
     public async Task Start()
     {
         Geolocation.LocationChanged += OnLocationChanged;
-        var request = new GeolocationListeningRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(5));
+        var request = new GeolocationListeningRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(1));
         if(request != null)
         {
             await Geolocation.StartListeningForegroundAsync(request);
