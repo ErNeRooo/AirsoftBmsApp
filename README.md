@@ -1,3 +1,5 @@
+![Showcase](./airsoftmap_showcase.png)
+
 # Airsoft Map Mobile
 
 ## About
@@ -7,6 +9,9 @@ The app allows teams to coordinate during matches by sharing live locations, tra
 
 Backend repository:  
 👉 [AirsoftBattlefieldManagementSystemAPI](https://github.com/ErNeRooo/AirsoftBattlefieldManagementSystemAPI)
+
+Application showcase video:  
+👉 https://youtu.be/KaQWGlp-ze4
 
 ---
 
@@ -22,11 +27,13 @@ Backend repository:
 ## Features
 
 ### Real-Time Team Communication
+
 - Share player locations with teammates in real time
 - Synchronize battle status across all connected players
 - Receive live tactical updates during gameplay
 
 ### Battle Management
+
 - Track battle states:
   - Started
   - Paused
@@ -35,12 +42,14 @@ Backend repository:
 - Configure spawn points for each team
 
 ### Player Statistics
+
 - Track personal battle statistics such as:
   - Kills
   - Deaths
   - Respawns
 
 ### Tactical Map System
+
 - Mark enemy sightings on the map
 - Display team positions
 - Improve battlefield awareness and coordination
